@@ -1,2 +1,2 @@
 # smartgarage-github
-Application web de gestion de garage automobile
+Application web ERP de gestion de garage automobile
