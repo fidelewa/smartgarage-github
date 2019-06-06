@@ -6,28 +6,68 @@ $button_text = "Enregistrer information";
 $successful_msg = "Ajouter un réceptionniste avec succès";
 $form_url = WEB_URL . "user/addDroitAccessRoleProcess.php";
 
-// Récupération des valeurs des variables de session définies
-if (isset($_SESSION['mech_elec_droit_acces']) && !empty($_SESSION['mech_elec_droit_acces'])) {
-    $mech_elec_droit_acces = $_SESSION['mech_elec_droit_acces'];
+// DROIT MECANICIEN ELECTRICIEN
+$mech_elec_droit_acces = 'role_mecano_eletro';
+$recep_droit_acces = 'role_recep';
+$client_droit_acces = 'role_client';
+$compta_droit_acces = 'role_compta';
+
+// DROIT MECANICIEN ELECTRICIEN
+
+// On vérifie que l'enregistrement du droit d'accès par role courant exsite déja en BDD
+$querySelMechElecDroitMenuRole = "SELECT droit_menu_role_id, role_name FROM tbl_droit_menu_role WHERE role_name = '" . $mech_elec_droit_acces  . "'";
+
+// On exécute la requête
+$resultSelMechElecDroitMenuRole = mysql_query($querySelMechElecDroitMenuRole, $link);
+
+// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+if (!$resultSelMechElecDroitMenuRole) {
+    $message  = 'Invalid query: ' . mysql_error() . "\n";
+    $message .= 'Whole query: ' . $querySelMechElecDroitMenuRole;
+    die($message);
 }
 
-if (isset($_SESSION['recep_droit_acces']) && !empty($_SESSION['recep_droit_acces'])) {
-    $recep_droit_acces = $_SESSION['recep_droit_acces'];
+// On récupère le jeu de résultat de la requête
+$listeMechElecDroitMenuRole = mysql_fetch_assoc($resultSelMechElecDroitMenuRole);
+
+// Si l'array n'est pas vide, alors il y a au moin un enregistrement correspondant à la sélection
+// Dans ce cas, on fait la sélection
+if (!empty($listeMechElecDroitMenuRole)) {
+
+    // Droit menu mécanicien et électricien
+    $resultDroitMenuMechElec = $wms->getDroitMenuMechElecInfo($link, $mech_elec_droit_acces);
 }
 
-if (isset($_SESSION['client_droit_acces']) && !empty($_SESSION['client_droit_acces'])) {
-    $client_droit_acces = $_SESSION['client_droit_acces'];
+// DROIT RECEPTIONNISTE
+
+// On vérifie que l'enregistrement du droit d'accès par role courant exsite déja en BDD
+$querySelRecepDroitMenuRole = "SELECT droit_menu_role_id, role_name FROM tbl_droit_menu_role WHERE role_name = '" . $recep_droit_acces  . "'";
+
+// On exécute la requête
+$resultSelRecepDroitMenuRole = mysql_query($querySelRecepDroitMenuRole, $link);
+
+// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+if (!$resultSelRecepDroitMenuRole) {
+    $message  = 'Invalid query: ' . mysql_error() . "\n";
+    $message .= 'Whole query: ' . $querySelRecepDroitMenuRole;
+    die($message);
 }
 
-if (isset($_SESSION['compta_droit_acces']) && !empty($_SESSION['compta_droit_acces'])) {
-    $compta_droit_acces = $_SESSION['compta_droit_acces'];
-}
+// On récupère le jeu de résultat de la requête
+$listeMechRecepDroitMenuRole = mysql_fetch_assoc($resultSelRecepDroitMenuRole);
 
-// Droit menu mécanicien et électricien
-$resultDroitMenuMechElec = $wms->getDroitMenuMechElecInfo($link, $mech_elec_droit_acces);
+// Si l'array n'est pas vide, alors il y a au moin un enregistrement correspondant à la sélection
+// Dans ce cas, on fait la sélection
+if (!empty($listeMechRecepDroitMenuRole)) {
+
+    // Droit menu mécanicien et électricien
+    $resultDroitMenuRecep = $wms->getDroitMenuRecepInfo($link, $recep_droit_acces);
+}
 
 // var_dump($_SESSION);
-// var_dump($resultDroitMenuMechElec);
+var_dump($resultDroitMenuMechElec);
+var_dump($resultDroitMenuRecep);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +117,7 @@ $resultDroitMenuMechElec = $wms->getDroitMenuMechElecInfo($link, $mech_elec_droi
                                     </div>
                                     <div class="col-md-9" id="role_mecano_eletro_box">
 
-                                        <?php if (empty($resultDroitMenuMechElec)) { // Si le droit du role mecano electro n'existe pas en BDD
+                                        <?php if (!isset($resultDroitMenuMechElec) || empty($resultDroitMenuMechElec)) { // Si le droit du role mecano electro n'existe pas en BDD
                                             // On affiche les drois par défaut
                                             ?>
 
@@ -102,7 +142,7 @@ $resultDroitMenuMechElec = $wms->getDroitMenuMechElecInfo($link, $mech_elec_droi
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="checkbox" id="mech_elec_droit_acces_menu_devis" name="role_data['role_mecano_eletro'][droit_acces_menu_devis]" value="O">
-                                                    <label for="mech_elec_droit_acces_menu_devis">Menu dévis</label>
+                                                    <label for="mech_elec_droit_acces_menu_devis">Menu devis</label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -175,36 +215,180 @@ $resultDroitMenuMechElec = $wms->getDroitMenuMechElecInfo($link, $mech_elec_droi
                                             <?php }
                                         if ($resultDroitMenuMechElec['menu_recep_vehi'] == 'O') { ?>
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="checkbox" id="mech_elec_droit_acces_menu_recep_vehi" name="role_data['role_mecano_eletro'][droit_acces_menu_recep_vehi]" value="O" checked>
-                                                    <label for="mech_elec_droit_acces_menu_client">Menu réception véhicule</label>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_recep_vehi" name="role_data['role_mecano_eletro'][droit_acces_menu_recep_vehi]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_client">Menu réception de véhicules</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        <?php } else { ?>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="checkbox" id="mech_elec_droit_acces_menu_recep_vehi" name="role_data['role_mecano_eletro'][droit_acces_menu_recep_vehi]" value="O">
-                                                    <label for="mech_elec_droit_acces_menu_recep_vehi">Menu réception véhicule</label>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_recep_vehi" name="role_data['role_mecano_eletro'][droit_acces_menu_recep_vehi]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_recep_vehi">Menu réception de véhicules</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        <?php }
+                                            <?php }
                                         if ($resultDroitMenuMechElec['menu_vehi'] == 'O') { ?>
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="checkbox" id="mech_elec_droit_acces_menu_vehi" name="role_data['role_mecano_eletro'][droit_acces_menu_vehi]" value="O" checked>
-                                                    <label for="mech_elec_droit_acces_menu_client">Menu réception véhicule</label>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_vehi" name="role_data['role_mecano_eletro'][droit_acces_menu_vehi]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_client">Menu véhicule</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        <?php } else { ?>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="checkbox" id="mech_elec_droit_acces_menu_vehi" name="role_data['role_mecano_eletro'][droit_acces_menu_vehi]" value="O">
-                                                    <label for="mech_elec_droit_acces_menu_vehi">Menu réception véhicule</label>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_vehi" name="role_data['role_mecano_eletro'][droit_acces_menu_vehi]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_vehi">Menu véhicule</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        <?php }
+                                            <?php }
+                                        if ($resultDroitMenuMechElec['menu_devis'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_devis" name="role_data['role_mecano_eletro'][droit_acces_menu_devis]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_devis">Menu devis</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_devis" name="role_data['role_mecano_eletro'][droit_acces_menu_devis]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_devis">Menu devis</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuMechElec['menu_facture'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_facture" name="role_data['role_mecano_eletro'][droit_acces_menu_facture]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_facture">Menu facture</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_facture" name="role_data['role_mecano_eletro'][droit_acces_menu_facture]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_facture">Menu facture</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuMechElec['menu_stock_piece'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_stock_piece" name="role_data['role_mecano_eletro'][droit_acces_menu_stock_piece]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_stock_piece">Menu stock de pièces</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_stock_piece" name="role_data['role_mecano_eletro'][droit_acces_menu_stock_piece]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_stock_piece">Menu stock de pièces</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuMechElec['menu_four'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_four" name="role_data['role_mecano_eletro'][droit_acces_menu_four]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_four">Menu fournisseur</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_four" name="role_data['role_mecano_eletro'][droit_acces_menu_four]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_four">Menu fournisseur</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuMechElec['menu_ges_personnel'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_personnel" name="role_data['role_mecano_eletro'][droit_acces_menu_personnel]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_personnel">Menu personnel</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_personnel" name="role_data['role_mecano_eletro'][droit_acces_menu_personnel]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_personnel">Menu personnel</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuMechElec['menu_ges_user'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_ges_user" name="role_data['role_mecano_eletro'][droit_acces_menu_ges_user]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_ges_user">Menu gestion des utilisateurs</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_ges_user" name="role_data['role_mecano_eletro'][droit_acces_menu_ges_user]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_ges_user">Menu gestion des utilisateurs</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuMechElec['menu_contact'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_contact" name="role_data['role_mecano_eletro'][droit_acces_menu_contact]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_contact">Menu contact</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_contact" name="role_data['role_mecano_eletro'][droit_acces_menu_contact]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_contact">Menu contact</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuMechElec['menu_rapport'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_rapport" name="role_data['role_mecano_eletro'][droit_acces_menu_rapport]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_rapport">Menu rapport</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_rapport" name="role_data['role_mecano_eletro'][droit_acces_menu_rapport]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_rapport">Menu rapport</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuMechElec['menu_setting'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_setting" name="role_data['role_mecano_eletro'][droit_acces_menu_setting]" value="O" checked>
+                                                        <label for="mech_elec_droit_acces_menu_setting">Menu paramètrage</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_setting" name="role_data['role_mecano_eletro'][droit_acces_menu_setting]" value="O">
+                                                        <label for="mech_elec_droit_acces_menu_setting">Menu paramètrage</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
                                     } ?>
 
                                     </div>
@@ -225,80 +409,283 @@ $resultDroitMenuMechElec = $wms->getDroitMenuMechElecInfo($link, $mech_elec_droi
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-9">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_client" name="role_data['role_recep'][droit_acces_menu_client]" value="O">
-                                                <label for="recep_droit_acces_menu_client">Menu client</label>
+                                    <div class="col-md-9" id="role_recep_box">
+
+                                        <?php if (!isset($resultDroitMenuRecep) || empty($resultDroitMenuRecep)) { // Si le droit du role receptionniste n'existe pas en BDD
+                                            // On affiche les drois par défaut
+                                            ?>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_client" name="role_data['role_recep'][droit_acces_menu_client]" value="O">
+                                                    <label for="recep_droit_acces_menu_client">Menu client</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_recep_vehi" name="role_data['role_recep'][droit_acces_menu_recep_vehi]" value="O">
-                                                <label for="recep_droit_acces_menu_recep_vehi">Menu réception de véhicules</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_recep_vehi" name="role_data['role_recep'][droit_acces_menu_recep_vehi]" value="O">
+                                                    <label for="recep_droit_acces_menu_recep_vehi">Menu réception de véhicules</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_vehi" name="role_data['role_recep'][droit_acces_menu_vehi]" value="O">
-                                                <label for="recep_droit_acces_menu_vehi">Menu véhicule</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_vehi" name="role_data['role_recep'][droit_acces_menu_vehi]" value="O">
+                                                    <label for="recep_droit_acces_menu_vehi">Menu véhicule</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_devis" name="role_data['role_recep'][droit_acces_menu_devis]" value="O">
-                                                <label for="recep_droit_acces_menu_devis">Menu dévis</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_devis" name="role_data['role_recep'][droit_acces_menu_devis]" value="O">
+                                                    <label for="recep_droit_acces_menu_devis">Menu devis</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_facture" name="role_data['role_recep'][droit_acces_menu_facture]" value="O">
-                                                <label for="recep_droit_acces_menu_devis">Menu facture</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_facture" name="role_data['role_recep'][droit_acces_menu_facture]" value="O">
+                                                    <label for="recep_droit_acces_menu_devis">Menu facture</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_stock_piece" name="role_data['role_recep'][droit_acces_menu_stock_piece]" value="O">
-                                                <label for="recep_droit_acces_menu_stock_piece">Menu stock de pièces</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_stock_piece" name="role_data['role_recep'][droit_acces_menu_stock_piece]" value="O">
+                                                    <label for="recep_droit_acces_menu_stock_piece">Menu stock de pièces</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_four" name="role_data['role_recep'][droit_acces_menu_four]" value="O">
-                                                <label for="recep_droit_acces_menu_four">Menu fournisseur</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_four" name="role_data['role_recep'][droit_acces_menu_four]" value="O">
+                                                    <label for="recep_droit_acces_menu_four">Menu fournisseur</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_personnel" name="role_data['role_recep'][droit_acces_menu_personnel]" value="O">
-                                                <label for="recep_droit_acces_menu_personnel">Menu personnel</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_personnel" name="role_data['role_recep'][droit_acces_menu_personnel]" value="O">
+                                                    <label for="recep_droit_acces_menu_personnel">Menu personnel</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_ges_user" name="role_data['role_recep'][droit_acces_menu_ges_user]" value="O">
-                                                <label for="recep_droit_acces_menu_ges_user">Menu gestion des utilisateurs</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_ges_user" name="role_data['role_recep'][droit_acces_menu_ges_user]" value="O">
+                                                    <label for="recep_droit_acces_menu_ges_user">Menu gestion des utilisateurs</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_contact" name="role_data['role_recep'][droit_acces_menu_contact]" value="O">
-                                                <label for="recep_droit_acces_menu_contact">Menu contact</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_contact" name="role_data['role_recep'][droit_acces_menu_contact]" value="O">
+                                                    <label for="recep_droit_acces_menu_contact">Menu contact</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_rapport" name="role_data['role_recep'][droit_acces_menu_rapport]" value="O">
-                                                <label for="recep_droit_acces_menu_rapport">Menu rapport</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_rapport" name="role_data['role_recep'][droit_acces_menu_rapport]" value="O">
+                                                    <label for="recep_droit_acces_menu_rapport">Menu rapport</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="checkbox" id="recep_droit_acces_menu_setting" name="role_data['role_recep'][droit_acces_menu_setting]" value="O">
-                                                <label for="recep_droit_acces_menu_setting">Menu paramètrage</label>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="checkbox" id="recep_droit_acces_menu_setting" name="role_data['role_recep'][droit_acces_menu_setting]" value="O">
+                                                    <label for="recep_droit_acces_menu_setting">Menu paramètrage</label>
+                                                </div>
                                             </div>
-                                        </div>
+
+                                        <?php } else { // Si le droit du role réceptionniste existe en BDD
+                                        // On récupère les données du droit en BDD
+                                        if ($resultDroitMenuRecep['menu_client'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_client" name="role_data['role_recep'][droit_acces_menu_client]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_client">Menu client</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_client" name="role_data['role_recep'][droit_acces_menu_client]" value="O">
+                                                        <label for="recep_droit_acces_menu_client">Menu client</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_recep_vehi'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_recep_vehi" name="role_data['role_recep'][droit_acces_menu_recep_vehi]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_client">Menu réception de véhicules</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_recep_vehi" name="role_data['role_recep'][droit_acces_menu_recep_vehi]" value="O">
+                                                        <label for="recep_droit_acces_menu_recep_vehi">Menu réception de véhicules</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_vehi'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_vehi" name="role_data['role_recep'][droit_acces_menu_vehi]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_client">Menu véhicule</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_vehi" name="role_data['role_recep'][droit_acces_menu_vehi]" value="O">
+                                                        <label for="recep_droit_acces_menu_vehi">Menu véhicule</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_devis'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_devis" name="role_data['role_recep'][droit_acces_menu_devis]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_devis">Menu devis</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_devis" name="role_data['role_recep'][droit_acces_menu_devis]" value="O">
+                                                        <label for="recep_droit_acces_menu_devis">Menu devis</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_facture'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_facture" name="role_data['role_recep'][droit_acces_menu_facture]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_facture">Menu facture</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_facture" name="role_data['role_recep'][droit_acces_menu_facture]" value="O">
+                                                        <label for="recep_droit_acces_menu_facture">Menu facture</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_stock_piece'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_stock_piece" name="role_data['role_recep'][droit_acces_menu_stock_piece]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_stock_piece">Menu stock de pièces</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_stock_piece" name="role_data['role_recep'][droit_acces_menu_stock_piece]" value="O">
+                                                        <label for="recep_droit_acces_menu_stock_piece">Menu stock de pièces</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_four'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_four" name="role_data['role_recep'][droit_acces_menu_four]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_four">Menu fournisseur</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_four" name="role_data['role_recep'][droit_acces_menu_four]" value="O">
+                                                        <label for="recep_droit_acces_menu_four">Menu fournisseur</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_ges_personnel'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_personnel" name="role_data['role_recep'][droit_acces_menu_personnel]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_personnel">Menu personnel</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_personnel" name="role_data['role_recep'][droit_acces_menu_personnel]" value="O">
+                                                        <label for="recep_droit_acces_menu_personnel">Menu personnel</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_ges_user'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_ges_user" name="role_data['role_recep'][droit_acces_menu_ges_user]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_ges_user">Menu gestion des utilisateurs</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_ges_user" name="role_data['role_recep'][droit_acces_menu_ges_user]" value="O">
+                                                        <label for="recep_droit_acces_menu_ges_user">Menu gestion des utilisateurs</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_contact'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_contact" name="role_data['role_recep'][droit_acces_menu_contact]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_contact">Menu contact</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_contact" name="role_data['role_recep'][droit_acces_menu_contact]" value="O">
+                                                        <label for="recep_droit_acces_menu_contact">Menu contact</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_rapport'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_rapport" name="role_data['role_recep'][droit_acces_menu_rapport]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_rapport">Menu rapport</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_rapport" name="role_data['role_recep'][droit_acces_menu_rapport]" value="O">
+                                                        <label for="recep_droit_acces_menu_rapport">Menu rapport</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                        if ($resultDroitMenuRecep['menu_setting'] == 'O') { ?>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_setting" name="role_data['role_recep'][droit_acces_menu_setting]" value="O" checked>
+                                                        <label for="recep_droit_acces_menu_setting">Menu paramètrage</label>
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="checkbox" id="recep_droit_acces_menu_setting" name="role_data['role_recep'][droit_acces_menu_setting]" value="O">
+                                                        <label for="recep_droit_acces_menu_setting">Menu paramètrage</label>
+                                                    </div>
+                                                </div>
+                                            <?php }
+                                    } ?>
+
                                     </div>
+
                                 </div>
                             </fieldset>
                             <fieldset>
@@ -337,7 +724,7 @@ $resultDroitMenuMechElec = $wms->getDroitMenuMechElecInfo($link, $mech_elec_droi
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input type="checkbox" id="client_droit_acces_menu_devis" name="role_data['role_client'][droit_acces_menu_devis]" value="O">
-                                                <label for="client_droit_acces_menu_devis">Menu dévis</label>
+                                                <label for="client_droit_acces_menu_devis">Menu devis</label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -428,7 +815,7 @@ $resultDroitMenuMechElec = $wms->getDroitMenuMechElecInfo($link, $mech_elec_droi
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input type="checkbox" id="compta_droit_acces_menu_devis" name="role_data['role_comptable'][droit_acces_menu_devis]" value="O">
-                                                <label for="compta_droit_acces_menu_devis">Menu dévis</label>
+                                                <label for="compta_droit_acces_menu_devis">Menu devis</label>
                                             </div>
                                         </div>
                                         <div class="row">

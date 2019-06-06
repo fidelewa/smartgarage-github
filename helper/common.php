@@ -2,6 +2,29 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getDroitMenuRecepInfo($con, $recep_droit_acces)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT *
+			from tbl_droit_menu_role
+			WHERE role_name = '" . $recep_droit_acces . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		if ($row = mysql_fetch_assoc($result)) {
+			$data = $row;
+		}
+		return $data;
+
+	}
 
 	public function getDroitMenuMechElecInfo($con, $mech_elec_droit_acces)
 	{
@@ -117,8 +140,15 @@ class wms_core
 		if (!empty($data)) {
 			if ($data['personnel_id'] == '0') {
 
-				$query = "INSERT INTO tbl_add_personnel(per_name, per_telephone, per_service, per_fonction) 
-				values('$data[txtPersName]','$data[telPers]','$data[servPers]','$data[foncPers]')";
+				$query = "INSERT INTO tbl_add_personnel(per_name, per_telephone, per_fonction, per_date_naiss, per_lieu_naiss,
+				per_lieu_ori, per_num_cni, per_etat_civile, per_nom_conjoint, per_adrs, per_nom_pere, per_nom_mere, perso_data
+				)
+
+				values('$data[txtPersName]','$data[telPers]','$data[foncPers]','$data[dateNaisPers]','$data[lieuNaisPers]',
+				'$data[lieuOriPers]','$data[numcniPers]','$data[etatcivilePers]','$data[nomconjointPers]','$data[adrsPers]',
+				'$data[nomperePers]','$data[nomerePers]','$data[perso_data]', '$data[perso_data]', '$data[perso_data]', '$data[perso_data]',
+				'$data[perso_data]'
+				)";
 				$result = mysql_query($query, $con);
 			} else {
 
@@ -6128,6 +6158,17 @@ class wms_core
 					'email'			=> $row['r_email'],
 					'password'		=> $row['r_password'],
 					'image'			=> $row['r_image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'comptable') {
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['usr_id'],
+					'name'			=> $row['usr_name'],
+					'email'			=> $row['usr_email'],
+					'password'		=> $row['usr_password'],
+					'image'			=> $row['usr_image']
 				);
 			}
 		}
