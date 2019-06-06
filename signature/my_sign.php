@@ -1,0 +1,192 @@
+<?php
+include("../config.php");
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Formulaire de Signatures</title>
+	<link href="./css/jquery.signaturepad.css" rel="stylesheet">
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<script src="./js/jquery-1.10.2.min.js"></script>
+	<script src="./js/numeric-1.2.6.min.js"></script>
+	<script src="./js/bezier.js"></script>
+	<script src="./js/jquery.signaturepad.js"></script>
+	<link href="<?php echo WEB_URL; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+	<!-- <script type='text/javascript' src="https://github.com/niklasvh/html2canvas/releases/download/0.4.1/html2canvas.js"></script> -->
+	<script type='text/javascript' src="./js/html2canvas.js"></script>
+	<script src="./js/json2.min.js"></script>
+
+
+	<style type="text/css">
+		body {
+			font-family: monospace;
+			text-align: center;
+		}
+
+		#btnSaveSign {
+			color: #fff;
+			background: #f99a0b;
+			padding: 5px;
+			border: none;
+			border-radius: 5px;
+			font-size: 20px;
+			margin-top: 10px;
+		}
+
+		#signArea {
+			width: 304px;
+			margin: 50px auto;
+		}
+
+		.sign-container {
+			width: 60%;
+			margin: auto;
+		}
+
+		.sign-preview {
+			width: 150px;
+			height: 50px;
+			/* border: solid 1px #CFCFCF; */
+			margin: 10px 5px;
+		}
+
+		.tag-ingo {
+			font-family: cursive;
+			font-size: 12px;
+			text-align: left;
+			font-style: oblique;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h2>Formulaire de Signatures </h2>
+
+	<div id="signArea">
+		<h2 class="tag-ingo">Signez ci-dessous,</h2>
+		<div class="sig sigWrapper" style="height:auto;">
+			<div class="typed"></div>
+			<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
+		</div>
+	</div>
+
+	<!-- <button id="btnSaveSign">Enregistrer Signature</button> -->
+
+	<div class="sign-container">
+		<?php
+		// Récupération de la liste de toutes les images de signatures enregistrées dans le dossier cible
+		$image_list = glob("./doc_signs/*.png");
+		// Déclaration et initialisation des variables des images des signatures du client et du receptionniste
+		$image_sign_client_depot = './doc_signs/' . $_GET['contact'] . '_cli_' . $_GET['car_id'] . '_' . $_GET['etat'] . '.png';
+		$image_sign_recep_depot = './doc_signs/' . $_GET['contact'] . '_recep_' . $_GET['car_id'] . '_' . $_GET['etat'] . '.png';
+		$image_sign_client_sortie = './doc_signs/' . $_GET['contact'] . '_cli_' . $_GET['car_id'] . '_' . $_GET['etat'] . '.png';
+		$image_sign_recep_sortie = './doc_signs/' . $_GET['contact'] . '_recep_' . $_GET['car_id'] . '_' . $_GET['etat'] . '.png';
+		foreach ($image_list as $image) {
+			// echo $image;
+			// var_dump($image_list);
+			?>
+			<!-- <img src="<?php echo $image; ?>" class="sign-preview" /> -->
+		<?php
+	}
+	?>
+	</div>
+
+	<!-- Si c'est le client qui signe au dépot -->
+	<?php if ($_GET['sign'] == 'client' && $_GET['etat'] == 'depot') {
+
+		?>
+
+		<button id="btnSaveSign"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_client_depot; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>">
+				Enregistrer la signature</a>
+		</button>
+
+	<?php } ?>
+
+	<!-- Si c'est le client qui signe à la sortie -->
+	<?php if ($_GET['sign'] == 'client' && $_GET['etat'] == 'sortie') {
+
+		?>
+
+		<button id="btnSaveSign"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_client_sortie; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>">
+				Enregistrer la signature</a>
+		</button>
+
+	<?php } ?>
+
+	<!-- Si c'est le réceptionniste qui signe au depot -->
+	<?php if ($_GET['sign'] == 'recep' && $_GET['etat'] == 'depot') {
+
+		?>
+
+		<!-- A la soumission du bouton,  -->
+		<button id="btnSaveSign"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_recep_depot; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat'] ?>">
+				Enregistrer la signature</a>
+		</button>
+
+	<?php } ?>
+
+	<!-- Si c'est le réceptionniste qui signe à la sortie -->
+	<?php if ($_GET['sign'] == 'recep' && $_GET['etat'] == 'sortie') {
+
+		?>
+
+		<button id="btnSaveSign"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_recep_sortie; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>">
+				Enregistrer la signature</a>
+		</button>
+
+	<?php } ?>
+
+	<script>
+		$(document).ready(function() {
+			$('#signArea').signaturePad({
+				drawOnly: true,
+				drawBezierCurves: true,
+				lineTop: 90
+			});
+		});
+
+		$("#btnSaveSign").click(function(e) {
+			html2canvas([document.getElementById('sign-pad')], {
+				onrendered: function(canvas) {
+					var canvas_img_data = canvas.toDataURL('image/png');
+					var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
+					// passage des variables 
+					var contact = "<?php echo $_GET['contact']; ?>";
+					var signataire = "<?php echo $_GET['sign']; ?>";
+					var car_id = "<?php echo $_GET['car_id']; ?>";
+					var add_car_id = "<?php echo $_GET['add_car_id']; ?>";
+					var etat = "<?php echo $_GET['etat']; ?>";
+					var immavehi = "<?php echo $_GET['immavehi']; ?>";
+					//ajax call to save image inside folder
+					$.ajax({
+						url: 'save_sign.php',
+						data: {
+							img_data: img_data,
+							contact: contact,
+							signataire: signataire,
+							car_id: car_id,
+							add_car_id: add_car_id,
+							etat: etat,
+							immavehi: immavehi
+						},
+						type: 'post',
+						dataType: 'json',
+						success: function(response) {
+							window.location.reload();
+						}
+					});
+				}
+			});
+		});
+	</script>
+
+
+</body>
+
+</html>
+

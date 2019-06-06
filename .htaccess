@@ -1,0 +1,25 @@
+RewriteEngine On
+ErrorDocument 404 http://smartgarage.e-mitic.com/404.php
+
+#RewriteRule ^([a-zA-Z0-9-/]+)$ mechanic.php?url=$1
+#RewriteRule ^([a-zA-Z0-9-/]+)/$ mechanic.php?url=$1
+
+RewriteRule ^news-latest-collection$ news-latest-collection.php [L]
+RewriteRule ^home$ index.php [L]
+RewriteRule ^contact$ contact.php [L]
+RewriteRule ^contact-us$ contact-us.php [L]
+RewriteRule ^our-team$ our-team.php [L]
+RewriteRule ^faq$ faq.php [L]
+RewriteRule ^auto-parts-collection$ auto-parts-collection.php [L]
+RewriteRule ^car-collection$ car-collection.php [L]
+RewriteRule ^filter-car-collection$ filter-car-collection.php [L]
+RewriteRule ^filter-parts-collection$ filter-parts-collection.php [L]
+
+#RewriteRule ^(news-latest-collection)/?$ /$news-latest-collection.php [L,NC]
+#RewriteRule ^news-latest-collection/?$ /news-latest-collection.php
+
+RewriteRule ^category([a-zA-Z0-9-/]+)$ category.php?url=$1
+RewriteRule ^news([a-zA-Z0-9-/]+)$ news.php?url=$1
+RewriteRule ^mechanic([a-zA-Z0-9-/]+)$ mechanic.php?url=$1
+RewriteRule ^([a-zA-Z0-9-/]+)$ cms.php?id=$1
+#RewriteRule ^mechanic/([^/]*)\.html$ /mechanic.php?id=$1 [L]
