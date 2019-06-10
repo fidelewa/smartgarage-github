@@ -2,6 +2,54 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getDroitMenuComptaInfo($con, $compta_droit_acces)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT *
+			from tbl_droit_menu_role
+			WHERE role_name = '" . $compta_droit_acces . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		if ($row = mysql_fetch_assoc($result)) {
+			$data = $row;
+		}
+		return $data;
+
+	}
+
+	public function getDroitMenuClientInfo($con, $client_droit_acces)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT *
+			from tbl_droit_menu_role
+			WHERE role_name = '" . $client_droit_acces . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		if ($row = mysql_fetch_assoc($result)) {
+			$data = $row;
+		}
+		return $data;
+
+	}
+
 	public function getDroitMenuRecepInfo($con, $recep_droit_acces)
 	{
 		// Déclaration et initialisation d'un array vide
