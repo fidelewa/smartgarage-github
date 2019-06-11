@@ -4,11 +4,14 @@ include('../header.php');
 // Déclaration et initialisation du compteur de boucle
 $row = 0;
 $estimate_data = array();
+$hdnid = "0";
+$model_post_token = 0;
 
 // Somme des totaux des prix des pièces de rechange
 // $somme_total_prix_piece_rechange = 0;
 
 $button_text = "Enregistrer information";
+// $form_url = WEB_URL . "estimate/adddevis_traitement.php";
 
 // var_dump($_SESSION);
 
@@ -73,14 +76,14 @@ if (isset($_POST) && !empty($_POST)) {
 
     <div class="container">
         <!-- Main content -->
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" id="mainForm" name="mainForm" role="form">
             <section class="content">
                 <!-- Full Width boxes (Stat box) -->
                 <div class="row">
                     <div class="col-md-12">
 
                         <div align="right" style="margin-bottom:1%;">
-                            <a class="btn btn-success" style="background-color:#0029CE;color:#ffffff;" data-toggle="modal" data-target="#devis-vehicule-modal" title="Attribuer le devis à un véhicule"><i class="fa fa-plus"></i></a>
+                            <!-- <a class="btn btn-success" style="background-color:#0029CE;color:#ffffff;" data-toggle="modal" data-target="#devis_vehicule_modal" title="Attribuer le devis à un véhicule"><i class="fa fa-plus"></i></a> -->
                             <button class="btn btn-success" type="submit" data-toggle="tooltip" href="javascript:;" data-original-title="<?php echo $button_text; ?>"><i class="fa fa-save"></i></button> &nbsp;
                             <!-- <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Back"><i class="fa fa-reply"></i></a> </div> -->
 
@@ -161,68 +164,67 @@ if (isset($_POST) && !empty($_POST)) {
                     </div>
             </section>
         </form>
-    </div>
+        <div id="devis_vehicule_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">×</a>
+                        <h3>Formulaire d'attribution du devis à un véhicule</h3>
+                    </div>
+                    <form id="devisVehiForm" name="devis_vehi" role="form" enctype="multipart/form-data" method="POST">
+                        <div class="modal-body">
 
-    <div id="devis-vehicule-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <a class="close" data-dismiss="modal">×</a>
-                    <h3>Formulaire d'attribution du devis à un véhicule</h3>
+                            <div class="form-group">
+                                <label for="txtCName"><span style="color:red;">*</span> Nom & prénom du client :</label>
+                                <!-- <input type="text" name="txtCName" value="" id="txtCName" class="form-control" /> -->
+                                <input type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client" onfocus="">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtCName"><span style="color:red;">*</span> Numéro de téléphone du client :</label>
+                                <!-- <input type="text" name="txtCName" value="" id="txtCName" class="form-control" /> -->
+                                <input type="text" name="princ_tel_client_devis" value="" id="princ_tel_client_devis" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Immatriculation du véhicule :</label>
+                                <input type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule">
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="ddlMake">Marque du véhicule :</label>
+                                    <select class="form-control" onchange="loadModel(this.value);" name="ddlMake_2" id="ddlMake_2">
+                                        <option value=''>--Sélectionnez Marque--</option>
+                                        <?php
+                                        $make_list = $wms->get_all_make_list($link);
+                                        foreach ($make_list as $make) {
+                                            echo "<option value='" . $make['make_id'] . "'>" . $make['make_name'] . "</option>";
+                                        }
+
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="ddl_model">Modèle du véhicule :</label>
+                                    <select class="form-control" onchange="loadYearData(this.value);" name="ddlModel_2" id="ddl_model_2">
+                                        <option value=''>--Choisir un modèle--</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-success" id="submit">Valider</button>
+                        </div>
+
+                        <input type="hidden" value="" name="txtCPassword" />
+                        <input type="hidden" value="" name="tel_wa" />
+                        <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
+                        <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
+                    </form>
                 </div>
-                <form id="devisVehiForm" name="devis_vehi" role="form" enctype="multipart/form-data" method="POST">
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="txtCName"><span style="color:red;">*</span> Nom & prénom du client :</label>
-                            <!-- <input type="text" name="txtCName" value="" id="txtCName" class="form-control" /> -->
-                            <input type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client" onfocus="">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="txtCName"><span style="color:red;">*</span> Numéro de téléphone du client :</label>
-                            <!-- <input type="text" name="txtCName" value="" id="txtCName" class="form-control" /> -->
-                            <input type="text" name="princ_tel_client_devis" value="" id="princ_tel_client_devis" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" />
-                        </div>
-
-                        <div class="form-group">
-                            <label>Immatriculation du véhicule :</label>
-                            <input type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule">
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="ddlMake">Marque du véhicule :</label>
-                                <select class="form-control" onchange="loadModel(this.value);" name="ddlMake_2" id="ddlMake_2">
-                                    <option value=''>--Sélectionnez Marque--</option>
-                                    <?php
-                                    $make_list = $wms->get_all_make_list($link);
-                                    foreach ($make_list as $make) {
-                                        echo "<option value='" . $make['make_id'] . "'>" . $make['make_name'] . "</option>";
-                                    }
-
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="ddl_model">Modèle du véhicule :</label>
-                                <select class="form-control" onchange="loadYearData(this.value);" name="ddlModel_2" id="ddl_model_2">
-                                    <option value=''>--Choisir un modèle--</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-success" id="submit">Valider</button>
-                    </div>
-
-                    <input type="hidden" value="" name="txtCPassword" />
-                    <input type="hidden" value="" name="tel_wa" />
-                    <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
-                    <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
-                </form>
             </div>
         </div>
     </div>
@@ -240,7 +242,7 @@ if (isset($_POST) && !empty($_POST)) {
                             <div class="box-header">
                                 <h3 class="box-title"><i class="fa fa-search"></i> Rechercher des pièces</h3>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="ddlMake">Marque :</label>
                                 <select class="form-control" onchange="loadYear(this.value);" name="ddlMake" id="ddlMake">
                                     <option value=''>--Sélectionnez Marque--</option>
@@ -253,7 +255,7 @@ if (isset($_POST) && !empty($_POST)) {
                                     ?>
                                 </select>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="ddl_model">Modèle :</label>
                                 <select class="form-control" onchange="loadPartsData();" name="ddlModel" id="ddl_model">
                                     <option value=''>--Choisir un modèle--</option>

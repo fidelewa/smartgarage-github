@@ -2,6 +2,83 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getRepairCarDevisFactureSimuInfo($con, $devisId)
+	{
+
+		$query = "SELECT distinct car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
+		c_address, VIN, add_date_mise_circu, devsim.*, facsim.*, princ_tel, add_date_visitetech, ma.*, mo.*
+
+			from tbl_add_devis_simulation devsim
+			join tbl_add_car cr on devsim.attribution_vehicule = cr.car_id
+            join tbl_add_customer cus on cus.customer_id = cr.customer_id
+			inner join tbl_make ma on cr.car_make = ma.make_id 
+			inner join tbl_model mo on cr.car_model = mo.model_id
+			inner join tbl_add_facture_simulation facsim on facsim.devis_simulation_id = devsim.devis_id
+			WHERE devsim.devis_id ='" . (int)$devisId . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+
+		return $row;
+	}
+
+	public function getRepairCarDevisSimuInfo($con, $devisId)
+	{
+
+		$query = "SELECT car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
+		c_address, VIN, add_date_mise_circu, devsim.*, princ_tel, add_date_visitetech, ma.*, mo.*
+			from tbl_add_devis_simulation devsim
+			left join tbl_add_car cr on devsim.attribution_vehicule = cr.car_id
+            left join tbl_add_customer cus on cus.customer_id = cr.customer_id
+			inner join tbl_make ma on cr.car_make = ma.make_id 
+			inner join tbl_model mo on cr.car_model = mo.model_id
+			WHERE devis_id ='" . (int)$devisId . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
+	public function getVehiDataByImmaVehi($con, $imma_vehi)
+	{
+
+		// On vérifie que l'immatriculation du véhicule existe et n'est pas vide
+		if (isset($imma_vehi) && !empty($imma_vehi)) {
+
+			// exécution de la réquête
+
+			$query = "SELECT * from tbl_add_car WHERE vin = '" . (string)$imma_vehi . "'";
+
+			// On stocke le résultat de la requête sous forme de ressource
+			$result = mysql_query($query, $con);
+
+			// S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
+			if (!$result) {
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		}
+
+		// On extrait les données du jeu de résultat dans un array associatif puis on le retourne
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
 	public function getRepairCarSimuDevis($con, $devisSimuId)
 	{
 		$query = "SELECT car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
@@ -32,7 +109,7 @@ class wms_core
 
 		// On récupère les infos du devis de réparation d'un véhicule en les regroupant par 
 		// identifiants de diagnostic
-		$query = "SELECT facture_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech
+		$query = "SELECT facture_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, devsim.devis_id
 			from tbl_add_devis_simulation devsim
 			left join tbl_recep_vehi_repar rvr on devsim.attribution_vehicule = rvr.add_car_id
             left join tbl_add_customer cus on rvr.customer_name = cus.customer_id

@@ -104,6 +104,7 @@ if (!empty($_SESSION['objLogin']['image'])) {
   <!-- <script src="<?php echo WEB_URL; ?>plugins/datepicker/bootstrap-datepicker.min.js" type="text/javascript"></script> -->
   <!-- <script src="<?php echo WEB_URL; ?>plugins/datepicker/locales/bootstrap-datepicker.fr.js" type="text/javascript"></script> -->
   <script src="<?php echo WEB_URL; ?>dist/js/addcar_reception.js"></script>
+  <!-- <script src="<?php echo WEB_URL; ?>dist/js/adddevis.js"></script> -->
   <script type="text/javascript" src="<?php echo WEB_URL; ?>dist/js/typeahead.js"></script>
   <style>
     .typeahead {
