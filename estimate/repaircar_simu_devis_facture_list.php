@@ -1,4 +1,4 @@
-<?php include('header.php') ?>
+<?php include('../header.php') ?>
 <?php
 $delinfo = 'none';
 $addinfo = 'none';
@@ -10,7 +10,7 @@ if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
 }
 if (isset($_GET['m']) && $_GET['m'] == 'add') {
     $addinfo = 'block';
-    $msg = "Création de la facture réussi";
+    $msg = "Ajout de la facture réussi";
 }
 if (isset($_GET['m']) && $_GET['m'] == 'up') {
     $addinfo = 'block';
@@ -20,10 +20,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1><i class="fa fa-wrench"></i> Liste de mes factures</h1>
+    <h1><i class="fa fa-wrench"></i> Liste des factures de réparation attribuées à des véhicules</h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Liste de mes factures</li>
+        <li class="active">Liste des factures de réparation attribuées à des véhicules</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -47,51 +47,51 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
             <div class="box box-success">
                 <div class="box-header">
                     <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
-                    <h3 class="box-title"><i class="fa fa-list"></i> Liste de mes factures</h3>
+                    <h3 class="box-title"><i class="fa fa-list"></i> Liste des factures de réparation attribuées à des véhicules</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table class="table sakotable table-bordered table-striped dt-responsive">
                         <thead>
                             <tr>
-                                <th>ID Reparation</th>
+                                <th>N° Facture</th>
                                 <th>Immatriculation</th>
                                 <th>Client</th>
                                 <th>Date reception</th>
                                 <th>Date exp. assur</th>
                                 <th>Date exp. vis. tech.</th>
-                                <!-- <th>Statut de la facture</th> -->
+                                <!-- <th>Attribué à</th> -->
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $result = $wms->getAllRepairCarDevisFactureListByCustId($link, $_SESSION['objCust']['user_id']);
+                            $result = $wms->getAllRepairCarSimuDevisFactureList($link);
 
                             // var_dump($result);
                             // die();
 
                             foreach ($result as $row) {
+                                // $image = WEB_URL . 'img/no_image.jpg';
+                                // $image_customer = WEB_URL . 'img/no_image.jpg';
+
+                                // if (file_exists(ROOT_PATH . '/img/upload/' . $row['image_vehi']) && $row['image_vehi'] != '') {
+                                //     $image = WEB_URL . 'img/upload/' . $row['image_vehi']; //car image
+                                // }
+                                // if (file_exists(ROOT_PATH . '/img/upload/' . $row['customer_image']) && $row['customer_image'] != '') {
+                                //     $image_customer = WEB_URL . 'img/upload/' . $row['customer_image']; //customer iamge
+                                // }
 
                                 ?>
                                 <tr>
-                                    <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td>
+                                    <td><span class="label label-success"><?php echo $row['facture_id']; ?></span></td>
                                     <td><?php echo $row['num_matricule']; ?></td>
                                     <td><?php echo $row['c_name']; ?></td>
                                     <td><?php echo $row['add_date_recep_vehi']; ?></td>
                                     <td><?php echo $row['add_date_assurance']; ?></td>
                                     <td><?php echo $row['add_date_visitetech']; ?></td>
-                                    <!-- <td><?php
-                                        if ($row['confirm_facture'] == null) {
-                                            echo "<span class='label label-default'>En attente de confirmation</span> <br/>";
-                                        } else if ($row['confirm_facture'] == 1) {
-                                            echo "<span class='label label-success'>Confirmé</span> <br/>";
-                                        } else if ($row['confirm_facture'] == 0) {
-                                            echo "<span class='label label-alert'>Annulé</span> <br/>";
-                                        }
-                                        ?></td> -->
                                     <td>
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_facture_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la facture du devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
+                                    <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_devis_facture_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la facture"><i class="fa fa-file-text-o"></i></a> -->
                                     </td>
                                 </tr>
                             <?php }
@@ -107,6 +107,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
     </div>
     <!-- /.row -->
     <script type="text/javascript">
+
         $(document).ready(function() {
             setTimeout(function() {
                 $("#me").hide(300);
@@ -114,4 +115,4 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
             }, 200000);
         });
     </script>
-    <?php include('footer.php'); ?>
+    <?php include('../footer.php'); ?>

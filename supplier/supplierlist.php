@@ -92,7 +92,7 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
                     <div class="modal-content">
                       <div class="modal-header orange_header">
                         <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                        <h3 class="modal-title">Supplier Details</h3>
+                        <h3 class="modal-title">Détails du fournisseur</h3>
                       </div>
                       <div class="modal-body model_view" align="center">&nbsp;
                         <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>
@@ -101,7 +101,7 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
                       <div class="modal-body">
                         <div class="row">
                           <div class="col-xs-6">
-                            <h3 style="text-decoration:underline;">Details Information</h3>
+                            <h3 style="text-decoration:underline;">Détails des informations</h3>
                             <b>Name :</b> <?php echo $row['s_name']; ?><br/>
                             <b>Email :</b> <?php echo $row['s_email']; ?><br/>
                             <b>Address :</b> <?php echo $row['s_address']; ?><br/>
@@ -112,7 +112,7 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
                             <b>Post Code :</b> <?php echo $row['post_code']; ?><br/>
                             <b>Website :</b> <?php echo $row['website_url']; ?> </div>
                           <div class="col-xs-6">
-                            <h3 style="text-decoration:underline;">Manufacturer Information</h3>
+                            <h3 style="text-decoration:underline;">Les fabricants</h3>
                             <?php foreach($manufacturerInfo as $manufacturer) { ?>
                             <div class="chkBoxStyle">
                               <label><?php echo $manufacturer['name']; ?></label>

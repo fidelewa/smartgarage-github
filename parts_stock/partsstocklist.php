@@ -17,10 +17,10 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-  <h1><i class="fa fa-shopping-cart"></i> Stock de pièces </h1>
+  <h1><i class="fa fa-shopping-cart"></i> Liste des pièces en stock</h1>
   <ol class="breadcrumb">
     <li><a href="<?php echo WEB_URL?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Stock de pièces</li>
+    <li class="active">Liste des pièces en stock</li>
   </ol>
 </section>
 <!-- Main content -->
@@ -39,7 +39,7 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
     <div align="right" style="margin-bottom:1%;"><a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
     <div class="box box-success">
       <div class="box-header">
-        <h3 class="box-title">Stock de pièces List</h3>
+        <h3 class="box-title">Liste des pièces en stock</h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -74,7 +74,7 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
 			<td><?php echo !empty($row['parts_warranty']) ? '<span class="label label-primary">'.$row['parts_warranty'].'</span>' : ''; ?></td>
 			<td><?php if($row['status'] == '1'){echo '<span class="label label-success">Enable</span>';} else {echo '<span class="label label-danger">Disable</span>';} ?></td>
             <td>
-              <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL;?>parts_stock/buyparts.php?pid=<?php echo $row['parts_id']; ?>" data-original-title="Purchase or Load Parts Quantity"><i class="fa fa-cart-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['parts_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a>  <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL;?>parts_stock/editpartsstock.php?id=<?php echo $row['parts_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['parts_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+              <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL;?>parts_stock/buyparts.php?pid=<?php echo $row['parts_id']; ?>" data-original-title="Ajouter une pièce supplémentaire"><i class="fa fa-cart-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['parts_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a>  <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL;?>parts_stock/editpartsstock.php?id=<?php echo $row['parts_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['parts_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
             <div id="nurse_view_<?php echo $row['parts_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">

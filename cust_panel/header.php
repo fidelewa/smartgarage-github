@@ -150,15 +150,15 @@ if(!empty($_SESSION['objCust']['image'])){
     <ul class="sidebar-menu">
       <li class="header">MAIN NAVIGATION</li>
       <li class="tm10 <?php if($page_name != '' && $page_name == 'mech_dashboard'){echo 'active';}?>"><a href="<?php echo WEB_URL; ?>cust_panel/cust_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
-      <li class="treeview <?php if($page_name != '' && $page_name == 'mycar' || $page_name == 'mycar'){echo 'active';}?>"> <a href="<?php echo WEB_URL; ?>cust_panel/mycar.php"> <i class="fa fa-car"></i> <span>Ma voiture</span></a></li>
-      <li class="treeview <?php if($page_name != '' && $page_name == 'estimate'){echo 'active';}?>"> <a href="<?php echo WEB_URL; ?>cust_panel/estimate.php"> <i class="fa fa-calculator"></i> <span>Historique des Devis </span></a></li>
+      <!-- <li class="treeview <?php if($page_name != '' && $page_name == 'mycar' || $page_name == 'mycar'){echo 'active';}?>"> <a href="<?php echo WEB_URL; ?>cust_panel/mycar.php"> <i class="fa fa-car"></i> <span>Ma voiture</span></a></li> -->
+      <!-- <li class="treeview <?php if($page_name != '' && $page_name == 'estimate'){echo 'active';}?>"> <a href="<?php echo WEB_URL; ?>cust_panel/estimate.php"> <i class="fa fa-calculator"></i> <span>Historique des Devis </span></a></li> -->
       </li>
       <li class="treeview <?php if ($page_name != '' && $page_name == 'cust_devis_repaircar_diagnostic_list') {
                                 echo 'active';
                               } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des devis de réparation</span></a></li>
-       <li class="treeview <?php if ($page_name != '' && $page_name == 'cust_devis_repaircar_diagnostic_list') {
+       <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'cust_devis_repaircar_diagnostic_list') {
                                 echo 'active';
-                              } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_devis_bcmde_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des bons de commande</span></a></li>
+                              } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_devis_bcmde_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des bons de commande</span></a></li> -->
        <li class="treeview <?php if ($page_name != '' && $page_name == 'cust_devis_repaircar_diagnostic_list') {
                                 echo 'active';
                               } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_devis_facture_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des factures</span></a></li>

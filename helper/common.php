@@ -2,6 +2,113 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getRepairCarSimuDevis($con, $devisSimuId)
+	{
+		$query = "SELECT car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
+		c_address, VIN, add_date_mise_circu, devsim.*, princ_tel, add_date_visitetech
+			from tbl_add_devis_simulation devsim
+			left join tbl_add_car cr on devsim.attribution_vehicule = cr.car_id
+            left join tbl_add_customer cus on cus.customer_id = cr.customer_id
+			-- inner join tbl_make ma on cr.car_make = ma.make_id 
+			-- inner join tbl_model mo on cr.car_model = mo.model_id 
+			WHERE devis_id ='" . (int)$devisSimuId . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
+	public function getAllRepairCarSimuDevisFactureList($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		// On récupère les infos du devis de réparation d'un véhicule en les regroupant par 
+		// identifiants de diagnostic
+		$query = "SELECT facture_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech
+			from tbl_add_devis_simulation devsim
+			left join tbl_recep_vehi_repar rvr on devsim.attribution_vehicule = rvr.add_car_id
+            left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			inner join tbl_add_facture_simulation fac on fac.devis_simulation_id = devsim.devis_id
+			";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllRepairCarSimuDevisList($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		// On récupère les infos du devis de réparation d'un véhicule en les regroupant par 
+		// identifiants de diagnostic
+		$query = "SELECT devis_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech
+		from tbl_add_devis_simulation devsim
+			left join tbl_recep_vehi_repar rvr on devsim.attribution_vehicule = rvr.add_car_id
+            left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function updateQtyPartsStock($con, $data)
+	{
+		$result_parts = mysql_query("SELECT * FROM tbl_parts_stock_manage where parts_id=" . (int)$data['piece_rechange_id'], $con);
+		if ($row_parts = mysql_fetch_array($result_parts)) {
+			// Quantité de la pièce de rechange en stock
+			$qty = $row_parts['quantity'];
+			if ((int)$qty > 0) {
+				// On fait la différence entre la quantité des pièces de rechange facturées avec celles en stock
+				$qty = (int)$qty - (int)$data['qte_piece_rechange_facture'];
+				mysql_query("UPDATE tbl_parts_stock_manage SET quantity=" . (int)$qty . " WHERE parts_id=" . (int)$data['piece_rechange_id'], $con);
+			}
+		}
+	}
+
+	public function getRepairCarDevisInfo($con, $devisSimuId)
+	{
+
+		$query = "SELECT *
+			from tbl_add_devis_simulation
+			WHERE devis_id ='" . (int)$devisSimuId . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
 	public function getDroitMenuComptaInfo($con, $compta_droit_acces)
 	{
 		// Déclaration et initialisation d'un array vide
@@ -23,7 +130,6 @@ class wms_core
 			$data = $row;
 		}
 		return $data;
-
 	}
 
 	public function getDroitMenuClientInfo($con, $client_droit_acces)
@@ -47,7 +153,6 @@ class wms_core
 			$data = $row;
 		}
 		return $data;
-
 	}
 
 	public function getDroitMenuRecepInfo($con, $recep_droit_acces)
@@ -71,7 +176,6 @@ class wms_core
 			$data = $row;
 		}
 		return $data;
-
 	}
 
 	public function getDroitMenuMechElecInfo($con, $mech_elec_droit_acces)
@@ -95,7 +199,6 @@ class wms_core
 			$data = $row;
 		}
 		return $data;
-
 	}
 
 	public function getAllDroitMenuRoleInfo($con)
@@ -189,20 +292,28 @@ class wms_core
 			if ($data['personnel_id'] == '0') {
 
 				$query = "INSERT INTO tbl_add_personnel(per_name, per_telephone, per_fonction, per_date_naiss, per_lieu_naiss,
-				per_lieu_ori, per_num_cni, per_etat_civile, per_nom_conjoint, per_adrs, per_nom_pere, per_nom_mere, perso_data
+				per_lieu_ori, per_num_cni, per_etat_civile, per_nom_conjoint, per_adrs, per_nom_pere, per_nom_mere, perso_data,
+				per_sal, per_type_contrat, per_mat, per_date_emb
 				)
 
 				values('$data[txtPersName]','$data[telPers]','$data[foncPers]','$data[dateNaisPers]','$data[lieuNaisPers]',
 				'$data[lieuOriPers]','$data[numcniPers]','$data[etatcivilePers]','$data[nomconjointPers]','$data[adrsPers]',
-				'$data[nomperePers]','$data[nomerePers]','$data[perso_data]', '$data[perso_data]', '$data[perso_data]', '$data[perso_data]',
-				'$data[perso_data]'
+				'$data[nomperePers]','$data[nomerePers]','$data[perso_data]', '$data[salPers]', '$data[typctrPers]', '$data[matPers]',
+				'$data[datembPers]'
 				)";
 				$result = mysql_query($query, $con);
 			} else {
 
 				$query = "UPDATE `tbl_add_personnel` 
 				SET `per_name`='" . $data['txtPersName'] . "',`per_telephone`='" . $data['telPers'] . "',
-				`per_service`='" . $data['servPers'] . "', `per_fonction`='" . $data['foncPers'] . "'
+				`per_fonction`='" . $data['foncPers'] . "',
+				`per_lieu_naiss`='" . $data['lieuNaisPers'] . "', `per_date_naiss`='" . $data['dateNaisPers'] . "',
+				`per_lieu_ori`='" . $data['lieuOriPers'] . "', `per_num_cni`='" . $data['numcniPers'] . "',
+				`per_etat_civile`='" . $data['etatcivilePers'] . "', `per_nom_conjoint`='" . $data['nomconjointPers'] . "',
+				`per_nom_conjoint`='" . $data['nomconjointPers'] . "', `per_adrs`='" . $data['adrsPers'] . "',
+				`per_nom_pere`='" . $data['nomperePers'] . "', `per_nom_mere`='" . $data['nomerePers'] . "',
+				`per_sal`='" . $data['salPers'] . "', `per_type_contrat`='" . $data['typctrPers'] . "',
+				`per_mat`='" . $data['matPers'] . "', `per_date_emb`='" . $data['datembPers'] . "'
 				WHERE per_id='" . $data['personnel_id'] . "'";
 				$result = mysql_query($query, $con);
 			}
@@ -1586,22 +1697,22 @@ class wms_core
 		// On vérifie que l'immatriculation du véhicule existe et n'est pas vide
 		// if (isset($imma_vehi) && !empty($imma_vehi)) {
 
-			// formulation de la réquête
-			$query = "SELECT tbl_make.make_id, tbl_model.model_id, make_name, model_name, VIN , cus.customer_id, car_id, tbl_make.*,tbl_model.*
+		// formulation de la réquête
+		$query = "SELECT tbl_make.make_id, tbl_model.model_id, make_name, model_name, VIN , cus.customer_id, car_id, tbl_make.*,tbl_model.*
 			FROM tbl_add_car JOIN tbl_make ON tbl_add_car.car_make = tbl_make.make_id 
 			JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model 
 			JOIN tbl_add_customer cus ON tbl_add_car.customer_id = cus.customer_id
 			WHERE vin = '" . (string)$imma_vehi . "'";
 
-			// Exécution et stockage du résultat de la requête sous forme de ressource
-			$result = mysql_query($query, $con);
+		// Exécution et stockage du résultat de la requête sous forme de ressource
+		$result = mysql_query($query, $con);
 
-			// S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-			if (!$result) {
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
-			}
+		// S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
 		// }
 
 		// On extrait les données du jeu de résultat dans un array associatif puis on le retourne
@@ -1676,22 +1787,22 @@ class wms_core
 		// On vérifie que l'immatriculation du véhicule existe et n'est pas vide
 		// if (isset($imma_vehi) && !empty($imma_vehi)) {
 
-			// formulation de la réquête
-			$query = "SELECT add_date_visitetech, add_date_assurance 
+		// formulation de la réquête
+		$query = "SELECT add_date_visitetech, add_date_assurance 
 			FROM tbl_add_car 
 			-- JOIN tbl_make ON tbl_add_car.car_make = tbl_make.make_id 
 			-- JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model 
 			WHERE vin = '" . (string)$imma_vehi . "'";
 
-			// Exécution et stockage du résultat de la requête sous forme de ressource
-			$result = mysql_query($query, $con);
+		// Exécution et stockage du résultat de la requête sous forme de ressource
+		$result = mysql_query($query, $con);
 
-			// S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-			if (!$result) {
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
-			}
+		// S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
 		// }
 
 		// On extrait les données du jeu de résultat dans un array associatif puis on le retourne
@@ -4463,9 +4574,8 @@ class wms_core
 				) 
 				values('$data[txtCName]','$data[txtCEmail]','$data[txtCAddress]','$data[txtCPassword]','$image_url',
 				'$data[type_client]','$data[civilite_client]','$data[princ_tel]','$data[tel_wa]',
-				'$data[pj1_url]','$data[pj2_url]','$data[pj3_url]','$data[pj4_url]','$data[pj5_url]',
-				'$data[pj6_url]','$data[pj7_url]','$data[pj8_url]','$data[pj9_url]','$data[pj10_url]',
-				'$data[pj11_url]','$data[pj12_url]'
+				'$data[pj1_client_url]','$data[pj2_client_url]','$data[pj3_client_url]','$data[pj4_client_url]','$data[pj5_client_url]',
+				'$data[pj6_client_url]',null,null,null,null,null,null
 				)";
 
 				$result = mysql_query($query, $con);
@@ -4742,12 +4852,12 @@ class wms_core
 			//Date de la visite technique
 			$datetech = DateTime::createFromFormat('d/m/Y', $data['add_date_visitetech']);
 
-			// $timestampstechnique =  $datetech->format('U');
+			$timestampstechnique =  $datetech->format('U');
 
 			//assurance
 			$dateassur = DateTime::createFromFormat('d/m/Y', $data['add_date_assurance']);
 
-			// $timestampsassurance =  $dateassur->format('U');
+			$timestampsassurance =  $dateassur->format('U');
 
 			if ($data['repair_car'] == '0') {
 				$query = "INSERT INTO tbl_add_car(repair_car_id, car_name, customer_id, car_make, car_model, year,
@@ -4760,7 +4870,7 @@ class wms_core
                    values('$data[hfInvoiceId]','$data[car_names]','$data[ddlCustomerList]','$data[ddlMake]','$data[ddlModel]',
 				   '$data[ddlYear]','$data[car_chasis_no]','$data[vin]','$data[car_note]','$data[add_date]',
 				   '$image_url','$data[car_pneu_av]','$data[car_gente_ar]','$data[car_pneu_ar]','$data[car_gente_av]',
-				   '$data[add_date_visitetech]','$data[add_date_assurance]','$data[add_date_assurance_fin]', 
+				   '$data[add_date_visitetech_car]','$data[add_date_assurance_car]','$data[add_date_assurance_fin]', 
 				   '$data[genre_vehi_recep]','$data[energie_vehi_recep]','$data[assurance_vehi_recep]','$data[boite_vitesse_vehi_recep]',
 				   '$data[add_date_mise_circu]','$data[add_date_imma]','$data[nb_cylindre]','$data[couleur_vehi]','$data[fisc_vehi]',
 				   '$data[pj1_url]','$data[pj2_url]','$data[pj3_url]','$data[pj4_url]','$data[pj5_url]','$data[pj6_url]','$data[pj7_url]',

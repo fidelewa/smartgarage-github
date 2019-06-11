@@ -170,11 +170,11 @@ if(isset($_GET['pid']) && $_GET['pid'] != ''){
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-  <h1><i class="fa fa-shopping-cart"></i> Achat de pièces </h1>
+  <h1><i class="fa fa-plus"></i> Ajout de pièces de véhicule</h1>
   <ol class="breadcrumb">
     <li><a href="<?php echo WEB_URL?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="<?php echo WEB_URL?>parts_stock/buypartslist.php">Achat de pièces</a></li>
-    <li class="active">Ajout Achat de pièces</li>
+    <li><a href="<?php echo WEB_URL?>parts_stock/buypartslist.php">Ajout de pièces de véhicule</a></li>
+    <li class="active">Ajout de pièces de véhicule</li>
   </ol>
 </section>
 <!-- Main content -->
@@ -226,7 +226,7 @@ if(isset($_GET['pid']) && $_GET['pid'] != ''){
       </div>
       <div class="box box-success">
         <div class="box-header">
-          <h3 class="box-title">Achat de pièces Formulaire</h3>
+          <h3 class="box-title">Formulaire d'ajout de pièces de véhicule</h3>
         </div>
         <div class="box-body">
           <div class="form-group col-md-12">

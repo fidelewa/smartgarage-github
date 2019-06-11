@@ -11,8 +11,8 @@ $post_code = '';
 $website_url = '';
 $s_fax = '';
 $r_password = '';
-$title = 'Ajouter un nouveau membre au personnel';
-$button_text = "Enregistrer information";
+$title = 'Formulaire de renseignement du personnel administratif';
+$button_text = "Enregistrer informations";
 $successful_msg = "Ajouter un personnel avec succès";
 // $form_url = WEB_URL . "reception/addreceptionniste.php";
 $id = "";
@@ -26,12 +26,35 @@ $per_name = "";
 $per_telephone = "";
 $per_service = "";
 $per_fonction = "";
+$per_date_naiss = "";
+$per_lieu_naiss = "";
+$per_lieu_ori = "";
+$per_num_cni = "";
+$per_etat_civile = "";
+$per_nom_conjoint = "";
+$per_adrs = "";
+$per_nom_pere = "";
+$per_nom_mere = "";
+$per_sal = "";
+$per_type_contrat = "";
+$per_mat = "";
+$per_date_emb = "";
+
+// Déclaration et initialisation du compteur de boucle
+$row = 0;
+$i = 0;
+$perso_data = array();
 
 /*#############################################################*/
 if (isset($_POST) && !empty($_POST)) { //Si les données ont été soumis à partir du formulaire
 
     // var_dump($_POST);
     // die();
+
+    $_POST['salPers'] = (int)$_POST['salPers'];
+
+    // Linéarisation de l'array des données du personnel pour le stocker en base de données
+    $_POST['perso_data'] = serialize($_POST['perso_data']);
 
     // On persiste les données en BDD
     $wms->saveUpdatePersonnelInformation($link, $_POST);
@@ -49,14 +72,27 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     //view
     $row = $wms->getPersonnelInfoByPersonnelId($link, $_GET['id']);
     if (!empty($row)) {
+
+        // var_dump($row);
+
         $per_name = $row['per_name'];
         $per_telephone = $row['per_telephone'];
-        $per_service = $row['per_service'];
         $per_fonction = $row['per_fonction'];
-        // if ($row['image'] != '') {
-        //     $image_sup = WEB_URL . 'img/upload/' . $row['image'];
-        //     $img_track = $row['image'];
-        // }
+        $per_date_naiss = $row['per_date_naiss'];
+        $per_lieu_naiss = $row['per_lieu_naiss'];
+        $per_lieu_ori = $row['per_lieu_ori'];
+        $per_num_cni = $row['per_num_cni'];
+        $per_etat_civile = $row['per_etat_civile'];
+        $per_nom_conjoint = $row['per_nom_conjoint'];
+        $per_adrs = $row['per_adrs'];
+        $per_nom_pere = $row['per_nom_pere'];
+        $per_nom_mere = $row['per_nom_mere'];
+        $per_sal = $row['per_sal'];
+        $per_type_contrat = $row['per_type_contrat'];
+        $per_mat = $row['per_mat'];
+        $per_date_emb = $row['per_date_emb'];
+        $perso_data = $row['perso_data'];
+
         $hdnid = $_GET['id'];
         $title = 'Modification du personnel';
         $button_text = "Mise à jour";
@@ -130,64 +166,92 @@ function NewGuid()
                         </div>
                         <div class="form-group">
                             <label for="foncPers"><span style="color:red;">*</span>Fonction:</label>
-                            <input type="text" name="foncPers" value="<?php echo $per_fonction; ?>" id="foncPers" class="form-control" required />
+                            <input required type="text" name="foncPers" value="<?php echo $per_fonction; ?>" id="foncPers" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="salPers">Salaire:</label>
+                            <input type="number" name="salPers" value="<?php echo $per_sal; ?>" id="salPers" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="servPers"><span style="color:red;">*</span> Service :</label>
-                            <select required class='form-control' id="servPers" name="servPers">
-                                <option value="">--Sélectionner le type de l'utilisateur--</option>
-                                <?php if (isset($per_service) && ($per_service == "reception")) {
-                                    echo "<option selected value='" . $per_service . "'>Réception</option>";
-                                    echo "<option value='comptabilite'>Comptabilité</option>";
-                                    echo "<option value='mecanique'>Mécanique</option>";
-                                    echo "<option value='electrique'>Electrique</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
-                                    echo "<option value='direction'>Direction</option>";
-                                } elseif (isset($per_service) && ($per_service == "comptabilite")) {
-                                    echo "<option value='reception'>Réception</option>";
-                                    echo "<option selected value='" . $per_service . "'>Comptabilite</option>";
-                                    echo "<option value='mecanique'>Mécanique</option>";
-                                    echo "<option value='electrique'>Electrique</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
-                                    echo "<option value='direction'>Direction</option>";
-                                } elseif (isset($per_service) && ($per_service == "mecanique")) {
-                                    echo "<option value='reception'>Réception</option>";
-                                    echo "<option value='comptabilite'>Comptabilite</option>";
-                                    echo "<option selected value='" . $per_service . "'>Mécanique</option>";
-                                    echo "<option value='electrique'>Electrique</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
-                                    echo "<option value='direction'>Direction</option>";
-                                } elseif (isset($per_service) && ($per_service == "electrique")) {
-                                    echo "<option value='reception'>Réception</option>";
-                                    echo "<option value='comptabilite'>Comptabilite</option>";
-                                    echo "<option value='mecanique'>Mécanique</option>";
-                                    echo "<option selected value='" . $per_service . "'>Electrique</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
-                                    echo "<option value='direction'>Direction</option>";
-                                } elseif (isset($per_service) && ($per_service == "commercial")) {
-                                    echo "<option value='reception'>Réception</option>";
-                                    echo "<option value='comptabilite'>Comptabilite</option>";
-                                    echo "<option value='mecanique'>Mécanique</option>";
-                                    echo "<option value='electrique'>Electrique</option>";
-                                    echo "<option selected value='" . $per_service . "'>Commercial</option>";
-                                    echo "<option value='direction'>Direction</option>";
-                                } elseif (isset($per_service) && ($per_service == "commercial")) {
-                                    echo "<option value='reception'>Réception</option>";
-                                    echo "<option value='comptabilite'>Comptabilite</option>";
-                                    echo "<option value='mecanique'>Mécanique</option>";
-                                    echo "<option value='electrique'>Electrique</option>";
-                                    echo "<option value='comercial'>Commercial</option>";
-                                    echo "<option selected value='" . $per_service . "'>Direction/option>";
-                                } else {
-                                    echo "<option value='reception'>Réception</option>";
-                                    echo "<option value='comptabilite'>Comptabilite</option>";
-                                    echo "<option value='mecanique'>Mécanique</option>";
-                                    echo "<option value='electrique'>Electrique</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
-                                    echo "<option value='direction'>Direction</option>";
-                                }
-                                ?>
-                            </select>
+                            <label for="typctrPers">Type de contrat:</label>
+                            <input type="text" name="typctrPers" value="<?php echo $per_type_contrat; ?>" id="typctrPers" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="matPers">N° matricule:</label>
+                            <input type="text" name="matPers" value="<?php echo $per_mat; ?>" id="matPers" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="datembPers">Date d'embauche:</label>
+                            <input type="text" name="datembPers" value="<?php echo $per_date_emb; ?>" id="datembPers" class="form-control datepicker" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtPersName"> Date de naissance:</label>
+                            <input type="text" name="dateNaisPers" value="<?php echo $per_date_naiss; ?>" id="dateNaisPers" class="form-control datepicker" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtPersName"> Lieu de naissance :</label>
+                            <input type="text" name="lieuNaisPers" value="<?php echo $per_lieu_naiss; ?>" id="lieuNaisPers" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtPersName"> Lieu d'origine :</label>
+                            <input type="text" name="lieuOriPers" value="<?php echo $per_lieu_ori; ?>" id="lieuOriPers" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtPersName"> Numéro de la CNI :</label>
+                            <input type="text" name="numcniPers" value="<?php echo $per_num_cni; ?>" id="numcniPers" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtPersName"> Etat civile :</label>
+                            <input type="text" name="etatcivilePers" value="<?php echo $per_etat_civile; ?>" id="etatcivilePers" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtPersName"> Nom et prénom du conjoint :</label>
+                            <input type="text" name="nomconjointePers" value="<?php echo $per_nom_conjoint; ?>" id="nomconjointePers" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtPersName"> Adresse complète :</label>
+                            <input type="text" name="adrsPers" value="<?php echo $per_adrs; ?>" id="adrsPers" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtPersName"> Nom et prénom du père :</label>
+                            <input type="text" name="nomperePers" value="<?php echo $per_nom_pere; ?>" id="nomperePers" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtPersName"> Nom et prénom de la mère :</label>
+                            <input type="text" name="nomerePers" value="<?php echo $per_nom_mere; ?>" id="nomerePers" class="form-control" />
+                        </div>
+                        <div class="table-responsive">
+                            <table id="labour_table" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Enfant</th>
+                                        <th>Nom</th>
+                                        <th>Prenom</th>
+                                        <th>Date de naissance</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($perso_data as $perso) { ?>
+                                        <tr id="estimate-row<?php echo $row; ?>">
+                                            <td class="text-right"><input id="perso_enfant_<?php echo $row; ?>" type="text" value="" name="perso_data[<?php echo $row; ?>][enfant]" class="form-control" /></td>
+                                            <td class="text-right"><input id="perso_nom_enfant_<?php echo $row; ?>" type="text" value="" name="perso_data[<?php echo $row; ?>][perso_nom_enfant]" class="form-control" /></td>
+                                            <td class="text-right"><input id="perso_prenom_enfant_<?php echo $row; ?>" type="text" value="" name="perso_data[<?php echo $row; ?>][perso_prenom_enfant]" class="form-control" /></td>
+                                            <td class="text-right"><input id="perso_datenaiss_enfant_<?php echo $row; ?>" type="text" name="perso_data[<?php echo $row; ?>][perso_datenaiss_enfant]" value="" class="form-control" /></td>
+                                            <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $row; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                        </tr>
+                                        <?php $row++;
+                                    } ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <td class="text-left"><button type="button" onclick="addEstimate();" data-toggle="tooltip" title="Ajouter une entrée" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                     <input type="hidden" value="<?php echo $hdnid; ?>" name="personnel_id" />
@@ -207,6 +271,20 @@ function NewGuid()
     <!-- /.row -->
 
     <script type="text/javascript">
+        var row = <?php echo $row; ?>;
+
+        function addEstimate() {
+            html = '<tr id="estimate-row' + row + '">';
+            html += '  <td class="text-right"><input id="perso_enfant_' + row + '" type="text" name="perso_data[' + row + '][enfant]" class="form-control"></td>';
+            html += '  <td class="text-right"><input id="perso_nom_enfant_' + row + '" type="text" name="perso_data[' + row + '][perso_nom_enfant]" class="form-control"></td>';
+            html += '  <td class="text-right"><input type="text" id="perso_prenom_enfant_' + row + '" name="perso_data[' + row + '][perso_prenom_enfant]" value="" class="form-control" /></td>';
+            html += '  <td class="text-right"><input id="perso_datenaiss_enfant_' + row + '" type="text" name="perso_data[' + row + '][perso_datenaiss_enfant]" value="" class="form-control" /></td>';
+            html += '  <td class="text-left"><button type="button" onclick="$(\'#estimate-row' + row + '\').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+            html += '</tr>';
+            $('#labour_table tbody').append(html);
+            row++;
+        }
+
         $(document).ready(function() {
             setTimeout(function() {
                 $("#me").hide(300);

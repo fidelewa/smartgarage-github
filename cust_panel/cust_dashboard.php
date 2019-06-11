@@ -128,14 +128,12 @@ function arrayValueExist($array, $value)
       </div>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">Liste de mes 10 derniers bon de commande</h3>
         </div>
-        <!-- <div><a href="<?php echo WEB_URL; ?>mech_panel/workstatus.php" class="btn btn-sm btn-success btn-flat pull-right"><b><i class="fa fa-list"></i> &nbsp;View All List</b></a> </div> -->
-        <!-- /.box-header -->
         <div class="box-body">
           <div class="table-responsive">
             <table class="table no-margin">
@@ -147,8 +145,6 @@ function arrayValueExist($array, $value)
                   <th>Date reception</th>
                   <th>Date exp. assur</th>
                   <th>Date exp. vis. tech.</th>
-                  <!-- <th>Statut du devis</th> -->
-                  <!-- <th>Action</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -169,20 +165,16 @@ function arrayValueExist($array, $value)
                     <td><?php echo $row['add_date_visitetech']; ?></td>
                   </tr>
                 <?php }
-              // mysql_close($link); 
               ?>
 
               </tbody>
             </table>
           </div>
-          <!-- /.table-responsive -->
         </div>
-        <!-- /.box-body -->
         <div class="box-footer clearfix"><a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_devis_bcmde_list.php" class="btn btn-sm btn-success btn-flat pull-right"><b><i class="fa fa-list"></i> &nbsp;Voir toute la liste</b></a> </div>
-        <!-- /.box-footer -->
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="row">
     <div class="col-md-12">

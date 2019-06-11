@@ -64,10 +64,13 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
           <table class="table sakotable table-bordered table-striped dt-responsive">
             <thead>
               <tr>
+                <th>N° maticule</th>
                 <th>Nom</th>
                 <th>Téléphone</th>
                 <th>Fonction</th>
-                <th>Service</th>
+                <th>Salaire</th>
+                <th>Type de contrat</th>
+                <th>Date d'embauche</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -81,13 +84,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                 // }
                 ?>
                 <tr>
+                  <td><?php echo $row['per_mat']; ?></td>
                   <td><?php echo $row['per_name']; ?></td>
                   <td><?php echo $row['per_telephone']; ?></td>
                   <td><?php echo $row['per_fonction']; ?></td>
-                  <td><?php echo $row['per_service']; ?></td>
+                  <td><?php echo $row['per_sal']; ?></td>
+                  <td><?php echo $row['per_type_contrat']; ?></td>
+                  <td><?php echo $row['per_date_emb']; ?></td>
                   <td>
                     <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a>  -->
-                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/addpersonnel.php?id=<?php echo $row['per_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> 
+                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/addpersonnel.php?id=<?php echo $row['per_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
                     <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['per_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
                     <div id="nurse_view_<?php echo $row['per_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
@@ -107,13 +113,13 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                 <b>Name :</b> <?php echo $row['r_name']; ?><br />
                                 <b>Email :</b> <?php echo $row['r_email']; ?><br />
                                 <!-- <div class="col-xs-6">
-                                <h3 style="text-decoration:underline;">Manufacturer Information</h3>
-                                <?php foreach ($manufacturerInfo as $manufacturer) { ?>
-                                    <div class="chkBoxStyle">
-                                      <label><?php echo $manufacturer['name']; ?></label>
-                                      &nbsp;&nbsp;<img style="float:right;" class="img_small" src="<?php echo $manufacturer['image']; ?>" /></div>
-                                <?php } ?>
-                              </div> -->
+                                    <h3 style="text-decoration:underline;">Manufacturer Information</h3>
+                                    <?php foreach ($manufacturerInfo as $manufacturer) { ?>
+                                            <div class="chkBoxStyle">
+                                              <label><?php echo $manufacturer['name']; ?></label>
+                                              &nbsp;&nbsp;<img style="float:right;" class="img_small" src="<?php echo $manufacturer['image']; ?>" /></div>
+                                    <?php } ?>
+                                  </div> -->
                               </div>
                             </div>
                           </div>

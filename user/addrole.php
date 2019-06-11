@@ -1,7 +1,7 @@
 <?php
 include('../header.php');
 
-$title = "Gérer les droits d'accès aux menus par rôles";
+$title = "Gérer les droits d'accès aux menus par rôles utilisateurs";
 $button_text = "Enregistrer information";
 $successful_msg = "Ajouter un réceptionniste avec succès";
 $form_url = WEB_URL . "user/addDroitAccessRoleProcess.php";

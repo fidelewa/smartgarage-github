@@ -2,7 +2,7 @@
 
 include('../config.php');
 
-$keyword = strval($_POST["immat"]);
+$keyword = strval($_POST["assurance"]);
 
 $query = "SELECT * FROM tbl_assurance_vehicule where assur_vehi_libelle LIKE '" . $keyword . "%'";
 

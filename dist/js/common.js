@@ -752,7 +752,8 @@ $(document).ready(function () {
 //get date and time
 $(function () {
 	if ($(".datepicker").length > 0) {
-		$(".datepicker").datepicker({ format: 'dd/mm/yyyy', autoclose: true });
+		$(".datepicker").datepicker({ format: 'dd/mm/yyyy', autoclose: true, language: "fr",
+		todayHighlight: true });
 	}
 	/*if($('.tool_always').length > 0) {
 		$('.tool_always').popover({
@@ -804,7 +805,7 @@ function loadPartsData() {
 	var year_id = $("#ddlYear").val();
 	$("#laod_parts_data").html('');
 	$(".page_loader").show();
-	if (make_id != '' && model_id != '' && year_id != '') {
+	if (make_id != '' && model_id != '') {
 		$.ajax({
 			url: '../ajax/getpartslist.php',
 			type: 'POST',
@@ -944,6 +945,19 @@ function loadYear(mid) {
 		success: function (data) {
 			$("#ddl_model").html(data);
 			$("#ddlYear").val('');
+		}
+	});
+}
+
+function loadModel(mid) {
+	$.ajax({
+		url: '../ajax/getstate.php',
+		type: 'POST',
+		data: 'mid=' + mid + '&token=getmodel',
+		dataType: 'html',
+		success: function (data) {
+			$("#ddl_model_2").html(data);
+			// $("#ddlYear").val('');
 		}
 	});
 }
@@ -1137,6 +1151,21 @@ $(document).ready(function () {
 			$.ajax({
 				url: '../ajax/verif_client.php',
 				data: 'client=' + query,            
+				dataType: "json",
+				type: "POST",
+				success: function (data) {
+					result($.map(data, function (item) {
+						return item;
+					}));
+				}
+			});
+		}
+	});
+	$('#princ_tel_client_devis').typeahead({
+		source: function (query, result) {
+			$.ajax({
+				url: '../ajax/verif_client.php',
+				data: 'tel_client=' + query,            
 				dataType: "json",
 				type: "POST",
 				success: function (data) {

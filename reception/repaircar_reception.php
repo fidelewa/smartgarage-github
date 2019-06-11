@@ -151,7 +151,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Formulaire de réception d'un véhicule</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <style>
         * {
