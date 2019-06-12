@@ -4,7 +4,7 @@ $delinfo = 'none';
 $addinfo = 'none';
 $msg = "";
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
-  $wms->deleteReceptionnisteInformation($link, $_GET['id']);
+  $wms->deletePersoInfo($link, $_GET['id']);
   $delinfo = 'block';
 }
 //	add success
@@ -47,7 +47,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
       <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
         <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
-        Suppression des informations de receptionniste avec succès.
+        Suppression des informations du personnel réussi.
       </div>
       <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
@@ -141,7 +141,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
   <!-- /.row -->
   <script type="text/javascript">
     function deleteSupplier(Id) {
-      var iAnswer = confirm("Êtes-vous sûr de vouloir supprimer ce receptionniste ?");
+      var iAnswer = confirm("Êtes-vous sûr de vouloir supprimer ce personnel ?");
       if (iAnswer) {
         window.location = '<?php echo WEB_URL; ?>user/listepersonnel.php?id=' + Id;
       }

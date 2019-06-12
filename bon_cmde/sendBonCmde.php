@@ -4,8 +4,13 @@ $msg = '';
 $addinfo = 'none';
 if (isset($_GET['success']) && $_GET['success'] == 1) {
 	$addinfo = 'block';
-	$msg = "E-mail de la fiche des pièces de rechange envoyé avec succès";
+	$msg = "E-mail du bon de commande envoyé avec succès";
 }
+if(isset($_GET['boncmde_id'])){
+	$_SESSION['boncmde_id'] = $_GET['boncmde_id'];
+}
+
+// var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +19,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Formulaire d'envoi de la fiche des pièces de rechange aux fournisseurss</title>
+	<title>Formulaire d'envoi du bon de commande aux fournisseurs</title>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -25,7 +30,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 </head>
 
 <body>
-	<form action="SupplierMailProcess.php" method="post" id="emailForm" enctype="multipart/form-data">
+	<form action="supplierMailBcdeProcess.php" method="post" id="emailForm" enctype="multipart/form-data">
 		<section class="content">
 			<!-- Full Width boxes (Stat box) -->
 			<div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
@@ -38,7 +43,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 
 					<div class="box box-success">
 						<div class="box-header">
-							<h3 class="box-title"> Formulaire d'envoi de la fiche des pièces de rechange aux fournisseurs</h3>
+							<h3 class="box-title"> Formulaire d'envoi du bon de commande aux fournisseurs</h3>
 						</div>
 						<div class="box-body">
 							<div class="contact-form">
@@ -84,7 +89,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 								</div>
 							</div>
 						</div>
-
+						<input type="hidden" name="boncmde_id" value="<?php if(isset($_GET['boncmde_id']) || isset($_SESSION['boncmde_id'])){echo $_SESSION['boncmde_id'];} ?>">
 						<!-- /.box-body -->
 					</div>
 					<!-- /.box -->

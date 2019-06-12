@@ -297,36 +297,36 @@ if (!empty($row) && count($row) > 0) { ?>
                                         </tfoot>
 
                                     </table>
-                                    <div class="row">
-                                        <div class="col-md-6 col-md-offset-6 cadre">
+                                    <!-- <div class="row"> -->
+                                        <div class="col-sm-6 col-sm-offset-6 cadre">
                                             <div class="row">
-                                                <div class="col-md-6">Total HT</div>
-                                                <div class="col-md-6"><?php echo $row['total_ht_gene_piece_rechange_facture'] . ' ' . $currency; ?></div>
+                                                <div class="col-sm-6">Total HT</div>
+                                                <div class="col-sm-6"><?php echo $row['total_ht_gene_piece_rechange_facture'] . ' ' . $currency; ?></div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">Total TVA</div>
-                                                <div class="col-md-6"><?php echo $row['total_tva_facture'] . ' ' . $currency; ?></div>
+                                                <div class="col-sm-6">Total TVA</div>
+                                                <div class="col-sm-6"><?php echo $row['total_tva_facture'] . ' ' . $currency; ?></div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-sm-6">
                                                     <p style="font-size:11pt;font-weight:bold">Total TTC</p>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-sm-6">
                                                     <p style="font-size:11pt;font-weight:bold">
                                                         <?php echo $row['total_ttc_gene_piece_rechange_facture'] . ' ' . $currency; ?>
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">Montant dû</div>
-                                                <div class="col-md-6"><?php echo $row['montant_du_piece_rechange_facture'] . ' ' . $currency; ?></div>
+                                                <div class="col-sm-6">Montant dû</div>
+                                                <div class="col-sm-6"><?php echo $row['montant_du_piece_rechange_facture'] . ' ' . $currency; ?></div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">Montant payé</div>
-                                                <div class="col-md-6"><?php echo $row['montant_paye_piece_rechange_facture'] . ' ' . $currency; ?></div>
+                                                <div class="col-sm-6">Montant payé</div>
+                                                <div class="col-sm-6"><?php echo $row['montant_paye_piece_rechange_facture'] . ' ' . $currency; ?></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                         </div>
@@ -451,7 +451,7 @@ if (!empty($row) && count($row) > 0) { ?>
         </div>
         <div id="mobile-preview-close_2">
             <a style="" href="<?php echo WEB_URL; ?>sendCustomerFactureEmail.php?devis_id=<?php echo $_GET['devis_id']; ?>&facture_id=<?php echo $row['facture_id']; ?>&date_facture=<?php echo $row['date_facture']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
-            <a style="" href="<?php echo WEB_URL; ?>sendCustomerFactureSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&facture_id=<?php echo $row['facture_id']; ?>&date_facture=<?php echo $row['date_facture']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
+            <a style="" href="<?php echo WEB_URL; ?>sendCustomerFacturesms.php?devis_id=<?php echo $_GET['devis_id']; ?>&facture_id=<?php echo $row['facture_id']; ?>&date_facture=<?php echo $row['date_facture']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
         </div>
         <script>
             jQuery(document).ready(function() {

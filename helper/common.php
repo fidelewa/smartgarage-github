@@ -2,6 +2,26 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getBoncmdeInfo($con, $bcdeId)
+	{
+
+		$query = "SELECT *
+			from tbl_add_boncmde
+			WHERE boncmde_id = " . (int)$bcdeId;
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+
+		return $row;
+	}
+
 	public function getRepairCarDevisFactureSimuInfo($con, $devisId)
 	{
 
@@ -363,6 +383,16 @@ class wms_core
 		return $data;
 	}
 
+	public function getAllBonCmdeData($con)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_add_boncmde", $con);
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
 	public function saveUpdatePersonnelInformation($con, $data)
 	{
 		if (!empty($data)) {
@@ -391,6 +421,34 @@ class wms_core
 				`per_nom_pere`='" . $data['nomperePers'] . "', `per_nom_mere`='" . $data['nomerePers'] . "',
 				`per_sal`='" . $data['salPers'] . "', `per_type_contrat`='" . $data['typctrPers'] . "',
 				`per_mat`='" . $data['matPers'] . "', `per_date_emb`='" . $data['datembPers'] . "'
+				WHERE per_id='" . $data['personnel_id'] . "'";
+				$result = mysql_query($query, $con);
+			}
+
+			if (!$result) {
+				var_dump($data);
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		}
+	}
+
+	public function saveUpdateBonCmdeInfo($con, $data)
+	{
+		if (!empty($data)) {
+			if ($data['boncmde_id'] == '0') {
+
+				$query = "INSERT INTO tbl_add_boncmde(boncmde_num, boncmde_designation, boncmde_qte, boncmde_pu_ht, boncmde_total_ht)
+
+				values('$data[numboncmde]','$data[codedesiboncmde]','$data[qteboncmde]','$data[prixhtboncmde]','$data[tothtboncmde]')";
+				$result = mysql_query($query, $con);
+			} else {
+
+				$query = "UPDATE `tbl_add_boncmde` 
+				SET `boncmde_num`='" . $data['numboncmde'] . "',`boncmde_designation`='" . $data['codedesiboncmde'] . "',
+				`boncmde_qte`='" . $data['qteboncmde'] . "',`boncmde_pu_ht`='" . $data['prixhtboncmde'] . "',
+				`boncmde_total_ht`='" . $data['tothtboncmde'] . "'
 				WHERE per_id='" . $data['personnel_id'] . "'";
 				$result = mysql_query($query, $con);
 			}
@@ -716,7 +774,7 @@ class wms_core
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
-			inner join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
+			-- inner join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
 			WHERE cus.customer_id ='" . (int)$cusId . "' LIMIT 10";
 
 		// Exécution et stockage du résultat de la requête
@@ -865,7 +923,7 @@ class wms_core
 		$query = "SELECT dev.*, diag.*
 			from tbl_add_devis dev
 			left join tbl_repaircar_diagnostic diag on diag.id = dev.repaircar_diagnostic_id
-			left join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
+			-- left join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
 			WHERE repaircar_diagnostic_id = " . (int)$diagId;
 
 		$result = mysql_query($query, $con);
@@ -947,7 +1005,7 @@ class wms_core
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
-			inner join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
+			-- inner join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
 			WHERE cus.customer_id ='" . (int)$cusId . "'";
 
 		// Exécution et stockage du résultat de la requête
@@ -3436,9 +3494,14 @@ class wms_core
 	/*
 	* @delete supplier info
 	*/
-	public function deleteReceptionnisteInformation($con, $s_id)
+	public function deletePersoInfo($con, $p_id)
 	{
-		mysql_query("DELETE FROM `tbl_add_reception` WHERE reception_id = " . (int)$s_id, $con);
+		mysql_query("DELETE FROM `tbl_add_personnel` WHERE perso_id = " . (int)$p_id, $con);
+	}
+
+	public function deleteBonCmdeInfo($con, $bcde_id)
+	{
+		mysql_query("DELETE FROM `tbl_add_boncmde` WHERE boncmde_id = " . (int)$bcde_id, $con);
 	}
 
 	/*

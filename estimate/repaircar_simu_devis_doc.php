@@ -139,7 +139,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <!-- <img class="editable-area" id="logo" src="<?php echo WEB_URL; ?>img/luxury_garage_logo.jpg" height="100" width="100"> -->
                             <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
                         </div>
-                        <div class="col-md-3 col-md-offset-7">
+                        <div class="col-sm-3 col-sm-offset-7">
                             <p><?php echo $row['date_devis']; ?></p>
                         </div>
                     </div>
@@ -147,14 +147,14 @@ if (!empty($row) && count($row) > 0) { ?>
                         <div class="col-sm-9">
                             <p style="font-size:13pt;font-weight:600;">LUXURY GARAGE</p>
                         </div>
-                        <div class="col-md-3" id="info_gene">
+                        <div class="col-sm-3" id="info_gene">
                             <p><?php echo $row['c_name']; ?></p>
                             <p><?php echo $row['c_address']; ?></p>
                             <p>Tel: <?php echo $row['princ_tel']; ?></p>
                         </div>
                     </div>
                     <div class="row" style="margin-bottom:20px;">
-                        <div class="col-sm-5 col-md-onset-7" style="border-radius: 20px; border: solid 2px #000;">
+                        <div class="col-sm-5 col-sm-onset-7" style="border-radius: 20px; border: solid 2px #000;">
                             <p>Devis N° : <?php echo $row['devis_id']; ?></p>
                         </div>
                     </div>
@@ -275,28 +275,28 @@ if (!empty($row) && count($row) > 0) { ?>
 
                                         </tfoot>
                                     </table>
-                                    <div class="row">
-                                        <div class="col-md-6 col-md-offset-6 cadre">
+                                    <!-- <div class="row"> -->
+                                        <div class="col-sm-6 col-sm-offset-6 cadre">
                                             <div class="row">
-                                                <div class="col-md-6">Total HT</div>
-                                                <div class="col-md-6"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
+                                                <div class="col-sm-6">Total HT</div>
+                                                <div class="col-sm-6"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">Total TVA</div>
-                                                <div class="col-md-6"><?php echo $row['total_tva'] . ' ' . $currency; ?></div>
+                                                <div class="col-sm-6">Total TVA</div>
+                                                <div class="col-sm-6"><?php echo $row['total_tva'] . ' ' . $currency; ?></div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-sm-6">
                                                     <p style="font-size:11pt;font-weight:bold">Total TTC</p>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-sm-6">
                                                     <p style="font-size:11pt;font-weight:bold">
                                                         <?php echo $row['total_ttc_gene_piece_rechange_devis'] . ' ' . $currency; ?>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                         </div>
@@ -419,10 +419,10 @@ if (!empty($row) && count($row) > 0) { ?>
             <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
             <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
-        <div id="mobile-preview-close_2">
+        <!-- <div id="mobile-preview-close_2">
             <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
-            <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par sms</a>
-        </div>
+            <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
+        </div> -->
         <script>
             jQuery(document).ready(function() {
                 location.reload(true);

@@ -208,7 +208,7 @@ function NewGuid()
                         </div>
                         <div class="form-group">
                             <label for="txtPersName"> Nom et prénom du conjoint :</label>
-                            <input type="text" name="nomconjointePers" value="<?php echo $per_nom_conjoint; ?>" id="nomconjointePers" class="form-control" />
+                            <input type="text" name="nomconjointPers" value="<?php echo $per_nom_conjoint; ?>" id="nomconjointPers" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="txtPersName"> Adresse complète :</label>

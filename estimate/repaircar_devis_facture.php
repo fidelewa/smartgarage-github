@@ -72,23 +72,22 @@ if (isset($_POST) && !empty($_POST)) {
 
     <div class="container">
         <!-- Main content -->
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" id="mainForm" name="mainForm" role="form">
             <section class="content">
                 <!-- Full Width boxes (Stat box) -->
                 <div class="row">
                     <div class="col-md-12">
 
                         <div align="right" style="margin-bottom:1%;">
+                            <!-- <a class="btn btn-success" style="background-color:#0029CE;color:#ffffff;" data-toggle="modal" data-target="#devis_vehicule_modal" title="Attribuer le devis à un véhicule"><i class="fa fa-plus"></i></a> -->
                             <button class="btn btn-success" type="submit" data-toggle="tooltip" href="javascript:;" data-original-title="<?php echo $button_text; ?>"><i class="fa fa-save"></i></button> &nbsp;
                             <!-- <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Back"><i class="fa fa-reply"></i></a> </div> -->
 
                             <div class="box box-success">
-                                <!-- <div class="box-header">
-                                <h3 class="box-title"><i class="fa fa-plus"></i> Formulaire client</h3>
-                            </div> -->
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
+
+                                <div class="box-body">
+                                    <div class="form-group col-md-12">
+                                        <div class="table-responsive">
                                             <table id="labour_table" class="table table-striped table-bordered table-hover">
                                                 <thead>
                                                     <tr>
@@ -168,7 +167,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <td colspan="7" class="text-right">Montant payé (<?php echo $currency; ?>):</td>
                                                         <td><input id="total_paid" type="text" value="<?php echo $row['montant_paye_piece_rechange_devis']; ?>" name="montant_paye_piece_rechange_facture" class="form-control" /></td>
                                                     </tr>
-                                                    
+
                                                 </tfoot>
                                                 <!-- <input type="hidden" value="<?php echo $row['main_oeuvre_piece_rechange_devis']; ?>" name="montant_main_oeuvre_facture" /> -->
                                                 <!-- <input type="hidden" value="<?php echo $row['total_ht_gene_piece_rechange_devis']; ?>" name="total_ht_gene_piece_rechange_facture" /> -->
@@ -180,13 +179,12 @@ if (isset($_POST) && !empty($_POST)) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- /.box-body -->
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
                         </div>
-                        <!-- /.box -->
                     </div>
-                </div>
             </section>
         </form>
     </div>

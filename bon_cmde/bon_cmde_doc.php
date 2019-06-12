@@ -3,9 +3,11 @@ include('../helper/common.php');
 include_once('../config.php');
 
 $wms = new wms_core();
-$row = $wms->getRepairCarDiagnosticInfoByDiagId($link, $_GET['vehi_diag_id']);
 
-$i = 1;
+$row = $wms->getBoncmdeInfo($link, $_GET['boncmde_id']);
+
+// var_dump($row);
+// die();
 
 if (!empty($row) && count($row) > 0) { ?>
     <!DOCTYPE html>
@@ -15,15 +17,15 @@ if (!empty($row) && count($row) > 0) { ?>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Fiche des pièces de rechange d'un véhicule</title>
+        <title>Fiche de comparaison des prix des pièces de rechange par fournisseurs</title>
         <link href="<?php echo WEB_URL; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                                        border: 1px dotted rgb(0, 0, 0);
-                                        border-radius: 1px;
-                                    } */
+                                                    border: 1px dotted rgb(0, 0, 0);
+                                                    border-radius: 1px;
+                                                } */
         </style>
     </head>
 
@@ -44,7 +46,7 @@ if (!empty($row) && count($row) > 0) { ?>
 
                 .invoice-wrap {
                     width: 800px;
-                    margin: 0 250px;
+                    margin: 0 auto;
                     background: #FFF;
                     color: #000
                 }
@@ -107,81 +109,64 @@ if (!empty($row) && count($row) > 0) { ?>
                     <div class="row" id="content_1">
                         <div class="col-sm-12" style="text-align:center;">
                             <h4 style="text-decoration:underline;font-weight:bold">
-                                FICHE DES PIECES DE RECHANGE
-                                <!-- A ENVOYER AUX FOURNISSEURS -->
+                                BON DE COMMANDE N° <?php echo $row['boncmde_id']; ?>
                             </h4>
                         </div>
                     </div>
 
                     <!-- <div class="row" id="content_2"> -->
-                    <!-- <div class="col-sm-12"> -->
+                    <!-- <div class="col-md-12"> -->
 
                     <div id="content_2">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <p>Marque du véhicule :</p>
-                            </div>
-                            <div class="col-sm-8">
-                                <p><?php echo $row['make_name']; ?></p>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <p>Modèle du véhicule :</p>
-                            </div>
-                            <div class="col-sm-8">
-                                <p><?php echo $row['model_name']; ?></p>
-                            </div>
-                        </div>
 
                         <div class="row">
-                            <div class="col-sm-4">
-                                <p>N° chassis du véhicule :</p>
-                            </div>
-                            <div class="col-sm-8">
-                                <p><?php echo $row['num_chasis_vehicule']; ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-md-12">
                                 <div class="row">
-                                    <table class="table dt-responsive">
+                                    <!-- <table border="1" class="table dt-responsive">
                                         <thead>
                                             <tr>
-                                                <th scope="col" align="justify">N°</th>
-                                                <th scope="col" align="justify">Désignation</th>
-                                                <th scope="col" align="justify">Quantité</th>
-                                                <!-- <th scope="col" align="justify">Montant</th> -->
+                                                <th style="text-align:center">N° bon de commande</th>
+                                                <th style="text-align:center">Code/désignation</th>
+                                                <th style="text-align:center">Quantité</th>
+                                                <th style="text-align:center">Prix unitaire HT</th>
+                                                <th style="text-align:center">Total HT</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-
-                                            // On délinéarise l'array
-                                            $estimate_data = unserialize($row['estimate_data']);
-
-                                            // var_dump($row['estimate_data']);
-
-                                            foreach ($estimate_data as $estimate) { ?>
-                                                <tr>
-                                                    <td><?php echo $i; ?></td>
-                                                    <td><?php echo $estimate['designation']; ?></td>
-                                                    <td><?php echo $estimate['quantity']; ?></td>
-                                                    <!-- <td><?php echo $estimate['total']; ?></td> -->
-                                                </tr>
-                                                <?php $i++;
-                                            } ?>
+                                            <tr>
+                                                <td><?php echo $row['boncmde_id']; ?></td>
+                                                <td><?php echo $row['boncmde_num']; ?></td>
+                                                <td><?php echo $row['boncmde_designation']; ?></td>
+                                                <td><?php echo $row['boncmde_qte']; ?></td>
+                                                <td><?php echo $row['boncmde_pu_ht']; ?></td>
+                                                <td><?php echo $row['boncmde_total_ht']; ?></td>
+                                            </tr>
                                         </tbody>
-                                        <!-- <tfoot>
-                                                            <tr>
-                                                                <td colspan="2"></td>
-                                                                <td>TOTAL HT</td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </tfoot> -->
-                                    </table>
+                                    </table> -->
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-2" for="email">Code/désignation:</label>
+                                        <div class="col-sm-10" id="email_supplier">
+                                            <input type="text" class="form-control" id="email" name="email" value="<?php echo $row['boncmde_designation']; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-2" for="lname">Quantité:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_qte']; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-2" for="lname">Prix unitaire HT :</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_pu_ht']; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-2" for="lname">Total HT:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_total_ht']; ?>">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -302,16 +287,12 @@ if (!empty($row) && count($row) > 0) { ?>
         </style>
         <div id="mobile-preview-close">
             <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
-            <a style="" href="<?php echo WEB_URL; ?>mech_panel/mech_dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
+            <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
-        <?php if (isset($_GET['login_type']) && $_GET['login_type'] == 'admin') { ?>
-            <div id="mobile-preview-close_2">
-                <!-- <a style="" href="#"> Envoyer aux fournisseurs par e-mail</a> -->
-                <a style="" href="<?php echo WEB_URL; ?>supplier/sendEmailToSuppliers.php"> Envoyer aux fournisseurs par e-mail</a>
-                <a style="" href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"> Créer un bon de commande</a>
-                <!-- <a style="" href="<?php echo WEB_URL; ?>convertToPdf.php"> Convertir en PDF </a> -->
-            </div>
-        <?php } ?>
+        <div id="mobile-preview-close_2">
+            <!-- <a style="" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>"> Créer un devis </a> -->
+            <a style="" href="<?php echo WEB_URL; ?>bon_cmde/sendBonCmde.php?boncmde_id=<?php echo $_GET['boncmde_id']; ?>"> Envoyer le bon de commande </a>
+        </div>
         <script>
             jQuery(document).ready(function() {
                 location.reload(true);
