@@ -31,7 +31,7 @@ $hdnid = "0";
 $image_cus = WEB_URL . 'img/no_image.jpg';
 $img_track = '';
 
-// Création de l'identifiant de réparation
+// Création de l'identifiant de réparation générée automatiquement
 $invoice_id = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
 
 /*added my*/

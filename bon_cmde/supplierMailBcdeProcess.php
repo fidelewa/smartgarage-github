@@ -9,15 +9,15 @@ $wms = new wms_core();
 // Récupération de l'email de l'administrateur
 $result_settings = $wms->getWebsiteSettingsInformation($link);
 if (!empty($result_settings)) {
-	// $admin_email = $result_settings['email'];
-	$admin_email = "fiderlet07@gmail.com";
+	$admin_email = $result_settings['email'];
+	// $admin_email = "fiderlet07@gmail.com";
 }
 
 // var_dump($_POST);
 // die();
 
 $boncmde_date_emission = date('d/m/Y');
-$query = "INSERT INTO tbl_boncmde_four (boncmde_id, supplier_id, boncmde_date_emission) VALUES('$_POST[boncmde_id]','$_POST[four]','$boncmde_date_emission')";
+$query = "INSERT INTO tbl_boncmde_four (boncmde_id, supplier_id, boncmde_date_emission) VALUES('$_POST[boncmde_id]','$_POST[supplier_id]','$boncmde_date_emission')";
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 $result = mysql_query($query, $link);
@@ -30,7 +30,7 @@ if (!$result) {
 
 // Définition du message et trraitement de l'envoi
 if ($_POST['email']) {
-	$four = $_POST['four'];
+
 	// $toEmail = $_POST['email'];
 	$toEmail = "fiderlet07@gmail.com";
 	$message = $_POST['message'];
@@ -38,6 +38,7 @@ if ($_POST['email']) {
 		$mail = new \PHPMailer\PHPMailer\PHPMailer();
 		$mail->AddAddress($toEmail);
 		$mail->From = $admin_email;
+		$mail->FromName = 'Luxury Admin';
 		$mail->Subject = "E-mail du bon de commande";
 		$body = "<table>
 			<tr>

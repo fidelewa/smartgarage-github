@@ -67,8 +67,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                 <th>N° du bon de commande</th>
                 <th>Code / désignation</th>
                 <th>Quantité</th>
-                <th>Prix unitaire HT</th>
-                <th>Total HT</th>
+                <!-- <th>Prix unitaire HT</th>
+                <th>Total HT</th> -->
                 <th>Action</th>
               </tr>
             </thead>
@@ -85,8 +85,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                   <td><?php echo $row['boncmde_num']; ?></td>
                   <td><?php echo $row['boncmde_designation']; ?></td>
                   <td><?php echo $row['boncmde_qte']; ?></td>
-                  <td><?php echo $row['boncmde_pu_ht']; ?></td>
-                  <td><?php echo $row['boncmde_total_ht']; ?></td>
+                  <!-- <td><?php echo $row['boncmde_pu_ht']; ?></td>
+                  <td><?php echo $row['boncmde_total_ht']; ?></td> -->
                   <td>
                     <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a>  -->
                     <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>bon_cmde/bon_cmde_doc.php?boncmde_id=<?php echo $row['boncmde_id']; ?>" data-original-title="Consulter le bon de commande"><i class="fa fa-file-text-o"></i></a>

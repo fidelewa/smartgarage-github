@@ -148,9 +148,9 @@ if (!empty($row) && count($row) > 0) { ?>
                             <p style="font-size:13pt;font-weight:600;">LUXURY GARAGE</p>
                         </div>
                         <div class="col-sm-3" id="info_gene">
-                            <p><?php echo $row['c_name']; ?></p>
+                            <p><?php if(isset($row['c_name'])){echo $row['c_name'];}else{echo $row['nom_client'];} ?></p>
                             <p><?php echo $row['c_address']; ?></p>
-                            <p>Tel: <?php echo $row['princ_tel']; ?></p>
+                            <p>Tel: <?php if(isset($row['princ_tel'])){echo $row['princ_tel'];}else{echo $row['numero_tel_client'];} ?></p>
                         </div>
                     </div>
                     <div class="row" style="margin-bottom:20px;">
@@ -178,7 +178,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <p>Immatriculation</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p><?php echo $row['VIN']; ?></p>
+                                            <p><?php if(isset($row['VIN'])){echo $row['VIN'];}else{echo $row['imma_vehi_client'];} ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <p>Marque</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p><?php echo $row['make_name']; ?></p>
+                                            <p><?php if(isset($row['make_name'])){echo $row['make_name'];}else{echo $row['marque_vehi_client'];} ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -200,12 +200,12 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <p>Modèle</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p><?php echo $row['model_name']; ?></p>
+                                            <p><?php if(isset($row['model_name'])){echo $row['model_name'];}else{echo $row['model_vehi_client'];} ?></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-sm-6">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -226,7 +226,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -236,7 +236,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <tr>
                                                 <th>Code</th>
                                                 <th>Désignation</th>
-                                                <th>Marque</th>
+                                                <!-- <th>Marque</th> -->
                                                 <th>Quantité</th>
                                                 <th>Tarif HT</th>
                                                 <th>Remise</th>
@@ -257,7 +257,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                                 <tr>
                                                     <td><?php echo $devis['code_piece']; ?></td>
                                                     <td><?php echo $devis['designation']; ?></td>
-                                                    <td><?php echo $devis['marque']; ?></td>
+                                                    <!-- <td><?php echo $devis['marque']; ?></td> -->
                                                     <td><?php echo $devis['quantity']; ?></td>
                                                     <td><?php echo $devis['price']; ?></td>
                                                     <td><?php echo $devis['remise_piece_rechange_devis']; ?></td>
@@ -267,7 +267,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                                 <?php $i++;
                                             } ?>
                                             <tr>
-                                                <td colspan="7" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
+                                                <td colspan="6" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
                                                 <td><?php echo $row['main_oeuvre_piece_rechange_devis']; ?></td>
                                             </tr>
                                         </tbody>

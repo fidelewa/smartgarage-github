@@ -440,10 +440,10 @@ if (!empty($_SESSION['objLogin']['image'])) {
 
               <li class="<?php if ($page_name != '' && $page_name == 'buypartslist') {
                             echo 'active';
-                          } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Ajout des pièces en stock</a></li>
+                          } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
               <li class="<?php if ($page_name != '' && $page_name == 'partsstocklist') {
                             echo 'active';
-                          } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des pièces en stock</a></li>
+                          } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
             </ul>
           </li>
           <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'buycarlist' || $page_name == 'buycar' || $page_name == 'sellcarlist' || $page_name == 'sellcar' || $page_name == 'carsellform') {

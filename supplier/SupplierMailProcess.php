@@ -22,6 +22,7 @@ if($_POST['email']) {
 		$mail = new \PHPMailer\PHPMailer\PHPMailer();
 		$mail->AddAddress($toEmail);
 		$mail->From = $admin_email;
+		$mail->FromName = 'Luxury Admin';
 		$mail->Subject = "E-mail de la fiche des pièces de rechange d'un véhicule";
 		$body = "<table>
 			<tr>

@@ -146,9 +146,9 @@ if (!empty($row) && count($row) > 0) { ?>
                             <p style="font-size:13pt;font-weight:600;">LUXURY GARAGE</p>
                         </div>
                         <div class="col-sm-3" id="info_gene">
-                            <p><?php echo $row['c_name']; ?></p>
+                            <p><?php if(isset($row['c_name'])){echo $row['c_name'];}else{echo $row['nom_client'];} ?></p>
                             <p><?php echo $row['c_address']; ?></p>
-                            <p>Tel: <?php echo $row['princ_tel']; ?></p>
+                            <p>Tel: <?php if(isset($row['princ_tel'])){echo $row['princ_tel'];}else{echo $row['numero_tel_client'];} ?></p>
                         </div>
                     </div>
                     <div class="row" style="margin-bottom:20px;">
@@ -179,7 +179,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <p>Immatriculation</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p><?php echo $row['VIN']; ?></p>
+                                            <p><?php if(isset($row['VIN'])){echo $row['VIN'];}else{echo $row['imma_vehi_client'];} ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <p>Marque</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p><?php echo $row['make_name']; ?></p>
+                                            <p><?php if(isset($row['make_name'])){echo $row['make_name'];}else{echo $row['marque_vehi_client'];} ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -201,12 +201,12 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <p>Modèle</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p><?php echo $row['model_name']; ?></p>
+                                            <p><?php if(isset($row['model_name'])){echo $row['model_name'];}else{echo $row['model_vehi_client'];} ?></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-sm-6">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -227,7 +227,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="row">
@@ -238,7 +238,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <tr>
                                                 <th>Code</th>
                                                 <th>Désignation</th>
-                                                <th>Marque</th>
+                                                <!-- <th>Marque</th> -->
                                                 <th>Quantité</th>
                                                 <th>Tarif HT</th>
                                                 <th>Remise(%)</th>
@@ -259,7 +259,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                                 <tr>
                                                     <td><?php echo $facture['code_piece_rechange_facture']; ?></td>
                                                     <td><?php echo $facture['designation_piece_rechange_facture']; ?></td>
-                                                    <td><?php echo $facture['marque_piece_rechange_facture']; ?></td>
+                                                    <!-- <td><?php echo $facture['marque_piece_rechange_facture']; ?></td> -->
                                                     <td><?php echo $facture['qte_piece_rechange_facture']; ?></td>
                                                     <td><?php echo $facture['prix_piece_rechange_min_facture']; ?></td>
                                                     <td><?php echo $facture['remise_piece_rechange_facture']; ?></td>
@@ -269,7 +269,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                                 <?php $i++;
                                             } ?>
                                             <tr>
-                                                <td colspan="7" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
+                                                <td colspan="6" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
                                                 <td><?php echo $row['montant_main_oeuvre_facture']; ?></td>
                                             </tr>
                                         </tbody>
@@ -449,10 +449,10 @@ if (!empty($row) && count($row) > 0) { ?>
             <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
             <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
-        <div id="mobile-preview-close_2">
+        <!-- <div id="mobile-preview-close_2">
             <a style="" href="<?php echo WEB_URL; ?>sendCustomerFactureEmail.php?devis_id=<?php echo $_GET['devis_id']; ?>&facture_id=<?php echo $row['facture_id']; ?>&date_facture=<?php echo $row['date_facture']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
             <a style="" href="<?php echo WEB_URL; ?>sendCustomerFacturesms.php?devis_id=<?php echo $_GET['devis_id']; ?>&facture_id=<?php echo $row['facture_id']; ?>&date_facture=<?php echo $row['date_facture']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
-        </div>
+        </div> -->
         <script>
             jQuery(document).ready(function() {
                 location.reload(true);

@@ -9,16 +9,13 @@ $wms = new wms_core();
 // var_dump($_POST);
 // die();
 
-// Récupération de l'identifiant du véhicule correspondant à l'immatriculation fournie
-$vehiData = $wms->getVehiDataByImmaVehi($link, $_POST['immat']);
+$query = "INSERT INTO tbl_attri_devis_vehicule (nom_client, numero_tel_client, imma_vehi_client, marque_vehi_client, 
+   model_vehi_client, devis_simulation_id
+) 
+VALUES('$_POST[ddlCustomerList]','$_POST[princ_tel_client_devis]','$_POST[immat]','$_POST[ddlMake]',
+'$_POST[ddlModel]','$_GET[devis_simu_id]')";
 
-// var_dump($vehiData);
-// die();
-
-// Mise à jour de l'attribution du véhicule dans la table des devis
-$query = "UPDATE tbl_add_devis_simulation SET attribution_vehicule=" . (int)$vehiData['car_id'] . " WHERE devis_id=" .(int)$_GET['devis_simu_id'];
-
-// Exécution de la requête
+// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 $result = mysql_query($query, $link);
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
@@ -29,6 +26,6 @@ if (!$result) {
     die($message);
 } else {
     // Redirection vers la liste des devis
-    $url = WEB_URL . "estimate/repaircar_simu_devis_list.php?m=attrib_vehi&devis_simu_id=".$_GET['devis_simu_id']."&car_name=".$vehiData['car_name']."&car_imma=".$vehiData['VIN'];
+    $url = WEB_URL . "estimate/repaircar_simu_devis_list.php?m=attrib_vehi&devis_simu_id=".$_GET['devis_simu_id']."&car_make=".$_POST['ddlMake']."&car_model=".$_POST['ddlModel']."&car_imma=".$_POST['immat'];
     header("Location: $url");
 }

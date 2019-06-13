@@ -4,8 +4,14 @@ include('../header.php');
 $button_text = "Enregistrer informations";
 $hdnid = "0";
 
+// Création du numéro du bon de commande généré automatiquement
+$numboncmde = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+
 /*#############################################################*/
 if (isset($_POST) && !empty($_POST)) { //Si les données ont été soumis à partir du formulaire
+
+    // var_dump($_POST);
+    // die();
 
     // On persiste les données en BDD
     $wms->saveUpdateBonCmdeInfo($link, $_POST);
@@ -63,12 +69,12 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Formulaire de création d'un bon de commande</title>
+    <title>Formulaire d'enregistrement d'un bon de commande</title>
 </head>
 
 <body>
     <section class="content-header">
-        <h1>Formulaire de création d'un bon de commande
+        <h1>Formulaire d'enregistrement d'un bon de commande
         </h1>
         <!-- <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -96,7 +102,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     <div class="form-group col-md-12">
                                         <div class="form-group">
                                             <label for="add_date"> Numéro du bon de commande :</label>
-                                            <input type="text" name="numboncmde" value="" id="numboncmde" class="form-control" placeholder="Saisissez le numéro du bon de commande" />
+                                            <input readonly type="text" name="numboncmde" value="<?php echo $numboncmde; ?>" id="numboncmde" class="form-control" placeholder="Saisissez le numéro du bon de commande" />
                                         </div>
                                         <div class="form-group">
                                             <label for="add_date"> Code/désignation :</label>
@@ -106,16 +112,16 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                             <label for="add_date"> Quantité :</label>
                                             <input type="number" name="qteboncmde" value="" id="qteboncmde" class="form-control" placeholder="Saisissez la quantité" />
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="add_date"> Prix unitaire HT :</label>
                                             <input type="number" name="prixhtboncmde" value="" id="prixhtboncmde" class="form-control" placeholder="Saisissez le prix unitaire hors taxe" />
                                         </div>
                                         <div class="form-group">
                                             <label for="add_date"> Total HT :</label>
                                             <input type="number" name="tothtboncmde" value="" id="tothtboncmde" class="form-control" placeholder="Saisissez le total hors taxe" />
-                                        </div>
+                                        </div> -->
 
-                                        <!-- <div class="form-group">
+                                        <div class="form-group">
                                             <label for="assurance_vehi_recep">Fournisseur :</label>
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -130,7 +136,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
 

@@ -23,9 +23,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                                                    border: 1px dotted rgb(0, 0, 0);
-                                                    border-radius: 1px;
-                                                } */
+                border: 1px dotted rgb(0, 0, 0);
+                border-radius: 1px;
+            } */
         </style>
     </head>
 
@@ -113,6 +113,18 @@ if (!empty($row) && count($row) > 0) { ?>
                             </h4>
                         </div>
                     </div>
+                    <div class="row" id="content_1">
+                        <div class="col-sm-6" style="text-align:center;">
+                            <p style="font-size:10pt;">
+                                Date : <?php echo $row['boncmde_date_creation']; ?>
+                            </p>
+                        </div>
+                        <div class="col-sm-6" style="text-align:center;">
+                            <p style="font-size:10pt;">
+                                Fournisseur : <?php echo $row['s_name']; ?>
+                            </p>
+                        </div>
+                    </div>
 
                     <!-- <div class="row" id="content_2"> -->
                     <!-- <div class="col-md-12"> -->
@@ -122,51 +134,51 @@ if (!empty($row) && count($row) > 0) { ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <!-- <table border="1" class="table dt-responsive">
+                                    <table border="1" class="table dt-responsive">
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center">N° bon de commande</th>
                                                 <th style="text-align:center">Code/désignation</th>
                                                 <th style="text-align:center">Quantité</th>
-                                                <th style="text-align:center">Prix unitaire HT</th>
-                                                <th style="text-align:center">Total HT</th>
+                                                <!-- <th style="text-align:center">Prix unitaire HT</th>
+                                                <th style="text-align:center">Total HT</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><?php echo $row['boncmde_id']; ?></td>
+                                                <!-- <td><?php echo $row['boncmde_id']; ?></td> -->
                                                 <td><?php echo $row['boncmde_num']; ?></td>
                                                 <td><?php echo $row['boncmde_designation']; ?></td>
                                                 <td><?php echo $row['boncmde_qte']; ?></td>
-                                                <td><?php echo $row['boncmde_pu_ht']; ?></td>
-                                                <td><?php echo $row['boncmde_total_ht']; ?></td>
+                                                <!-- <td><?php echo $row['boncmde_pu_ht']; ?></td>
+                                                <td><?php echo $row['boncmde_total_ht']; ?></td> -->
                                             </tr>
                                         </tbody>
-                                    </table> -->
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-2" for="email">Code/désignation:</label>
-                                        <div class="col-sm-10" id="email_supplier">
-                                            <input type="text" class="form-control" id="email" name="email" value="<?php echo $row['boncmde_designation']; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-2" for="lname">Quantité:</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_qte']; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-2" for="lname">Prix unitaire HT :</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_pu_ht']; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-2" for="lname">Total HT:</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_total_ht']; ?>">
-                                        </div>
-                                    </div>
+                                    </table>
+                                    <!-- <div class="form-group row">
+                                                        <label class="control-label col-sm-2" for="email">Code/désignation:</label>
+                                                        <div class="col-sm-10" id="email_supplier">
+                                                            <input type="text" class="form-control" id="email" name="email" value="<?php echo $row['boncmde_designation']; ?>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-sm-2" for="lname">Quantité:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_qte']; ?>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-sm-2" for="lname">Prix unitaire HT :</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_pu_ht']; ?>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-sm-2" for="lname">Total HT:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_total_ht']; ?>">
+                                                        </div>
+                                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -260,8 +272,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
 
             @media print {
 
@@ -291,14 +303,8 @@ if (!empty($row) && count($row) > 0) { ?>
         </div>
         <div id="mobile-preview-close_2">
             <!-- <a style="" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>"> Créer un devis </a> -->
-            <a style="" href="<?php echo WEB_URL; ?>bon_cmde/sendBonCmde.php?boncmde_id=<?php echo $_GET['boncmde_id']; ?>"> Envoyer le bon de commande </a>
+            <a style="" href="<?php echo WEB_URL; ?>bon_cmde/sendBonCmde.php?boncmde_id=<?php echo $_GET['boncmde_id']; ?>&supplier_id=<?php echo $row['supplier_id']; ?>"> Envoyer le bon de commande </a>
         </div>
-        <script>
-            jQuery(document).ready(function() {
-                location.reload(true);
-                window.onload = timedRefresh(500);
-            });
-        </script>
     </body>
 
     </html>

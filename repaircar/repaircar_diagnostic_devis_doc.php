@@ -205,7 +205,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-sm-6">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -226,7 +226,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="row">
                             <div class="col-sm-12">

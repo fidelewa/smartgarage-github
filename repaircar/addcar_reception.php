@@ -273,7 +273,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               </div>
               <div class="form-group">
                 <label for="ddlMake"><span style="color:red;">*</span> Marque :</label>
-                <!-- <input type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture"> -->
                 <div class="row">
                   <div class="col-md-12">
                     <input type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
@@ -377,6 +376,22 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               <div class="form-group">
                 <label for="add_date"><span style="color:red;">*</span> Date de fin de l'assurance:</label>
                 <input type="text" name="add_date_assurance_fin" value="" id="add_date_assurance_fin" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+              </div>
+              <div class="form-group">
+                <label for="add_date"><span style="color:red;">*</span> Date de dernière vidange:</label>
+                <input type="text" name="add_date_derniere_vidange" value="" id="add_date_derniere_vidange" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+              </div>
+              <div class="form-group">
+                <label for="add_date"><span style="color:red;">*</span> Date de changement de filtre à air:</label>
+                <input type="text" name="add_date_changement_filtre_air" value="" id="add_date_changement_filtre_air" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+              </div>
+              <div class="form-group">
+                <label for="add_date"><span style="color:red;">*</span> Date de changement de filtre à huile:</label>
+                <input type="text" name="add_date_changement_filtre_huile" value="" id="add_date_changement_filtre_huile" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+              </div>
+              <div class="form-group">
+                <label for="add_date"><span style="color:red;">*</span> Date de changement de filtre à pollen:</label>
+                <input type="text" name="add_date_changement_filtre_pollen" value="" id="add_date_changement_filtre_pollen" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <!-- <div class="form-group">
                 <label for="duree_assurance"><span style="color:red;">*</span> Durée de l'assurance :</label>
@@ -1798,6 +1813,47 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     var currentTab = 0; // Current tab is set to be the first tab (0)
     showTab(currentTab); // Display the current tab
 
+    // Récupération des éléments à partir de leur id
+    const elt_etat_vehi_arrive_remorq = document.getElementById('etat_vehi_arrive_remorq');
+    const elt_nivo_carbu_recep_vehi_0_4 = document.getElementById('nivo_carbu_recep_vehi_0_4');
+    const elt_nivo_carbu_recep_vehi_1_2 = document.getElementById('nivo_carbu_recep_vehi_1_2');
+    const elt_nivo_carbu_recep_vehi_2_4 = document.getElementById('nivo_carbu_recep_vehi_2_4');
+    const elt_nivo_carbu_recep_vehi_3_4 = document.getElementById('nivo_carbu_recep_vehi_3_4');
+
+    const elt_elec_recep_vehi = document.getElementById('elec_recep_vehi');
+    const elt_meca_recep_vehi = document.getElementById('meca_recep_vehi');
+    const elt_pb_electro_recep_vehi = document.getElementById('pb_electro_recep_vehi');
+    const elt_pb_demar_recep_vehi = document.getElementById('pb_demar_recep_vehi');
+    const elt_pb_meca_recep_vehi = document.getElementById('pb_meca_recep_vehi');
+    const elt_sup_adblue_recep_vehi = document.getElementById('sup_adblue_recep_vehi');
+    const elt_sup_fil_parti_recep_vehi = document.getElementById('sup_fil_parti_recep_vehi');
+    const elt_sup_vanne_egr_recep_vehi = document.getElementById('sup_vanne_egr_recep_vehi');
+
+    const elt_voyant_1 = document.getElementById('voyant_1');
+    const elt_voyant_2 = document.getElementById('voyant_2');
+    const elt_voyant_3 = document.getElementById('voyant_3');
+    const elt_voyant_4 = document.getElementById('voyant_4');
+    const elt_voyant_5 = document.getElementById('voyant_5');
+    const elt_voyant_6 = document.getElementById('voyant_6');
+    const elt_voyant_7 = document.getElementById('voyant_7');
+    const elt_voyant_8 = document.getElementById('voyant_8');
+    const elt_voyant_9 = document.getElementById('voyant_9');
+    const elt_voyant_10 = document.getElementById('voyant_10');
+    const elt_voyant_11 = document.getElementById('voyant_11');
+    const elt_voyant_12 = document.getElementById('voyant_12');
+    const elt_voyant_13 = document.getElementById('voyant_13');
+    const elt_voyant_14 = document.getElementById('voyant_14');
+    const elt_voyant_15 = document.getElementById('voyant_15');
+    const elt_voyant_16 = document.getElementById('voyant_16');
+    const elt_voyant_17 = document.getElementById('voyant_17');
+    const elt_voyant_18 = document.getElementById('voyant_18');
+    const elt_voyant_19 = document.getElementById('voyant_19');
+    const elt_voyant_20 = document.getElementById('voyant_20');
+    const elt_voyant_21 = document.getElementById('voyant_21');
+    const elt_voyant_22 = document.getElementById('voyant_22');
+    const elt_voyant_23 = document.getElementById('voyant_23');
+    const elt_voyant_24 = document.getElementById('voyant_24');
+
     function showTab(n) {
       // This function will display the specified tab of the form...
       var x = document.getElementsByClassName("tab");
@@ -1838,24 +1894,174 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
     function validateForm() {
       // This function deals with validation of the form fields
-      var x, y, i, valid = true;
+      var x, y, z, i, valid = true;
       x = document.getElementsByClassName("tab");
       y = x[currentTab].getElementsByTagName("input");
-      // A loop that checks every input field in the current tab:
+      z = x[currentTab].getElementsByTagName("select");
+
+      // Cette boucle vérifie chaque champ input de l'onglet courant
       for (i = 0; i < y.length; i++) {
-        // If a field is empty...
-        if (y[i].value == "") {
-          // add an "invalid" class to the field:
-          y[i].className += " invalid";
-          // and set the current valid status to false
+
+        if (y[i].type == "hidden") { // Traitement des champs de type hidden "champs cachés"
+
+          // Même si la valeur du champ hidden est vide
+          // On valide quaund même son statut
+          if (y[i].value == "") {
+            valid = true;
+          }
+        } else if (y[i].type == "checkbox") { // Traitement des champs de type checkbox
+
+          // On vérifie si l'id de l'élément courant correspond à l'id recherché
+          if (y[i].id == "assur_recep_vehi") {
+
+            // On vérifie que l'élément ayant cet id est checked
+            if (!y[i].checked) {
+              // Si l'élément en question n'est pas checked, alors il est invalide
+              y[i].className += " invalid";
+              valid = true;
+              // valid = false;
+              alert("Veuillez cochez l'assurance SVP !!!");
+            }
+
+          }
+
+          // On vérifie si l'id de l'élément courant correspond à l'id recherché
+          if (y[i].id == "cle_recep_vehi") {
+
+            // On vérifie que l'élément ayant cet id est checked
+            if (!y[i].checked) {
+              // Si l'élément en question n'est pas checked, alors il est invalide
+              y[i].className += " invalid";
+              valid = true;
+              // valid = false;
+              alert("Veuillez cochez la clé du véhicule SVP !!!");
+            }
+
+          }
+
+          // On vérifie si l'id de l'élément courant correspond à l'id recherché
+          if (y[i].id == "visitetech_recep_vehi") {
+
+            // On vérifie que l'élément ayant cet id est checked
+            if (!y[i].checked) {
+              // Si l'élément en question n'est pas checked, alors il est invalide
+              y[i].className += " invalid";
+              // valid = false;
+              valid = true;
+              alert("Veuillez cochez la visite technique SVP !!!");
+            }
+
+          }
+
+          if (y[i].id == "sortie_remarq_recep_vehi") {
+
+            // On vérifie que l'élément ayant cet id est checked
+            if (!y[i].checked) {
+              // Si l'élément en question n'est pas checked, alors il est invalide
+              // y[i].className += " invalid";
+              valid = true;
+              // alert("Veuillez cochez le statut remorqué SVP !!!");
+            }
+
+          }
+        } else if (y[i].type == "text") { // Traitement des champs de type text
+
+          // Si l'élément courant est celui recherché
+          if (y[i].id == "arriv_remarq_recep_vehi_text") {
+
+            // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+            if (elt_etat_vehi_arrive_remorq.id == "etat_vehi_arrive_remorq") {
+
+              // On vérifie que l'élément ayant cet id est checked
+              // et que la valeur de ce élément checked est "remorqué"
+              if (elt_etat_vehi_arrive_remorq.checked && elt_etat_vehi_arrive_remorq.value == "Remorqué") {
+
+                // console.log(elt_etat_vehi_arrive_remorq);
+
+                // Si la valeur ou le contenu de l'élément text courant est vide alors il est invalid
+                if (y[i].value == "") {
+
+                  // console.log(y[i]);
+
+                  // Si le champ text est invalide, une alerte est déclenchée
+                  y[i].className += " invalid";
+                  // valid = false;
+                  valid = true;
+                  alert("Veuillez renseigner ce champ SVP lorsque le véhicule est rémorqué !!!");
+                }
+
+              } else { // Sinon si le bouton radio de valeur "remorqué" n'est pas coché
+
+                // Même si la valeur ou le contenu de l'élément text courant est vide
+                // alors il est valide
+                if (y[i].value == "") {
+
+                  // console.log(y[i]);
+
+                  valid = true;
+                }
+
+              }
+
+            }
+
+          } else if (y[i].id == "sortie_remarq_recep_vehi_text") {
+
+            if (y[i].value == "") {
+              valid = true;
+            }
+
+          } else {
+            // Même si la valeur du champ hidden est vide
+            // On valide quaund même son statut
+            if (y[i].value == "") {
+              // add an "invalid" class to the field:
+              y[i].className += " invalid";
+              // and set the current valid statut to false
+              // valid = false;
+              valid = true;
+              // valid = true;
+            }
+
+          }
+
+        } else if (y[i].type == "number") {
+
+          if (y[i].id == "km_reception_vehi") {
+            if (y[i].value == "") {
+              valid = true;
+            }
+          }
+
+          if (y[i].id == "cle_recep_vehi_text") {
+            if (y[i].value == "") {
+              valid = true;
+            }
+          }
+
+        } else {
           valid = true;
         }
       }
-      // If the valid status is true, mark the step as finished and valid:
+
+      // Cette boucle vérifie chaque champ select de l'onglet courant
+      for (i = 0; i < z.length; i++) {
+        // If a field is empty...
+        if (z[i].value == "") {
+          // add an "invalid" class to the field:
+          z[i].className += " invalid";
+          // and set the current valid statut to false
+          // valid = false;
+          valid = true;
+          // valid = true;
+        }
+      }
+
+      // If the valid statut is true, mark the step as finished and valid:
       if (valid) {
         document.getElementsByClassName("step")[currentTab].className += " finish";
       }
-      return valid; // return the valid status
+      return valid; // return the valid statut
     }
 
     function fixStepIndicator(n) {
@@ -1867,6 +2073,650 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
       //... and adds the "active" class on the current step:
       x[n].className += " active";
     }
+
+    // Au chargement du DOM
+    $(document).ready(function() {
+
+      elt_nivo_carbu_recep_vehi_0_4.addEventListener('click', function() { // On écoute l'événement click sur cet élément
+
+        // On vérifie que l'élément ayant cet id est checked
+        if (elt_nivo_carbu_recep_vehi_0_4.checked == true) {
+
+          // console.log(elt_nivo_carbu_recep_vehi_0_4.checked);
+
+          // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
+          elt_nivo_carbu_recep_vehi_1_2.checked = false;
+          elt_nivo_carbu_recep_vehi_2_4.checked = false;
+          elt_nivo_carbu_recep_vehi_3_4.checked = false;
+
+          // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+          if (elt_elec_recep_vehi.id == "elec_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_elec_recep_vehi.disabled = true;
+          }
+          // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+          if (elt_meca_recep_vehi.id == "meca_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_meca_recep_vehi.disabled = true;
+          }
+          if (elt_pb_electro_recep_vehi.id == "pb_electro_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_electro_recep_vehi.disabled = true;
+          }
+          if (elt_pb_demar_recep_vehi.id == "pb_demar_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_demar_recep_vehi.disabled = true;
+          }
+          if (elt_pb_meca_recep_vehi.id == "pb_meca_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_meca_recep_vehi.disabled = true;
+          }
+          if (elt_sup_adblue_recep_vehi.id == "sup_adblue_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_adblue_recep_vehi.disabled = true;
+          }
+          if (elt_sup_fil_parti_recep_vehi.id == "sup_fil_parti_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_fil_parti_recep_vehi.disabled = true;
+          }
+          if (elt_sup_vanne_egr_recep_vehi.id == "sup_vanne_egr_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_vanne_egr_recep_vehi.disabled = true;
+          }
+
+
+          if (elt_voyant_1.id == "voyant_1") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_1.disabled = true;
+          }
+          if (elt_voyant_2.id == "voyant_2") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_2.disabled = true;
+          }
+          if (elt_voyant_3.id == "voyant_3") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_3.disabled = true;
+          }
+          if (elt_voyant_4.id == "voyant_4") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_4.disabled = true;
+          }
+          if (elt_voyant_5.id == "voyant_5") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_5.disabled = true;
+          }
+          if (elt_voyant_6.id == "voyant_6") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_6.disabled = true;
+          }
+          if (elt_voyant_7.id == "voyant_7") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_7.disabled = true;
+          }
+          if (elt_voyant_8.id == "voyant_8") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_8.disabled = true;
+          }
+          if (elt_voyant_9.id == "voyant_9") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_9.disabled = true;
+          }
+          if (elt_voyant_10.id == "voyant_10") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_10.disabled = true;
+          }
+          if (elt_voyant_11.id == "voyant_11") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_11.disabled = true;
+          }
+          if (elt_voyant_12.id == "voyant_12") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_12.disabled = true;
+          }
+          if (elt_voyant_13.id == "voyant_13") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_13.disabled = true;
+          }
+          if (elt_voyant_14.id == "voyant_14") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_14.disabled = true;
+          }
+          if (elt_voyant_15.id == "voyant_15") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_15.disabled = true;
+          }
+          if (elt_voyant_16.id == "voyant_16") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_16.disabled = true;
+          }
+          if (elt_voyant_17.id == "voyant_17") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_17.disabled = true;
+          }
+          if (elt_voyant_18.id == "voyant_18") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_18.disabled = true;
+          }
+          if (elt_voyant_19.id == "voyant_19") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_19.disabled = true;
+          }
+          if (elt_voyant_20.id == "voyant_20") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_20.disabled = true;
+          }
+          if (elt_voyant_21.id == "voyant_21") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_21.disabled = true;
+          }
+          if (elt_voyant_22.id == "voyant_22") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_22.disabled = true;
+          }
+          if (elt_voyant_23.id == "voyant_23") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_23.disabled = true;
+          }
+          if (elt_voyant_24.id == "voyant_24") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_24.disabled = true;
+          }
+
+        }
+      });
+
+      elt_nivo_carbu_recep_vehi_1_2.addEventListener('click', function() { // On écoute l'événement click sur cet élément
+
+        // console.log(elt_nivo_carbu_recep_vehi_0_4.checked);
+
+        // On vérifie que l'élément ayant cet id est checked
+        if (elt_nivo_carbu_recep_vehi_1_2.checked == true) {
+
+          // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
+          elt_nivo_carbu_recep_vehi_0_4.checked = false;
+          elt_nivo_carbu_recep_vehi_2_4.checked = false;
+          elt_nivo_carbu_recep_vehi_3_4.checked = false;
+
+          // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+          if (elt_elec_recep_vehi.id == "elec_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_elec_recep_vehi.disabled = false;
+          }
+          // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+          if (elt_meca_recep_vehi.id == "meca_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_meca_recep_vehi.disabled = false;
+          }
+          if (elt_pb_electro_recep_vehi.id == "pb_electro_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_electro_recep_vehi.disabled = false;
+          }
+          if (elt_pb_demar_recep_vehi.id == "pb_demar_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_demar_recep_vehi.disabled = false;
+          }
+          if (elt_pb_meca_recep_vehi.id == "pb_meca_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_meca_recep_vehi.disabled = false;
+          }
+          if (elt_sup_adblue_recep_vehi.id == "sup_adblue_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_adblue_recep_vehi.disabled = false;
+          }
+          if (elt_sup_fil_parti_recep_vehi.id == "sup_fil_parti_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_fil_parti_recep_vehi.disabled = false;
+          }
+          if (elt_sup_vanne_egr_recep_vehi.id == "sup_vanne_egr_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_vanne_egr_recep_vehi.disabled = false;
+          }
+
+          if (elt_voyant_1.id == "voyant_1") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_1.disabled = false;
+          }
+          if (elt_voyant_2.id == "voyant_2") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_2.disabled = false;
+          }
+          if (elt_voyant_3.id == "voyant_3") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_3.disabled = false;
+          }
+          if (elt_voyant_4.id == "voyant_4") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_4.disabled = false;
+          }
+          if (elt_voyant_5.id == "voyant_5") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_5.disabled = false;
+          }
+          if (elt_voyant_6.id == "voyant_6") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_6.disabled = false;
+          }
+          if (elt_voyant_7.id == "voyant_7") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_7.disabled = false;
+          }
+          if (elt_voyant_8.id == "voyant_8") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_8.disabled = false;
+          }
+          if (elt_voyant_9.id == "voyant_9") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_9.disabled = false;
+          }
+          if (elt_voyant_10.id == "voyant_10") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_10.disabled = false;
+          }
+          if (elt_voyant_11.id == "voyant_11") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_11.disabled = false;
+          }
+          if (elt_voyant_12.id == "voyant_12") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_12.disabled = false;
+          }
+          if (elt_voyant_13.id == "voyant_13") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_13.disabled = false;
+          }
+          if (elt_voyant_14.id == "voyant_14") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_14.disabled = false;
+          }
+          if (elt_voyant_15.id == "voyant_15") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_15.disabled = false;
+          }
+          if (elt_voyant_16.id == "voyant_16") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_16.disabled = false;
+          }
+          if (elt_voyant_17.id == "voyant_17") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_17.disabled = false;
+          }
+          if (elt_voyant_18.id == "voyant_18") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_18.disabled = false;
+          }
+          if (elt_voyant_19.id == "voyant_19") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_19.disabled = false;
+          }
+          if (elt_voyant_20.id == "voyant_20") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_20.disabled = false;
+          }
+          if (elt_voyant_21.id == "voyant_21") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_21.disabled = false;
+          }
+          if (elt_voyant_22.id == "voyant_22") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_22.disabled = false;
+          }
+          if (elt_voyant_23.id == "voyant_23") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_23.disabled = false;
+          }
+          if (elt_voyant_24.id == "voyant_24") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_24.disabled = false;
+          }
+
+        }
+      });
+
+      elt_nivo_carbu_recep_vehi_2_4.addEventListener('click', function() { // On écoute l'événement click sur cet élément
+
+        // console.log(elt_nivo_carbu_recep_vehi_0_4.checked);
+
+        // On vérifie que l'élément ayant cet id est checked
+        if (elt_nivo_carbu_recep_vehi_2_4.checked == true) {
+
+          // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
+          elt_nivo_carbu_recep_vehi_0_4.checked = false;
+          elt_nivo_carbu_recep_vehi_1_2.checked = false;
+          elt_nivo_carbu_recep_vehi_3_4.checked = false;
+
+          // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+          if (elt_elec_recep_vehi.id == "elec_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_elec_recep_vehi.disabled = false;
+          }
+          // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+          if (elt_meca_recep_vehi.id == "meca_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_meca_recep_vehi.disabled = false;
+          }
+          if (elt_pb_electro_recep_vehi.id == "pb_electro_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_electro_recep_vehi.disabled = false;
+          }
+          if (elt_pb_demar_recep_vehi.id == "pb_demar_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_demar_recep_vehi.disabled = false;
+          }
+          if (elt_pb_meca_recep_vehi.id == "pb_meca_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_meca_recep_vehi.disabled = false;
+          }
+          if (elt_sup_adblue_recep_vehi.id == "sup_adblue_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_adblue_recep_vehi.disabled = false;
+          }
+          if (elt_sup_fil_parti_recep_vehi.id == "sup_fil_parti_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_fil_parti_recep_vehi.disabled = false;
+          }
+          if (elt_sup_vanne_egr_recep_vehi.id == "sup_vanne_egr_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_vanne_egr_recep_vehi.disabled = false;
+          }
+
+          if (elt_voyant_1.id == "voyant_1") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_1.disabled = false;
+          }
+          if (elt_voyant_2.id == "voyant_2") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_2.disabled = false;
+          }
+          if (elt_voyant_3.id == "voyant_3") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_3.disabled = false;
+          }
+          if (elt_voyant_4.id == "voyant_4") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_4.disabled = false;
+          }
+          if (elt_voyant_5.id == "voyant_5") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_5.disabled = false;
+          }
+          if (elt_voyant_6.id == "voyant_6") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_6.disabled = false;
+          }
+          if (elt_voyant_7.id == "voyant_7") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_7.disabled = false;
+          }
+          if (elt_voyant_8.id == "voyant_8") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_8.disabled = false;
+          }
+          if (elt_voyant_9.id == "voyant_9") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_9.disabled = false;
+          }
+          if (elt_voyant_10.id == "voyant_10") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_10.disabled = false;
+          }
+          if (elt_voyant_11.id == "voyant_11") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_11.disabled = false;
+          }
+          if (elt_voyant_12.id == "voyant_12") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_12.disabled = false;
+          }
+          if (elt_voyant_13.id == "voyant_13") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_13.disabled = false;
+          }
+          if (elt_voyant_14.id == "voyant_14") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_14.disabled = false;
+          }
+          if (elt_voyant_15.id == "voyant_15") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_15.disabled = false;
+          }
+          if (elt_voyant_16.id == "voyant_16") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_16.disabled = false;
+          }
+          if (elt_voyant_17.id == "voyant_17") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_17.disabled = false;
+          }
+          if (elt_voyant_18.id == "voyant_18") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_18.disabled = false;
+          }
+          if (elt_voyant_19.id == "voyant_19") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_19.disabled = false;
+          }
+          if (elt_voyant_20.id == "voyant_20") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_20.disabled = false;
+          }
+          if (elt_voyant_21.id == "voyant_21") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_21.disabled = false;
+          }
+          if (elt_voyant_22.id == "voyant_22") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_22.disabled = false;
+          }
+          if (elt_voyant_23.id == "voyant_23") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_23.disabled = false;
+          }
+          if (elt_voyant_24.id == "voyant_24") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_24.disabled = false;
+          }
+
+        }
+      });
+
+      elt_nivo_carbu_recep_vehi_3_4.addEventListener('click', function() { // On écoute l'événement click sur cet élément
+
+        // console.log(elt_nivo_carbu_recep_vehi_0_4.checked);
+
+        // On vérifie que l'élément ayant cet id est checked
+        if (elt_nivo_carbu_recep_vehi_3_4.checked == true) {
+
+          // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
+          elt_nivo_carbu_recep_vehi_0_4.checked = false;
+          elt_nivo_carbu_recep_vehi_2_4.checked = false;
+          elt_nivo_carbu_recep_vehi_1_2.checked = false;
+
+          // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+          if (elt_elec_recep_vehi.id == "elec_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_elec_recep_vehi.disabled = false;
+          }
+          // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+          if (elt_meca_recep_vehi.id == "meca_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_meca_recep_vehi.disabled = false;
+          }
+          if (elt_pb_electro_recep_vehi.id == "pb_electro_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_electro_recep_vehi.disabled = false;
+          }
+          if (elt_pb_demar_recep_vehi.id == "pb_demar_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_demar_recep_vehi.disabled = false;
+          }
+          if (elt_pb_meca_recep_vehi.id == "pb_meca_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_pb_meca_recep_vehi.disabled = false;
+          }
+          if (elt_sup_adblue_recep_vehi.id == "sup_adblue_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_adblue_recep_vehi.disabled = false;
+          }
+          if (elt_sup_fil_parti_recep_vehi.id == "sup_fil_parti_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_fil_parti_recep_vehi.disabled = false;
+          }
+          if (elt_sup_vanne_egr_recep_vehi.id == "sup_vanne_egr_recep_vehi") {
+            // Si c'est le cas, on le désactive
+            elt_sup_vanne_egr_recep_vehi.disabled = false;
+          }
+
+          if (elt_voyant_1.id == "voyant_1") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_1.disabled = false;
+          }
+          if (elt_voyant_2.id == "voyant_2") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_2.disabled = false;
+          }
+          if (elt_voyant_3.id == "voyant_3") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_3.disabled = false;
+          }
+          if (elt_voyant_4.id == "voyant_4") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_4.disabled = false;
+          }
+          if (elt_voyant_5.id == "voyant_5") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_5.disabled = false;
+          }
+          if (elt_voyant_6.id == "voyant_6") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_6.disabled = false;
+          }
+          if (elt_voyant_7.id == "voyant_7") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_7.disabled = false;
+          }
+          if (elt_voyant_8.id == "voyant_8") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_8.disabled = false;
+          }
+          if (elt_voyant_9.id == "voyant_9") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_9.disabled = false;
+          }
+          if (elt_voyant_10.id == "voyant_10") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_10.disabled = false;
+          }
+          if (elt_voyant_11.id == "voyant_11") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_11.disabled = false;
+          }
+          if (elt_voyant_12.id == "voyant_12") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_12.disabled = false;
+          }
+          if (elt_voyant_13.id == "voyant_13") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_13.disabled = false;
+          }
+          if (elt_voyant_14.id == "voyant_14") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_14.disabled = false;
+          }
+          if (elt_voyant_15.id == "voyant_15") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_15.disabled = false;
+          }
+          if (elt_voyant_16.id == "voyant_16") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_16.disabled = false;
+          }
+          if (elt_voyant_17.id == "voyant_17") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_17.disabled = false;
+          }
+          if (elt_voyant_18.id == "voyant_18") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_18.disabled = false;
+          }
+          if (elt_voyant_19.id == "voyant_19") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_19.disabled = false;
+          }
+          if (elt_voyant_20.id == "voyant_20") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_20.disabled = false;
+          }
+          if (elt_voyant_21.id == "voyant_21") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_21.disabled = false;
+          }
+          if (elt_voyant_22.id == "voyant_22") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_22.disabled = false;
+          }
+          if (elt_voyant_23.id == "voyant_23") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_23.disabled = false;
+          }
+          if (elt_voyant_24.id == "voyant_24") {
+            // Si c'est le cas, on le désactive
+            elt_voyant_24.disabled = false;
+          }
+
+        }
+      });
+
+    });
+
+    // function writediv(texte) {
+    //     document.getElementById('immabox').innerHTML = texte;
+    // }
+
+    // function verifImma(immatriculation) {
+    //     if (immatriculation != '') {
+
+    //         if (texte = file('verif_imma.php?imma=' + escape(immatriculation))) {
+
+    //             if (texte == 1)
+    //                 writediv('<span style="color:#cc0000"><b>' + immatriculation + ' :</b> ce immatriculation est deja pris</span>');
+
+    //             else if (texte == 2)
+    //                 writediv('<span style="color:#1A7917"><b>' + immatriculation + ' :</b> ce immatriculation est libre</span>');
+
+    //             else
+    //                 writediv(texte);
+    //         }
+    //     }
+    // }
+
+    function getImmaValue() {
+
+      // On récupère l'élément immatriculation 
+      var elt_immat = document.getElementById('immat');
+      // on récupère le nom de domaine de l'application
+      var web_url = "<?php echo WEB_URL; ?>";
+
+      // On fait une redirection en faisant passer la valeur de l'immatriculation saisie dans l'url
+      window.location.href = web_url + "repaircar/addcar_reception.php?immat=" + elt_immat.value;
+
+    }
+
+    // function file(fichier) {
+    //     if (window.XMLHttpRequest) // FIREFOX
+    //         xhr_object = new XMLHttpRequest();
+
+    //     else if (window.ActiveXObject) // IE
+    //         xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+
+    //     else
+
+    //         return (false);
+
+    //     xhr_object.open("GET", fichier, false);
+    //     xhr_object.send(null);
+    //     if (xhr_object.readyState == 4) return (xhr_object.responseText);
+    //     else return (false);
+    // }
 
     $(document).ready(function() {
       setTimeout(function() {

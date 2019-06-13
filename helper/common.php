@@ -2,12 +2,17 @@
 //include_once('../config.php');v
 class wms_core
 {
-	public function getBoncmdeInfo($con, $bcdeId)
+	public function getRepairCarSimuDevis($con, $devisSimuId)
 	{
-
-		$query = "SELECT *
-			from tbl_add_boncmde
-			WHERE boncmde_id = " . (int)$bcdeId;
+		$query = "SELECT car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
+		c_address, VIN, add_date_mise_circu, devsim.*, princ_tel, add_date_visitetech
+			from tbl_add_devis_simulation devsim
+			join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
+			left join tbl_add_car cr on cr.VIN = adv.imma_vehi_client
+            left join tbl_add_customer cus on cus.customer_id = cr.customer_id
+			-- inner join tbl_make ma on cr.car_make = ma.make_id 
+			-- inner join tbl_model mo on cr.car_model = mo.model_id 
+			WHERE devis_id ='" . (int)$devisSimuId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -18,7 +23,6 @@ class wms_core
 		}
 
 		$row = mysql_fetch_assoc($result);
-
 		return $row;
 	}
 
@@ -26,13 +30,14 @@ class wms_core
 	{
 
 		$query = "SELECT distinct car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
-		c_address, VIN, add_date_mise_circu, devsim.*, facsim.*, princ_tel, add_date_visitetech, ma.*, mo.*
+		c_address, VIN, add_date_mise_circu, devsim.*, facsim.*, princ_tel, add_date_visitetech, ma.*, mo.*, adv.*
 
 			from tbl_add_devis_simulation devsim
-			join tbl_add_car cr on devsim.attribution_vehicule = cr.car_id
-            join tbl_add_customer cus on cus.customer_id = cr.customer_id
-			inner join tbl_make ma on cr.car_make = ma.make_id 
-			inner join tbl_model mo on cr.car_model = mo.model_id
+			join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
+			left join tbl_add_car cr on cr.VIN = adv.imma_vehi_client
+            left join tbl_add_customer cus on cus.customer_id = cr.customer_id
+			left join tbl_make ma on cr.car_make = ma.make_id 
+			left join tbl_model mo on cr.car_model = mo.model_id
 			inner join tbl_add_facture_simulation facsim on facsim.devis_simulation_id = devsim.devis_id
 			WHERE devsim.devis_id ='" . (int)$devisId . "'";
 
@@ -53,12 +58,13 @@ class wms_core
 	{
 
 		$query = "SELECT car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
-		c_address, VIN, add_date_mise_circu, devsim.*, princ_tel, add_date_visitetech, ma.*, mo.*
+		c_address, VIN, add_date_mise_circu, devsim.*, princ_tel, add_date_visitetech, ma.*, mo.*, adv.*
 			from tbl_add_devis_simulation devsim
-			left join tbl_add_car cr on devsim.attribution_vehicule = cr.car_id
+			join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
+			left join tbl_add_car cr on cr.VIN = adv.imma_vehi_client
             left join tbl_add_customer cus on cus.customer_id = cr.customer_id
-			inner join tbl_make ma on cr.car_make = ma.make_id 
-			inner join tbl_model mo on cr.car_model = mo.model_id
+			left join tbl_make ma on cr.car_make = ma.make_id 
+			left join tbl_model mo on cr.car_model = mo.model_id
 			WHERE devis_id ='" . (int)$devisId . "'";
 
 		$result = mysql_query($query, $con);
@@ -70,6 +76,51 @@ class wms_core
 		}
 
 		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
+	public function getAllRepairCarSimuDevisList($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		// On récupère les infos du devis de réparation d'un véhicule en les regroupant par 
+		// identifiants de diagnostic
+		$query = "SELECT devsim.devis_id, adv.*
+			from tbl_add_devis_simulation devsim
+			left join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
+			";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getBoncmdeInfo($con, $bcdeId)
+	{
+
+		$query = "SELECT bcde.*, s_name
+			from tbl_add_boncmde bcde
+			inner join tbl_add_supplier su ON su.supplier_id = bcde.supplier_id
+			WHERE boncmde_id = " . (int)$bcdeId;
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+
 		return $row;
 	}
 
@@ -99,29 +150,6 @@ class wms_core
 		return $row;
 	}
 
-	public function getRepairCarSimuDevis($con, $devisSimuId)
-	{
-		$query = "SELECT car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
-		c_address, VIN, add_date_mise_circu, devsim.*, princ_tel, add_date_visitetech
-			from tbl_add_devis_simulation devsim
-			left join tbl_add_car cr on devsim.attribution_vehicule = cr.car_id
-            left join tbl_add_customer cus on cus.customer_id = cr.customer_id
-			-- inner join tbl_make ma on cr.car_make = ma.make_id 
-			-- inner join tbl_model mo on cr.car_model = mo.model_id 
-			WHERE devis_id ='" . (int)$devisSimuId . "'";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		$row = mysql_fetch_assoc($result);
-		return $row;
-	}
-
 	public function getAllRepairCarSimuDevisFactureList($con)
 	{
 		// Déclaration et initialisation d'un array vide
@@ -134,31 +162,6 @@ class wms_core
 			left join tbl_recep_vehi_repar rvr on devsim.attribution_vehicule = rvr.add_car_id
             left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			inner join tbl_add_facture_simulation fac on fac.devis_simulation_id = devsim.devis_id
-			";
-
-		// Exécution et stockage du résultat de la requête
-		$result = mysql_query($query, $con);
-
-		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
-		// Pour chaque ligne, on l'affecte à une variable tampon
-		// Puis dans l'array
-		while ($row = mysql_fetch_assoc($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
-	public function getAllRepairCarSimuDevisList($con)
-	{
-		// Déclaration et initialisation d'un array vide
-		$data = array();
-
-		// On récupère les infos du devis de réparation d'un véhicule en les regroupant par 
-		// identifiants de diagnostic
-		$query = "SELECT devis_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech
-		from tbl_add_devis_simulation devsim
-			left join tbl_recep_vehi_repar rvr on devsim.attribution_vehicule = rvr.add_car_id
-            left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			";
 
 		// Exécution et stockage du résultat de la requête
@@ -439,9 +442,12 @@ class wms_core
 		if (!empty($data)) {
 			if ($data['boncmde_id'] == '0') {
 
-				$query = "INSERT INTO tbl_add_boncmde(boncmde_num, boncmde_designation, boncmde_qte, boncmde_pu_ht, boncmde_total_ht)
+				$boncmde_date_creation = date('d/m/Y');
 
-				values('$data[numboncmde]','$data[codedesiboncmde]','$data[qteboncmde]','$data[prixhtboncmde]','$data[tothtboncmde]')";
+				$query = "INSERT INTO tbl_add_boncmde(boncmde_num, boncmde_designation, boncmde_qte, boncmde_pu_ht, boncmde_total_ht, supplier_id, boncmde_date_creation)
+
+				values('$data[numboncmde]','$data[codedesiboncmde]','$data[qteboncmde]',null,null,
+				'$data[four]','$boncmde_date_creation')";
 				$result = mysql_query($query, $con);
 			} else {
 
@@ -4992,12 +4998,12 @@ class wms_core
 			//Date de la visite technique
 			$datetech = DateTime::createFromFormat('d/m/Y', $data['add_date_visitetech']);
 
-			$timestampstechnique =  $datetech->format('U');
+			// $timestampstechnique =  $datetech->format('U');
 
 			//assurance
 			$dateassur = DateTime::createFromFormat('d/m/Y', $data['add_date_assurance']);
 
-			$timestampsassurance =  $dateassur->format('U');
+			// $timestampsassurance =  $dateassur->format('U');
 
 			if ($data['repair_car'] == '0') {
 				$query = "INSERT INTO tbl_add_car(repair_car_id, car_name, customer_id, car_make, car_model, year,
@@ -5005,7 +5011,8 @@ class wms_core
 				add_date_assurance, add_date_assurance_fin, genre, energie, assurance, type_boite_vitesse,
 				add_date_mise_circu, add_date_imma, nb_cylindre, couleur_vehi, fisc_vehi,
 				pj1_url, pj2_url, pj3_url, pj4_url, pj5_url, pj6_url, pj7_url, pj8_url, pj9_url, pj10_url, pj11_url, pj12_url,
-				duree_assurance, add_date_ctr_tech, delai_ctr_tech
+				duree_assurance, add_date_ctr_tech, delai_ctr_tech, add_date_derniere_vidange, add_date_changement_filtre_air,
+				add_date_changement_filtre_huile, add_date_changement_filtre_pollen
 				)
                    values('$data[hfInvoiceId]','$data[car_names]','$data[ddlCustomerList]','$data[ddlMake]','$data[ddlModel]',
 				   '$data[ddlYear]','$data[car_chasis_no]','$data[vin]','$data[car_note]','$data[add_date]',
@@ -5015,7 +5022,9 @@ class wms_core
 				   '$data[add_date_mise_circu]','$data[add_date_imma]','$data[nb_cylindre]','$data[couleur_vehi]','$data[fisc_vehi]',
 				   '$data[pj1_url]','$data[pj2_url]','$data[pj3_url]','$data[pj4_url]','$data[pj5_url]','$data[pj6_url]','$data[pj7_url]',
 				   '$data[pj8_url]','$data[pj9_url]','$data[pj10_url]','$data[pj11_url]','$data[pj12_url]','$data[duree_assurance]',
-				   '$data[add_date_ctr_tech]','$data[delai_ctr_tech]'
+				   '$data[add_date_ctr_tech]','$data[delai_ctr_tech]','$data[add_date_derniere_vidange]',
+				   '$data[add_date_changement_filtre_air]','$data[add_date_changement_filtre_huile]',
+				   '$data[add_date_changement_filtre_pollen]'
 				   )";
 				$result = mysql_query($query, $con);
 			} else {
@@ -5026,7 +5035,10 @@ class wms_core
 				`image`='" . $image_url . "',`car_pneu_av`='" . $data['car_pneu_av'] . "',`car_gente_ar`='" . $data['car_gente_ar'] . "',
 				`car_pneu_ar`='" . $data['car_pneu_ar'] . "',`car_gente_av`='" . $data['car_gente_av'] . "',
 				`add_date_visitetech`='" . $data['add_date_visitetech'] . "',`add_date_assurance`='" . $data['add_date_assurance'] . "',
-				`add_date_assurance_fin`='" . $data['add_date_assurance_fin'] . "',
+				`add_date_derniere_vidange`='" . $data['add_date_derniere_vidange'] . "',
+				`add_date_changement_filtre_air`='" . $data['add_date_changement_filtre_air'] . "', 
+				`add_date_changement_filtre_huile`='" . $data['add_date_changement_filtre_huile'] . "',
+				`add_date_changement_filtre_pollen`='" . $data['add_date_changement_filtre_pollen'] . "',
 				`timestampstechnique`='" . $timestampstechnique . "',`genre`='" . $data[genre_vehi_recep] . "',
 				`energie`='" . $data[energie_vehi_recep] . "', `assurance`='" . $data[assurance_vehi_recep] . "',
 				`type_boite_vitesse`='" . $data[boite_vitesse_vehi_recep] . "', `add_date_mise_circu`='" . $data[add_date_mise_circu] . "',

@@ -46,7 +46,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 									<div id="message" class="alert alert-danger alert-dismissible fade show">The message has been sent.</div>
 								<?php } ?> -->
 								<div class="form-group row">
-									<label class="control-label col-sm-2" for="fname">Fournisseur*:</label>
+									<label class="control-label col-sm-2" for="fname">Fournisseur:</label>
 									<div class="col-sm-10">
 										<select required class="form-control" name="four" id="four" onchange="loadSupplierEmail(this.value);">
 											<option value=''>--Sélectionnez un fournisseur--</option>
@@ -60,7 +60,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 									</div>
 								</div>
 								<div class="form-group row">
-									<label class="control-label col-sm-2" for="email">Email*:</label>
+									<label class="control-label col-sm-2" for="email">Email:</label>
 									<div class="col-sm-10" id="email_supplier">
 										<input type="email" class="form-control" id="email" name="email">
 									</div>
@@ -68,11 +68,12 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 								<div class="form-group row">
 									<label class="control-label col-sm-2" for="lname">Fichier joint:</label>
 									<div class="col-sm-10">
-										<input type="file" class="form-control" id="attachFile" name="attachFile">
+										<span class="btn btn-file btn btn-primary">Ajouter la fiche des pièces de rechange en fichier joint<input type="file" id="attachFile" name="attachFile" onchange="loadFile(event)" />
+										</span>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label class="control-label col-sm-2" for="comment">Message*:</label>
+									<label class="control-label col-sm-2" for="comment">Message:</label>
 									<div class="col-sm-10">
 										<textarea class="form-control" rows="5" name="message" id="message"></textarea>
 									</div>

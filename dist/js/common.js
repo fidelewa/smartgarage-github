@@ -962,18 +962,18 @@ function loadModel(mid) {
 	});
 }
 
-function loadSupplierEmail(sid) {
-	$.ajax({
-		url: '../ajax/getstate.php',
-		type: 'POST',
-		data: 'sid=' + sid + '&token=getsupplier',
-		dataType: 'html',
-		success: function (data) {
-			$("#email_supplier").html(data);
-			// $("#ddlYear").val('data');
-		}
-	});
-}
+// function loadSupplierEmail(sid) {
+// 	$.ajax({
+// 		url: '../ajax/getstate.php',
+// 		type: 'POST',
+// 		data: 'sid=' + sid + '&token=getsupplier',
+// 		dataType: 'html',
+// 		success: function (data) {
+// 			$("#email_supplier").html(data);
+// 			// $("#ddlYear").val('data');
+// 		}
+// 	});
+// }
 
 //A partir de l'identifiant du client on charge les données (immatriculation) des voitures lui appartenant
 function loadImmaVoiture(clientid) {

@@ -15,7 +15,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add') {
 }
 if (isset($_GET['m']) && $_GET['m'] == 'attrib_vehi') {
     $addinfo = 'block';
-    $msg = "Le devis N° " . $_GET['devis_simu_id'] . " à bien été attribué à la voiture " . $_GET['car_name'] . " " . $_GET['car_imma'];
+    $msg = "Le devis N° " . $_GET['devis_simu_id'] . " à bien été attribué à la voiture " . $_GET['car_make'] . " " . $_GET['car_model']. " " . $_GET['car_imma'];
 }
 if (isset($_GET['m']) && $_GET['m'] == 'up') {
     $addinfo = 'block';
@@ -65,12 +65,11 @@ $model_post_token = 0;
                         <thead>
                             <tr>
                                 <th>N° Devis</th>
+                                <th>Nom du client</th>
+                                <th>Téléphone</th>
                                 <th>Immatriculation</th>
-                                <th>Client</th>
-                                <th>Date reception</th>
-                                <th>Date exp. assur</th>
-                                <th>Date exp. vis. tech.</th>
-                                <!-- <th>Attribué à</th> -->
+                                <th>Marque</th>
+                                <th>Modèle</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -83,24 +82,14 @@ $model_post_token = 0;
                             // die();
 
                             foreach ($result as $row) {
-                                // $image = WEB_URL . 'img/no_image.jpg';
-                                // $image_customer = WEB_URL . 'img/no_image.jpg';
-
-                                // if (file_exists(ROOT_PATH . '/img/upload/' . $row['image_vehi']) && $row['image_vehi'] != '') {
-                                //     $image = WEB_URL . 'img/upload/' . $row['image_vehi']; //car image
-                                // }
-                                // if (file_exists(ROOT_PATH . '/img/upload/' . $row['customer_image']) && $row['customer_image'] != '') {
-                                //     $image_customer = WEB_URL . 'img/upload/' . $row['customer_image']; //customer iamge
-                                // }
-
                                 ?>
                                 <tr>
                                     <td><span class="label label-success"><?php echo $row['devis_id']; ?></span></td>
-                                    <td><?php echo $row['num_matricule']; ?></td>
-                                    <td><?php echo $row['c_name']; ?></td>
-                                    <td><?php echo $row['add_date_recep_vehi']; ?></td>
-                                    <td><?php echo $row['add_date_assurance']; ?></td>
-                                    <td><?php echo $row['add_date_visitetech']; ?></td>
+                                    <td><?php echo $row['nom_client']; ?></td>
+                                    <td><?php echo $row['numero_tel_client']; ?></td>
+                                    <td><?php echo $row['imma_vehi_client']; ?></td>
+                                    <td><?php echo $row['marque_vehi_client']; ?></td>
+                                    <td><?php echo $row['model_vehi_client']; ?></td>
                                     <td>
                                         <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_doc.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
                                         <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_simu.php?devis_simu_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture à partir de ce devis"><i class="fa fa-plus"></i></a>
@@ -142,14 +131,24 @@ $model_post_token = 0;
                         </div>
 
                         <div class="form-group">
-                            <label><span style="color:red;">*</span> Immatriculation du véhicule :</label>
+                            <label> Immatriculation du véhicule :</label>
                             <!-- <input required type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule"> -->
                             <input required onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
                         </div>
 
-                        <div class="form-group" id="marque_modele_vehi_box">
+                        <!-- <div class="form-group" id="marque_modele_vehi_box">
                             <label>Marque et modèle du véhicule :</label>
                             <input readonly onfocus="loadVehiData();" type="text" name="modeleMarqueVehi" id="marque_modele_vehi" class="form-control" value="">
+                        </div> -->
+
+                        <div class="form-group">
+                            <label>Marque du véhicule :</label>
+                            <input type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Modèle du véhicule :</label>
+                            <input type="text" class='form-control' name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture">
                         </div>
 
                         <!-- <div class="row">
@@ -180,9 +179,9 @@ $model_post_token = 0;
                         <button type="submit" class="btn btn-success" id="submit">Valider</button>
                     </div>
 
-                    <input type="hidden" value="" name="txtCPassword" />
+                    <!-- <input type="hidden" value="" name="txtCPassword" />
                     <input type="hidden" value="" name="tel_wa" />
-                    <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
+                    <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" /> -->
                     <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
                 </form>
             </div>

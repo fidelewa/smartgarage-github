@@ -98,7 +98,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <th>Code de la pièce</th>
                                                         <th class="text-center"><b>Pièce de rechange</b></th>
                                                         <th>Désignations</th>
-                                                        <th>Marque</th>
+                                                        <!-- <th>Marque</th> -->
                                                         <th>Quantité</th>
                                                         <th>Tarif HT</th>
                                                         <th>Taux Remise</th>
@@ -116,7 +116,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                                 <input type="hidden" id="parts_id_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][stock_parts]" value="<?php echo $estimate->stock_parts; ?>" />
                                                             </td>
                                                             <td class="text-right"><input id="parts_desc_<?php echo $row; ?>" type="text" value="" name="estimate_data[<?php echo $row; ?>][designation]" class="form-control" /></td>
-                                                            <td class="text-right"><input id="marque_<?php echo $row; ?>" type="text" value="" name="estimate_data[<?php echo $row; ?>][marque]" class="form-control" /></td>
+                                                            <!-- <td class="text-right"><input id="marque_<?php echo $row; ?>" type="text" value="" name="estimate_data[<?php echo $row; ?>][marque]" class="form-control" /></td> -->
                                                             <td class="text-right"><input id="qty_<?php echo $row; ?>" type="text" name="estimate_data[<?php echo $row; ?>][quantity]" value="0" class="form-control eFire allownumberonly" /></td>
                                                             <td class="text-right"><input id="price_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][prix_piece_rechange_min_devis]" type="text" value="0.00" class="form-control eFirePrice" /></td>
                                                             <td class="text-right"><input id="remise_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][remise_piece_rechange_devis]" type="text" value="0.00" class="form-control eFireRemise" /></td>
@@ -129,23 +129,23 @@ if (isset($_POST) && !empty($_POST)) {
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td colspan="9"></td>
+                                                        <td colspan="8"></td>
                                                         <td class="text-left"><button type="button" onclick="addEstimate();" data-toggle="tooltip" title="Ajouter une estimation" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="8" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
+                                                        <td colspan="7" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
                                                         <td><input id="labour" name="main_oeuvre_piece_rechange_devis" type="text" class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="8" class="text-right">Total HT:</td>
+                                                        <td colspan="7" class="text-right">Total HT:</td>
                                                         <td><input id="total_ht_gene" name="total_ht_gene_piece_rechange_devis" type="text" value="0.00" readonly class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="8" class="text-right">Total TVA (<?php echo $currency; ?>):</td>
+                                                        <td colspan="7" class="text-right">Total TVA (<?php echo $currency; ?>):</td>
                                                         <td><input id="total_tva" name="total_tva" type="text" value="0.00" readonly class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="8" class="text-right">Total TTC (<?php echo $currency; ?>):</td>
+                                                        <td colspan="7" class="text-right">Total TTC (<?php echo $currency; ?>):</td>
                                                         <td><input id="total_ttc_gene" name="total_ttc_gene_piece_rechange_devis" type="text" value="0.00" readonly class="form-control allownumberonly" /></td>
                                                     </tr>
 
@@ -191,7 +191,7 @@ if (isset($_POST) && !empty($_POST)) {
                                 <input type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule">
                             </div>
 
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="ddlMake">Marque du véhicule :</label>
                                     <select class="form-control" onchange="loadModel(this.value);" name="ddlMake_2" id="ddlMake_2">
@@ -211,7 +211,7 @@ if (isset($_POST) && !empty($_POST)) {
                                         <option value=''>--Choisir un modèle--</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
                         <div class="modal-footer">
@@ -234,7 +234,7 @@ if (isset($_POST) && !empty($_POST)) {
             <div class="modal-content">
                 <div class="modal-header green_header">
                     <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                    <h3 class="modal-title">Filtrer les pièces</h3>
+                    <h3 class="modal-title">Rechercher des pièces</h3>
                 </div>
                 <div class="modal-body">
                     <div class="box box-info" id="box_model">
@@ -242,7 +242,7 @@ if (isset($_POST) && !empty($_POST)) {
                             <div class="box-header">
                                 <h3 class="box-title"><i class="fa fa-search"></i> Rechercher des pièces</h3>
                             </div>
-                            <div class="form-group col-md-6">
+                            <!-- <div class="form-group col-md-6">
                                 <label for="ddlMake">Marque :</label>
                                 <select class="form-control" onchange="loadYear(this.value);" name="ddlMake" id="ddlMake">
                                     <option value=''>--Sélectionnez Marque--</option>
@@ -260,7 +260,7 @@ if (isset($_POST) && !empty($_POST)) {
                                 <select class="form-control" onchange="loadPartsData();" name="ddlModel" id="ddl_model">
                                     <option value=''>--Choisir un modèle--</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <!-- <div class="form-group col-md-4">
                                 <label for="ddl_model">Modèle :</label>
                                 <select class="form-control" onchange="loadYearData(this.value);" name="ddlModel" id="ddl_model">
@@ -274,7 +274,7 @@ if (isset($_POST) && !empty($_POST)) {
                                 </select>
                             </div> -->
                             <div class="form-group col-md-12">
-                                <label for="txtPartsName">Type Nom des pièces :</label>
+                                <label for="txtPartsName">Saisissez le nom de la pièce :</label>
                                 <input class="form-control" type="text" name="txtPartsName" id="txtPartsName" />
                             </div>
                             <div class="form-group col-md-12">
@@ -312,7 +312,7 @@ if (isset($_POST) && !empty($_POST)) {
             html += '  <td class="text-right"><button data-toggle="tooltip" title="Ajouter une pièce de rechange à partir du stock" type="button" name="estimate_data[' + row + '][button]" onClick=loadModal(' + row + '); class="btn btn-info btnsp"><i class="fa fa-plus"></i></button><input type="hidden" id="parts_id_' + row + '" name="estimate_data[' + row + '][stock_parts]" value="0" /></td>';
             // html += '  <td class="text-right"><input id="parts_desc_' + row + '" type="text" name="estimate_data[' + row + '][discription]" class="form-control parts_list" /></td>';
             html += '  <td class="text-right"><input id="parts_desc_' + row + '" type="text" name="estimate_data[' + row + '][designation]" class="form-control parts_list"></td>';
-            html += '  <td class="text-right"><input type="text" id="marque_' + row + '" name="estimate_data[' + row + '][marque]" value="" class="form-control" /></td>';
+            // html += '  <td class="text-right"><input type="text" id="marque_' + row + '" name="estimate_data[' + row + '][marque]" value="" class="form-control" /></td>';
             html += '  <td class="text-right"><input id="qty_' + row + '" type="text" name="estimate_data[' + row + '][quantity]" value="0" class="form-control eFire allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="price_' + row + '" name="estimate_data[' + row + '][price]" value="0.00" class="form-control eFirePrice allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="remise_' + row + '" name="estimate_data[' + row + '][remise_piece_rechange_devis]" value="0.00" class="form-control eFireRemise allownumberonly" /></td>';
