@@ -17,7 +17,7 @@ if (!empty($row) && count($row) > 0) { ?>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Fiche de comparaison des prix des pièces de rechange par fournisseurs</title>
+        <title>Bon de commande</title>
         <link href="<?php echo WEB_URL; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
         <style>

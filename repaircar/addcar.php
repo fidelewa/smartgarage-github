@@ -133,6 +133,10 @@ if (isset($_POST['car_names'])) {
   // On insère la nouvelle valeur de la colonne car_name en BDD
   $wms->saveUpdateRepairCarInformation($link, $_POST, $image_url);
   if ((int)$_POST['repair_car'] > 0) {
+
+    // var_dump($_POST);
+    // die();
+
     $url = WEB_URL . 'repaircar/carlist.php?m=up';
     header("Location: $url");
   } else {
@@ -473,7 +477,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
 <div class="container">
 
   <section class="content-header">
-    <h1><i class="fa fa-wrench"></i> Création de véhicule</h1>
+    <h1> Création de véhicule</h1>
     <ol class="breadcrumb">
       <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a href="<?php echo WEB_URL ?>repaircar/carlist.php"> Création de véhicule</a></li>

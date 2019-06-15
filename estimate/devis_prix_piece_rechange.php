@@ -65,7 +65,7 @@ if (isset($_POST) && !empty($_POST)) {
 <body>
 
     <section class="content-header">
-        <h1><i class="fa fa-wrench"></i> Formulaire de création du devis de réparation du véhicule
+        <h1> Formulaire de création du devis de réparation du véhicule
         </h1>
         <!-- <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -116,7 +116,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                             <th>Taux Remise</th>
                                                             <th>Total HT</th>
                                                             <th>Total TTC</th>
-                                                            <th>&nbsp;</th>
+                                                            <th></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

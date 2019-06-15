@@ -56,7 +56,7 @@ if (isset($_POST) && !empty($_POST)) {
 <body>
 
     <section class="content-header">
-        <h1><i class="fa fa-wrench"></i> Formulaire de comparaison des prix des pièces de rechange par fournisseurs
+        <h1> Formulaire de comparaison des prix des pièces de rechange par fournisseurs
         </h1>
         <!-- <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>

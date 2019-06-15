@@ -99,7 +99,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <th>Taux Remise</th>
                                                         <th>Total HT</th>
                                                         <th>Total TTC</th>
-                                                        <th>&nbsp;</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

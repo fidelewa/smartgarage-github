@@ -20,7 +20,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1><i class="fa fa-wrench"></i> Liste de mes bons de commande</h1>
+    <h1>Liste de mes bons de commande</h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Liste de mes bons de commande</li>

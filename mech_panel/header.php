@@ -161,7 +161,7 @@ if (!empty($_SESSION['objMech']['image'])) {
                       } ?> tm10"><a href="<?php echo WEB_URL; ?>mech_panel/mech_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
           <li class="treeview <?php if ($page_name != '' && $page_name == 'workstatus' || $page_name == 'addworkstatus') {
                                 echo 'active';
-                              } ?>"> <a href="<?php echo WEB_URL; ?>mech_panel/workstatus.php"> <i class="fa fa-wrench"></i> <span>Travail quotidien</span></a></li>
+                              } ?>"> <a href="<?php echo WEB_URL; ?>mech_panel/workstatus.php">  <span>Travail quotidien</span></a></li>
           <li class="treeview <?php if ($page_name != '' && $page_name == 'rptmsalary') {
                                 echo 'active';
                               } ?>"> <a href="<?php echo WEB_URL; ?>mech_panel/rptmsalary.php"> <i class="fa fa-money"></i> <span>Statut de salaire</span></a></li>

@@ -20,7 +20,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1><i class="fa fa-wrench"></i> Liste des factures de réparation attribuées à des véhicules</h1>
+    <h1><i class="fa fa-list"></i> Liste des factures de réparation attribuées à des véhicules</h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Liste des factures de réparation attribuées à des véhicules</li>
@@ -55,12 +55,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                         <thead>
                             <tr>
                                 <th>N° Facture</th>
+                                <th>Nom du client</th>
+                                <th>Téléphone</th>
                                 <th>Immatriculation</th>
-                                <th>Client</th>
-                                <th>Date reception</th>
-                                <th>Date exp. assur</th>
-                                <th>Date exp. vis. tech.</th>
-                                <!-- <th>Attribué à</th> -->
+                                <th>Marque</th>
+                                <th>Modèle</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -85,11 +84,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                 ?>
                                 <tr>
                                     <td><span class="label label-success"><?php echo $row['facture_id']; ?></span></td>
-                                    <td><?php echo $row['num_matricule']; ?></td>
-                                    <td><?php echo $row['c_name']; ?></td>
-                                    <td><?php echo $row['add_date_recep_vehi']; ?></td>
-                                    <td><?php echo $row['add_date_assurance']; ?></td>
-                                    <td><?php echo $row['add_date_visitetech']; ?></td>
+                                    <td><?php echo $row['nom_client']; ?></td>
+                                    <td><?php echo $row['numero_tel_client']; ?></td>
+                                    <td><?php echo $row['imma_vehi_client']; ?></td>
+                                    <td><?php echo $row['marque_vehi_client']; ?></td>
+                                    <td><?php echo $row['model_vehi_client']; ?></td>
                                     <td>
                                     <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_devis_facture_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la facture"><i class="fa fa-file-text-o"></i></a> -->
                                     <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_doc.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la facture"><i class="fa fa-file-text-o"></i></a>    

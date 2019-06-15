@@ -25,10 +25,10 @@ if (isset($_GET['supplier_id'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Formulaire d'envoi du bon de commande au fournisseur</title>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script> -->
 	<!-- <script src="<?php echo WEB_URL; ?>supplier/validation.js"></script> -->
 	<script type="text/javascript" src="<?php echo WEB_URL; ?>dist/js/typeahead.js"></script>
 	<!-- <link rel="stylesheet" href="style.css"> -->
@@ -48,12 +48,12 @@ if (isset($_GET['supplier_id'])) {
 
 					<div class="box box-success">
 						<div class="box-header">
-							<h3 class="box-title"> Formulaire d'envoi du bon de commande aux fournisseurs</h3>
+							<h1 class="box-title"> Fournisseur - Formulaire d'envoi du bon de commande aux fournisseurs</h1>
 						</div>
 						<div class="box-body">
 							<div class="contact-form">
 								<!-- <?php if (!empty($_GET['success']) && $_GET['success'] == 1) { ?>
-														<div id="message" class="alert alert-danger alert-dismissible fade show">The message has been sent.</div>
+															<div id="message" class="alert alert-danger alert-dismissible fade show">The message has been sent.</div>
 								<?php } ?> -->
 								<div class="form-group row">
 									<label class="control-label col-sm-2" for="fname">Fournisseur:</label>
@@ -79,9 +79,14 @@ if (isset($_GET['supplier_id'])) {
 								<div class="form-group row">
 									<label class="control-label col-sm-2" for="lname">Fichier joint:</label>
 									<div class="col-sm-10">
-										<span class="btn btn-file btn btn-primary">Ajouter le bon de commande en fichier joint<input type="file" id="attachFile" name="attachFile" onchange="loadFile(event)" />
+										<span class="btn btn-file btn btn-primary">Ajouter le bon de commande en fichier joint<input required type="file" id="attachFile" name="attachFile" onchange="loadFile(event)" />
 										</span>
 									</div>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputFile">File input</label>
+									<input type="file" id="exampleInputFile">
+									<p class="help-block">Example block-level help text here.</p>
 								</div>
 								<div class="form-group row">
 									<label class="control-label col-sm-2" for="comment">Message:</label>
@@ -100,12 +105,12 @@ if (isset($_GET['supplier_id'])) {
 																			echo $_SESSION['boncmde_id'];
 																		} ?>">
 						<input type="hidden" name="supplier_id" id="supplier_id" value="<?php if (isset($_GET['supplier_id']) || isset($_SESSION['supplier_id'])) {
-																			echo $_SESSION['supplier_id'];
-																		} ?>">
+																							echo $_SESSION['supplier_id'];
+																						} ?>">
 						<!-- /.box-body -->
 					</div>
 					<!-- /.box -->
-		
+
 				</div>
 			</div>
 			</div>

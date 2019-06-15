@@ -74,7 +74,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
 <body>
     <section class="content-header">
-        <h1>Formulaire d'enregistrement d'un bon de commande
+        <h1>Réception de véhicule - Formulaire d'enregistrement d'un bon de commande
         </h1>
         <!-- <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -83,7 +83,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
         </ol> -->
     </section>
 
-    <div class="container">
+    <div class="content">
         <!-- Main content -->
         <form method="post" enctype="multipart/form-data" id="mainForm" name="mainForm" role="form">
             <section class="content">
@@ -150,8 +150,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
             <div class="pull-right">
                 <button type="submit" class="btn btn-success btnsp"><i class="fa fa-save fa-2x"></i><br />
                     <?php echo $button_text; ?></button>&emsp;
-                <a class="btn btn-warning btnsp" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Retour"><i class="fa fa-reply  fa-2x"></i><br />
-                            Retour</a> 
+                <!-- <a class="btn btn-warning btnsp" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Retour"><i class="fa fa-reply  fa-2x"></i><br />
+                            Retour</a>  -->
             </div>
         </form>
     </div>

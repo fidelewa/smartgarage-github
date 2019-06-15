@@ -33,7 +33,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1><i class="fa fa-wrench"></i> Liste des véhicules réceptionnés</h1>
+    <h1> Liste des véhicules réceptionnés</h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Liste des voitures réceptionnées</li>

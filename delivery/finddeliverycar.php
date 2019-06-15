@@ -114,7 +114,7 @@ if (!empty($_POST)) {
         <div class="col-md-12" style="border-top:solid 2px #00a65a"><br/>
         </div>
         <div class="box-header">
-          <h3 class="box-title"><i class="fa fa-wrench"></i> Repair Détails de la voiture</h3>
+          <h3 class="box-title"> Repair Détails de la voiture</h3>
         </div>
         <div style="width:98%;height:auto;border:solid 1px #ccc;padding:10px;margin:10px;">
           <div class="col-md-3"><img class="img-thumbnail" style="width:150px;height:150px;" src="<?php echo $image; ?>" /></div>

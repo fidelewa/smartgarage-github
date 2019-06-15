@@ -28,7 +28,7 @@ $model_post_token = 0;
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1><i class="fa fa-wrench"></i> Liste des devis de réparation attribués à des véhicules</h1>
+    <h1> Devis - Liste des devis attribués à des véhicules</h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Liste des devis de réparation attribués à des véhicules</li>
@@ -87,7 +87,7 @@ $model_post_token = 0;
                                     <td><span class="label label-success"><?php echo $row['devis_id']; ?></span></td>
                                     <td><?php echo $row['nom_client']; ?></td>
                                     <td><?php echo $row['numero_tel_client']; ?></td>
-                                    <td><?php echo $row['imma_vehi_client']; ?></td>
+                                    <td><?php if(isset($row['imma_vehi_client'])){echo $row['imma_vehi_client'];}else{ echo "<p><span class='label label-warning'>Veuillez attribuer un véhicule à ce devis</span>";} ?></td>
                                     <td><?php echo $row['marque_vehi_client']; ?></td>
                                     <td><?php echo $row['model_vehi_client']; ?></td>
                                     <td>

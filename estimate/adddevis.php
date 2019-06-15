@@ -10,7 +10,7 @@ $model_post_token = 0;
 // Somme des totaux des prix des pièces de rechange
 // $somme_total_prix_piece_rechange = 0;
 
-$button_text = "Enregistrer information";
+$button_text = "Enregistrer le devis";
 // $form_url = WEB_URL . "estimate/adddevis_traitement.php";
 
 // var_dump($_SESSION);
@@ -65,7 +65,7 @@ if (isset($_POST) && !empty($_POST)) {
 <body>
 
     <section class="content-header">
-        <h1><i class="fa fa-wrench"></i> Formulaire de création du devis de réparation d'un véhicule
+        <h1> Devis - créer un devis de réparation
         </h1>
         <!-- <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -104,7 +104,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <th>Taux Remise</th>
                                                         <th>Total HT</th>
                                                         <th>Total TTC</th>
-                                                        <th>&nbsp;</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -274,7 +274,7 @@ if (isset($_POST) && !empty($_POST)) {
                                 </select>
                             </div> -->
                             <div class="form-group col-md-12">
-                                <label for="txtPartsName">Saisissez le nom de la pièce :</label>
+                                <label for="txtPartsName">Saisissez le nom ou le code barre de la pièce :</label>
                                 <input class="form-control" type="text" name="txtPartsName" id="txtPartsName" />
                             </div>
                             <div class="form-group col-md-12">
@@ -284,10 +284,11 @@ if (isset($_POST) && !empty($_POST)) {
                                         <thead>
                                             <tr>
                                                 <td class="text-center"><b>Image</b></td>
-                                                <td class="text-center"><b>Nom</b></td>
-                                                <td class="text-center"><b>Prix</b></td>
-                                                <td class="text-center"><b>Garantie</b></td>
-                                                <td class="text-center"><b>Quantité</b></td>
+                                                <td class="text-center"><b>Code</b></td>
+                                                <td class="text-center"><b>Désignation</b></td>
+                                                <td class="text-center"><b>Prix base HT</b></td>
+                                                <!-- <td class="text-center"><b>Garantie</b></td> -->
+                                                <td class="text-center"><b>Quantité/stock</b></td>
                                             </tr>
                                         </thead>
                                         <tbody id="laod_parts_data">
@@ -340,7 +341,7 @@ if (isset($_POST) && !empty($_POST)) {
             });
         }
 
-        function addDataToEstimate(obj, parts_id, price, qty, warranty) {
+        function addDataToEstimate(obj, parts_id, price, qty, code_piece) {
             if (parseInt(qty) > 0) {
                 var row = $("#estimate_row").val();
                 var parts_name = $(obj).find(".parts_name").html();
@@ -349,7 +350,7 @@ if (isset($_POST) && !empty($_POST)) {
                 $("#qty_" + row).val('1');
                 $("#total_" + row).val(price);
                 $("#parts_id_" + row).val(parts_id);
-                $("#warranty_" + row).val(warranty);
+                $("#codepiece_" + row).val(code_piece);
                 totalEstCost();
                 $("#filter_popup").modal("hide")
             } else {

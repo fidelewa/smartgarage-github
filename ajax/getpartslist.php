@@ -19,11 +19,19 @@
 				$html .= "<tr onclick=addDataToEstimate(this,'".$rows['parts_id']."','".$rows['price']."','".$rows['quantity']."','".$warranty."'); style='cursor:pointer;'><td><img style='width:50px;height:50px;' class='img-thumbnail' src='".$image."' /></td><td class='parts_name'>".$rows['parts_name']."</td><td>".$rows['price']."</td><td align='center'>".$rows['parts_warranty']."</td><td class='text-center'>".$rows['quantity']."</td></tr>";
 			}
 		} else if(!empty($_POST['token']) && $_POST['token'] == 'name'){
-			$result = $wms->ajaxPartsListByPartsName($link, $_POST);
+			// $result = $wms->ajaxPartsListByPartsName($link, $_POST);
+			$result = $wms->ajaxPieceListByPieceName($link, $_POST);
+
 			foreach($result as $rows) {
 				$image = '';
-				if($rows['parts_image'] != ''){ $image = WEB_URL . 'img/upload/' . $rows['parts_image'];}
-				$html .= "<tr onclick=addDataToEstimate(this,'".$rows['parts_id']."','".$rows['parts_sell_price']."','".$rows['parts_quantity']."'); style='cursor:pointer;'><td><img style='width:50px;height:50px;' class='img-thumbnail' src='".$image."' /></td><td class='parts_name'>".$rows['parts_name']."</td><td align='center'>".$rows['parts_warranty']."</td><td>".$rows['parts_sell_price']."</td><td class='text-center'>".$rows['parts_quantity']."</td></tr>";
+				if($rows['image_url'] != ''){ $image = WEB_URL . 'img/upload/' . $rows['image_url'];}
+				$html .= "<tr onclick=addDataToEstimate(this,'".$rows['piece_stock_id']."','".$rows['prix_base_ttc']."','".$rows['stock_piece']."','".$rows['code_piece']."'); style='cursor:pointer;'>
+				<td><img style='width:50px;height:50px;' class='img-thumbnail' src='".$image."' /></td>
+				<td>".$rows['code_piece']."</td>
+				<td class='parts_name'>".$rows['lib_piece']."</td>
+				<td>".$rows['prix_base_ttc']."</td>
+				<td class='text-center'>".$rows['stock_piece']."</td>
+				</tr>";
 			}
 		} else if(!empty($_POST['token']) && $_POST['token'] == 'getsalaryamount'){
 			$result = $wms->ajaxGetMechanicsSalary($link, $_POST['mid']);
@@ -58,5 +66,4 @@
 function string_sanitize($s) {
     $result = preg_replace("/[^a-zA-Z0-9]+/", "-", $s);
     return $result;
-}	
-?>
+}

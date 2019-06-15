@@ -7,7 +7,7 @@ $i = 0;
 // Somme des totaux des prix des pièces de rechange
 // $somme_total_prix_piece_rechange = 0;
 
-$button_text = "Enregistrer information";
+$button_text = "Enregistrer la facture";
 
 $wms = new wms_core();
 
@@ -32,7 +32,9 @@ if (isset($_POST) && !empty($_POST)) {
 
         // On met à jour la quantité de la pièce de rechange en question dans le stock
         // A la validation du formulaire de facture
-        $row = $wms->updateQtyPartsStock($link, $fac_data);
+        // $row = $wms->updateQtyPartsStock($link, $fac_data);
+        $row = $wms->updateQtyPieceStock($link, $fac_data);
+        
     }
 
     // Linéarisation de l'array des estimations pour le stocker en base de données
@@ -113,7 +115,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <th>Taux Remise</th>
                                                         <th>Total HT</th>
                                                         <th>Total TTC</th>
-                                                        <th>&nbsp;</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

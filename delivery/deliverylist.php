@@ -34,7 +34,7 @@ $delivery_list = $wms->getAllDeliveryCarList($link);
               <th>Email</th>
               <th>Registration No</th>
               <th>Livré</th>
-              <th>&nbsp;</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
