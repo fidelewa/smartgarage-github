@@ -274,7 +274,6 @@ if (!empty($rows) && count($rows) > 0) { ?>
         </div>
         <div id="mobile-preview-close_2">
             <a style="" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>"> Créer un devis </a>
-            <a style="" href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"> Créer un bon de commande </a>
         </div>
         <script>
             jQuery(document).ready(function() {

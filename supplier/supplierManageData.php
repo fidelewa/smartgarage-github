@@ -53,7 +53,7 @@ $button_text = "Enregistrer les informations";
 
                                     $supplier_manage_data = $wms->getSupplierInfoBySupplierIdAndBcmd($link, $_GET['supplier_id']);
 
-                                    var_dump($supplier_manage_data);
+                                    // var_dump($supplier_manage_data);
 
                                     if (!empty($supplier_manage_data) && count($supplier_manage_data) > 0) { ?>
 

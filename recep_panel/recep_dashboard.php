@@ -167,7 +167,7 @@ function arrayValueExist($array, $value) {
                         <tbody>
                             <?php
 
-                            $result = $wms->getAllRecepRepairCarList($link);
+                            $result = $wms->getAllRecepRepairCarListByRecepId($link, $_SESSION['objRecep']['user_id']);
 
                             // var_dump($result);
 

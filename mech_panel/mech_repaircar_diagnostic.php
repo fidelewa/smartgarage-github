@@ -103,7 +103,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
 <body>
 
     <section class="content-header">
-        <h1> Formulaire de création de la fiche de diagnostic d'un véhicule</h1>
+        <h1><i class="fa fa-wrench"></i> Formulaire de création de la fiche de diagnostic d'un véhicule</h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="<?php echo WEB_URL ?>repaircar/carlist.php"> fiche de diagnostic</a></li>
@@ -235,7 +235,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
 
                     <div class="box box-success" id="box_model">
                         <div class="box-header">
-                            <h3 class="box-title"> Pièces de rechange requis</h3>
+                            <h3 class="box-title"><i class="fa fa-wrench"></i> Pièces de rechange requis</h3>
                         </div>
                         <div class="box-body">
                             <div class="form-group col-md-12">
@@ -247,7 +247,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                                                 <!-- <th class="text-center"><b>Prix(<?php echo $currency; ?>)</b></th> -->
                                                 <th class="text-center"><b> Quantité </b></th>
                                                 <!-- <th class="text-center"><b>Montant</b></th> -->
-                                                <th></th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>

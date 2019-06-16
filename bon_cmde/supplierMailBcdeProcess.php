@@ -38,7 +38,7 @@ if ($_POST['email']) {
 		$mail = new \PHPMailer\PHPMailer\PHPMailer();
 		$mail->AddAddress($toEmail);
 		$mail->From = $admin_email;
-		$mail->FromName = 'Luxury Admin';
+		$mail->FromName = 'Luxury Garage';
 		$mail->Subject = "E-mail du bon de commande";
 		$body = "<table>
 			<tr>

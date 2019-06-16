@@ -3,16 +3,379 @@
 class wms_core
 {
 	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepRepairCarList($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, m_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
+		add_car_id, diag.id as vehi_diag_id
+			from tbl_recep_vehi_repar rvr
+			left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
+			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+	
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepRepairCarListByRecepId($con, $recepId)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, m_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
+		add_car_id, diag.id as vehi_diag_id
+			from tbl_recep_vehi_repar rvr
+			left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
+			left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
+			join tbl_add_reception recep on recep.reception_id = rvr.attrib_recep
+			where attrib_recep ='" . (int)$recepId . "'
+			";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function saveStockPiece($con, $data, $image_url)
+	{
+		$queryInsertPieceStock = "INSERT INTO tbl_piece_stock(code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc, stock_piece, image_url)
+                values('$data[code_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]','$data[prix_base_ttc]','$data[stock_piece]',
+				'$image_url'
+				)";
+
+		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+		$resultInsertPieceStock = mysql_query($queryInsertPieceStock, $con);
+
+		if (!$resultInsertPieceStock) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryInsertPieceStock;
+			die($message);
+		}
+	}
+
+	public function getAllPieceData_2($con)
+	{
+		$data = array();
+
+		// $query = "SELECT image_url, code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc , count(*) as stock_piece
+		// FROM tbl_add_piece 
+		// WHERE famille_piece IN ('huile','electrique','mecanique','accessoire')
+		// GROUP BY famille_piece, lib_piece
+		// ";
+
+		$query = "SELECT image_url, code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc , count(*) as stock_piece
+		FROM tbl_add_piece
+		GROUP BY lib_piece
+		";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+
+		// if ($row = mysql_fetch_assoc($result)) {
+		// 	$data = $row;
+		// }
+
+		return $data;
+	}
+
+	public function getAllPieceData($con)
+	{
+		$data = array();
+
+		// $query = "SELECT image_url, code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc , count(*) as stock_piece
+		// FROM tbl_add_piece 
+		// WHERE famille_piece IN ('huile','electrique','mecanique','accessoire')
+		// GROUP BY famille_piece, lib_piece
+		// ";
+
+		$query = "SELECT *
+		FROM tbl_piece_stock
+		";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+
+		// if ($row = mysql_fetch_assoc($result)) {
+		// 	$data = $row;
+		// }
+
+		return $data;
+	}
+
+	public function saveUpdatePieceInfo($con, $data, $image_url)
+	{
+		if (!empty($data)) {
+			if ($data['piece_id'] == '0') {
+
+				$query = "INSERT INTO tbl_add_piece(code_piece, code_barre_piece, lib_piece, type_piece, 
+				famille_piece, dernier_prix_achat, montant_frais, prix_revient, coefficient, prix_base_ht,
+				prix_base_ttc, image_url)
+
+				values('$data[code_piece]','$data[code_barre_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]',
+				'$data[last_pa]','$data[mont_frais]','$data[prix_revient]','$data[coeff]','$data[prix_base_ht]','$data[prix_base_ttc]',
+				'$image_url'
+				)";
+				$result = mysql_query($query, $con);
+			} else {
+
+				$query = "UPDATE `tbl_add_piece` 
+				SET `code_piece`='" . $data['code_piece'] . "',`code_barre_piece`='" . $data['code_barre_piece'] . "',
+				`lib_piece`='" . $data['lib_piece'] . "',`type_piece`='" . $data['type_piece'] . "',
+				`famille_piece`='" . $data['famille_piece'] . "',`dernier_prix_achat`='" . $data['last_pa'] . "',
+				`montant_frais`='" . $data['mont_frais'] . "',`prix_revient`='" . $data['prix_revient'] . "',
+				`coefficient`='" . $data['coeff'] . "',`prix_base_ht`='" . $data['prix_base_ht'] . "',
+				`prix_base_ttc`='" . $data['prix_base_ttc'] . "',`image_url`='" . $image_url . "'
+				WHERE add_piece_id='" . $data['piece_id'] . "'";
+				$result = mysql_query($query, $con);
+			}
+
+			if (!$result) {
+				var_dump($data);
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		}
+	}
+
+	public function getPieceStockDataByCodePiece($con, $code_piece)
+	{
+		$data = array();
+
+		$query = "SELECT *
+		FROM tbl_piece_stock
+		WHERE code_piece = '" . $code_piece . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// while ($row = mysql_fetch_assoc($result)) {
+		// 	$data[] = $row;
+		// }
+
+		if ($row = mysql_fetch_assoc($result)) {
+			$data = $row;
+		}
+
+		return $data;
+	}
+
+	/*
+	* @save/update buy parts list information
+	*/
+	public function saveUpdateBuyPiecesInformation($con, $data, $image_url)
+	{
+		if (!empty($data)) {
+			// $piece_id = $data['piece_id']; 
+			// if (!empty($data['ddl_e_parts']) && (int)$data['ddl_e_parts'] > 0) {
+			// 	//buy exisiting
+			// 	//insert into putchase invoice table
+			// 	$parts_id = $data['ddl_e_parts'];
+			// 	mysql_query("INSERT INTO tbl_parts_stock(invoice_id,parts_id,parts_name,supplier_id,manufacturer_id,parts_condition,parts_buy_price,parts_quantity,parts_sku,parts_warranty,total_amount,given_amount,pending_amount,parts_image,parts_added_date) values('$data[invoice_id]','$parts_id','$data[parts_names]','$data[ddl_supplier]','$data[ddl_load_manufracturer]','$data[txtCondition]','$data[buy_prie]','$data[parts_quantity]','$data[parts_sku]','$data[parts_warranty]','$data[total_amount]','$data[given_amount]','$data[pending_amount]','$image_url','" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "')", $con);
+			// 	$stock_table = $this->getPartsStockStatusFromStockTable($con, $parts_id);
+			// 	if (!empty($stock_table)) {
+			// 		$qty = (int)$stock_table['quantity'] + (int)$data['parts_quantity'];
+			// 		mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . (int)$qty . "' WHERE parts_id = '" . (int)$parts_id . "'", $con);
+			// 	}
+			// } else {
+			$piece_id = $data['piece_id']; // On récupère l'id de la pièce
+
+			if ($piece_id == '0') {
+				// Si la pièce n'existe pas en BDD, on l'enregistre
+				$query = "INSERT INTO tbl_add_piece(code_piece, code_barre_piece, lib_piece, type_piece, 
+				famille_piece, dernier_prix_achat, montant_frais, prix_revient, coefficient, prix_base_ht,
+				prix_base_ttc, image_url)
+
+				values('$data[code_piece]','$data[code_barre_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]',
+				'$data[last_pa]','$data[mont_frais]','$data[prix_revient]','$data[coeff]','$data[prix_base_ht]','$data[prix_base_ttc]',
+				'$image_url'
+				)";
+
+				$result = mysql_query($query, $con);
+
+				if (!$result) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $query;
+					die($message);
+				}
+
+				// On récupère l'identifiant de la dernière pièce ajoutée
+				$piece_id = mysql_insert_id();
+
+				//insert into putchase invoice table
+				// mysql_query("INSERT INTO tbl_parts_stock(invoice_id,parts_id,parts_name,supplier_id,manufacturer_id,parts_condition,parts_buy_price,parts_quantity,parts_sku,parts_warranty,total_amount,given_amount,pending_amount,parts_image,parts_added_date) values('$data[invoice_id]','$parts_id','$data[parts_names]','$data[ddl_supplier]','$data[ddl_load_manufracturer]','$data[txtCondition]','$data[buy_prie]','$data[parts_quantity]','$data[parts_sku]','$data[parts_warranty]','$data[total_amount]','$data[given_amount]','$data[pending_amount]','$image_url','" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "')", $con);
+
+				// On enregistre cette pièce dans le stock des pièces
+				$queryInsertPieceStock = "INSERT INTO tbl_piece_stock(piece_stock_id, code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc, stock_piece, image_url)
+                values('$piece_id','$data[code_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]','$data[prix_base_ttc]','$data[coeff]',
+				'$image_url'
+				)";
+
+				// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+				$resultInsertPieceStock = mysql_query($queryInsertPieceStock, $con);
+
+				if (!$resultInsertPieceStock) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $queryInsertPieceStock;
+					die($message);
+				}
+			} else {
+
+				// var_dump($data);
+				// die();
+
+				$query = "UPDATE `tbl_add_piece` 
+				SET `code_piece`='" . $data['code_piece'] . "',`code_barre_piece`='" . $data['code_barre_piece'] . "',
+				`lib_piece`='" . $data['lib_piece'] . "', `type_piece`='" . $data['type_piece'] . "',
+				`famille_piece`='" . $data['famille_piece'] . "',
+				`dernier_prix_achat`='" . $data['last_pa'] . "',`montant_frais`='" . $data['mont_frais'] . "',
+				`prix_revient`='" . $data['prix_revient'] . "',`coefficient`='" . $data['coeff'] . "',
+				`prix_base_ht`='" . $data['prix_base_ht'] . "',`prix_base_ttc`='" . $data['prix_base_ttc'] . "',
+				`image_url`='" . $image_url . "'
+				WHERE add_piece_id='" . (int)$data['piece_id'] . "'";
+
+				$result = mysql_query($query, $con);
+
+				if (!$result) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $query;
+					die($message);
+				}
+
+				if ((int)$piece_id > 0) {
+					$old_qty = $data['old_qty'];
+					$new_qty = $data['coeff'];
+					$stock_table = $this->getPieceStockStatusFromStockTable($con, $piece_id);
+
+					// var_dump($old_qty);
+					// var_dump($new_qty);
+					// var_dump($stock_table);
+					// die();
+
+					if (!empty($stock_table)) {
+						$current_qty = (int)$stock_table['stock_piece'];
+						$current_qty = (int)$current_qty - (int)$old_qty;
+						$current_qty = (int)$current_qty + (int)$new_qty;
+						//update stock table
+						//$this->saveUpdatePartsVirtualStockTable($con, $parts_id, $current_qty, 'u');
+						$query_2 = "UPDATE `tbl_piece_stock`
+						SET `code_piece` = '" . $data['code_piece'] . "', `image_url`='" . $image_url . "', 
+						`type_piece`='" . $data['type_piece'] . "',`famille_piece`='" . $data['famille_piece'] . "', 
+						`prix_base_ttc`='" . $data['prix_base_ttc'] . "',
+						`stock_piece`='" . (int)$current_qty . "' WHERE piece_stock_id = '" . (int)$piece_id . "'";
+
+						$result = mysql_query($query_2, $con);
+
+						if (!$result) {
+							$message  = 'Invalid query: ' . mysql_error() . "\n";
+							$message .= 'Whole query: ' . $query;
+							die($message);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/*
+	* @get specific parts exist to stock maintain table
+	*/
+	public function getPiecesStockStatusFromStockTable($con, $parts_id)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_piece_stock WHERE parts_id=" . (int)$parts_id, $con);
+		if ($row = mysql_fetch_assoc($result)) {
+			$data = $row;
+		}
+		return $data;
+	}
+
+	/*
 	* @get supplier info by id
 	*/
 	public function getSupplierInfoBySupplierId($con, $supplier_id)
 	{
 		$data = array();
 
+		$query = "SELECT * FROM tbl_add_supplier su
+		WHERE su.supplier_id = '" . (int)$supplier_id . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		if ($row = mysql_fetch_assoc($result)) {
+			$data = $row;
+		}
+
+		return $data;
+	}
+
+	/*
+	* @get supplier info by id
+	*/
+	public function getSupplierInfoBySupplierIdAndBcmd($con, $supplier_id)
+	{
+		$data = array();
+
 		$query = "SELECT s_name, boncmde_num, boncmde_designation, boncmde_date_creation FROM tbl_add_supplier su
 		JOIN tbl_add_boncmde bcde ON  su.supplier_id = bcde.supplier_id
 		WHERE su.supplier_id = '" . (int)$supplier_id . "'";
-		
+
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
@@ -126,51 +489,6 @@ class wms_core
 		return $data;
 	}
 
-	public function getPieceStockDataByCodePiece($con, $code_piece)
-	{
-		$data = array();
-
-		$query = "SELECT *
-		FROM tbl_piece_stock
-		WHERE code_piece = '" . $code_piece . "'";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		// while ($row = mysql_fetch_assoc($result)) {
-		// 	$data[] = $row;
-		// }
-
-		if ($row = mysql_fetch_assoc($result)) {
-			$data = $row;
-		}
-
-		return $data;
-	}
-
-	public function saveStockPiece($con, $data, $image_url)
-	{
-		$queryInsertPieceStock = "INSERT INTO tbl_piece_stock(code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc, stock_piece, image_url)
-                values('$data[code_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]','$data[prix_base_ttc]','$data[stock_piece]',
-				'$image_url'
-				)";
-
-		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-		$resultInsertPieceStock = mysql_query($queryInsertPieceStock, $con);
-
-		if (!$resultInsertPieceStock) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $queryInsertPieceStock;
-			die($message);
-		}
-	}
-
 	public function ajaxPieceListByPieceName($con, $post)
 	{
 		$data = array();
@@ -191,128 +509,6 @@ class wms_core
 				// On fait la différence entre la quantité des pièces de rechange facturées avec celles en stock
 				$qty = (int)$qty - (int)$data['qte_piece_rechange_facture'];
 				mysql_query("UPDATE tbl_parts_stock_manage SET quantity=" . (int)$qty . " WHERE parts_id=" . (int)$data['piece_rechange_id'], $con);
-			}
-		}
-	}
-
-	public function getAllPieceData($con)
-	{
-		$data = array();
-
-		$query = "SELECT image_url, code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc , count(*) as stock_piece
-		FROM tbl_add_piece 
-		WHERE famille_piece IN ('huile','electrique','mecanique','accessoire')
-		GROUP BY famille_piece, lib_piece
-		";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		while ($row = mysql_fetch_assoc($result)) {
-			$data[] = $row;
-		}
-
-		// if ($row = mysql_fetch_assoc($result)) {
-		// 	$data = $row;
-		// }
-
-		return $data;
-	}
-
-	public function saveUpdatePieceInfo($con, $data, $image_url)
-	{
-		if (!empty($data)) {
-			if ($data['piece_id'] == '0') {
-
-				$query = "INSERT INTO tbl_add_piece(code_piece, code_barre_piece, lib_piece, type_piece, 
-				famille_piece, dernier_prix_achat, montant_frais, prix_revient, coefficient, prix_base_ht,
-				prix_base_ttc, image_url)
-
-				values('$data[code_piece]','$data[code_barre_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]',
-				'$data[last_pa]','$data[mont_frais]','$data[prix_revient]','$data[coeff]','$data[prix_base_ht]','$data[prix_base_ttc]',
-				'$image_url'
-				)";
-				$result = mysql_query($query, $con);
-			} else {
-
-				$query = "UPDATE `tbl_add_piece` 
-				SET `code_piece`='" . $data['code_piece'] . "',`code_barre_piece`='" . $data['code_barre_piece'] . "',
-				`lib_piece`='" . $data['lib_piece'] . "',`type_piece`='" . $data['type_piece'] . "',
-				`famille_piece`='" . $data['famille_piece'] . "',`dernier_prix_achat`='" . $data['last_pa'] . "',
-				`montant_frais`='" . $data['mont_frais'] . "',`prix_revient`='" . $data['prix_revient'] . "',
-				`coefficient`='" . $data['coeff'] . "',`prix_base_ht`='" . $data['prix_base_ht'] . "',
-				`prix_base_ttc`='" . $data['prix_base_ttc'] . "',`image_url`='" . $image_url . "'
-				WHERE add_piece_id='" . $data['piece_id'] . "'";
-				$result = mysql_query($query, $con);
-			}
-
-			if (!$result) {
-				var_dump($data);
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
-			}
-		}
-	}
-
-	/*
-	* @save/update buy parts list information
-	*/
-	public function saveUpdateBuyPartsInformation($con, $data)
-	{
-		if (!empty($data)) {
-			$parts_id = $data['parts_id'];
-			if (!empty($data['ddl_e_parts']) && (int)$data['ddl_e_parts'] > 0) {
-				//buy exisiting
-				//insert into putchase invoice table
-				$parts_id = $data['ddl_e_parts'];
-				mysql_query("INSERT INTO tbl_parts_stock(invoice_id,parts_id,parts_name,supplier_id,manufacturer_id,parts_condition,parts_buy_price,parts_quantity,parts_sku,parts_warranty,total_amount,given_amount,pending_amount,parts_image,parts_added_date) values('$data[invoice_id]','$parts_id','$data[parts_names]','$data[ddl_supplier]','$data[ddl_load_manufracturer]','$data[txtCondition]','$data[buy_prie]','$data[parts_quantity]','$data[parts_sku]','$data[parts_warranty]','$data[total_amount]','$data[given_amount]','$data[pending_amount]','$image_url','" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "')", $con);
-				$stock_table = $this->getPartsStockStatusFromStockTable($con, $parts_id);
-				if (!empty($stock_table)) {
-					$qty = (int)$stock_table['quantity'] + (int)$data['parts_quantity'];
-					mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . (int)$qty . "' WHERE parts_id = '" . (int)$parts_id . "'", $con);
-				}
-			} else {
-				$parts_id = $data['parts_id'];
-				if ($parts_id == '0') {
-					//insert into stock table
-					mysql_query("INSERT INTO `tbl_parts_stock_manage`(`parts_id`, `parts_name`, `parts_image`, `part_no`, `price`, `condition`, `parts_warranty`, `supplier_id`, `manufacturer_id`,`quantity`) VALUES (" . (int)$parts_id . ",'" . $data['parts_names'] . "','" . $image_url . "','" . $data['parts_sku'] . "','" . $data['parts_sell_price'] . "','" . $data['txtCondition'] . "','" . $data['parts_warranty'] . "','" . $data['ddl_supplier'] . "','" . $data['ddl_load_manufracturer'] . "','" . $data['parts_quantity'] . "')", $con);
-
-					$parts_id = mysql_insert_id();
-
-					//insert into putchase invoice table
-					mysql_query("INSERT INTO tbl_parts_stock(invoice_id,parts_id,parts_name,supplier_id,manufacturer_id,parts_condition,parts_buy_price,parts_quantity,parts_sku,parts_warranty,total_amount,given_amount,pending_amount,parts_image,parts_added_date) values('$data[invoice_id]','$parts_id','$data[parts_names]','$data[ddl_supplier]','$data[ddl_load_manufracturer]','$data[txtCondition]','$data[buy_prie]','$data[parts_quantity]','$data[parts_sku]','$data[parts_warranty]','$data[total_amount]','$data[given_amount]','$data[pending_amount]','$image_url','" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "')", $con);
-				} else {
-					mysql_query("UPDATE `tbl_parts_stock` SET `parts_name`='" . $data['parts_names'] . "',`supplier_id`='" . $data['ddl_supplier'] . "',`manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`parts_condition`='" . $data['txtCondition'] . "',`parts_buy_price`='" . $data['buy_prie'] . "',`parts_quantity`='" . $data['parts_quantity'] . "',`parts_sku`='" . $data['parts_sku'] . "',`parts_warranty`='" . $data['parts_warranty'] . "',`total_amount`='" . $data['total_amount'] . "',`given_amount`='" . $data['given_amount'] . "',`pending_amount`='" . $data['pending_amount'] . "',`parts_image`='" . $image_url . "',`parts_added_date`='" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "' WHERE invoice_id='" . trim($data['invoice_id']) . "'", $con);
-
-					if ((int)$parts_id > 0) {
-						$old_qty = $data['old_qty'];
-						$new_qty = $data['parts_quantity'];
-						$stock_table = $this->getPartsStockStatusFromStockTable($con, $parts_id);
-						if (!empty($stock_table)) {
-							$current_qty = (int)$stock_table['quantity'];
-							$current_qty = (int)$current_qty - (int)$old_qty;
-							$current_qty = (int)$current_qty + (int)$new_qty;
-							//update stock table
-							//$this->saveUpdatePartsVirtualStockTable($con, $parts_id, $current_qty, 'u');
-							mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . (int)$current_qty . "' WHERE parts_id = '" . (int)$parts_id . "'", $con);
-						}
-					}
-				}
-			}
-			//clear filter tabale for this parts
-			mysql_query("DELETE FROM `tbl_parts_fit_data` WHERE parts_id = " . (int)$parts_id, $con);
-			//add again new
-			if (isset($data['partsfilter']) && $data['partsfilter'] != '' && $parts_id > 0) {
-				foreach ($data['partsfilter'] as $partsdata) {
-					mysql_query("INSERT INTO tbl_parts_fit_data SET parts_id = '" . (int)$parts_id . "',make_id = '" . (int)$partsdata['make'] . "',model_id = '" . (int)$partsdata['model'] . "',year_id = '" . (int)$partsdata['year'] . "'", $con);
-				}
 			}
 		}
 	}
@@ -1278,7 +1474,7 @@ class wms_core
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
-			WHERE cus.customer_id ='" . (int)$cusId . "'";
+			WHERE cus.customer_id ='" . (int)$cusId . "' AND confirm_devis = 1 ";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2296,33 +2492,6 @@ class wms_core
 	/*
 	* @get all Voiture de réparation list
 	*/
-	public function getAllRecepRepairCarList($con)
-	{
-		// Déclaration et initialisation d'un array vide
-		$data = array();
-
-		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, m_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
-		add_car_id, diag.id as vehi_diag_id
-			from tbl_recep_vehi_repar rvr
-			left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
-			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
-			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id";
-
-		// Exécution et stockage du résultat de la requête
-		$result = mysql_query($query, $con);
-
-		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
-		// Pour chaque ligne, on l'affecte à une variable tampon
-		// Puis dans l'array
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
-	/*
-	* @get all Voiture de réparation list
-	*/
 	public function getAllRecepRepairCarListByCustomer($con, $cust_id)
 	{
 		// Déclaration et initialisation d'un array vide
@@ -2375,7 +2544,7 @@ class wms_core
 			voyant_21, voyant_22, voyant_23, voyant_24, type_km, remarque_prise_charge, remarque_access_vehi,
 			remarque_motif_depot, remarque_etat_vehi_arrive, remarque_aspect_ext, remarque_aspect_int, remarque_etat_vehi_sortie, 
 			etat_vehi_arrive, add_car_id, pj1_url, pj2_url, pj3_url, pj4_url, pj5_url, pj6_url, pj7_url, pj8_url, pj9_url, pj10_url, pj11_url, 
-			pj12_url, pj13_url, pj14_url, pj15_url, pj16_url
+			pj12_url, pj13_url, pj14_url, pj15_url, pj16_url, attrib_recep
 				
 			) 
 			values('$data[hfInvoiceId]','$data[ddlCustomerList]','$data[ddlMake]','$data[ddlModel]','$data[ddlImma]','$data[heure_reception]',
@@ -2407,7 +2576,7 @@ class wms_core
 			'$data[remarque_etat_vehi_sortie]','$data[etat_vehi_arrive]','$data[add_car_id]','$data[pj1_url]','$data[pj2_url]',
 			'$data[pj3_url]','$data[pj4_url]','$data[pj5_url]',
 			'$data[pj6_url]','$data[pj7_url]','$data[pj8_url]','$data[pj9_url]','$data[pj10_url]','$data[pj11_url]','$data[pj12_url]',
-			'$data[pj13_url]','$data[pj14_url]','$data[pj15_url]','$data[pj16_url]'
+			'$data[pj13_url]','$data[pj14_url]','$data[pj15_url]','$data[pj16_url]','$data[recep_id]'
 			)";
 
 		$result = mysql_query($query, $con);
@@ -3045,6 +3214,19 @@ class wms_core
 	{
 		$data = array();
 		$result = mysql_query("SELECT *,psm.price FROM tbl_parts_stock ps INNER JOIN tbl_parts_stock_manage psm on psm.parts_id = ps.parts_id where ps.invoice_id = '" . trim($invoice_id) . "'", $con);
+		if ($row = mysql_fetch_array($result)) {
+			$data = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get Stock de pièces information by parts id
+	*/
+	public function getPieceStockInfoByPieceId($con, $piece_id)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_add_piece p where p.add_piece_id = '" . (int)$piece_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -3770,9 +3952,15 @@ class wms_core
 	/*
 	* @delete parts from stock
 	*/
+	// public function deleteStockPartsInformation($con, $parts_id)
+	// {
+	// 	mysql_query("DELETE FROM `tbl_parts_stock_manage` WHERE parts_id = " . (int)$parts_id, $con);
+	// }
+
 	public function deleteStockPartsInformation($con, $parts_id)
 	{
-		mysql_query("DELETE FROM `tbl_parts_stock_manage` WHERE parts_id = " . (int)$parts_id, $con);
+		mysql_query("DELETE FROM `tbl_piece_stock` WHERE piece_stock_id = " . (int)$parts_id, $con);
+		mysql_query("DELETE FROM `tbl_add_piece` WHERE add_piece_id = " . (int)$parts_id, $con);
 	}
 
 	/*
@@ -5206,6 +5394,17 @@ class wms_core
 		}
 		return $data;
 	}
+
+	public function getPieceStockStatusFromStockTable($con, $piece_id)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_piece_stock WHERE piece_stock_id=" . (int)$piece_id, $con);
+		if ($row = mysql_fetch_assoc($result)) {
+			$data = $row;
+		}
+		return $data;
+	}
+
 	/*
 	* @save/update parts virtual stock table
 	*/

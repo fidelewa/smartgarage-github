@@ -25,13 +25,13 @@ $title = "Réception d'un véhicule";
 $button_text = "Enregistrer information";
 $successful_msg = "Add véhicule de réparation Successfully";
 // $form_url = WEB_URL . "repaircar/addcar.php";
-$form_url = WEB_URL . "recep_panel/recep_repaircar_traitement.php";
+$form_url = WEB_URL . "recep_panel/recep_addcar_reception_traitement.php";
 $id = "";
 $hdnid = "0";
 $image_cus = WEB_URL . 'img/no_image.jpg';
 $img_track = '';
 
-// Création de l'identifiant de réparation
+// Création de l'identifiant de réparation générée automatiquement
 $invoice_id = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
 
 /*added my*/
@@ -39,6 +39,16 @@ $cus_id = 0;
 if (isset($_GET['cid']) && (int)$_GET['cid'] > 0) {
     $cus_id = $_GET['cid'];
 }
+
+// var_dump($_SESSION);
+
+// if (isset($_SESSION['immat']) && !empty($_SESSION['immat'])) { // Quand le paramètre immat existe dans l'url
+
+//     $immat = $_SESSION['immat']; // On affecte directement sa valeur à $vin
+
+//   } else { // Quand le paramètre immat n'existe pas dans l'url
+//     $immat = ''; // on affecte la valeur de la variable de session à $vin
+//   }
 
 if (isset($_POST['car_names'])) { // Si le nom de la voiture existe et à une valeur
     $image_url = uploadImage();
@@ -51,7 +61,7 @@ if (isset($_POST['car_names'])) { // Si le nom de la voiture existe et à une va
     // if((int)$_POST['repair_car'] > 0){
     // 	$url = WEB_URL.'repaircar/carlist.php?m=up';
     // 	header("Location: $url");
-    // } else {		
+    // } else {
     // 	$url = WEB_URL.'repaircar/carlist.php?m=add';
     // 	header("Location: $url");
     // }
@@ -93,7 +103,6 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     }
 
     //mysql_close($link);
-
 }
 
 //for image upload
@@ -142,7 +151,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Formulaire de réception d'un véhicule</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <style>
         * {
@@ -255,9 +264,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                     <div class="form-group row">
                         <div class="col-md-11">
-                            <input onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" value="" placeholder="Rechercher un véhicule en saisissant son immatriculation" onKeyUp="verifImma(this.value)"><span id="immabox"></span>
+                            <!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
+                            <input onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
                         </div>
-                        <div class="col-md-1">
+                        <div class=" col-md-1">
                             <a class="btn btn-success" data-toggle="tooltip" data-original-title="Ajouter une nouvelle voiture" target="_blank" onclick="getImmaValue();"><i class="fa fa-plus"></i></a>
                             <!-- <a class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal" data-original-title="Ajouter un véhicule"><i class="fa fa-plus"></i></a> -->
                         </div>
@@ -269,7 +279,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                             <?php
                             $customer_list = $wms->getAllCustomerList($link);
                             foreach ($customer_list as $crow) {
-
                                 echo '<option value="' . $crow['customer_id'] . '">' . $crow['c_name'] . '</option>';
                             }
                             ?>
@@ -282,7 +291,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                             <?php
                             $result_car = $wms->getCarListByCustomerId($link, $cus_id);
                             foreach ($result_car as $row_car) {
-
                                 echo '<option value="' . $row_car['VIN'] . '">' . $row_car['VIN'] . '</option>';
                             }
                             ?>
@@ -1500,6 +1508,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     <input type="hidden" name="ddlMake" value="" />
     <input type="hidden" name="ddlModel" value="" />
     <input type="hidden" name="ddlImma" value="" />
+    <input type="hidden" name="recep_id" value="<?php echo $_SESSION['objRecep']['user_id']; ?>" />
+    
     </section>
     </form>
     </div>
@@ -1547,9 +1557,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         const elt_voyant_22 = document.getElementById('voyant_22');
         const elt_voyant_23 = document.getElementById('voyant_23');
         const elt_voyant_24 = document.getElementById('voyant_24');
-
-        const elt_cle_recep_vehi_text = document.getElementById('cle_recep_vehi_text');
-        const elt_cle_recep_vehi = document.getElementById('cle_recep_vehi');
 
         function showTab(n) {
             // This function will display the specified tab of the form...
@@ -1915,12 +1922,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                 }
             });
-
-            // elt_cle_recep_vehi_text.addEventListener('change', function() { 
-
-            //     elt_cle_recep_vehi.checked == true;
-
-            // });
 
             elt_nivo_carbu_recep_vehi_1_2.addEventListener('click', function() { // On écoute l'événement click sur cet élément
 
@@ -2384,7 +2385,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         //                 writediv(texte);
         //         }
         //     }
-
         // }
 
         function getImmaValue() {
@@ -2395,7 +2395,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             var web_url = "<?php echo WEB_URL; ?>";
 
             // On fait une redirection en faisant passer la valeur de l'immatriculation saisie dans l'url
-            // window.location.href = web_url + "repaircar/addcar_reception.php?immat=" + elt_immat.value;
             window.location.href = web_url + "recep_panel/recep_addcar_reception.php?immat=" + elt_immat.value;
 
         }

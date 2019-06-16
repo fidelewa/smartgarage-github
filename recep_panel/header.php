@@ -98,6 +98,8 @@ if (!empty($_SESSION['objRecep']['image'])) {
   <script src="<?php echo WEB_URL; ?>plugins/summernote/summernote.min.js"></script>
   <script src="<?php echo WEB_URL; ?>plugins/chartjs/Chart.min.js" type="text/javascript"></script>
   <script src="<?php echo WEB_URL; ?>plugins/select2/select2.min.js" type="text/javascript"></script>
+  <script src="<?php echo WEB_URL; ?>dist/js/addcar_reception.js"></script>
+  <script type="text/javascript" src="<?php echo WEB_URL; ?>dist/js/typeahead.js"></script>
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

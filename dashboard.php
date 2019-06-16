@@ -242,7 +242,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
                   $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
                   if ($resultSmsSent) {
-                    echo "<p><span class='label label-success'>SMS automatique de rappel envoyé avec succès !</p><span>";
+                    echo "<p><span class='label label-success'>SMS automatique de rappel de la visite technique envoyé avec succès !</p><span>";
                     // $url = WEB_URL.'dashboard.php';
                     // header("Location: $url");
                   }
@@ -267,7 +267,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
                   $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
                   if ($resultSmsSent) {
-                    echo "<p><span class='label label-success'>SMS automatique de rappel envoyé avec succès !</p><span>";
+                    echo "<p><span class='label label-success'>SMS automatique de rappel de la visite technique envoyé avec succès !</p><span>";
                     // $url = WEB_URL.'dashboard.php';
                     // header("Location: $url");
                   }
@@ -310,7 +310,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
                   $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
                   if ($resultSmsSent) {
-                    echo "<p><span class='label label-success'>SMS automatique de rappel envoyé avec succès !</p><span>";
+                    echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
                     // $url = WEB_URL.'dashboard.php';
                     // header("Location: $url");
                   }
@@ -335,7 +335,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
                   $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
                   if ($resultSmsSent) {
-                    echo "<p><span class='label label-success'>SMS automatique de rappel envoyé avec succès !</p><span>";
+                    echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
                     // $url = WEB_URL.'dashboard.php';
                     // header("Location: $url");
                   }

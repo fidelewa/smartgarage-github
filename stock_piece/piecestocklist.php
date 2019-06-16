@@ -2,7 +2,6 @@
 <?php
 $delinfo = 'none';
 $addinfo = 'none';
-$warninginfo = 'none';
 $msg = "";
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
   $wms->deleteStockPartsInformation($link, $_GET['id']);
@@ -16,10 +15,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 if (isset($_GET['m']) && $_GET['m'] == 'add') {
   $addinfo = 'block';
   $msg = "Article ajouté avec succès";
-}
-if (isset($_GET['m']) && $_GET['m'] == 'exiting_piece') {
-  $warninginfo = 'block';
-  $msg = "Un article possède déjà cet identifiant, veuillez simplement le modifier à partir de cette liste";
 }
 
 ?>
@@ -40,11 +35,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'exiting_piece') {
       <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
         <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
-        <?php echo $msg; ?>
-      </div>
-      <div id="me" class="alert alert-warning alert-dismissable" style="display:<?php echo $warninginfo; ?>">
-        <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-        <h4><i class="icon fa fa-ban"></i></h4>
         <?php echo $msg; ?>
       </div>
       <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
@@ -71,11 +61,30 @@ if (isset($_GET['m']) && $_GET['m'] == 'exiting_piece') {
                 <th>Famille</th>
                 <th>Prix base TTC</th>
                 <th>Stock</th>
-                <th>Action</th>
+                <!-- <th>Action</th> -->
               </tr>
             </thead>
             <tbody>
               <?php
+
+              // On récupère la liste de toutes les pièce de véhicule
+              $results = $wms->getAllPieceData($link);
+
+              // var_dump($results);
+              // die();
+
+              foreach ($results as $row) {
+
+                // Pour chaque pièce de véhicule, on vérifie si la pièce courante existe dans la table tbl_piece_stock
+                // à partir du code de la piece
+                
+                $rowPieceStockData = $wms->getPieceStockDataByCodePiece($link, $row['code_piece'], $row['image_url']);
+
+                // Si ce n'est pas le cas, on l'insère dans la table tbl_piece_stock
+                if (empty($rowPieceStockData) && count($rowPieceStockData) == 0) {
+                  $wms->saveStockPiece($link, $row, $row['image_url']);
+                }
+              }
 
               // On récupère la liste de toutes les pièce de véhicule en stock
               $resultsPieceStockData = $wms->getAllPieceStockData($link);
@@ -100,11 +109,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'exiting_piece') {
                   <td><?php echo $row['famille_piece']; ?></td>
                   <td><?php echo $row['prix_base_ttc']; ?></td>
                   <td><?php echo $row['stock_piece']; ?></td>
-                  <td>
-                    <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a>  -->
-                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>parts_stock/buyparts.php?pid=<?php echo $row['piece_stock_id']; ?>" data-original-title="Modifier l'article"><i class="fa fa-pencil"></i></a>
-                    <a class="btn btn-danger" data-toggle="tooltip" onClick="deletePartStock(<?php echo $row['piece_stock_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
-                  </td>
+                  <!-- <td>
+                    <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a> 
+                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/addpersonnel.php?id=<?php echo $row['per_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['per_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                  </td> -->
                 </tr>
               <?php
             } ?>
@@ -119,10 +128,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'exiting_piece') {
   </div>
   <!-- /.row -->
   <script type="text/javascript">
-    function deletePartStock(Id) {
+    function deleteCustomer(Id) {
       var iAnswer = confirm("Êtes-vous sûr de bien vouloir supprimer cet élément?");
       if (iAnswer) {
-        window.location = '<?php echo WEB_URL; ?>parts_stock/partsstocklist.php?id=' + Id;
+        window.location = '<?php echo WEB_URL; ?>parts_stock/buypartslist.php?id=' + Id;
       }
     }
 
