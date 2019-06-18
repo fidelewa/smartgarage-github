@@ -147,6 +147,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                     </div>
             </section>
             <input type="hidden" value="<?php echo $hdnid; ?>" name="boncmde_id" />
+            <input type="hidden" value="bon_cmde" name="bon_cmde_type" />
             <div class="pull-right">
                 <button type="submit" class="btn btn-success btnsp"><i class="fa fa-save fa-2x"></i><br />
                     <?php echo $button_text; ?></button>&emsp;

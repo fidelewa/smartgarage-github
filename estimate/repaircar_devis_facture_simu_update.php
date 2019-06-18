@@ -7,14 +7,16 @@ $i = 0;
 // Somme des totaux des prix des pièces de rechange
 // $somme_total_prix_piece_rechange = 0;
 
-$button_text = "Enregistrer la facture";
+$button_text = "Modifier la facture";
 
 $wms = new wms_core();
 
 // Sélection des fournisseurs offrant les prix les plus bas pour chaque pièce de rechange
 // $rows = $wms->getComparPrixPieceRechangeMinByDiagId($link, $_GET['vehi_diag_id']);
 // $row = $wms->getRepairCarDiagnosticDevisInfoByDiagId($link, $_GET['devis_id']);
-$row = $wms->getRepairCarSimuDevis($link, $_GET['devis_simu_id']);
+// $row = $wms->getRepairCarSimuDevis($link, $_GET['devis_simu_id']);
+
+$row = $wms->getRepairCarSimuFacture($link, $_GET['facture_id']);
 
 // var_dump($row);
 // die();
@@ -34,7 +36,6 @@ if (isset($_POST) && !empty($_POST)) {
         // A la validation du formulaire de facture
         // $row = $wms->updateQtyPartsStock($link, $fac_data);
         $row = $wms->updateQtyPieceStock($link, $fac_data);
-        
     }
 
     // Linéarisation de l'array des estimations pour le stocker en base de données
@@ -44,14 +45,21 @@ if (isset($_POST) && !empty($_POST)) {
     // $date_facture = date('d/m/Y');
     $date_facture = $wms->datepickerDateToMySqlDate(date('d/m/Y'));
 
+    // var_dump($_POST);
+    // die();
+
     // Formulation de la requête
-    $query = "INSERT INTO tbl_add_facture_simulation (date_facture, facture_data, montant_main_oeuvre_facture, total_ht_gene_piece_rechange_facture,
-        total_tva_facture, total_ttc_gene_piece_rechange_facture, montant_du_piece_rechange_facture, 
-        montant_paye_piece_rechange_facture, devis_simulation_id) 
-        VALUES ('$date_facture','$facture_data','$_POST[montant_main_oeuvre_facture]','$_POST[total_ht_gene_piece_rechange_facture]',
-        '$_POST[total_tva_facture]','$_POST[total_ttc_gene_piece_rechange_facture]','$_POST[montant_du_piece_rechange_facture]',
-        '$_POST[montant_paye_piece_rechange_facture]','$_GET[devis_simu_id]'
-        )";
+    $query = "UPDATE tbl_add_facture_simulation 
+        SET date_facture='" . $date_facture . "', facture_data='" . $facture_data . "',
+        montant_main_oeuvre_facture='" . $_POST['montant_main_oeuvre_facture'] . "', total_ht_gene_piece_rechange_facture='" . $_POST['total_ht_gene_piece_rechange_facture'] . "',
+        total_tva_facture='" . $_POST['total_tva_facture'] . "',total_ttc_gene_piece_rechange_facture='" . $_POST['total_ttc_gene_piece_rechange_facture'] . "',
+        montant_du_piece_rechange_facture='" . $_POST['montant_du_piece_rechange_facture'] . "',
+        montant_paye_piece_rechange_facture='" . $_POST['hfDone'] . "'
+        WHERE facture_id='" . $_GET['facture_id'] . "'";
+
+
+    // echo $query;
+    // die();
 
     // Exécution de la requête
     $result = mysql_query($query, $link);
@@ -63,7 +71,7 @@ if (isset($_POST) && !empty($_POST)) {
         die($message);
     } else {
         // Redirection vers la liste des devis
-        $url = WEB_URL . 'estimate/repaircar_simu_devis_facture_list.php?m=add';
+        $url = WEB_URL . 'estimate/repaircar_simu_devis_facture_list.php?m=up';
         header("Location: $url");
     }
 }
@@ -78,7 +86,7 @@ if (isset($_POST) && !empty($_POST)) {
 <body>
 
     <section class="content-header">
-    <h1>Formulaire de création de la facture de réparation d'un véhicule
+        <h1>Formulaire de création de la facture de réparation d'un véhicule
         </h1>
         <!-- <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -155,27 +163,27 @@ if (isset($_POST) && !empty($_POST)) {
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
-                                                        <td><input id="labour" type="text" value="<?php echo $row['main_oeuvre_piece_rechange_devis']; ?>" name="montant_main_oeuvre_facture" class="form-control allownumberonly" /></td>
+                                                        <td><input id="labour" type="text" value="<?php echo $row['montant_main_oeuvre_facture']; ?>" name="montant_main_oeuvre_facture" class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6" class="text-right">Total HT:</td>
-                                                        <td><input id="total_ht_gene" type="text" value="<?php echo $row['total_ht_gene_piece_rechange_devis']; ?>" name="total_ht_gene_piece_rechange_facture" class="form-control" /></td>
+                                                        <td><input id="total_ht_gene" type="text" value="<?php echo $row['total_ht_gene_piece_rechange_facture']; ?>" name="total_ht_gene_piece_rechange_facture" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6" class="text-right">Total TVA (<?php echo $currency; ?>):</td>
-                                                        <td><input id="total_tva" type="text" value="<?php echo $row['total_tva']; ?>" name="total_tva_facture" class="form-control" /></td>
+                                                        <td><input id="total_tva" type="text" value="<?php echo $row['total_tva_facture']; ?>" name="total_tva_facture" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6" class="text-right">Total TTC (<?php echo $currency; ?>):</td>
-                                                        <td><input id="total_ttc_gene" type="text" value="<?php echo $row['total_ttc_gene_piece_rechange_devis']; ?>" name="total_ttc_gene_piece_rechange_facture" class="form-control" /></td>
+                                                        <td><input id="total_ttc_gene" type="text" value="<?php echo $row['total_ttc_gene_piece_rechange_facture']; ?>" name="total_ttc_gene_piece_rechange_facture" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6" class="text-right">Montant dû (<?php echo $currency; ?>):</td>
-                                                        <td><input id="total_due" type="text" value="<?php echo $row['montant_du_piece_rechange_devis']; ?>" name="montant_du_piece_rechange_facture" class="form-control" /></td>
+                                                        <td><input id="total_due" type="text" value="<?php echo $row['montant_du_piece_rechange_facture']; ?>" name="montant_du_piece_rechange_facture" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6" class="text-right">Montant payé (<?php echo $currency; ?>):</td>
-                                                        <td><input id="total_paid" type="text" value="<?php echo $row['montant_paye_piece_rechange_devis']; ?>" name="montant_paye_piece_rechange_facture" class="form-control" /></td>
+                                                        <td><input id="total_paid" type="text" value="<?php echo $row['montant_paye_piece_rechange_facture']; ?>" name="montant_paye_piece_rechange_facture" class="form-control" /></td>
                                                     </tr>
 
                                                 </tfoot>
@@ -183,7 +191,7 @@ if (isset($_POST) && !empty($_POST)) {
                                         </div>
                                     </div>
                                 </div>
-
+                                <input type="hidden" value="" name="hfDone" id="hfDone"/>
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
@@ -224,13 +232,49 @@ if (isset($_POST) && !empty($_POST)) {
                 totalEstCost();
             });
 
+            $("#total_paid").keyup(function() {
+
+                calculateTotalPaid();
+            });
+
             row++;
             // reloadQtyRow();
             // numberAllow();
         }
 
+        function calculateTotalPaid(payment_done, payment_due, old_payment_done) {
+
+            // console.log(payment_done);
+            // console.log(payment_due);
+
+            payment_due = parseFloat(payment_due) - parseFloat(payment_done);
+
+            // console.log(payment_due);
+
+            payment_due = parseFloat(payment_due).toFixed(2);
+
+            payment_done = parseFloat(old_payment_done) + parseFloat(payment_done);
+
+            console.log('Montant payé total :' + payment_done);
+
+            $("#total_due").val(payment_due);
+            $("#hfDue").val(payment_due);
+            $("#hfDone").val(payment_done);
+
+        }
+
         // Au chargement du DOM, on appelle la fonction qui nous intéresse
         $(document).ready(function() {
+
+            // On récupère les valeurs courantes du total du et du total payé
+            var payment_done = $("#total_paid").val();
+            var payment_due = $("#total_due").val();
+            var old_payment_done = "<?php echo $row['montant_paye_piece_rechange_facture']; ?>";
+
+            console.log('Ancien paiement du :' + old_payment_done);
+            console.log('Ancien montant payé :' + payment_done);
+            console.log('Montant due :' + payment_due);
+            // console.log(payment_done);
 
             $(".eFirePrice").keyup(function() {
                 // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
@@ -244,6 +288,14 @@ if (isset($_POST) && !empty($_POST)) {
 
             $("#labour").keyup(function() {
                 totalEstCost();
+            });
+
+            $("#total_paid").change(function() {
+                // On récupère la nouvelle valeur du montant total payé
+                payment_done = parseFloat($("#total_paid").val());
+                console.log('Nouveau montant payé :' + payment_done);
+                // payment_due = $("#total_due").val();
+                calculateTotalPaid(payment_done, payment_due, old_payment_done);
             });
         });
     </script>

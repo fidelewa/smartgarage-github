@@ -2,6 +2,130 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getFactureFourForReport($con, $filter)
+	{
+		$data = array();
+		$sql = "SELECT * FROM tbl_ges_four_compta";
+
+		if (!empty($filter['dateDebut']) && !empty($filter['dateFin'])) {
+			$sql .= " WHERE ges_four_compta_date BETWEEN '" . $this->datepickerDateToMySqlDate($filter['dateDebut']) . "' AND '" . $this->datepickerDateToMySqlDate($filter['dateFin']) . "'";
+		}
+
+		$result = mysql_query($sql, $con);
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getRepairCarFacture($con, $facId)
+	{
+		$query = "SELECT car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
+		c_address, VIN, add_date_mise_circu, fac.*, princ_tel, add_date_visitetech
+			from tbl_add_facture fac
+			INNER JOIN tbl_add_devis dev ON fac.devis_id = dev.devis_id
+        	INNER JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
+			inner join tbl_add_car cr on rd.car_id = cr.car_id
+			inner join tbl_make ma on cr.car_make = ma.make_id 
+			inner join tbl_model mo on cr.car_model = mo.model_id 
+			inner join tbl_add_customer cus on cus.customer_id = cr.customer_id
+			WHERE fac.facture_id ='" . (int)$facId . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
+	public function getRepairCarSimuFacture($con, $facSimuId)
+	{
+		$query = "SELECT car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
+		c_address, VIN, add_date_mise_circu, facsim.*, princ_tel, add_date_visitetech
+			from tbl_add_facture_simulation facsim
+			INNER JOIN tbl_add_devis_simulation devsim ON facsim.devis_simulation_id = devsim.devis_id
+			join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
+			left join tbl_add_car cr on cr.VIN = adv.imma_vehi_client
+            left join tbl_add_customer cus on cus.customer_id = cr.customer_id
+			WHERE facsim.facture_id ='" . (int)$facSimuId . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
+	public function getFactureSimuForReport($con, $filter)
+	{
+		$data = array();
+		$sql = "SELECT * FROM tbl_add_facture_simulation facsim
+		INNER JOIN tbl_add_devis_simulation devsim ON facsim.devis_simulation_id = devsim.devis_id";
+
+		if (!empty($filter['dateDebut']) && !empty($filter['dateFin'])) {
+			$sql .= " WHERE facsim.date_facture BETWEEN '" . $this->datepickerDateToMySqlDate($filter['dateDebut']) . "' AND '" . $this->datepickerDateToMySqlDate($filter['dateFin']) . "'";
+		}
+		
+		// if (!empty($filter['payment'])) {
+		// 	if ($filter['payment'] == 'due') {
+		// 		$sql .= " AND payment_due > 0";
+		// 	} else {
+		// 		$sql .= " AND payment_due = 0.00";
+		// 	}
+		// }
+		//echo $sql;
+		//die();
+		//
+
+		$result = mysql_query($sql, $con);
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getFactureClientForReport($con, $filter)
+	{
+		$data = array();
+		$sql = "SELECT fac.* FROM tbl_add_facture fac 
+		INNER JOIN tbl_add_devis dev ON fac.devis_id = dev.devis_id
+        INNER JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
+        INNER JOIN tbl_add_car cr ON rd.car_id = cr.car_id
+        INNER JOIN tbl_make ma ON cr.car_make = ma.make_id
+        INNER JOIN tbl_model mo ON cr.car_model = mo.model_id
+        INNER JOIN tbl_add_customer cus ON cus.customer_id = cr.customer_id";
+
+		if (!empty($filter['dateDebut']) && !empty($filter['dateFin'])) {
+			$sql .= " WHERE fac.date_facture BETWEEN '" . $this->datepickerDateToMySqlDate($filter['dateDebut']) . "' AND '" . $this->datepickerDateToMySqlDate($filter['dateFin']) . "'";
+		}
+		// if (!empty($filter['payment'])) {
+		// 	if ($filter['payment'] == 'due') {
+		// 		$sql .= " AND payment_due > 0";
+		// 	} else {
+		// 		$sql .= " AND payment_due = 0.00";
+		// 	}
+		// }
+		//echo $sql;
+		//die();
+		//
+
+		$result = mysql_query($sql, $con);
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
 	/*
 	* @get all Voiture de réparation list
 	*/
@@ -20,6 +144,12 @@ class wms_core
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
 
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
 		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
 		// Pour chaque ligne, on l'affecte à une variable tampon
 		// Puis dans l'array
@@ -28,7 +158,7 @@ class wms_core
 		}
 		return $data;
 	}
-	
+
 	/*
 	* @get all Voiture de réparation list
 	*/
@@ -372,8 +502,10 @@ class wms_core
 	{
 		$data = array();
 
-		$query = "SELECT s_name, boncmde_num, boncmde_designation, boncmde_date_creation FROM tbl_add_supplier su
-		JOIN tbl_add_boncmde bcde ON  su.supplier_id = bcde.supplier_id
+		$query = "SELECT s_name, boncmde_num, boncmde_designation, boncmde_date_creation, bon_cmde_type
+		FROM tbl_add_supplier su
+		JOIN tbl_add_boncmde bcde ON su.supplier_id = bcde.supplier_id
+		-- JOIN tbl_ges_four_compta gfc ON gfc.supplier_id = su.supplier_id
 		WHERE su.supplier_id = '" . (int)$supplier_id . "'";
 
 		$result = mysql_query($query, $con);
@@ -881,10 +1013,10 @@ class wms_core
 
 				$boncmde_date_creation = date('d/m/Y');
 
-				$query = "INSERT INTO tbl_add_boncmde(boncmde_num, boncmde_designation, boncmde_qte, boncmde_pu_ht, boncmde_total_ht, supplier_id, boncmde_date_creation)
+				$query = "INSERT INTO tbl_add_boncmde(boncmde_num, boncmde_designation, boncmde_qte, boncmde_pu_ht, boncmde_total_ht, supplier_id, boncmde_date_creation, bon_cmde_type)
 
 				values('$data[numboncmde]','$data[codedesiboncmde]','$data[qteboncmde]',null,null,
-				'$data[four]','$boncmde_date_creation')";
+				'$data[four]','$boncmde_date_creation','$data[bon_cmde_type]')";
 				$result = mysql_query($query, $con);
 			} else {
 
@@ -1312,7 +1444,7 @@ class wms_core
 		// On récupère les infos du devis de réparation d'un véhicule en les regroupant par 
 		// identifiants de diagnostic
 		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
-			rd.car_id
+			rd.car_id, facture_id
 			from tbl_recep_vehi_repar rvr
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id

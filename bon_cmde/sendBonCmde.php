@@ -31,6 +31,7 @@ if (isset($_GET['supplier_id'])) {
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script> -->
 	<!-- <script src="<?php echo WEB_URL; ?>supplier/validation.js"></script> -->
 	<script type="text/javascript" src="<?php echo WEB_URL; ?>dist/js/typeahead.js"></script>
+	<script src="<?php echo WEB_URL; ?>dist/js/common.js"></script>
 	<!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 
@@ -83,11 +84,11 @@ if (isset($_GET['supplier_id'])) {
 										</span>
 									</div>
 								</div>
-								<div class="form-group">
+								<!-- <div class="form-group">
 									<label for="exampleInputFile">File input</label>
 									<input type="file" id="exampleInputFile">
 									<p class="help-block">Example block-level help text here.</p>
-								</div>
+								</div> -->
 								<div class="form-group row">
 									<label class="control-label col-sm-2" for="comment">Message:</label>
 									<div class="col-sm-10">

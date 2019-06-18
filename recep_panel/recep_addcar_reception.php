@@ -42,7 +42,7 @@ if (isset($_GET['cid']) && (int)$_GET['cid'] > 0) {
   $cus_id = $_GET['cid'];
 }
 
-// var_dump($_SESSION);
+$recep_id = $_SESSION['objRecep']['user_id'];
 
 // if (isset($_SESSION['immat']) && !empty($_SESSION['immat'])) { // Quand le paramètre immat existe dans l'url
 
@@ -345,6 +345,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 </div>
               </div>
               <input type="hidden" value="<?php echo $car_names; ?>" name="car_names" />
+              <input type="hidden" value="<?php echo $recep_id; ?>" name="recep_id" />
+              <input type="hidden" value="" name="txtCPassword" />
+              <input type="hidden" value="" name="tel_wa" />
+              <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
+              <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
+              
               <div class="form-group">
                 <label for="ddlYear"><span style="color:red;">*</span> Année :</label>
                 <input type="text" class='form-control' name="ddlYear" id="ddlYear" placeholder="Saisissez année">
@@ -376,6 +382,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               <div class="form-group">
                 <label for="add_date"><span style="color:red;">*</span> Date de fin de l'assurance:</label>
                 <input type="text" name="add_date_assurance_fin" value="" id="add_date_assurance_fin" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+              </div>
+              <div class="form-group">
+                <label for="add_date"><span style="color:red;">*</span> Date de la prochaine visite technique:</label>
+                <input type="text" name="add_date_visitetech_car" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <div class="form-group">
                 <label for="add_date"><span style="color:red;">*</span> Date de dernière vidange:</label>
@@ -411,11 +421,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <option value="P12M">12 mois</option>
                 </select>
               </div> -->
-
-              <div class="form-group">
-                <label for="add_date"><span style="color:red;">*</span> Date de la prochaine visite technique:</label>
-                <input type="text" name="add_date_visitetech_car" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
-              </div>
               <!-- <div class="form-group">
                 <label for="add_date_ctr_tech"><span style="color:red;">*</span> Date du contrôle technique:</label>
                 <input type="text" name="add_date_ctr_tech" value="<?php echo $add_date_ctr_tech; ?>" id="add_date_ctr_tech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
@@ -1800,11 +1805,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <button type="submit" class="btn btn-success" id="submit">Valider</button>
           </div>
 
-          <input type="hidden" value="" name="txtCPassword" />
-          <input type="hidden" value="" name="tel_wa" />
-          <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
-          <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
-          <input type="hidden" name="recep_id" value="<?php echo $_SESSION['objRecep']['user_id']; ?>" />
         </form>
       </div>
     </div>

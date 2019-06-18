@@ -1,5 +1,15 @@
 <?php
-include('../header.php'); ?>
+include('../header.php'); 
+
+if (isset($_GET['m']) && $_GET['m'] == 'add') {
+    $addinfo = 'block';
+    $msg = "La voiture a été ajoutée à la liste des véhicules réceptionnés";
+}
+if (isset($_GET['m']) && $_GET['m'] == 'up') {
+    $addinfo = 'block';
+    $msg = "La voiture receptionnée a été modifiée";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +25,12 @@ include('../header.php'); ?>
         <!-- Full Width boxes (Stat box) -->
         <div class="row">
             <div class="col-md-12">
+            <!-- <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
+                </button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <?php echo $msg; ?>
+            </div> -->
                 <div class="box box-success">
                     <ul class="list-group list-group-flush">
 

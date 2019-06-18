@@ -25,7 +25,7 @@ if (isset($_POST) && !empty($_POST)) {
     $facture_data = serialize($_POST['facture_data']);
 
     // Initialisation de la date de la fature
-    $date_facture = date('d/m/Y');
+    $date_facture = $wms->datepickerDateToMySqlDate(date('d/m/Y'));
 
     // Formulation de la requête
     $query = "INSERT INTO tbl_add_facture (date_facture, facture_data, montant_main_oeuvre_facture, total_ht_gene_piece_rechange_facture,

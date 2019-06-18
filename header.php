@@ -343,7 +343,7 @@ if (!empty($_SESSION['objLogin']['image'])) {
                           } ?>">
                 <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
               </li>
-              
+
             </ul>
           </li>
 
@@ -393,16 +393,16 @@ if (!empty($_SESSION['objLogin']['image'])) {
             </ul>
           </li>
 
-          <li class="treeview <?php if ($page_name != '' && $page_name == 'deliverylist' || $page_name == 'finddeliverycar') {
+          <li class="treeview <?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list' || $page_name == 'repaircar_simu_devis_facture_list') {
                                 echo 'active';
-                              } ?>"> <a href="<?php echo WEB_URL; ?>delivery/finddeliverycar.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                              } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
             <ul class="treeview-menu">
-              <li class="<?php if ($page_name != '' && $page_name == 'repair_diagnostic_facture_list') {
+              <li class="<?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list') {
                             echo 'active';
                           } ?>">
                 <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de réparation</a>
               </li>
-              <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_facture_list') {
+              <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
                             echo 'active';
                           } ?>">
                 <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de simulation</a>
@@ -477,7 +477,7 @@ if (!empty($_SESSION['objLogin']['image'])) {
                                 echo 'active';
                               } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
             <ul class="treeview-menu">
-            <li class="<?php if ($page_name != '' && $page_name == 'addsupplier') {
+              <li class="<?php if ($page_name != '' && $page_name == 'addsupplier') {
                             echo 'active';
                           } ?>">
                 <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"><i class="fa fa-arrow-circle-right"></i>Créer un fournisseur</a>
@@ -487,7 +487,7 @@ if (!empty($_SESSION['objLogin']['image'])) {
                           } ?>">
                 <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
               </li>
-            <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
+              <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
                             echo 'active';
                           } ?>">
                 <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
@@ -606,14 +606,17 @@ if (!empty($_SESSION['objLogin']['image'])) {
           <!-- <li class="<?php if ($page_name != '' && $page_name == 'contact_list') {
                             echo 'active';
                           } ?>"><a href="<?php echo WEB_URL; ?>contact_list/contact_list.php"><i class="fa fa-envelope-o"></i> <span>Contact</span></a> </li> -->
-          <li class="treeview <?php if ($page_name != '' && $page_name == 'reprepairdelivery' || $page_name == 'rptcarbuy' || $page_name == 'rptcarsell' || $page_name == 'rptpartsbuy' || $page_name == 'rptpartssell' || $page_name == 'rptmsalary') {
+          <li class="treeview <?php if ($page_name != '' && $page_name == 'reprepairdelivery' || $page_name == 'rptcarbuy' || $page_name == 'rptcarsell' || $page_name == 'rptpartsbuy' || $page_name == 'rptpartssell' || $page_name == 'rptmsalary' || $page_name == 'synthActivity') {
                                 echo 'active';
                               } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
             <ul class="treeview-menu">
+              <li class="<?php if ($page_name != '' && $page_name == 'synthActivity') {
+                            echo 'active';
+                          } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
               <li class="<?php if ($page_name != '' && $page_name == 'reprepairdelivery') {
                             echo 'active';
                           } ?>"><a href="<?php echo WEB_URL; ?>report/reprepairdelivery.php"><i class="fa fa-arrow-circle-right"></i> Rapport de réparation de voiture</a></li>
-              <li class="<?php if ($page_name != '' && $page_name == 'rptcarbuy') {
+              <!-- <li class="<?php if ($page_name != '' && $page_name == 'rptcarbuy') {
                             echo 'active';
                           } ?>"><a href="<?php echo WEB_URL; ?>report/rptcarbuy.php"><i class="fa fa-arrow-circle-right"></i> Rapport d'achat de voiture</a></li>
               <li class="<?php if ($page_name != '' && $page_name == 'rptcarsell') {
@@ -627,7 +630,7 @@ if (!empty($_SESSION['objLogin']['image'])) {
                           } ?>"><a href="<?php echo WEB_URL; ?>report/rptpartssell.php"><i class="fa fa-arrow-circle-right"></i> Rapport de vente de piècest</a></li>
               <li class="<?php if ($page_name != '' && $page_name == 'rptmsalary') {
                             echo 'active';
-                          } ?>"><a href="<?php echo WEB_URL; ?>report/rptmsalary.php"><i class="fa fa-arrow-circle-right"></i> Salaire Mécaniciens</a></li>
+                          } ?>"><a href="<?php echo WEB_URL; ?>report/rptmsalary.php"><i class="fa fa-arrow-circle-right"></i> Salaire Mécaniciens</a></li> -->
             </ul>
           </li>
           <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'menulist' || $page_name == 'addmenu' || $page_name == 'servicelist' || $page_name == 'addservice' || $page_name == 'commentslist' || $page_name == 'addcomments' || $page_name == 'sliderlist' || $page_name == 'addslider' || $page_name == 'cmslist' || $page_name == 'addcms' || $page_name == 'teamview' || $page_name == 'gallerylist' || $page_name == 'addgallery' || $page_name == 'widgetlist' || $page_name == 'wprocess' || $page_name == 'author' || $page_name == 'category' || $page_name == 'bloglist' || $page_name == 'blog' || $page_name == 'faq' || $page_name == 'newscommentslist') {

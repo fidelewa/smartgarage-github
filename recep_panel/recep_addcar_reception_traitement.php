@@ -367,22 +367,18 @@ if (isset($_POST['car_names'])) {
 
 }
 
-$result_car_model = $wms->getMarkModelListByImmaVehi($link, $_POST['immat']);
+if (isset($_POST['vin'])) {
+    $result_car_model = $wms->getMarkModelListByImmaVehi($link, $_POST['vin']);
+    $_POST['ddlImma'] = $_POST['vin'];
+    $_POST['add_car_id'] = $result_car_model['car_id'];
+}
 
-// $result_car_model['customer_id'];
-// $result_car_model['make_id'];
-// $result_car_model['model_id'];
-$_POST['ddlImma'] = $_POST['immat'];
-$_POST['add_car_id'] = $result_car_model['car_id'];
-// $_POST['ddlCustomerList'] = $_POST['customer_id'];
-// $_POST['ddlMake'] = $_POST['car_make_id'];
-// $_POST['ddlModel'] = $_POST['car_model_id'];
-
-if ($_POST['add_car_id'] == null) {
+if (isset($_POST['immat'])) {
     $_POST['add_car_id'] = $_POST['car_id'];
     $_POST['ddlCustomerList'] = $_POST['customer_id'];
     $_POST['ddlMake'] = $_POST['car_make_id'];
     $_POST['ddlModel'] = $_POST['car_model_id'];
+    $_POST['ddlImma'] = $_POST['immat'];
 }
 
 // var_dump($result_car_model);
@@ -900,9 +896,8 @@ if (empty($image_url)) {
 }
 
 $_POST['recep_id'] = (int)$_POST['recep_id'];
-
-// var_dump($_POST);
-// die();
+var_dump($_POST);
+die();
 
 // Exécution de la réquête et redirection vers la liste des voitures à faire réparer
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);

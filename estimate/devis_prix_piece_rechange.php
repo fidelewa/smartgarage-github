@@ -24,8 +24,8 @@ if (isset($_POST) && !empty($_POST)) {
 
     // Linéarisation de l'array des données des devis pour le stocker en base de données
     $devis_data = serialize($_POST['devis_data']);
-
-    $date_devis = date('d/m/Y');
+    
+    $date_devis = $wms->datepickerDateToMySqlDate(date('d/m/Y'));
 
     // Formulation de la requête
     $query = "INSERT INTO tbl_add_devis (date_devis, devis_data, main_oeuvre_piece_rechange_devis, total_ht_gene_piece_rechange_devis, 

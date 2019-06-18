@@ -8,6 +8,54 @@ $hdnid = "0";
 $model_post_token = 0;
 $button_text = "Enregistrer les informations";
 
+if (isset($_POST) && !empty($_POST)) {
+
+    var_dump($_POST);
+    // die();
+
+    // Persister les données du devis en BDD
+
+    // Linéarisation de l'array des données des devis pour le stocker en base de données
+    // $supplier_manage_data = json_encode($_POST['supplier_manage_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+
+    foreach ($_POST['supplier_manage_data'] as $supplier_compta_data) {
+
+        $supplier_compta_data['date'] = $wms->datepickerDateToMySqlDate($supplier_compta_data['date']);
+
+        $supplier_compta_data['debit'] = (float)$supplier_compta_data['debit'];
+        $supplier_compta_data['credit'] = (float)$supplier_compta_data['credit'];
+        $supplier_compta_data['balance'] = (float)$supplier_compta_data['balance'];
+
+        // var_dump($supplier_compta_data);
+        // die();
+
+        // Formulation de la requête
+        $query = "INSERT INTO tbl_ges_four_compta (ges_four_compta_date, tbl_ges_four_compta_ref, ges_four_compta_lib, debit, credit, solde, supplier_id) 
+    VALUES (
+    '$supplier_compta_data[date]',
+    '$supplier_compta_data[reference]',
+    '$supplier_compta_data[libelle]', 
+    '$supplier_compta_data[debit]',
+    '$supplier_compta_data[credit]',
+    '$supplier_compta_data[balance]',
+    '$supplier_compta_data[supplier_id]')";
+
+        // Exécution de la requête
+        $result = mysql_query($query, $link);
+
+        // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
+        if (!$result) {
+            $message  = 'Invalid query: ' . mysql_error() . "\n";
+            $message .= 'Whole query: ' . $query;
+            die($message);
+        }
+    }
+
+    // Redirection vers la liste des devis
+    $url = WEB_URL . 'supplier/supplierManage.php?m=add';
+    header("Location: $url");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +88,7 @@ $button_text = "Enregistrer les informations";
                 <div class="row">
                     <div class="col-md-12">
 
-                        <div style="margin-bottom:1%;">
+                        <div align="right" style="margin-bottom:1%;">
                             <!-- <a class="btn btn-success" style="background-color:#0029CE;color:#ffffff;" data-toggle="modal" data-target="#devis_vehicule_modal" title="Attribuer le devis à un véhicule"><i class="fa fa-plus"></i></a> -->
                             <button class="btn btn-success" type="submit" data-toggle="tooltip" href="javascript:;" data-original-title="<?php echo $button_text; ?>"><i class="fa fa-save"></i></button> &nbsp;
                             <!-- <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Back"><i class="fa fa-reply"></i></a> </div> -->
@@ -86,6 +134,8 @@ $button_text = "Enregistrer les informations";
                                                                 <td class="text-right"><input readonly id="balance_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][balance]" type="text" value="0.00" class="form-control" /></td>
                                                                 <td class="text-left"><button type="button" onclick="$('#supplier-data-row<?php echo $row; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                                             </tr>
+                                                            <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][supplier_id]" value="<?php echo $_GET['supplier_id']; ?>" />
+                                                            <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][bon_cmde_type]" value="<?php echo $supplier_data['bon_cmde_type']; ?>" />
                                                             <?php $row++;
                                                         } ?>
                                                     </tbody>
@@ -113,6 +163,7 @@ $button_text = "Enregistrer les informations";
     </div>
 
     <input type="hidden" id="estimate_row" value="" />
+
     <script>
         var row = <?php echo $row; ?>;
         // Somme des soldes
@@ -174,6 +225,8 @@ $button_text = "Enregistrer les informations";
 
             // Calcul des la sommes des soldes
             somBalance = somBalance + montBalance;
+
+            console.log(somBalance);
 
             $("#balance_" + row_id).val(somBalance);
 

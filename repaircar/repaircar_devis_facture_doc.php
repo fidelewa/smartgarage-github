@@ -238,7 +238,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <tr>
                                                 <th>Code</th>
                                                 <th>Désignation</th>
-                                                <th>Marque</th>
+                                                <!-- <th>Marque</th> -->
                                                 <th>Quantité</th>
                                                 <th>Tarif HT</th>
                                                 <th>Remise(%)</th>
@@ -259,7 +259,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                                 <tr>
                                                     <td><?php echo $facture['code_piece_rechange_facture']; ?></td>
                                                     <td><?php echo $facture['designation_piece_rechange_facture']; ?></td>
-                                                    <td><?php echo $facture['marque_piece_rechange_facture']; ?></td>
+                                                    <!-- <td><?php echo $facture['marque_piece_rechange_facture']; ?></td> -->
                                                     <td><?php echo $facture['qte_piece_rechange_facture']; ?></td>
                                                     <td><?php echo $facture['prix_piece_rechange_min_facture']; ?></td>
                                                     <td><?php echo $facture['remise_piece_rechange_facture']; ?></td>

@@ -26,7 +26,7 @@ if (isset($_POST) && !empty($_POST)) {
     // Linéarisation de l'array des données des devis pour le stocker en base de données
     $devis_data = serialize($_POST['estimate_data']);
 
-    $date_devis = date('d/m/Y');
+    $date_devis = $wms->datepickerDateToMySqlDate(date('d/m/Y'));
 
     // Formulation de la requête
     $query = "INSERT INTO tbl_add_devis_simulation (date_devis, devis_data, main_oeuvre_piece_rechange_devis, total_ht_gene_piece_rechange_devis, 
@@ -347,7 +347,8 @@ if (isset($_POST) && !empty($_POST)) {
                 var parts_name = $(obj).find(".parts_name").html();
                 $("#parts_desc_" + row).val(parts_name);
                 $("#price_" + row).val(price);
-                $("#qty_" + row).val('1');
+                // $("#qty_" + row).val('1');
+                $("#qty_" + row).val(qty);
                 $("#total_" + row).val(price);
                 $("#parts_id_" + row).val(parts_id);
                 $("#codepiece_" + row).val(code_piece);
