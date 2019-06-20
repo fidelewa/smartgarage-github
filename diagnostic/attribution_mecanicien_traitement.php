@@ -55,11 +55,11 @@ if (isset($_POST['mecanicienList']) && isset($_POST['car_id'])) {
         // instanciation de la classe de l'API SMS
         $smsApi = new SmsApi();
 
-        $mobile_mech = $row['m_phone_number'];
+        $mobile_mech = $row['usr_email'];
         // $mobile_mech  = "02280768";
 
         // Message d'alerte
-        $content_msg = $row['m_name'].', vous avez la charge de faire le diagnostic de la voiture ' . $voiture['make_name'] . ' ' . $voiture['model_name'] . ' ' . $voiture['VIN'];
+        $content_msg = $row['usr_name'].', vous avez la charge de faire le diagnostic de la voiture ' . $voiture['make_name'] . ' ' . $voiture['model_name'] . ' ' . $voiture['VIN'];
         // $content_msg = "Le véhicule d'identifiant " . $_POST['car_id'] . "vous a été attribué pour effectuer un diagnostic";
 
         // Exécution de la méthode d'envoi 
@@ -68,7 +68,7 @@ if (isset($_POST['mecanicienList']) && isset($_POST['car_id'])) {
         // On fait une redirection si le sms a été envoyé avec succès
         if ($resultSmsSent) {
             // Faire une rédirection vers la liste des véhicules réceptionnés avec un paramètre d'attribution
-            header("Location: " . WEB_URL . "reception/repaircar_reception_list.php?m=attribution&car_id=" . $_POST['car_id'] . "&mecanicien_id=" . $_POST['mecanicienList']."&marque=".$voiture['make_name']."&modele=".$voiture['model_name']."&imma=".$voiture['VIN']."&mech_name=".$row['m_name']);
+            header("Location: " . WEB_URL . "reception/repaircar_reception_list.php?m=attribution&car_id=" . $_POST['car_id'] . "&mecanicien_id=" . $_POST['mecanicienList']."&marque=".$voiture['make_name']."&modele=".$voiture['model_name']."&imma=".$voiture['VIN']."&mech_name=".$row['usr_name']);
         } else {
             echo "L'envoi du SMS a échoué !";
         }

@@ -594,15 +594,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
             <hr>
 
-            <div class="form-group row">
-              <div class="col-md-3">
-                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" />
-                <label for="clé du véhicule"><span style="color:red;">*</span> Clé du véhicule</label>
-              </div>
-              <div class="col-md-9" style="padding-left:0px;">
-                <input type="number" min="0" max="100" name="cle_recep_vehi_text" id="cle_recep_vehi_text" class="form-control" placeholder="Veuillez renseigner le nombre de clé du véhicule" />
-              </div>
-            </div>
+            
 
             <div class="form-group row">
               <div class="col-md-12">
@@ -872,6 +864,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               <textarea class="form-control" id="remarque_motif_depot" rows="4" name="remarque_motif_depot"></textarea>
             </div>
           </div>
+
+          <div class="form-group row">
+              <div class="col-md-3">
+                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" />
+                <label for="clé du véhicule"><span style="color:red;">*</span> Clé du véhicule</label>
+              </div>
+              <div class="col-md-9" style="padding-left:0px;">
+                <input type="number" min="0" max="100" name="cle_recep_vehi_text" id="cle_recep_vehi_text" class="form-control" placeholder="Veuillez renseigner le nombre de clé du véhicule" />
+              </div>
+            </div>
 
           <fieldset>
             <legend>Ajouter des fichiers joints</legend>
@@ -1924,7 +1926,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             if (!y[i].checked) {
               // Si l'élément en question n'est pas checked, alors il est invalide
               y[i].className += " invalid";
-              valid = true;
+              valid = false;
               // valid = false;
               alert("Veuillez cochez l'assurance SVP !!!");
             }
@@ -1938,8 +1940,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             if (!y[i].checked) {
               // Si l'élément en question n'est pas checked, alors il est invalide
               y[i].className += " invalid";
-              valid = true;
-              // valid = false;
+              // valid = true;
+              valid = false;
               alert("Veuillez cochez la clé du véhicule SVP !!!");
             }
 
@@ -1953,7 +1955,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               // Si l'élément en question n'est pas checked, alors il est invalide
               y[i].className += " invalid";
               // valid = false;
-              valid = true;
+              valid = false;
               alert("Veuillez cochez la visite technique SVP !!!");
             }
 
@@ -1991,8 +1993,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                   // Si le champ text est invalide, une alerte est déclenchée
                   y[i].className += " invalid";
-                  // valid = false;
-                  valid = true;
+                  valid = false;
+                  // valid = true;
                   alert("Veuillez renseigner ce champ SVP lorsque le véhicule est rémorqué !!!");
                 }
 
@@ -2024,8 +2026,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               // add an "invalid" class to the field:
               y[i].className += " invalid";
               // and set the current valid statut to false
-              // valid = false;
-              valid = true;
+              valid = false;
               // valid = true;
             }
 
@@ -2057,8 +2058,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           // add an "invalid" class to the field:
           z[i].className += " invalid";
           // and set the current valid statut to false
-          // valid = false;
-          valid = true;
+          valid = false;
           // valid = true;
         }
       }

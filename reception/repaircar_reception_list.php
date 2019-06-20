@@ -165,7 +165,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                                                                             $mecanicien_list = $wms->getAllMechanicsListByTitle($link);
                                                                             foreach ($mecanicien_list as $mrow) {
                                                                                 // if ($cus_id > 0 && $cus_id == $mrow['customer_id']) {
-                                                                                echo '<option value="' . $mrow['mechanics_id'] . '">' . $mrow['title'] . '</option>';
+                                                                                echo '<option value="' . $mrow['usr_id'] . '">' . $mrow['usr_name'] .' - '. $mrow['usr_type'] . '</option>';
                                                                                 // } else {
                                                                                 // echo '<option value="' . $mrow['customer_id'] . '">' . $mrow['c_name'] . '</option>';
                                                                                 // }

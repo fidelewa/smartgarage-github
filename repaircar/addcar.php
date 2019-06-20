@@ -507,14 +507,14 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
             <div class="box-body">
               <div class="form-group">
                 <label for="vin"><span style="color:red;">*</span> Immatriculation :</label>
-                <input required type="text" name="vin" value="<?php echo $vin ?>" id="vin" class="form-control" placeholder="Saisissez l'immatriculation de la voiture" />
+                <input type="text" name="vin" value="<?php echo $vin ?>" id="vin" class="form-control" placeholder="Saisissez l'immatriculation de la voiture" />
               </div>
               <div class="form-group">
                 <label for="ddlMake"><span style="color:red;">*</span> Marque :</label>
-                <!-- <input type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture" required> -->
                 <div class="row">
                   <div class="col-md-12">
-                    <select required class="form-control" onchange="loadYear(this.value);" name="ddlMake" id="ddlMake">
+                    <input type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
+                    <!-- <select class="form-control" onchange="loadYear(this.value);" name="ddlMake" id="ddlMake" onfocus="getAllMarque();">
                       <option value=''>--Sélectionnez Marque--</option>
                       <?php
                       $result = $wms->get_all_make_list($link);
@@ -525,66 +525,44 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
                           echo "<option value='" . $row['make_id'] . "'>" . $row['make_name'] . "</option>";
                         }
                       } ?>
-                    </select>
+                    </select> -->
                   </div>
-                  <!-- <div class="col-md-1">
-                    <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>setting/carsetting.php" data-original-title="Ajouter une nouvelle marque"><i class="fa fa-plus"></i></a>
-                  </div> -->
+                  <!-- <div class="col-md-1" id="marque">
+                    <a class="btn btn-success" data-toggle="modal" data-target="#marque-modal" data-original-title="Ajouter une nouvelle marque">ajouter</a> -->
+                  <!-- <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>setting/carsetting_reception.php" data-original-title="Ajouter une nouvelle marque"><i class="fa fa-plus"></i></a> -->
+                  <!-- </div> -->
                 </div>
               </div>
               <div class="form-group">
                 <label for="ddl_model"><span style="color:red;">*</span> Modèle :</label>
-                <!-- <input type="text" class='form-control' name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture" required> -->
                 <div class="row">
                   <div class="col-md-12">
-                    <!-- <select onchange="loadYearData(this.value);" class="form-control" name="ddlModel" id="ddl_model"> -->
-                    <select required class="form-control" name="ddlModel" id="ddl_model">
-                      <option value="">--Veuillez sélectionner le modèle du véhicule--</option>
-                      <?php
-                      if ($c_make > 0) {
-                        $result_model = $wms->getModelListByMakeId($link, $c_make);
-                        foreach ($result_model as $row_model) {
-                          if ($c_model > 0 && $c_model == $row_model['model_id']) {
-                            echo "<option selected value='" . $row_model['model_id'] . "'>" . $row_model['model_name'] . "</option>";
-                          } else {
-                            echo "<option value='" . $row_model['model_id'] . "'>" . $row_model['model_name'] . "</option>";
-                          }
-                        }
-                      } ?>
-                    </select>
+                    <input type="text" class='form-control' name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture">
                   </div>
-                  <!-- <div class="col-md-1">
-                    <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>setting/carsetting.php" data-original-title="Ajouter un nouveau modèle"><i class="fa fa-plus"></i></a>
-                  </div> -->
                 </div>
               </div>
               <div class="form-group">
                 <label for="assurance_vehi_recep"><span style="color:red;">*</span> Assurance :</label>
                 <div class="row">
                   <div class="col-md-12">
-                    <select required class='form-control' id="assurance_vehi_recep" name="assurance_vehi_recep">
+                    <input type="text" class='form-control' name="assurance_vehi_recep" id="assurance_vehi_recep" placeholder="Saisissez l'assurance de la voiture">
+                    <!-- <select class='form-control' id="assurance_vehi_recep" name="assurance_vehi_recep">
                       <option value="">--Sélectionner l'assurance du véhicule--</option>
                       <?php
                       $result = $wms->get_all_assurance_vehicule_list($link);
                       foreach ($result as $row) {
-                        if (isset($assurance) && $assurance == $row['assur_vehi_libelle']) {
-                          echo "<option selected value='" . $row['assur_vehi_libelle'] . "'>" . $row['assur_vehi_libelle'] . "</option>";
-                        } else {
-                          echo "<option value='" . $row['assur_vehi_libelle'] . "'>" . $row['assur_vehi_libelle'] . "</option>";
-                        }
+                        echo "<option value='" . $row['assur_vehi_libelle'] . "'>" . $row['assur_vehi_libelle'] . "</option>";
                       } ?>
-                    </select>
+                    </select> -->
                   </div>
-                  <!-- <div class="col-md-1">
-                    <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>setting/car_assurance_setting.php" data-original-title="Ajouter une nouvelle assurance"><i class="fa fa-plus"></i></a>
-                  </div> -->
                 </div>
               </div>
               <div class="form-group">
-                <label for="assurance_vehi_recep"><span style="color:red;">*</span> Ajouter un client :</label>
+                <label for="assurance_vehi_recep"><span style="color:red;">*</span> Client :</label>
                 <div class="row">
                   <div class="col-md-11">
-                    <select required class='form-control' id="ddlCustomerList" name="ddlCustomerList">
+                    <input type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client" onfocus="">
+                    <!-- <select class='form-control' id="ddlCustomerList" name="ddlCustomerList">
                       <option value="">--Saisissez ou sélectionnez un client--</option>
                       <?php
                       $customer_list = $wms->getAllCustomerList($link);
@@ -596,11 +574,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
                         }
                       }
                       ?>
-                    </select>
+                    </select> -->
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-md-1" id="client">
                     <a class="btn btn-success" data-toggle="modal" data-target="#client-modal" data-original-title="Ajouter un nouveau client"><i class="fa fa-plus"></i></a>
-                    <!-- <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/addcustomer.php" data-original-title="Ajouter un nouveau client"><i class="fa fa-plus"></i></a> -->
+                    <!-- <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/addcustomer_reception.php" data-original-title="Ajouter un nouveau client"><i class="fa fa-plus"></i></a> -->
                   </div>
                 </div>
               </div>
@@ -615,68 +593,68 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
                     echo "<option selected value='" . $year . "'>" . $year . "</option>";
                   } else { ?>
 
-                              <option value="">--Sélectionner l'année de votre voiture--</option>
-                              <option value="2020">2020</option>
-                              <option value="2019">2019</option>
-                              <option value="2018">2018</option>
-                              <option value="2017">2017</option>
-                              <option value="2016">2016</option>
-                              <option value="2015">2015</option>
-                              <option value="2014">2014</option>
-                              <option value="2013">2013</option>
-                              <option value="2012">2012</option>
-                              <option value="2011">2011</option>
-                              <option value="2010">2010</option>
-                              <option value="2009">2009</option>
-                              <option value="2008">2008</option>
-                              <option value="2007">2007</option>
-                              <option value="2006">2006</option>
-                              <option value="2005">2005</option>
-                              <option value="2004">2004</option>
-                              <option value="2003">2003</option>
-                              <option value="2002">2002</option>
-                              <option value="2001">2001</option>
-                              <option value="2000">2000</option>
-                              <option value="1999">1999</option>
-                              <option value="1998">1998</option>
-                              <option value="1997">1997</option>
-                              <option value="1996">1996</option>
-                              <option value="1995">1995</option>
-                              <option value="1994">1994</option>
-                              <option value="1993">1993</option>
-                              <option value="1992">1992</option>
-                              <option value="1991">1991</option>
-                              <option value="1990">1990</option>
-                              <option value="1999">1989</option>
-                              <option value="1998">1988</option>
-                              <option value="1997">1987</option>
-                              <option value="1996">1986</option>
-                              <option value="1995">1985</option>
-                              <option value="1994">1984</option>
-                              <option value="1993">1983</option>
-                              <option value="1992">1982</option>
-                              <option value="1991">1981</option>
-                              <option value="1990">1980</option>
-                              <option value="1999">1979</option>
-                              <option value="1998">1978</option>
-                              <option value="1997">1977</option>
-                              <option value="1996">1976</option>
-                              <option value="1995">1975</option>
-                              <option value="1994">1974</option>
-                              <option value="1993">1973</option>
-                              <option value="1992">1972</option>
-                              <option value="1991">1971</option>
-                              <option value="1990">1970</option>
-                              <option value="1999">1969</option>
-                              <option value="1998">1968</option>
-                              <option value="1997">1967</option>
-                              <option value="1996">1966</option>
-                              <option value="1995">1965</option>
-                              <option value="1994">1964</option>
-                              <option value="1993">1963</option>
-                              <option value="1992">1962</option>
-                              <option value="1991">1961</option>
-                              <option value="1990">1960</option>
+                                <option value="">--Sélectionner l'année de votre voiture--</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                                <option value="1999">1999</option>
+                                <option value="1998">1998</option>
+                                <option value="1997">1997</option>
+                                <option value="1996">1996</option>
+                                <option value="1995">1995</option>
+                                <option value="1994">1994</option>
+                                <option value="1993">1993</option>
+                                <option value="1992">1992</option>
+                                <option value="1991">1991</option>
+                                <option value="1990">1990</option>
+                                <option value="1999">1989</option>
+                                <option value="1998">1988</option>
+                                <option value="1997">1987</option>
+                                <option value="1996">1986</option>
+                                <option value="1995">1985</option>
+                                <option value="1994">1984</option>
+                                <option value="1993">1983</option>
+                                <option value="1992">1982</option>
+                                <option value="1991">1981</option>
+                                <option value="1990">1980</option>
+                                <option value="1999">1979</option>
+                                <option value="1998">1978</option>
+                                <option value="1997">1977</option>
+                                <option value="1996">1976</option>
+                                <option value="1995">1975</option>
+                                <option value="1994">1974</option>
+                                <option value="1993">1973</option>
+                                <option value="1992">1972</option>
+                                <option value="1991">1971</option>
+                                <option value="1990">1970</option>
+                                <option value="1999">1969</option>
+                                <option value="1998">1968</option>
+                                <option value="1997">1967</option>
+                                <option value="1996">1966</option>
+                                <option value="1995">1965</option>
+                                <option value="1994">1964</option>
+                                <option value="1993">1963</option>
+                                <option value="1992">1962</option>
+                                <option value="1991">1961</option>
+                                <option value="1990">1960</option>
 
                   <?php } ?>
                 </select> -->

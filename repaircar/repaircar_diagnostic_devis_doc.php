@@ -236,7 +236,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <tr>
                                                 <th>Code</th>
                                                 <th>Désignation</th>
-                                                <th>Marque</th>
+                                                <!-- <th>Marque</th> -->
                                                 <th>Quantité</th>
                                                 <th>Tarif HT</th>
                                                 <th>Remise</th>
@@ -257,7 +257,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                                 <tr>
                                                     <td><?php echo $devis['code_piece_rechange_devis']; ?></td>
                                                     <td><?php echo $devis['designation_piece_rechange_devis']; ?></td>
-                                                    <td><?php echo $devis['marque_piece_rechange_devis']; ?></td>
+                                                    <!-- <td><?php echo $devis['marque_piece_rechange_devis']; ?></td> -->
                                                     <td><?php echo $devis['qte_piece_rechange_devis']; ?></td>
                                                     <td><?php echo $devis['prix_piece_rechange_min_devis']; ?></td>
                                                     <td><?php echo $devis['remise_piece_rechange_devis']; ?></td>

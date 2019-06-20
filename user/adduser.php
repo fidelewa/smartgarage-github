@@ -113,7 +113,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                             <input type="text" name="txtUserName" value="<?php echo $usr_name ?>" id="txtUserName" class="form-control" required />
                         </div>
                         <div class="form-group">
-                            <label for="txtEmail"><span style="color:red;">*</span>Email :</label>
+                            <label for="txtEmail"><span style="color:red;">*</span>N° téléphone :<span style="color:red;"> (le numéro de téléphone est le login)</span></label>
                             <input type="text" name="txtUserEmail" value="<?php echo $usr_email ?>" id="txtUserEmail" class="form-control" required />
                         </div>
                         <div class="form-group">

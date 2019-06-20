@@ -53,9 +53,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                    border: 1px dotted rgb(0, 0, 0);
-                    border-radius: 1px;
-                } */
+                        border: 1px dotted rgb(0, 0, 0);
+                        border-radius: 1px;
+                    } */
         </style>
     </head>
 
@@ -89,7 +89,7 @@ if (!empty($row) && count($row) > 0) { ?>
                 #info_gene {
                     border-radius: 20px;
                     /* width: 400px;
-                                                                height: 175px; */
+                                                                    height: 175px; */
                     border: solid 2px #000;
                     padding: 15px;
                     margin-bottom: 20pt;
@@ -98,7 +98,7 @@ if (!empty($row) && count($row) > 0) { ?>
                 .cadre {
                     border-radius: 20px;
                     /* width: 400px;
-                                                                height: 175px; */
+                                                                    height: 175px; */
                     border: solid 2px #000;
                     padding: 15px;
                     margin-bottom: 20pt;
@@ -207,27 +207,27 @@ if (!empty($row) && count($row) > 0) { ?>
                             </div>
                         </div>
                         <!-- <div class="row">
-                            <div class="col-sm-6">
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <p>Première mise en circulation</p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p><?php echo $row['add_date_mise_circu']; ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <p>Prochain controle technique</p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p><?php echo $row['add_date_visitetech']; ?></p>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <p>Première mise en circulation</p>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p><?php echo $row['add_date_mise_circu']; ?></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div> -->
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <p>Prochain controle technique</p>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p><?php echo $row['add_date_visitetech']; ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
                         <!-- </div> -->
                         <div class="row">
                             <div class="col-sm-12">
@@ -237,7 +237,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <tr>
                                                 <th>Code</th>
                                                 <th>Désignation</th>
-                                                <th>Marque</th>
+                                                <!-- <th>Marque</th> -->
                                                 <th>Quantité</th>
                                                 <th>Tarif HT</th>
                                                 <th>Remise</th>
@@ -258,7 +258,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                                 <tr>
                                                     <td><?php echo $devis['code_piece_rechange_devis']; ?></td>
                                                     <td><?php echo $devis['designation_piece_rechange_devis']; ?></td>
-                                                    <td><?php echo $devis['marque_piece_rechange_devis']; ?></td>
+                                                    <!-- <td><?php echo $devis['marque_piece_rechange_devis']; ?></td> -->
                                                     <td><?php echo $devis['qte_piece_rechange_devis']; ?></td>
                                                     <td><?php echo $devis['prix_piece_rechange_min_devis']; ?></td>
                                                     <td><?php echo $devis['remise_piece_rechange_devis']; ?></td>
@@ -380,8 +380,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
 
             @media print {
 
@@ -409,16 +409,17 @@ if (!empty($row) && count($row) > 0) { ?>
             <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
             <a style="" href="<?php echo WEB_URL; ?>cust_panel/cust_dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
-        <div id="mobile-preview-close_2">
+        <!-- <div id="mobile-preview-close_2">
             <a style="" href="<?php echo WEB_URL; ?>bonCmdeTraitement.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>&devis_id=<?php echo $_GET['devis_id']; ?>&nom_client=<?php echo $row['nom_client']; ?>">
                 Créer le bon de commande
             </a>
-            <script>
-                $(document).ready(function() {
-                    location.reload(true);
-                    window.onload = timedRefresh(500);
-                });
-            </script>
+        </div> -->
+        <script>
+            $(document).ready(function() {
+                location.reload(true);
+                window.onload = timedRefresh(500);
+            });
+        </script>
     </body>
 
     </html>

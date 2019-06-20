@@ -24,7 +24,7 @@ if (isset($_POST) && !empty($_POST)) {
 
     // Linéarisation de l'array des données des devis pour le stocker en base de données
     $devis_data = serialize($_POST['devis_data']);
-    
+
     $date_devis = $wms->datepickerDateToMySqlDate(date('d/m/Y'));
 
     // Formulation de la requête
@@ -109,8 +109,9 @@ if (isset($_POST) && !empty($_POST)) {
                                                     <thead>
                                                         <tr>
                                                             <th>Code de la pièce</th>
+                                                            <th class="text-center"><b>Pièce de rechange</b></th>
                                                             <th>Désignations</th>
-                                                            <th>Marque</th>
+                                                            <!-- <th>Marque</th> -->
                                                             <th>Quantité</th>
                                                             <th>Tarif HT</th>
                                                             <th>Taux Remise</th>
@@ -138,12 +139,16 @@ if (isset($_POST) && !empty($_POST)) {
                                                                 <td>
                                                                     <input name="devis_data[<?php echo $i; ?>][code_piece_rechange_devis]" type="text" value="" class="form-control" />
                                                                 </td>
-                                                                <td>
-                                                                    <input type="text" value="<?php echo $row['designation_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][designation_piece_rechange_devis]" class="form-control" />
+                                                                <td class="text-right">
+                                                                    <button data-toggle="tooltip" title="Ajouter une pièce de rechange à partir du stock" type="button" name="devis_data[<?php echo $i; ?>][button]" onClick=loadModal(<?php echo $i; ?>); class="btn btn-info btnsp"><i class="fa fa-plus"></i></button>
+                                                                    <input type="hidden" id="parts_id_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][stock_parts]" value="" />
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" class="form-control" />
+                                                                    <input type="text" value="<?php echo $row['designation_piece_rechange']; ?>" id="parts_desc_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][designation_piece_rechange_devis]" class="form-control" />
                                                                 </td>
+                                                                <!-- <td>
+                                                                        <input type="text" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" class="form-control" />
+                                                                    </td> -->
                                                                 <td>
                                                                     <input type="text" value="<?php echo $row['qte_piece_rechange']; ?>" id="qty_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][qte_piece_rechange_devis]" class="form-control" />
                                                                 </td>
@@ -164,8 +169,8 @@ if (isset($_POST) && !empty($_POST)) {
 
                                                             <!-- Récupération des données du devis -->
                                                             <!-- <input type="hidden" value="<?php echo $row['designation_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][designation_piece_rechange_devis]" />
-                                                                        <input type="hidden" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" />
-                                                                        <input type="hidden" value="<?php echo $row['qte_piece_rechange']; ?>" id="qty_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][qte_piece_rechange_devis]" /> -->
+                                                                                <input type="hidden" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" />
+                                                                                <input type="hidden" value="<?php echo $row['qte_piece_rechange']; ?>" id="qty_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][qte_piece_rechange_devis]" /> -->
 
                                                             <?php
                                                             // Incrémentation du compteur
@@ -225,15 +230,90 @@ if (isset($_POST) && !empty($_POST)) {
             </section>
         </form>
     </div>
+    <div id="filter_popup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header green_header">
+                    <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                    <h3 class="modal-title">Rechercher des pièces</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="box box-info" id="box_model">
+                        <div class="box-body">
+                            <div class="box-header">
+                                <h3 class="box-title"><i class="fa fa-search"></i> Rechercher des pièces</h3>
+                            </div>
+                            <!-- <div class="form-group col-md-6">
+                                <label for="ddlMake">Marque :</label>
+                                <select class="form-control" onchange="loadYear(this.value);" name="ddlMake" id="ddlMake">
+                                    <option value=''>--Sélectionnez Marque--</option>
+                                    <?php
+                                    $make_list = $wms->get_all_make_list($link);
+                                    foreach ($make_list as $make) {
+                                        echo "<option value='" . $make['make_id'] . "'>" . $make['make_name'] . "</option>";
+                                    }
 
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="ddl_model">Modèle :</label>
+                                <select class="form-control" onchange="loadPartsData();" name="ddlModel" id="ddl_model">
+                                    <option value=''>--Choisir un modèle--</option>
+                                </select>
+                            </div> -->
+                            <!-- <div class="form-group col-md-4">
+                                <label for="ddl_model">Modèle :</label>
+                                <select class="form-control" onchange="loadYearData(this.value);" name="ddlModel" id="ddl_model">
+                                    <option value=''>--Choisir un modèle--</option>
+                                </select>
+                            </div> -->
+                            <!-- <div class="form-group col-md-4">
+                                <label for="ddlYear">Année :</label>
+                                <select class="form-control" name="ddlYear" onchange="loadPartsData();" id="ddlYear">
+                                    <option value=''>--Sélectionnez Année--</option>
+                                </select>
+                            </div> -->
+                            <div class="form-group col-md-12">
+                                <label for="txtPartsName">Saisissez le nom ou le code barre de la pièce :</label>
+                                <input class="form-control" type="text" name="txtPartsName" id="txtPartsName" />
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div align="center" class="page_loader"><img src="<?php echo WEB_URL; ?>/img/ajax-loader.gif" /></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-center"><b>Image</b></td>
+                                                <td class="text-center"><b>Code</b></td>
+                                                <td class="text-center"><b>Désignation</b></td>
+                                                <td class="text-center"><b>Prix base HT</b></td>
+                                                <!-- <td class="text-center"><b>Garantie</b></td> -->
+                                                <td class="text-center"><b>Quantité/stock</b></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="laod_parts_data">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+    <input type="hidden" id="estimate_row" value="0" />
     <script>
         var row = <?php echo $i; ?>;
 
         function addEstimate() {
             html = '<tr id="estimate-row' + row + '">';
             html += '  <td class="text-right"><input id="codepiece_' + row + '" type="text" name="devis_data[' + row + '][code_piece_rechange_devis]" class="form-control"></td>';
-            html += '  <td class="text-right"><input id="designation_' + row + '" type="text" name="devis_data[' + row + '][designation_piece_rechange_devis]" class="form-control"></td>';
-            html += '  <td class="text-right"><input type="text" id="marque_' + row + '" name="devis_data[' + row + '][marque_piece_rechange_devis]" value="" class="form-control" /></td>';
+            html += '  <td class="text-right"><button data-toggle="tooltip" title="Ajouter une pièce de rechange à partir du stock" type="button" name="estimate_data[' + row + '][button]" onClick=loadModal(' + row + '); class="btn btn-info btnsp"><i class="fa fa-plus"></i></button><input type="hidden" id="parts_id_' + row + '" name="estimate_data[' + row + '][stock_parts]" value="0" /></td>';
+            html += '  <td class="text-right"><input id="parts_desc_' + row + '" type="text" name="devis_data[' + row + '][designation_piece_rechange_devis]" class="form-control"></td>';
+            // html += '  <td class="text-right"><input type="text" id="marque_' + row + '" name="devis_data[' + row + '][marque_piece_rechange_devis]" value="" class="form-control" /></td>';
             html += '  <td class="text-right"><input id="qty_' + row + '" type="text" name="devis_data[' + row + '][qte_piece_rechange_devis]" value="0" class="form-control eFire allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="price_' + row + '" name="devis_data[' + row + '][prix_piece_rechange_min_devis]" value="0.00" class="form-control eFirePrice" /></td>';
             html += '  <td class="text-right"><input type="text" id="remise_' + row + '" name="devis_data[' + row + '][remise_piece_rechange_devis]" value="0.00" class="form-control eFireRemise allownumberonly" /></td>';
@@ -260,6 +340,29 @@ if (isset($_POST) && !empty($_POST)) {
             row++;
             // reloadQtyRow();
             // numberAllow();
+        }
+
+        function addDataToEstimate(obj, parts_id, price, qty, code_piece) {
+            if (parseInt(qty) > 0) {
+                var row = $("#estimate_row").val();
+                var parts_name = $(obj).find(".parts_name").html();
+                $("#parts_desc_" + row).val(parts_name);
+                $("#price_" + row).val(price);
+                // $("#qty_" + row).val('1');
+                $("#qty_" + row).val(qty);
+                $("#total_" + row).val(price);
+                $("#parts_id_" + row).val(parts_id);
+                $("#codepiece_" + row).val(code_piece);
+                totalEstCost();
+                $("#filter_popup").modal("hide")
+            } else {
+                alert("Stock Empty so you cannot add parts");
+            }
+        }
+
+        function loadModal(row) {
+            $("#estimate_row").val(row);
+            $("#filter_popup").modal("show")
         }
 
         // Au chargement du DOM, on appelle la fonction qui nous intéresse

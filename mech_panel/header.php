@@ -171,11 +171,11 @@ if (!empty($_SESSION['objMech']['image'])) {
 
           <li class="treeview <?php if ($page_name != '' && $page_name == 'mech_reception_vehicule_list') {
                                 echo 'active';
-                              } ?>"> <a href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_reception_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des véhicules réceptionnés</span></a></li>
+                              } ?>"> <a href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_reception_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Véhicules à diagnostiquer</span></a></li>
 
-          <li class="treeview <?php if ($page_name != '' && $page_name == 'mech_diagnostic_vehicule_list') {
+          <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'mech_diagnostic_vehicule_list') {
                                 echo 'active';
-                              } ?>"> <a href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des véhicules diagnostiqués</span></a></li>
+                              } ?>"> <a href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des véhicules diagnostiqués</span></a></li> -->
 
           <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'mech_devis_repaircar_diagnostic_list') {
                                 echo 'active';

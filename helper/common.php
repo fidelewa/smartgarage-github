@@ -2,6 +2,252 @@
 //include_once('../config.php');v
 class wms_core
 {
+
+	public function getAllRepairCarDevisFactureListByClient($con, $cusId)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
+			rd.car_id, dev.confirm_devis, confirm_facture
+			from tbl_recep_vehi_repar rvr
+			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
+			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
+			inner join tbl_add_facture fac on fac.devis_id = dev.devis_id
+			WHERE cus.customer_id ='" . (int)$cusId . "' LIMIT 10";
+
+		$result = mysql_query($query, $con);
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllRepairCarDevisFactureListByCustId($con, $cusId)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
+			rd.car_id, dev.confirm_devis, confirm_facture
+			from tbl_recep_vehi_repar rvr
+			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
+			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
+			inner join tbl_add_facture fac on fac.devis_id = dev.devis_id
+			WHERE cus.customer_id ='" . (int)$cusId . "'";
+
+		$result = mysql_query($query, $con);
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllRepairCarDevisFactureListByCustId_2($con, $cusId)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
+			rd.car_id, dev.confirm_devis, confirm_facture
+			from tbl_recep_vehi_repar rvr
+			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
+			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
+			left join tbl_add_facture fac on fac.devis_id = dev.devis_id
+			WHERE cus.customer_id ='" . (int)$cusId . "'";
+
+		$result = mysql_query($query, $con);
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepRepairCarListByMecanicien($con, $mecanicien_id)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, usr_type, 
+		rvr.car_id, rvr.add_car_id, diag.id as vehi_diag_id
+		FROM tbl_recep_vehi_repar rvr
+		inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id 
+		join tbl_add_user us on us.usr_id = rvr.attribution_mecanicien
+		left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
+		WHERE us.usr_id = '" . (int)$mecanicien_id . "' LIMIT 10 ";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepRepairCarListByMechId($con, $mecanicien_id)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, usr_type, 
+		rvr.car_id, rvr.add_car_id, diag.id as vehi_diag_id
+		FROM tbl_recep_vehi_repar rvr
+		inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id 
+		join tbl_add_user us on us.usr_id = rvr.attribution_mecanicien
+		left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
+		WHERE us.usr_id = '" . (int)$mecanicien_id . "'";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get all car list
+	*/
+	public function getAllActiveCarList_2($con)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_buycar WHERE car_status = 0", $con);
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function saveUpdateUserInformation($con, $data, $image_url)
+	{
+		if (!empty($data)) {
+			if ($data['usr_id'] == '0') {
+
+				$query = "INSERT INTO tbl_add_user(usr_name, usr_email, usr_password, usr_type, usr_image) 
+				values('$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]', '$image_url')";
+				$result = mysql_query($query, $con);
+
+			} else {
+
+				$query = "UPDATE `tbl_add_user` 
+				SET `usr_name`='" . $data['txtUserName'] . "',`usr_email`='" . $data['txtUserEmail'] . "',
+				`usr_password`='" . $data['txtUserPassword'] . "', `usr_type`='" . $data['user_type'] . "',
+				`usr_image`='" . $image_url . "'
+				 WHERE usr_id='" . $data['usr_id'] . "'";
+				$result = mysql_query($query, $con);
+			}
+
+			if (!$result) {
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		}
+	}
+
+	public function getAllMechanicsListByTitle($con)
+	{
+		$data = array();
+		$result = mysql_query('SELECT * FROM tbl_add_user 
+		WHERE usr_type IN ("mecanicien","electricien")', $con);
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @login process
+	*/
+	public function login_operation($con, $data)
+	{
+		$obj_login = array();
+		if ($data['ddlLoginType'] == 'admin') {
+			$sql = mysql_query("SELECT * FROM tbl_admin WHERE email = '" . $this->make_safe($data['username']) . "' and password = '" . $this->make_safe($data['password']) . "'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['user_id'],
+					'name'			=> $row['name'],
+					'email'			=> $row['email'],
+					'password'		=> $row['password'],
+					'image'			=> $row['image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'customer') {
+			$sql = mysql_query("SELECT * FROM tbl_add_customer WHERE c_email = '" . $this->make_safe($data['username']) . "' and c_password = '" . $this->make_safe($data['password']) . "'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['customer_id'],
+					'name'			=> $row['c_name'],
+					'email'			=> $row['c_email'],
+					'password'		=> $row['c_password'],
+					'image'			=> $row['image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'mechanics') {
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type IN ('mecanicien','electricien')", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['usr_id'],
+					'name'			=> $row['usr_name'],
+					'email'			=> $row['usr_email'],
+					'password'		=> $row['usr_password'],
+					'image'			=> $row['usr_image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'reception') {
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'receptionniste'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['usr_id'],
+					'name'			=> $row['usr_name'],
+					'email'			=> $row['usr_email'],
+					'password'		=> $row['usr_password'],
+					'image'			=> $row['usr_image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'comptable') {
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['usr_id'],
+					'name'			=> $row['usr_name'],
+					'email'			=> $row['usr_email'],
+					'password'		=> $row['usr_password'],
+					'image'			=> $row['usr_image']
+				);
+			}
+		}
+		return $obj_login;
+	}
+
 	public function getStatutEtatVehiSortie($con, $car_recep_id)
 	{
 
@@ -14,7 +260,7 @@ class wms_core
 		$result = mysql_query($query, $con);
 
 		$row = mysql_fetch_array($result);
-	
+
 		return $row;
 	}
 
@@ -1063,33 +1309,6 @@ class wms_core
 		return $data;
 	}
 
-	public function saveUpdateUserInformation($con, $data, $image_url)
-	{
-		if (!empty($data)) {
-			if ($data['user_id'] == '0') {
-
-				$query = "INSERT INTO tbl_add_user(usr_name, usr_email, usr_password, usr_type, usr_image) 
-				values('$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]', '$image_url')";
-				$result = mysql_query($query, $con);
-			} else {
-
-				$query = "UPDATE `tbl_add_user` 
-				SET `usr_name`='" . $data['txtUserName'] . "',`usr_email`='" . $data['txtUserEmail'] . "',
-				`usr_password`='" . $data['txtUserPassword'] . "', `usr_type`='" . $data['user_type'] . "',
-				`usr_image`='" . $image_url . "'
-				 WHERE usr_id='" . $data['usr_id'] . "'";
-				$result = mysql_query($query, $con);
-			}
-
-			if (!$result) {
-				var_dump($data);
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
-			}
-		}
-	}
-
 	public function getCarMakeDataByMakeName($con, $make_name)
 	{
 		$data = array();
@@ -1130,44 +1349,7 @@ class wms_core
 	/*
 	* @get all Voiture de réparation list
 	*/
-	public function getAllRecepRepairCarListByMecanicien_2($con, $mecanicien_id)
-	{
-		// Déclaration et initialisation d'un array vide
-		$data = array();
-
-		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, title, 
-		rvr.car_id, rvr.add_car_id, diag.id as vehi_diag_id
-		FROM tbl_recep_vehi_repar rvr
-		inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id 
-		join tbl_attribution att on att.car_id = rvr.add_car_id
-        join tbl_add_mechanics mec on mec.mechanics_id = att.mechanics_id
-		inner join tbl_mechanics_designation mecdes on mecdes.designation_id = mec.designation_id
-		left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
-		WHERE mec.mechanics_id = '" . (int)$mecanicien_id . "' LIMIT 10 ";
-
-		// Exécution et stockage du résultat de la requête
-		$result = mysql_query($query, $con);
-
-		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
-		// Pour chaque ligne, on l'affecte à une variable tampon
-		// Puis dans l'array
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
-	/*
-	* @get all Voiture de réparation list
-	*/
-	public function getAllRecepRepairCarListByMecanicien($con, $mecanicien_id)
+	public function getAllRecepRepairCarListByMecanicien_3($con, $mecanicien_id)
 	{
 		// Déclaration et initialisation d'un array vide
 		$data = array();
@@ -1399,50 +1581,6 @@ class wms_core
 		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
 		// Pour chaque ligne, on l'affecte à une variable tampon
 		// Puis dans l'array
-		while ($row = mysql_fetch_assoc($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
-	public function getAllRepairCarDevisFactureListByClient($con, $cusId)
-	{
-		// Déclaration et initialisation d'un array vide
-		$data = array();
-
-		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
-			rd.car_id, dev.confirm_devis, confirm_facture
-			from tbl_recep_vehi_repar rvr
-			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
-			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
-			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
-			inner join tbl_add_facture fac on fac.devis_id = dev.devis_id
-			WHERE cus.customer_id ='" . (int)$cusId . "' LIMIT 10";
-
-		$result = mysql_query($query, $con);
-
-		while ($row = mysql_fetch_assoc($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
-	public function getAllRepairCarDevisFactureListByCustId($con, $cusId)
-	{
-		// Déclaration et initialisation d'un array vide
-		$data = array();
-
-		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
-			rd.car_id, dev.confirm_devis, confirm_facture
-			from tbl_recep_vehi_repar rvr
-			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
-			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
-			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
-			left join tbl_add_facture fac on fac.devis_id = dev.devis_id
-			WHERE cus.customer_id ='" . (int)$cusId . "'";
-
-		$result = mysql_query($query, $con);
-
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -1757,38 +1895,9 @@ class wms_core
 	}
 
 	/*
-	* @get all Voiture de réparation list
-	*/
-	public function getAllRecepRepairCarListByMechId($con, $mecanicien_id)
-	{
-		// Déclaration et initialisation d'un array vide
-		$data = array();
-
-		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, m_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
-		add_car_id, diag.id as vehi_diag_id, title
-			from tbl_recep_vehi_repar rvr
-			left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
-			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
-			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
-			inner join tbl_mechanics_designation mecdes on mecdes.designation_id = me.designation_id
-			WHERE attribution_mecanicien = " . (int)$mecanicien_id;
-
-		// Exécution et stockage du résultat de la requête
-		$result = mysql_query($query, $con);
-
-		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
-		// Pour chaque ligne, on l'affecte à une variable tampon
-		// Puis dans l'array
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
-	/*
 	* @get all mechanics information
 	*/
-	public function getAllMechanicsListByTitle($con)
+	public function getAllMechanicsListByTitle_2($con)
 	{
 		$data = array();
 		$result = mysql_query('SELECT *,d.title FROM tbl_add_mechanics m 
@@ -5436,16 +5545,10 @@ class wms_core
 	public function saveUpdateReceptionnisteInformation($con, $data, $image_url)
 	{
 		if (!empty($data)) {
-			if ($data['reception_id'] == '0') {
 
 				$query = "INSERT INTO tbl_add_reception(r_name,r_email,r_password) 
 				values('$data[txtSName]','$data[txtSEmail]','$data[txtSPassword]')";
 				$result = mysql_query($query, $con);
-			} else {
-
-				$query = "UPDATE `tbl_add_reception` SET `r_name`='" . $data['txtSName'] . "',`r_email`='" . $data['txtSEmail'] . "',`r_password`='" . $data['txtSPassword'] . "' WHERE reception_id='" . $data['reception_id'] . "'";
-				$result = mysql_query($query, $con);
-			}
 
 			if (!$result) {
 				var_dump($data);
@@ -5728,7 +5831,7 @@ class wms_core
 	public function getMechanicsInfoByMechanicsId($con, $mechanics_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_mechanics where mechanics_id = '" . (int)$mechanics_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_add_user where usr_id = '" . (int)$mechanics_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -7004,71 +7107,6 @@ class wms_core
 			}
 		}
 		return $cc;
-	}
-
-	/*
-	* @login process
-	*/
-	public function login_operation($con, $data)
-	{
-		$obj_login = array();
-		if ($data['ddlLoginType'] == 'admin') {
-			$sql = mysql_query("SELECT * FROM tbl_admin WHERE email = '" . $this->make_safe($data['username']) . "' and password = '" . $this->make_safe($data['password']) . "'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['user_id'],
-					'name'			=> $row['name'],
-					'email'			=> $row['email'],
-					'password'		=> $row['password'],
-					'image'			=> $row['image']
-				);
-			}
-		} else if ($data['ddlLoginType'] == 'customer') {
-			$sql = mysql_query("SELECT * FROM tbl_add_customer WHERE c_email = '" . $this->make_safe($data['username']) . "' and c_password = '" . $this->make_safe($data['password']) . "'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['customer_id'],
-					'name'			=> $row['c_name'],
-					'email'			=> $row['c_email'],
-					'password'		=> $row['c_password'],
-					'image'			=> $row['image']
-				);
-			}
-		} else if ($data['ddlLoginType'] == 'mechanics') {
-			$sql = mysql_query("SELECT * FROM tbl_add_mechanics WHERE m_email = '" . $this->make_safe($data['username']) . "' and m_password = '" . $this->make_safe($data['password']) . "'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['mechanics_id'],
-					'name'			=> $row['m_name'],
-					'email'			=> $row['m_email'],
-					'password'		=> $row['m_password'],
-					'image'			=> $row['m_image']
-				);
-			}
-		} else if ($data['ddlLoginType'] == 'reception') {
-			$sql = mysql_query("SELECT * FROM tbl_add_reception WHERE r_email = '" . $this->make_safe($data['username']) . "' and r_password = '" . $this->make_safe($data['password']) . "'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['reception_id'],
-					'name'			=> $row['r_name'],
-					'email'			=> $row['r_email'],
-					'password'		=> $row['r_password'],
-					'image'			=> $row['r_image']
-				);
-			}
-		} else if ($data['ddlLoginType'] == 'comptable') {
-			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['usr_id'],
-					'name'			=> $row['usr_name'],
-					'email'			=> $row['usr_email'],
-					'password'		=> $row['usr_password'],
-					'image'			=> $row['usr_image']
-				);
-			}
-		}
-		return $obj_login;
 	}
 
 	/*
