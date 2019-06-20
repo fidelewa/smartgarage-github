@@ -269,7 +269,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <div class="box-body">
               <div class="form-group">
                 <label for="vin"><span style="color:red;">*</span> Immatriculation :</label>
-                <input type="text" name="vin" value="<?php echo $vin ?>" id="vin" class="form-control" placeholder="Saisissez l'immatriculation de la voiture" />
+                <input type="text" name="vin" maxlength="10" value="<?php echo $vin ?>" id="vin" class="form-control" placeholder="Saisissez l'immatriculation de la voiture" />
               </div>
               <div class="form-group">
                 <label for="ddlMake"><span style="color:red;">*</span> Marque :</label>
@@ -1804,6 +1804,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
             <button type="submit" class="btn btn-success" id="submit">Valider</button>
           </div>
+
+          <input type="hidden" value="" name="txtCPassword" />
+          <input type="hidden" value="" name="tel_wa" />
+          <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
+          <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
 
         </form>
       </div>

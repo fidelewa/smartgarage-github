@@ -2,6 +2,22 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getStatutEtatVehiSortie($con, $car_recep_id)
+	{
+
+		$query = "SELECT status_sortie_vehicule
+			from tbl_recep_vehi_repar
+			where car_id ='" . (int)$car_recep_id . "' AND status_sortie_vehicule is null
+			";
+
+		// Exécution de la requête
+		$result = mysql_query($query, $con);
+
+		$row = mysql_fetch_array($result);
+	
+		return $row;
+	}
+
 	public function getFactureFourForReport($con, $filter)
 	{
 		$data = array();
@@ -75,7 +91,7 @@ class wms_core
 		if (!empty($filter['dateDebut']) && !empty($filter['dateFin'])) {
 			$sql .= " WHERE facsim.date_facture BETWEEN '" . $this->datepickerDateToMySqlDate($filter['dateDebut']) . "' AND '" . $this->datepickerDateToMySqlDate($filter['dateFin']) . "'";
 		}
-		
+
 		// if (!empty($filter['payment'])) {
 		// 	if ($filter['payment'] == 'due') {
 		// 		$sql .= " AND payment_due > 0";
@@ -5957,10 +5973,20 @@ class wms_core
 	/*
 	* @parts total qty for dashboard
 	*/
-	public function partsStockTotalQty($con)
+	public function partsStockTotalQty_2($con)
 	{
 		$data = 0;
 		$result = mysql_query("SELECT sum(quantity) as total_parts FROM tbl_parts_stock_manage", $con);
+		if ($row = mysql_fetch_assoc($result)) {
+			$data = $row['total_parts'];
+		}
+		return $data;
+	}
+
+	public function partsStockTotalQty($con)
+	{
+		$data = 0;
+		$result = mysql_query("SELECT sum(stock_piece) as total_parts FROM tbl_piece_stock", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row['total_parts'];
 		}

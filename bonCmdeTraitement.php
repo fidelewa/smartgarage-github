@@ -6,8 +6,8 @@ $wms = new wms_core();
 // Récupération de l'email de l'administrateur
 $result_settings = $wms->getWebsiteSettingsInformation($link);
 if (!empty($result_settings)) {
-    // $admin_email = $result_settings['email'];
-    $admin_email = "aw.fidele@e-mitic.com";
+    $admin_email = $result_settings['email'];
+    // $admin_email = "aw.fidele@e-mitic.com";
 }
 
 // initialisation des variables
@@ -27,8 +27,8 @@ $row = $wms->getBonCmdeByDevisId($link, $devis_id);
 // Si un bon de commande correspond au devis courant
 if (!empty($row)) {
 
-    // $mech_email = $row['m_email'];
-    $mech_email = "aw.fidele@e-mitic.com";
+    $mech_email = $row['m_email'];
+    // $mech_email = "aw.fidele@e-mitic.com";
     
     // Lien d'apercu du bon de commande à envoyer par e-mail
     // $url_boncmde = '<a href=' . WEB_URL . 'confirmDevis.php?confirm_devis=1&vehi_diag_id=' . $vehi_diag_id . '&devis_id=' . $devis_id . '>cliquer sur ce lien</a>';

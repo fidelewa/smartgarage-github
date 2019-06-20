@@ -125,7 +125,14 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                                         if (isset($row['sign_cli_depot']) && isset($row['sign_recep_depot'])) {?>
 
                                             <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien"><i class="fa fa-user"></i></a>
-                                            <a class="btn btn-primary" style="background-color:#021254;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/etat_vehicule_sortie.php?cid=<?php echo $row['car_id']; ?>" data-original-title="Définir l'état du véhicule à la sortie"><i class="fa fa-car"></i></a>
+                                            
+                                        <?php } 
+                                        
+                                        // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
+                                        $rowsGetStatutEtatVehiSortie = $wms->getStatutEtatVehiSortie($link, $row['car_id']); 
+                                        
+                                        if (!empty($rowsGetStatutEtatVehiSortie)) {?>
+                                        <a class="btn btn-primary" style="background-color:#021254;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/etat_vehicule_sortie.php?cid=<?php echo $row['car_id']; ?>" data-original-title="Définir l'état du véhicule à la sortie"><i class="fa fa-car"></i></a>
                                         <?php } ?>
 
                                         <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien"><i class="fa fa-eye"></i></a> -->

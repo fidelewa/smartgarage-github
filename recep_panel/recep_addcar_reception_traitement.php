@@ -896,8 +896,8 @@ if (empty($image_url)) {
 }
 
 $_POST['recep_id'] = (int)$_POST['recep_id'];
-var_dump($_POST);
-die();
+// var_dump($_POST);
+// die();
 
 // Exécution de la réquête et redirection vers la liste des voitures à faire réparer
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);

@@ -1,3 +1,5 @@
+DirectoryIndex my_sign_pointage.php
+
 RewriteEngine On
 ErrorDocument 404 http://smartgarage.e-mitic.com/404.php
 

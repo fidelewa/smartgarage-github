@@ -31,8 +31,8 @@ if (!$result) {
 // Définition du message et trraitement de l'envoi
 if ($_POST['email']) {
 
-	// $toEmail = $_POST['email'];
-	$toEmail = "fiderlet07@gmail.com";
+	$toEmail = $_POST['email'];
+	// $toEmail = "fiderlet07@gmail.com";
 	$message = $_POST['message'];
 	try {
 		$mail = new \PHPMailer\PHPMailer\PHPMailer();

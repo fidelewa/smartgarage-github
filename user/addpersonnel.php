@@ -51,6 +51,49 @@ if (isset($_POST) && !empty($_POST)) { //Si les données ont été soumis à par
     // var_dump($_POST);
     // die();
 
+    // Echappement des caractères spéciaux
+
+    // Remarque sur la voiture à son arrivée
+    if (!empty($_POST['txtPersName'])) {
+        $_POST['txtPersName'] = mysql_real_escape_string($_POST['txtPersName']);
+    }
+
+    if (!empty($_POST['telPers'])) {
+        $_POST['telPers'] = mysql_real_escape_string($_POST['telPers']);
+    }
+
+    if (!empty($_POST['foncPers'])) {
+        $_POST['foncPers'] = mysql_real_escape_string($_POST['foncPers']);
+    }
+
+    if (!empty($_POST['lieuNaisPers'])) {
+        $_POST['lieuNaisPers'] = mysql_real_escape_string($_POST['lieuNaisPers']);
+    }
+
+    if (!empty($_POST['lieuOriPers'])) {
+        $_POST['lieuOriPers'] = mysql_real_escape_string($_POST['lieuOriPers']);
+    }
+
+    if (!empty($_POST['etatcivilePers'])) {
+        $_POST['etatcivilePers'] = mysql_real_escape_string($_POST['etatcivilePers']);
+    }
+
+    if (!empty($_POST['nomconjointPers'])) {
+        $_POST['nomconjointPers'] = mysql_real_escape_string($_POST['nomconjointPers']);
+    }
+
+    if (!empty($_POST['adrsPers'])) {
+        $_POST['adrsPers'] = mysql_real_escape_string($_POST['adrsPers']);
+    }
+
+    if (!empty($_POST['nomperePers'])) {
+        $_POST['nomperePers'] = mysql_real_escape_string($_POST['nomperePers']);
+    }
+
+    if (!empty($_POST['nomerePers'])) {
+        $_POST['nomerePers'] = mysql_real_escape_string($_POST['nomerePers']);
+    }
+
     $_POST['salPers'] = (int)$_POST['salPers'];
 
     // Linéarisation de l'array des données du personnel pour le stocker en base de données

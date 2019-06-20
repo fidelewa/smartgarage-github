@@ -23,7 +23,8 @@ SET etat_reparation_sortie='" . $_POST[etat_reparation_sortie] . "' ,
 etat_proprete_sortie='" . $_POST[etat_proprete_sortie] . "' ,
 sortie_remarq_recep_vehi='" . $_POST[sortie_remarq_recep_vehi] . "' ,
 sortie_remarq_recep_vehi_text='" . $_POST[sortie_remarq_recep_vehi_text] . "',
-remarque_etat_vehi_sortie='" . $_POST[remarque_etat_vehi_sortie] . "'
+remarque_etat_vehi_sortie='" . $_POST[remarque_etat_vehi_sortie] . "',
+status_sortie_vehicule=1
 WHERE car_id='" . (int)$_GET['cid'] . "'";
 
     // Exécution de la requête
@@ -83,7 +84,7 @@ WHERE car_id='" . (int)$_GET['cid'] . "'";
                 <div class="col-md-12">
 
                     <div align="right" style="margin-bottom:1%;">
-                        <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php" data-original-title="Back"><i class="fa fa-reply"></i></a>
+                        <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php" data-original-title="Retour"><i class="fa fa-reply"></i></a>
                     </div>
 
                     <div class="box box-success">
@@ -133,15 +134,17 @@ WHERE car_id='" . (int)$_GET['cid'] . "'";
                         </div>
                         <!-- <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" /> -->
                         <!-- /.box-body -->
+                        
                     </div>
                     <!-- /.box -->
                 </div>
             </div>
         </section>
-        <div style="overflow:auto;">
-            <div style="float:right;">
-                <button type="submit">Valider</button>
-            </div>
+        <div class="pull-right">
+            <button type="submit" class="btn btn-success btnsp"><i class="fa fa-save fa-2x"></i><br />
+                <?php echo $button_text; ?></button>&emsp;
+            <!-- <a class="btn btn-warning btnsp" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/receptionnistelist.php" data-original-title="Retour"><i class="fa fa-reply  fa-2x"></i><br />
+                            Retour</a>  -->
         </div>
     </form>
 </body>
