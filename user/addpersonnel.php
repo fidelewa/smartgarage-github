@@ -205,7 +205,7 @@ function NewGuid()
                         </div>
                         <div class="form-group">
                             <label for="telPers"><span style="color:red;">*</span> Téléphone:</label>
-                            <input required type="text" name="telPers" value="<?php echo $per_telephone; ?>" id="telPers" class="form-control" />
+                            <input required type="text" maxlength="10" name="telPers" value="<?php echo $per_telephone; ?>" id="telPers" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="foncPers"><span style="color:red;">*</span>Fonction:</label>

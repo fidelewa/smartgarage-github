@@ -86,7 +86,9 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
               <td><?php echo $row['s_email']; ?></td>
               <td><?php echo $row['phone_number']; ?></td>
               <td><?php echo $row['fax_number']; ?></td>
-              <td><a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['supplier_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a> <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL;?>supplier/addsupplier.php?id=<?php echo $row['supplier_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['supplier_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+              <td><a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['supplier_id']; ?>').modal('show');" data-original-title="Aperçu"><i class="fa fa-eye"></i></a> 
+              <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL;?>supplier/addsupplier.php?id=<?php echo $row['supplier_id']; ?>" data-original-title="Modifier"><i class="fa fa-pencil"></i></a> 
+              <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['supplier_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
                 <div id="nurse_view_<?php echo $row['supplier_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -102,23 +104,23 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
                         <div class="row">
                           <div class="col-xs-6">
                             <h3 style="text-decoration:underline;">Détails des informations</h3>
-                            <b>Name :</b> <?php echo $row['s_name']; ?><br/>
+                            <b>Nom :</b> <?php echo $row['s_name']; ?><br/>
                             <b>Email :</b> <?php echo $row['s_email']; ?><br/>
-                            <b>Address :</b> <?php echo $row['s_address']; ?><br/>
-                            <b>Country :</b> <?php echo $row['country_name']; ?><br/>
-                            <b>State :</b> <?php echo $row['state_name']; ?><br/>
-                            <b>Phone :</b> <?php echo $row['phone_number']; ?><br/>
-                            <b>Fax :</b> <?php echo $row['fax_number']; ?><br/>
+                            <b>Addresse :</b> <?php echo $row['s_address']; ?><br/>
+                            <!-- <b>Country :</b> <?php echo $row['country_name']; ?><br/>
+                            <b>State :</b> <?php echo $row['state_name']; ?><br/> -->
+                            <b>Téléphone :</b> <?php echo $row['phone_number']; ?><br/>
+                            <!-- <b>Fax :</b> <?php echo $row['fax_number']; ?><br/>
                             <b>Post Code :</b> <?php echo $row['post_code']; ?><br/>
-                            <b>Website :</b> <?php echo $row['website_url']; ?> </div>
-                          <div class="col-xs-6">
+                            <b>Website :</b> <?php echo $row['website_url']; ?> </div> -->
+                          <!-- <div class="col-xs-6">
                             <h3 style="text-decoration:underline;">Les fabricants</h3>
                             <?php foreach($manufacturerInfo as $manufacturer) { ?>
                             <div class="chkBoxStyle">
                               <label><?php echo $manufacturer['name']; ?></label>
                               &nbsp;&nbsp;<img style="float:right;" class="img_small" src="<?php echo $manufacturer['image']; ?>" /></div>
                             <?php } ?>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>

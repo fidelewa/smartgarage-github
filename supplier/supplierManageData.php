@@ -90,6 +90,7 @@ if (isset($_POST) && !empty($_POST)) {
 
                         <div align="right" style="margin-bottom:1%;">
                             <!-- <a class="btn btn-success" style="background-color:#0029CE;color:#ffffff;" data-toggle="modal" data-target="#devis_vehicule_modal" title="Attribuer le devis à un véhicule"><i class="fa fa-plus"></i></a> -->
+                            <button type="button" onclick="javascript:window.print();" class="btn btn-danger btnsp"><i class="fa fa-print" data-original-title="imprimer"></i></button>
                             <button class="btn btn-success" type="submit" data-toggle="tooltip" href="javascript:;" data-original-title="<?php echo $button_text; ?>"><i class="fa fa-save"></i></button> &nbsp;
                             <!-- <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Back"><i class="fa fa-reply"></i></a> </div> -->
 
@@ -99,14 +100,73 @@ if (isset($_POST) && !empty($_POST)) {
 
                                     <?php
 
-                                    $supplier_manage_data = $wms->getSupplierInfoBySupplierIdAndBcmd($link, $_GET['supplier_id']);
+                                    // On récupère les données comptables correspondant à un fournisseur spécifique 
+                                    $supplier_compta_data = $wms->getInfoComptaBySupplierId($link, $_GET['supplier_id']);
 
-                                    // var_dump($supplier_manage_data);
+                                    // S'il n'y a aucune donnée comptable correspondant à ce fournisseur spécifique
+                                    if (empty($supplier_compta_data)) {
 
-                                    if (!empty($supplier_manage_data) && count($supplier_manage_data) > 0) { ?>
+                                        // On récupère les bons de commande associé au fournisseur spécifié
+                                        $supplier_manage_data = $wms->getSupplierInfoBySupplierIdAndBcmd($link, $_GET['supplier_id']);
+
+                                        // var_dump($supplier_manage_data);
+
+                                        if (!empty($supplier_manage_data) && count($supplier_manage_data) > 0) {
+                                            ?>
+
+                                            <div class="col-md-4 col-md-onset-8">
+                                                <p style="text-align:left;font-size:11pt;font-weight:bold;">NOM DU FOURNISSEUR &nbsp;: <?php echo $supplier_manage_data[0]['s_name'] ?></p>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <div class="table-responsive">
+                                                    <table id="labour_table" class="table table-striped table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="text-align:center"><?php echo strtoupper("Dates"); ?></th>
+                                                                <th style="text-align:center"><?php echo strtoupper("Reference"); ?></th>
+                                                                <th style="text-align:center"><?php echo strtoupper("Libelle"); ?></th>
+                                                                <th style="text-align:center"><?php echo strtoupper("Debit"); ?></th>
+                                                                <th style="text-align:center"><?php echo strtoupper("Credit"); ?></th>
+                                                                <th style="text-align:center"><?php echo strtoupper("Balance"); ?></th>
+                                                                <th>&nbsp;</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($supplier_manage_data as $supplier_data) { ?>
+                                                                <tr id="supplier-data-row<?php echo $row; ?>">
+                                                                    <td class="text-right"><input id="date_<?php echo $row; ?>" type="text" value="<?php echo $supplier_data['boncmde_date_creation']; ?>" name="supplier_manage_data[<?php echo $row; ?>][date]" class="form-control datepicker" /></td>
+                                                                    <td class="text-right"><input id="reference_<?php echo $row; ?>" type="text" value="<?php echo $supplier_data['boncmde_num']; ?>" name="supplier_manage_data[<?php echo $row; ?>][reference]" class="form-control" /></td>
+                                                                    <td class="text-right"><input id="libelle_<?php echo $row; ?>" type="text" name="supplier_manage_data[<?php echo $row; ?>][libelle]" value="<?php echo $supplier_data['boncmde_designation']; ?>" class="form-control" /></td>
+                                                                    <td class="text-right"><input id="debit_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][debit]" type="text" value="0.00" class="form-control eFireDebit" /></td>
+                                                                    <td class="text-right"><input id="credit_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][credit]" type="text" value="0.00" class="form-control eFireCredit" /></td>
+                                                                    <td class="text-right"><input readonly id="balance_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][balance]" type="text" value="0.00" class="form-control" /></td>
+                                                                    <td class="text-left"><button type="button" onclick="$('#supplier-data-row<?php echo $row; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                                                </tr>
+                                                                <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][supplier_id]" value="<?php echo $_GET['supplier_id']; ?>" />
+                                                                <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][bon_cmde_type]" value="<?php echo $supplier_data['bon_cmde_type']; ?>" />
+                                                                <?php $row++;
+                                                            } ?>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="6"></td>
+                                                                <td class="text-left"><button type="button" onclick="addEstimate();" data-toggle="tooltip" title="Ajouter une ligne" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                                                            </tr>
+
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        <?php }
+                                } else { // S'il y'a des données comptables correspondant à ce fournisseur spécifique 
+
+                                    // var_dump($supplier_compta_data);
+                                    ?>
 
                                         <div class="col-md-4 col-md-onset-8">
-                                            <p style="text-align:left;font-size:11pt;font-weight:bold;">NOM DU FOURNISSEUR &nbsp;: <?php echo $supplier_manage_data[0]['s_name'] ?></p>
+                                            <p style="text-align:left;font-size:11pt;font-weight:bold;">NOM DU FOURNISSEUR &nbsp;: <?php echo $supplier_compta_data[0]['s_name'] ?></p>
                                         </div>
 
                                         <div class="form-group col-md-12">
@@ -124,14 +184,16 @@ if (isset($_POST) && !empty($_POST)) {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach ($supplier_manage_data as $supplier_data) { ?>
+                                                        <?php foreach ($supplier_compta_data as $supplier_data) { 
+                                                            ?>
+
                                                             <tr id="supplier-data-row<?php echo $row; ?>">
-                                                                <td class="text-right"><input id="date_<?php echo $row; ?>" type="text" value="<?php echo $supplier_data['boncmde_date_creation']; ?>" name="supplier_manage_data[<?php echo $row; ?>][date]" class="form-control datepicker" /></td>
-                                                                <td class="text-right"><input id="reference_<?php echo $row; ?>" type="text" value="<?php echo $supplier_data['boncmde_num']; ?>" name="supplier_manage_data[<?php echo $row; ?>][reference]" class="form-control" /></td>
-                                                                <td class="text-right"><input id="libelle_<?php echo $row; ?>" type="text" name="supplier_manage_data[<?php echo $row; ?>][libelle]" value="<?php echo $supplier_data['boncmde_designation']; ?>" class="form-control" /></td>
-                                                                <td class="text-right"><input id="debit_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][debit]" type="text" value="0.00" class="form-control eFireDebit" /></td>
-                                                                <td class="text-right"><input id="credit_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][credit]" type="text" value="0.00" class="form-control eFireCredit" /></td>
-                                                                <td class="text-right"><input readonly id="balance_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][balance]" type="text" value="0.00" class="form-control" /></td>
+                                                                <td class="text-right"><input id="date_<?php echo $row; ?>" type="text" value="<?php echo date_format(date_create($supplier_data['ges_four_compta_date']), 'd/m/Y'); ?>" name="supplier_manage_data[<?php echo $row; ?>][date]" class="form-control datepicker" /></td>
+                                                                <td class="text-right"><input id="reference_<?php echo $row; ?>" type="text" value="<?php echo $supplier_data['tbl_ges_four_compta_ref']; ?>" name="supplier_manage_data[<?php echo $row; ?>][reference]" class="form-control" /></td>
+                                                                <td class="text-right"><input id="libelle_<?php echo $row; ?>" type="text" name="supplier_manage_data[<?php echo $row; ?>][libelle]" value="<?php echo $supplier_data['ges_four_compta_lib']; ?>" class="form-control" /></td>
+                                                                <td class="text-right"><input id="debit_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][debit]" type="text" value="<?php echo $supplier_data['debit']; ?>" class="form-control eFireDebit" /></td>
+                                                                <td class="text-right"><input id="credit_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][credit]" type="text" value="<?php echo $supplier_data['credit']; ?>" class="form-control eFireCredit" /></td>
+                                                                <td class="text-right"><input readonly id="balance_<?php echo $row; ?>" name="supplier_manage_data[<?php echo $row; ?>][balance]" type="text" value="<?php echo $supplier_data['solde']; ?>" class="form-control" /></td>
                                                                 <td class="text-left"><button type="button" onclick="$('#supplier-data-row<?php echo $row; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                                             </tr>
                                                             <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][supplier_id]" value="<?php echo $_GET['supplier_id']; ?>" />

@@ -1,4 +1,4 @@
-<?php include('../mech_panel/header.php') ?>
+<?php include('../header.php') ?>
 <?php
 $delinfo = 'none';
 $addinfo = 'none';
@@ -140,4 +140,4 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
             }, 200000);
         });
     </script>
-    <?php include('../mech_panel/footer.php'); ?>
+    <?php include('../footer.php'); ?>

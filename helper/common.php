@@ -3,6 +3,92 @@
 class wms_core
 {
 
+	public function getAllPersoPointage($con)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_add_pointage", $con);
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get supplier info by id
+	*/
+	public function getInfoComptaBySupplierId($con, $supplier_id)
+	{
+		$data = array();
+
+		$query = "SELECT gfc.*, s_name
+		FROM tbl_ges_four_compta gfc
+		JOIN tbl_add_supplier su ON su.supplier_id = gfc.supplier_id
+		WHERE gfc.supplier_id = '" . (int)$supplier_id . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+
+		return $data;
+	}
+
+	public function getSupplierInfoBySupplierIdAndBcmd($con, $supplier_id)
+	{
+		$data = array();
+
+		$query = "SELECT s_name, boncmde_num, boncmde_designation, boncmde_date_creation, bon_cmde_type
+		FROM tbl_add_supplier su
+		JOIN tbl_add_boncmde bcde ON su.supplier_id = bcde.supplier_id
+		WHERE su.supplier_id = '" . (int)$supplier_id . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+
+		return $data;
+	}
+
+	public function getNbHeureWorkByMois($con, $num_tel, $dateDebutMois, $dateFinMois)
+	{
+		
+		// $data = array();
+		$query = "SELECT sum(nb_heure_work) as nb_heure_work FROM tbl_add_pointage WHERE num_tel ='" . $num_tel . "'
+		AND date_depart BETWEEN '" . $dateDebutMois . "' AND '" . $dateFinMois . "'";
+
+		$result = mysql_query($query, $con);
+		// while ($row = mysql_fetch_assoc($result)) {
+		// 	$data[] = $row;
+		// }
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+
+		return $row;
+	}
+
 	public function getAllRepairCarDevisFactureListByClient($con, $cusId)
 	{
 		// Déclaration et initialisation d'un array vide
@@ -172,6 +258,38 @@ class wms_core
 		}
 	}
 
+	/*
+	* @save/update supplier information
+	*/
+	public function saveUpdateSupplierInformation($con, $data, $image_url)
+	{
+		if (!empty($data)) {
+			if ($data['supplier_id'] == '0') {
+
+				$query = "INSERT INTO tbl_add_supplier(s_name,s_email,s_address,country_id,state_id,phone_number,fax_number,post_code,website_url,s_password,image) 
+				values('$data[txtSName]','$data[txtSEmail]','$data[txtSAddress]',null,null,'$data[txtPhonenumber]',null,null,null,null,'$image_url')";
+				
+				$result = mysql_query($query, $con);
+		
+			} else {
+
+				$query = "UPDATE `tbl_add_supplier` 
+				SET `s_name`='" . $data['txtSName'] . "',`s_email`='" . $data['txtSEmail'] . "',`s_address`='" . $data['txtSAddress'] . "',
+				`phone_number`='" . $data['txtPhonenumber'] . "',`post_code`='" . $data['txtPostcode'] . "',`image`='" . $image_url . "' 
+				WHERE supplier_id='" . $data['supplier_id'] . "'";
+
+				$result = mysql_query($query, $con);
+			
+			}
+
+			if (!$result) {
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		}
+	}
+
 	public function getAllMechanicsListByTitle($con)
 	{
 		$data = array();
@@ -234,7 +352,18 @@ class wms_core
 				);
 			}
 		} else if ($data['ddlLoginType'] == 'comptable') {
-			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "'", $con);
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'comptable'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['usr_id'],
+					'name'			=> $row['usr_name'],
+					'email'			=> $row['usr_email'],
+					'password'		=> $row['usr_password'],
+					'image'			=> $row['usr_image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'service client') {
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'service client'", $con);
 			if ($row = mysql_fetch_assoc($sql)) {
 				$obj_login = array(
 					'user_id'		=> $row['usr_id'],
@@ -250,7 +379,6 @@ class wms_core
 
 	public function getStatutEtatVehiSortie($con, $car_recep_id)
 	{
-
 		$query = "SELECT status_sortie_vehicule
 			from tbl_recep_vehi_repar
 			where car_id ='" . (int)$car_recep_id . "' AND status_sortie_vehicule is null
@@ -752,35 +880,6 @@ class wms_core
 
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
-		}
-
-		return $data;
-	}
-
-	/*
-	* @get supplier info by id
-	*/
-	public function getSupplierInfoBySupplierIdAndBcmd($con, $supplier_id)
-	{
-		$data = array();
-
-		$query = "SELECT s_name, boncmde_num, boncmde_designation, boncmde_date_creation, bon_cmde_type
-		FROM tbl_add_supplier su
-		JOIN tbl_add_boncmde bcde ON su.supplier_id = bcde.supplier_id
-		-- JOIN tbl_ges_four_compta gfc ON gfc.supplier_id = su.supplier_id
-		WHERE su.supplier_id = '" . (int)$supplier_id . "'";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		while ($row = mysql_fetch_assoc($result)) {
-			$data[] = $row;
 		}
 
 		return $data;
@@ -4044,10 +4143,26 @@ class wms_core
 	/*
 	* @get all Liste Fournisseurs
 	*/
-	public function getAllSupplierData($con)
+	public function getAllSupplierData_2($con)
 	{
 		$data = array();
 		$result = mysql_query("SELECT *,c.name as country_name,sa.name as state_name FROM tbl_add_supplier s inner join tbl_countries c on c.id = s.country_id inner join tbl_states sa on sa.id = s.state_id order by s.supplier_id", $con);
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllSupplierData($con)
+	{
+
+		$data = array();
+
+		$query = "SELECT *
+		FROM tbl_add_supplier s 
+		order by s.supplier_id";
+
+		$result = mysql_query($query, $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -5512,32 +5627,6 @@ class wms_core
 				mysql_query("INSERT INTO tbl_mcncsslary(mechanics_id,fix_salary,total_time,paid_amount,due_amount,total,month_id,year_id,sl_date) values('$data[ddlMechanicslist]','$data[txtFixsalary]','$data[txtTotaltime]','$data[given_amount]','$data[pending_amount]','$data[txtTotal]','$data[ddlMonth]','$data[ddlYear]','" . $this->datepickerDateToMySqlDate($data['txtSalarydate']) . "')", $con);
 			} else {
 				mysql_query("UPDATE `tbl_mcncsslary` SET `mechanics_id`='" . $data['ddlMechanicslist'] . "',`fix_salary`='" . $data['txtFixsalary'] . "',`total_time`='" . $data['txtTotaltime'] . "',`paid_amount`='" . $data['given_amount'] . "',`due_amount`='" . $data['pending_amount'] . "',`total`='" . $data['txtTotal'] . "',`month_id`='" . $data['ddlMonth'] . "',`year_id`='" . $data['ddlYear'] . "',`sl_date`='" . $this->datepickerDateToMySqlDate($data['txtSalarydate']) . "' WHERE m_salary_id='" . $data['salery_id'] . "'", $con);
-			}
-		}
-	}
-
-	/*
-	* @save/update supplier information
-	*/
-	public function saveUpdateSupplierInformation($con, $data, $image_url)
-	{
-		if (!empty($data)) {
-			if ($data['supplier_id'] == '0') {
-				mysql_query($sql = "INSERT INTO tbl_add_supplier(s_name,s_email,s_address,country_id,state_id,phone_number,fax_number,post_code,website_url,s_password,image) values('$data[txtSName]','$data[txtSEmail]','$data[txtSAddress]','$data[ddlCountry]','$data[ddlState]','$data[txtPhonenumber]','$data[txtFax]','$data[txtPostcode]','$data[txtWebsite]','$data[txtSPassword]','$image_url')", $con);
-				$sup_id = mysql_insert_id();
-				if (!empty($data['manufacturer']) && count($data['manufacturer'] > 0)) {
-					foreach ($data['manufacturer'] as $mid) {
-						mysql_query("INSERT INTO tbl_supplier_manufacturer(supplier_id,manufacturer_id) values('$sup_id','$mid')", $con);
-					}
-				}
-			} else {
-				mysql_query("UPDATE `tbl_add_supplier` SET `s_name`='" . $data['txtSName'] . "',`s_email`='" . $data['txtSEmail'] . "',`s_address`='" . $data['txtSAddress'] . "',`country_id`='" . $data['ddlCountry'] . "',`state_id`='" . $data['ddlState'] . "',`phone_number`='" . $data['txtPhonenumber'] . "', `fax_number`='" . $data['txtFax'] . "', `post_code`='" . $data['txtPostcode'] . "', `website_url`='" . $data['txtWebsite'] . "',`s_password`='" . $data['txtSPassword'] . "',`image`='" . $image_url . "' WHERE supplier_id='" . $data['supplier_id'] . "'", $con);
-				mysql_query('DELETE FROM tbl_supplier_manufacturer WHERE supplier_id =' . (int)$data['supplier_id'], $con);
-				if (!empty($data['manufacturer']) && count($data['manufacturer'] > 0)) {
-					foreach ($data['manufacturer'] as $mid) {
-						mysql_query("INSERT INTO tbl_supplier_manufacturer(supplier_id,manufacturer_id) values('$data[supplier_id]','$mid')", $con);
-					}
-				}
 			}
 		}
 	}

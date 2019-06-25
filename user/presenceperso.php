@@ -57,7 +57,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
       <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/addpersonnel.php" data-original-title="Ajouter un membre du personnel"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
       <div class="box box-success">
         <div class="box-header">
-          <h3 class="box-title">Liste du personnel</h3>
+          <h3 class="box-title">Liste des pointages du personnel</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -76,7 +76,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
             </thead>
             <tbody>
               <?php
-              $results = $wms->getAllPersoData($link);
+              $results = $wms->getAllPersoPointage($link);
+
+              var_dump($results);
+
               foreach ($results as $row) {
                 $image = WEB_URL . 'img/no_image.jpg';
                 // if(file_exists(ROOT_PATH . '/img/upload/' . $row['image']) && $row['image'] != ''){

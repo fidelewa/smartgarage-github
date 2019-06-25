@@ -6,7 +6,7 @@ $button_text = "Enregistrer information";
 $successful_msg = "Ajouter un réceptionniste avec succès";
 $form_url = WEB_URL . "user/addDroitAccessRoleProcess.php";
 
-// DROIT MECANICIEN ELECTRICIEN
+// Définition des droits en fonction des profils utilisateurs
 $mech_elec_droit_acces = 'role_mecano_eletro';
 $recep_droit_acces = 'role_recep';
 $client_droit_acces = 'role_client';
@@ -230,22 +230,16 @@ if (!empty($listeComptaDroitMenuRole)) {
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="checkbox" id="mech_elec_droit_acces_menu_contact" name="role_data['role_mecano_eletro'][droit_acces_menu_contact]" value="O">
-                                                    <label for="mech_elec_droit_acces_menu_contact">Menu contact</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
                                                     <input type="checkbox" id="mech_elec_droit_acces_menu_rapport" name="role_data['role_mecano_eletro'][droit_acces_menu_rapport]" value="O">
-                                                    <label for="mech_elec_droit_acces_menu_rapport">Menu rapport</label>
+                                                    <label for="mech_elec_droit_acces_menu_rapport">Menu statistique</label>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <!-- <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="checkbox" id="mech_elec_droit_acces_menu_setting" name="role_data['role_mecano_eletro'][droit_acces_menu_setting]" value="O">
                                                     <label for="mech_elec_droit_acces_menu_setting">Menu paramètrage</label>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                         <?php } else { // Si le droit du role mecano electro existe en BDD
                                         // On récupère les données du droit en BDD
@@ -394,54 +388,23 @@ if (!empty($listeComptaDroitMenuRole)) {
                                                     </div>
                                                 </div>
                                             <?php }
-                                        if ($resultDroitMenuMechElec['menu_contact'] == 'O') { ?>
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_contact" name="role_data['role_mecano_eletro'][droit_acces_menu_contact]" value="O" checked>
-                                                        <label for="mech_elec_droit_acces_menu_contact">Menu contact</label>
-                                                    </div>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_contact" name="role_data['role_mecano_eletro'][droit_acces_menu_contact]" value="O">
-                                                        <label for="mech_elec_droit_acces_menu_contact">Menu contact</label>
-                                                    </div>
-                                                </div>
-                                            <?php }
                                         if ($resultDroitMenuMechElec['menu_rapport'] == 'O') { ?>
 
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="checkbox" id="mech_elec_droit_acces_menu_rapport" name="role_data['role_mecano_eletro'][droit_acces_menu_rapport]" value="O" checked>
-                                                        <label for="mech_elec_droit_acces_menu_rapport">Menu rapport</label>
+                                                        <label for="mech_elec_droit_acces_menu_rapport">Menu statistique</label>
                                                     </div>
                                                 </div>
                                             <?php } else { ?>
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="checkbox" id="mech_elec_droit_acces_menu_rapport" name="role_data['role_mecano_eletro'][droit_acces_menu_rapport]" value="O">
-                                                        <label for="mech_elec_droit_acces_menu_rapport">Menu rapport</label>
+                                                        <label for="mech_elec_droit_acces_menu_rapport">Menu statistique</label>
                                                     </div>
                                                 </div>
                                             <?php }
-                                        if ($resultDroitMenuMechElec['menu_setting'] == 'O') { ?>
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_setting" name="role_data['role_mecano_eletro'][droit_acces_menu_setting]" value="O" checked>
-                                                        <label for="mech_elec_droit_acces_menu_setting">Menu paramètrage</label>
-                                                    </div>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="mech_elec_droit_acces_menu_setting" name="role_data['role_mecano_eletro'][droit_acces_menu_setting]" value="O">
-                                                        <label for="mech_elec_droit_acces_menu_setting">Menu paramètrage</label>
-                                                    </div>
-                                                </div>
-                                            <?php }
+                        
                                     } ?>
 
                                     </div>
@@ -524,22 +487,16 @@ if (!empty($listeComptaDroitMenuRole)) {
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="checkbox" id="recep_droit_acces_menu_contact" name="role_data['role_recep'][droit_acces_menu_contact]" value="O">
-                                                    <label for="recep_droit_acces_menu_contact">Menu contact</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
                                                     <input type="checkbox" id="recep_droit_acces_menu_rapport" name="role_data['role_recep'][droit_acces_menu_rapport]" value="O">
-                                                    <label for="recep_droit_acces_menu_rapport">Menu rapport</label>
+                                                    <label for="recep_droit_acces_menu_rapport">Menu statistique</label>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <!-- <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="checkbox" id="recep_droit_acces_menu_setting" name="role_data['role_recep'][droit_acces_menu_setting]" value="O">
                                                     <label for="recep_droit_acces_menu_setting">Menu paramètrage</label>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                         <?php } else { // Si le droit du role réceptionniste existe en BDD
                                         // On récupère les données du droit en BDD
@@ -687,54 +644,23 @@ if (!empty($listeComptaDroitMenuRole)) {
                                                     </div>
                                                 </div>
                                             <?php }
-                                        if ($resultDroitMenuRecep['menu_contact'] == 'O') { ?>
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="recep_droit_acces_menu_contact" name="role_data['role_recep'][droit_acces_menu_contact]" value="O" checked>
-                                                        <label for="recep_droit_acces_menu_contact">Menu contact</label>
-                                                    </div>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="recep_droit_acces_menu_contact" name="role_data['role_recep'][droit_acces_menu_contact]" value="O">
-                                                        <label for="recep_droit_acces_menu_contact">Menu contact</label>
-                                                    </div>
-                                                </div>
-                                            <?php }
                                         if ($resultDroitMenuRecep['menu_rapport'] == 'O') { ?>
 
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="checkbox" id="recep_droit_acces_menu_rapport" name="role_data['role_recep'][droit_acces_menu_rapport]" value="O" checked>
-                                                        <label for="recep_droit_acces_menu_rapport">Menu rapport</label>
+                                                        <label for="recep_droit_acces_menu_rapport">Menu statistique</label>
                                                     </div>
                                                 </div>
                                             <?php } else { ?>
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="checkbox" id="recep_droit_acces_menu_rapport" name="role_data['role_recep'][droit_acces_menu_rapport]" value="O">
-                                                        <label for="recep_droit_acces_menu_rapport">Menu rapport</label>
+                                                        <label for="recep_droit_acces_menu_rapport">Menu statistique</label>
                                                     </div>
                                                 </div>
                                             <?php }
-                                        if ($resultDroitMenuRecep['menu_setting'] == 'O') { ?>
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="recep_droit_acces_menu_setting" name="role_data['role_recep'][droit_acces_menu_setting]" value="O" checked>
-                                                        <label for="recep_droit_acces_menu_setting">Menu paramètrage</label>
-                                                    </div>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="recep_droit_acces_menu_setting" name="role_data['role_recep'][droit_acces_menu_setting]" value="O">
-                                                        <label for="recep_droit_acces_menu_setting">Menu paramètrage</label>
-                                                    </div>
-                                                </div>
-                                            <?php }
+                
                                     } ?>
 
                                     </div>
@@ -743,7 +669,7 @@ if (!empty($listeComptaDroitMenuRole)) {
                             <fieldset>
                                 <legend>
                                     <input type="checkbox" id="client_droit_acces" name="client_droit_acces" value="role_client">
-                                    Client
+                                    Service client
                                 </legend>
                                 <div class="form-group row">
                                     <div class="col-md-3">
@@ -816,22 +742,16 @@ if (!empty($listeComptaDroitMenuRole)) {
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="checkbox" id="client_droit_acces_menu_contact" name="role_data['role_client'][droit_acces_menu_contact]" value="O">
-                                                    <label for="client_droit_acces_menu_contact">Menu contact</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
                                                     <input type="checkbox" id="client_droit_acces_menu_rapport" name="role_data['role_client'][droit_acces_menu_rapport]" value="O">
-                                                    <label for="client_droit_acces_menu_rapport">Menu rapport</label>
+                                                    <label for="client_droit_acces_menu_rapport">Menu statistique</label>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <!-- <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="checkbox" id="client_droit_acces_menu_setting" name="role_data['role_client'][droit_acces_menu_setting]" value="O">
                                                     <label for="client_droit_acces_menu_setting">Menu paramètrage</label>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         <?php } else { // Si le droit du role client existe en BDD
                                         // On récupère les données du droit en BDD
 
@@ -979,54 +899,23 @@ if (!empty($listeComptaDroitMenuRole)) {
                                                     </div>
                                                 </div>
                                             <?php }
-                                        if ($resultDroitMenuClient['menu_contact'] == 'O') { ?>
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="client_droit_acces_menu_contact" name="role_data['role_client'][droit_acces_menu_contact]" value="O" checked>
-                                                        <label for="client_droit_acces_menu_contact">Menu contact</label>
-                                                    </div>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="client_droit_acces_menu_contact" name="role_data['role_client'][droit_acces_menu_contact]" value="O">
-                                                        <label for="client_droit_acces_menu_contact">Menu contact</label>
-                                                    </div>
-                                                </div>
-                                            <?php }
                                         if ($resultDroitMenuClient['menu_rapport'] == 'O') { ?>
 
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="checkbox" id="client_droit_acces_menu_rapport" name="role_data['role_client'][droit_acces_menu_rapport]" value="O" checked>
-                                                        <label for="client_droit_acces_menu_rapport">Menu rapport</label>
+                                                        <label for="client_droit_acces_menu_rapport">Menu statistique</label>
                                                     </div>
                                                 </div>
                                             <?php } else { ?>
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="checkbox" id="client_droit_acces_menu_rapport" name="role_data['role_client'][droit_acces_menu_rapport]" value="O">
-                                                        <label for="client_droit_acces_menu_rapport">Menu rapport</label>
+                                                        <label for="client_droit_acces_menu_rapport">Menu statistique</label>
                                                     </div>
                                                 </div>
                                             <?php }
-                                        if ($resultDroitMenuClient['menu_setting'] == 'O') { ?>
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="client_droit_acces_menu_setting" name="role_data['role_client'][droit_acces_menu_setting]" value="O" checked>
-                                                        <label for="client_droit_acces_menu_setting">Menu paramètrage</label>
-                                                    </div>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="client_droit_acces_menu_setting" name="role_data['role_client'][droit_acces_menu_setting]" value="O">
-                                                        <label for="client_droit_acces_menu_setting">Menu paramètrage</label>
-                                                    </div>
-                                                </div>
-                                            <?php }
+                                        
                                     } ?>
 
                                     </div>
@@ -1109,22 +998,16 @@ if (!empty($listeComptaDroitMenuRole)) {
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="checkbox" id="compta_droit_acces_menu_contact" name="role_data['role_comptable'][droit_acces_menu_contact]" value="O">
-                                                    <label for="compta_droit_acces_menu_contact">Menu contact</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
                                                     <input type="checkbox" id="compta_droit_acces_menu_rapport" name="role_data['role_comptable'][droit_acces_menu_rapport]" value="O">
-                                                    <label for="compta_droit_acces_menu_rapport">Menu rapport</label>
+                                                    <label for="compta_droit_acces_menu_rapport">Menu statistique</label>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <!-- <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="checkbox" id="compta_droit_acces_menu_setting" name="role_data['role_comptable'][droit_acces_menu_setting]" value="O">
                                                     <label for="compta_droit_acces_menu_setting">Menu paramètrage</label>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                         <?php } else { // Si le droit du role comptable existe en BDD
                                         // On récupère les données du droit en BDD
@@ -1273,51 +1156,19 @@ if (!empty($listeComptaDroitMenuRole)) {
                                                     </div>
                                                 </div>
                                             <?php }
-                                        if ($resultDroitMenuCompta['menu_contact'] == 'O') { ?>
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="compta_droit_acces_menu_contact" name="role_data['role_compta'][droit_acces_menu_contact]" value="O" checked>
-                                                        <label for="compta_droit_acces_menu_contact">Menu contact</label>
-                                                    </div>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="compta_droit_acces_menu_contact" name="role_data['role_compta'][droit_acces_menu_contact]" value="O">
-                                                        <label for="compta_droit_acces_menu_contact">Menu contact</label>
-                                                    </div>
-                                                </div>
-                                            <?php }
                                         if ($resultDroitMenuCompta['menu_rapport'] == 'O') { ?>
 
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="checkbox" id="compta_droit_acces_menu_rapport" name="role_data['role_compta'][droit_acces_menu_rapport]" value="O" checked>
-                                                        <label for="compta_droit_acces_menu_rapport">Menu rapport</label>
+                                                        <label for="compta_droit_acces_menu_rapport">Menu statistique</label>
                                                     </div>
                                                 </div>
                                             <?php } else { ?>
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="checkbox" id="compta_droit_acces_menu_rapport" name="role_data['role_compta'][droit_acces_menu_rapport]" value="O">
-                                                        <label for="compta_droit_acces_menu_rapport">Menu rapport</label>
-                                                    </div>
-                                                </div>
-                                            <?php }
-                                        if ($resultDroitMenuCompta['menu_setting'] == 'O') { ?>
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="compta_droit_acces_menu_setting" name="role_data['role_compta'][droit_acces_menu_setting]" value="O" checked>
-                                                        <label for="compta_droit_acces_menu_setting">Menu paramètrage</label>
-                                                    </div>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="checkbox" id="compta_droit_acces_menu_setting" name="role_data['role_compta'][droit_acces_menu_setting]" value="O">
-                                                        <label for="compta_droit_acces_menu_setting">Menu paramètrage</label>
+                                                        <label for="compta_droit_acces_menu_rapport">Menu statistique</label>
                                                     </div>
                                                 </div>
                                             <?php }

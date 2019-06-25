@@ -194,7 +194,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                 <div class="modal-content">
                                   <div class="modal-header orange_header">
                                     <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                                    <h3 class="modal-title">Repair Détails de la voiture</h3>
+                                    <h3 class="modal-title">Détails des informations de la voiture</h3>
                                   </div>
                                   <div class="modal-body model_view" align="center">&nbsp;
                                     <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>

@@ -1,4 +1,4 @@
-<?php include('../header.php') ?>
+<?php include('header.php') ?>
 <?php
 $delinfo = 'none';
 $addinfo = 'none';
@@ -13,8 +13,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add') {
 }
 if (isset($_GET['m']) && $_GET['m'] == 'up') {
   $addinfo = 'block';
-  $msg = "Informations client mises à jour avec succès";
+  $msg = "Informations client mises à jour avec succès";  
 }
+
+var_dump($_SESSION);
 ?>
 <!-- Content Header (Page header) -->
 
@@ -139,4 +141,4 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
       }, 3000);
     });
   </script>
-  <?php include('../footer.php'); ?>
+  <?php include('footer.php'); ?>

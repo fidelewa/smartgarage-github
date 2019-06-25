@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php include('../header.php'); ?>
 <?php
 //dashboard widget data
 $total_paid = 0;
@@ -304,4 +304,4 @@ function NewGuid()
   // - END PIE CHART -
   // -----------------
 </script>
-<?php include('footer.php'); ?>
+<?php include('../footer.php'); ?>

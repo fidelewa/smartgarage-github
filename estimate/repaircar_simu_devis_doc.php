@@ -52,9 +52,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                                border: 1px dotted rgb(0, 0, 0);
-                                border-radius: 1px;
-                            } */
+                                    border: 1px dotted rgb(0, 0, 0);
+                                    border-radius: 1px;
+                                } */
         </style>
     </head>
 
@@ -88,7 +88,7 @@ if (!empty($row) && count($row) > 0) { ?>
                 #info_gene {
                     border-radius: 20px;
                     /* width: 400px;
-                                                                            height: 175px; */
+                                                                                height: 175px; */
                     border: solid 2px #000;
                     padding: 15px;
                     margin-bottom: 20pt;
@@ -97,7 +97,7 @@ if (!empty($row) && count($row) > 0) { ?>
                 .cadre {
                     border-radius: 20px;
                     /* width: 400px;
-                                                                            height: 175px; */
+                                                                                height: 175px; */
                     border: solid 2px #000;
                     padding: 15px;
                     margin-bottom: 20pt;
@@ -140,7 +140,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
                         </div>
                         <div class="col-sm-3 col-sm-offset-7">
-                            <p><?php echo $row['date_devis']; ?></p>
+                            <p><?php echo date_format(date_create($row['date_devis']), 'd/m/Y'); ?></p>
                         </div>
                     </div>
                     <div class="row" id="content_1">
@@ -148,9 +148,17 @@ if (!empty($row) && count($row) > 0) { ?>
                             <p style="font-size:13pt;font-weight:600;">LUXURY GARAGE</p>
                         </div>
                         <div class="col-sm-3" id="info_gene">
-                            <p><?php if(isset($row['c_name'])){echo $row['c_name'];}else{echo $row['nom_client'];} ?></p>
+                            <p><?php if (isset($row['c_name'])) {
+                                    echo $row['c_name'];
+                                } else {
+                                    echo $row['nom_client'];
+                                } ?></p>
                             <p><?php echo $row['c_address']; ?></p>
-                            <p>Tel: <?php if(isset($row['princ_tel'])){echo $row['princ_tel'];}else{echo $row['numero_tel_client'];} ?></p>
+                            <p>Tel: <?php if (isset($row['princ_tel'])) {
+                                        echo $row['princ_tel'];
+                                    } else {
+                                        echo $row['numero_tel_client'];
+                                    } ?></p>
                         </div>
                     </div>
                     <div class="row" style="margin-bottom:20px;">
@@ -178,7 +186,11 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <p>Immatriculation</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p><?php if(isset($row['VIN'])){echo $row['VIN'];}else{echo $row['imma_vehi_client'];} ?></p>
+                                            <p><?php if (isset($row['VIN'])) {
+                                                    echo $row['VIN'];
+                                                } else {
+                                                    echo $row['imma_vehi_client'];
+                                                } ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +202,11 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <p>Marque</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p><?php if(isset($row['make_name'])){echo $row['make_name'];}else{echo $row['marque_vehi_client'];} ?></p>
+                                            <p><?php if (isset($row['make_name'])) {
+                                                    echo $row['make_name'];
+                                                } else {
+                                                    echo $row['marque_vehi_client'];
+                                                } ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -200,33 +216,37 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <p>Modèle</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p><?php if(isset($row['model_name'])){echo $row['model_name'];}else{echo $row['model_vehi_client'];} ?></p>
+                                            <p><?php if (isset($row['model_name'])) {
+                                                    echo $row['model_name'];
+                                                } else {
+                                                    echo $row['model_vehi_client'];
+                                                } ?></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p>Première mise en circulation</p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p><?php echo $row['add_date_mise_circu']; ?></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p>Prochain controle technique</p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p><?php echo $row['add_date_visitetech']; ?></p>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p>Première mise en circulation</p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p><?php echo $row['add_date_mise_circu']; ?></p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> -->
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p>Prochain controle technique</p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p><?php echo $row['add_date_visitetech']; ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -276,26 +296,34 @@ if (!empty($row) && count($row) > 0) { ?>
                                         </tfoot>
                                     </table>
                                     <!-- <div class="row"> -->
-                                        <div class="col-sm-6 col-sm-offset-6 cadre">
-                                            <div class="row">
-                                                <div class="col-sm-6">Total HT</div>
-                                                <div class="col-sm-6"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
+
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-6">Avance 75% = ET RESTE 25%</div>
+                                            <div class="col-sm-6"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 cadre">
+                                        <div class="row">
+                                            <div class="col-sm-6">Total HT</div>
+                                            <div class="col-sm-6"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">Total TVA</div>
+                                            <div class="col-sm-6"><?php echo $row['total_tva'] . ' ' . $currency; ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p style="font-size:11pt;font-weight:bold">Total TTC</p>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-6">Total TVA</div>
-                                                <div class="col-sm-6"><?php echo $row['total_tva'] . ' ' . $currency; ?></div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <p style="font-size:11pt;font-weight:bold">Total TTC</p>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <p style="font-size:11pt;font-weight:bold">
-                                                        <?php echo $row['total_ttc_gene_piece_rechange_devis'] . ' ' . $currency; ?>
-                                                    </p>
-                                                </div>
+                                            <div class="col-sm-6">
+                                                <p style="font-size:11pt;font-weight:bold">
+                                                    <?php echo $row['total_ttc_gene_piece_rechange_devis'] . ' ' . $currency; ?>
+                                                </p>
                                             </div>
                                         </div>
+                                    </div>
                                     <!-- </div> -->
                                 </div>
                             </div>
@@ -390,8 +418,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
 
             @media print {
 
@@ -420,9 +448,9 @@ if (!empty($row) && count($row) > 0) { ?>
             <a style="" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
         <!-- <div id="mobile-preview-close_2">
-            <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
-            <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
-        </div> -->
+                <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
+                <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
+            </div> -->
         <script>
             jQuery(document).ready(function() {
                 location.reload(true);

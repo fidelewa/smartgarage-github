@@ -48,6 +48,16 @@ if (isset($_POST['username']) && $_POST['username'] != '' && isset($_POST['passw
 			header("Location: recep_panel/recep_dashboard.php");
 			die();
 		}
+		else if($_POST['ddlLoginType'] == 'comptable'){
+			$_SESSION['objCompta'] = $obj_login;
+			header("Location: compta_panel/compta_dashboard.php");
+			die();
+		}
+		else if($_POST['ddlLoginType'] == 'service client'){
+			$_SESSION['objServiceClient'] = $obj_login;
+			header("Location: servcli_panel/servcli_dashboard.php");
+			die();
+		}
 	} else {
 		session_unset();
 		session_destroy();
@@ -322,8 +332,10 @@ if (isset($_POST['username']) && $_POST['username'] != '' && isset($_POST['passw
 								<option value="">--Sélectionnez le type d'utilisateur--</option>
 								<option value="admin">Admin</option>
 								<option value="customer">Client</option>
-								<option value="mechanics">Mecanicien</option>
+								<option value="mechanics">Mecanicien & électricien</option>
 								<option value="reception">Receptionniste</option>
+								<option value="comptable">Comptable</option>
+								<option value="service client">Service client</option>
 							</select>
 						</li>
 						<li>

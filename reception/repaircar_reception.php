@@ -42,6 +42,14 @@ if (isset($_GET['cid']) && (int)$_GET['cid'] > 0) {
 
 // var_dump($_SESSION);
 
+if(isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
+
+    $recep_id = $_SESSION['objRecep']['user_id'];
+  
+  } else {
+    $recep_id = 0;
+  }
+
 // if (isset($_SESSION['immat']) && !empty($_SESSION['immat'])) { // Quand le paramètre immat existe dans l'url
 
 //     $immat = $_SESSION['immat']; // On affecte directement sa valeur à $vin
@@ -346,7 +354,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                                         <option value="miles">miles</option>
                                     </select>
                                 </span>
-                                <input type="number" min="0" max="100000" id="km_reception_vehi" name="km_reception_vehi" value="" class="form-control" placeholder="Saisissez le kilométrage en km ou en miles" />
+                                <input type="text" id="km_reception_vehi" maxlength="6" name="km_reception_vehi" value="" class="form-control" placeholder="Saisissez le kilométrage en km ou en miles" />
                             </div>
                         </div>
 
@@ -1508,6 +1516,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     <input type="hidden" name="ddlMake" value="" />
     <input type="hidden" name="ddlModel" value="" />
     <input type="hidden" name="ddlImma" value="" />
+    <input type="hidden" name="recep_id" value="<?php echo $recep_id; ?>" />
+
     </section>
     </form>
     </div>

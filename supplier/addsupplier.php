@@ -20,18 +20,21 @@ $hdnid = "0";
 $image_sup = WEB_URL . 'img/no_image.jpg';
 $img_track = '';
 $manufacturerInfo = array();
-$wow = false;
 
 $countries = $wms->getAllCountries($link);
 
 
 /*#############################################################*/
-if (isset($_POST['txtSName'])) {
-	if (!$wms->checkSupplierEmailAddress($link, $_POST['txtSEmail'])) {
+if(isset($_POST) && !empty($_POST)) {
+
 		$image_url = uploadImage();
 		if (empty($image_url)) {
 			$image_url = $_POST['img_exist'];
 		}
+
+		// var_dump($_POST);
+		// die();
+
 		$wms->saveUpdateSupplierInformation($link, $_POST, $image_url);
 		if ((int)$_POST['supplier_id'] > 0) {
 			$url = WEB_URL . 'supplier/supplierlist.php?m=up';
@@ -41,9 +44,6 @@ if (isset($_POST['txtSName'])) {
 			header("Location: $url");
 		}
 		exit();
-	} else {
-		$wow = true;
-	}
 }
 
 if (isset($_GET['id']) && $_GET['id'] != '') {
@@ -65,9 +65,9 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 			$img_track = $row['image'];
 		}
 		$hdnid = $_GET['id'];
-		$title = 'Update Supplier';
-		$button_text = "Update";
-		$successful_msg = "Update Supplier Successfully";
+		$title = 'Modification du fournisseur';
+		$button_text = "Modification";
+		$successful_msg = "Modification du fournisseur effectuée avec succès";
 		$form_url = WEB_URL . "supplier/addsupplier.php?id=" . $_GET['id'];
 
 		/*manuafcturer info*/
@@ -133,13 +133,6 @@ function NewGuid()
 	<!-- Full Width boxes (Stat box) -->
 	<div class="row">
 		<div class="col-md-12">
-			<?php if ($wow) { ?>
-				<div id="me" class="alert alert-warning alert-dismissable" style="display:<?php echo $delinfo; ?>">
-					<button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-					<h4><i class="icon fa fa-ban"></i> Attention!</h4>
-					Email existe déjà en choisir un autre.
-				</div>
-			<?php } ?>
 
 			<div class="box box-success" id="box_model">
 				<div class="box-body">
@@ -155,64 +148,25 @@ function NewGuid()
 				<!-- <div class="box-header">
         <h3 class="box-title">Supplier Entry Form</h3>
       </div> -->
-				<form onSubmit="return validateMe();" id="fromsuplier" action="<?php echo $form_url; ?>" method="post" enctype="multipart/form-data">
+				<form id="fromsuplier" action="<?php echo $form_url; ?>" method="post" enctype="multipart/form-data">
 					<div class="box-body">
 						<div class="form-group">
 							<label for="txtSName"><span style="color:red;">*</span> Nom du fournisseur :</label>
-							<input type="text" name="txtSName" value="<?php echo $s_name; ?>" id="txtSName" class="form-control" />
+							<input required type="text" name="txtSName" value="<?php echo $s_name; ?>" id="txtSName" class="form-control" />
 						</div>
 						<div class="form-group">
 							<label for="txtSEmail"><span style="color:red;">*</span> Email :</label>
-							<input type="text" name="txtSEmail" value="<?php echo $s_email; ?>" id="txtSEmail" class="form-control" />
+							<input required type="text" name="txtSEmail" value="<?php echo $s_email; ?>" id="txtSEmail" class="form-control" />
 						</div>
 						<div class="form-group">
 							<label for="txtSAddress"><span style="color:red;">*</span> Addresse :</label>
-							<textarea name="txtSAddress" id="txtSAddress" class="form-control"><?php echo $s_address; ?></textarea>
-						</div>
-						<div class="form-group">
-							<label for="ddlCountry"><span style="color:red;">*</span> Pays :</label>
-							<select name="ddlCountry" onchange="loadStates(this.value);" id="ddlCountry" class="form-control">
-								<option value="">--Choisissez le pays--</option>
-								<?php foreach ($countries as $country) { ?>
-									<option <?php if ($ddlCountry == $country['country_id']) {
-														echo 'selected';
-													} ?> value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-								<?php } ?>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="ddlState"> Etat :</label>
-							<select name="ddlState" id="ddlState" class="form-control">
-								<option value="">--Sélectionner une ville--</option>
-								<?php
-								if ($ddlCountry > 0) {
-									$states = $wms->getStateByCountryId($link, $ddlCountry);
-									foreach ($states as $state) { ?>
-										<option <?php if ($ddlState == $state['id']) {
-															echo 'selected';
-														} ?> value="<?php echo $state['id']; ?>"><?php echo $state['name']; ?></option>
-									<?php }
-							}
-							?>
-							</select>
+							<textarea required name="txtSAddress" id="txtSAddress" class="form-control"><?php echo $s_address; ?></textarea>
 						</div>
 						<div class="form-group">
 							<label for="txtPhonenumber"><span style="color:red;">*</span> Téléphone :</label>
-							<input type="text" name="txtPhonenumber" value="<?php echo $phone_number; ?>" id="txtPhonenumber" class="form-control" />
+							<input required type="text" maxlength="10" name="txtPhonenumber" value="<?php echo $phone_number; ?>" id="txtPhonenumber" class="form-control" />
 						</div>
-						<div class="form-group">
-							<label for="txtFax">Fax :</label>
-							<input type="text" name="txtFax" value="<?php echo $s_fax; ?>" id="txtFax" class="form-control" />
-						</div>
-						<div class="form-group">
-							<label for="txtc"><span style="color:red;">*</span> Code Postal:</label>
-							<input type="text" name="txtPostcode" value="<?php echo $post_code; ?>" id="txtPostcode" class="form-control" />
-						</div>
-						<div class="form-group">
-							<label for="txtWebsite">Site web</label>
-							<input type="text" name="txtWebsite" value="<?php echo $website_url; ?>" id="txtWebsite" class="form-control" />
-						</div>
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label for="txtWebsite">Liste de fabricants</label><br />
 							<div class="ssbox">
 								<?php
@@ -223,7 +177,7 @@ function NewGuid()
 																									} ?> type="checkbox" id="<?php echo $manufacturer['id']; ?>" name="manufacturer[]" value="<?php echo $manufacturer['id']; ?>"> <label for="<?php echo $manufacturer['id']; ?>"><?php echo $manufacturer['name']; ?></label>&nbsp;&nbsp;<img style="float:right;" class="img_small" src="<?php echo $manufacturer['image']; ?>" /></div>
 								<?php } ?>
 							</div>
-						</div>
+						</div> -->
 						<!-- <div class="form-group">
 							<label for="txtSPassword"><span style="color:red;">*</span> Password :</label>
 							<input type="password" name="txtSPassword" value="<?php echo $s_password; ?>" id="txtSPassword" class="form-control" />
@@ -233,7 +187,7 @@ function NewGuid()
 							<img class="form-control" src="<?php echo $image_sup; ?>" style="height:100px;width:100px;" id="output" />
 							<input type="hidden" name="img_exist" value="<?php echo $img_track; ?>" />
 						</div>
-						<div class="form-group"> <span class="btn btn-file btn btn-primary">Upload Image
+						<div class="form-group"> <span class="btn btn-file btn btn-primary">Uploader une image
 								<input type="file" name="uploaded_file" onchange="loadFile(event)" />
 							</span> </div>
 					</div>
@@ -246,7 +200,7 @@ function NewGuid()
 	</div>
 	<!-- /.row -->
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function validateMe() {
 			if ($("#txtSName").val() == '') {
 				alert("Nom du fournisseur est Obligatoire !!!");
@@ -288,7 +242,7 @@ function NewGuid()
 				return true;
 			}
 		}
-	</script>
+	</script> -->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			setTimeout(function() {

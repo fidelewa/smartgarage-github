@@ -114,7 +114,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                         </div>
                         <div class="form-group">
                             <label for="txtEmail"><span style="color:red;">*</span>N° téléphone :<span style="color:red;"> (le numéro de téléphone est le login)</span></label>
-                            <input type="text" name="txtUserEmail" value="<?php echo $usr_email ?>" id="txtUserEmail" class="form-control" required />
+                            <input type="text" maxlength="10" name="txtUserEmail" value="<?php echo $usr_email ?>" id="txtUserEmail" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="txtPassword"><span style="color:red;">*</span>Mot de passe :</label>
@@ -129,37 +129,37 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
+                                    echo "<option value='service client'>Service client</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "comptable")) {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option selected value='" . $usr_type . "'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
+                                    echo "<option value='service client'>Service client</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "mecanicien")) {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option selected value='" . $usr_type . "'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
+                                    echo "<option value='service client'>Service client</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "electricien")) {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option selected value='" . $usr_type . "'>Electricien</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
-                                } elseif (isset($usr_type) && ($usr_type == "commercial")) {
+                                    echo "<option value='service client'>Service client</option>";
+                                } elseif (isset($usr_type) && ($usr_type == "service client")) {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
-                                    echo "<option selected value='" . $usr_type . "'>Commercial</option>";
+                                    echo "<option selected value='" . $usr_type . "'>Service client</option>";
                                 } else {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
-                                    echo "<option value='commercial'>Commercial</option>";
+                                    echo "<option value='service client'>Service client</option>";
                                 }
                                 ?>
                             </select>
@@ -170,7 +170,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                             <input type="hidden" name="img_exist" value="" />
                         </div>
 
-                        <div class="form-group"> <span class="btn btn-file btn btn-success">Upload Image
+                        <div class="form-group"> <span class="btn btn-file btn btn-success">Uploader une image
                                 <input type="file" name="uploaded_file" onchange="loadFile(event)" />
                             </span> </div>
                     </div>

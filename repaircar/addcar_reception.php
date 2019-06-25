@@ -42,6 +42,15 @@ if (isset($_GET['cid']) && (int)$_GET['cid'] > 0) {
   $cus_id = $_GET['cid'];
 }
 
+if(isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
+
+  $recep_id = $_SESSION['objRecep']['user_id'];
+
+} else {
+  $recep_id = 0;
+}
+
+
 // var_dump($_SESSION);
 
 // if (isset($_SESSION['immat']) && !empty($_SESSION['immat'])) { // Quand le paramètre immat existe dans l'url
@@ -344,7 +353,14 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   </div>
                 </div>
               </div>
+
               <input type="hidden" value="<?php echo $car_names; ?>" name="car_names" />
+              <input type="hidden" value="<?php echo $recep_id; ?>" name="recep_id" />
+              <input type="hidden" value="" name="txtCPassword" />
+              <input type="hidden" value="" name="tel_wa" />
+              <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
+              <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
+
               <div class="form-group">
                 <label for="ddlYear"><span style="color:red;">*</span> Année :</label>
                 <input type="text" class='form-control' name="ddlYear" id="ddlYear" placeholder="Saisissez année">
@@ -563,7 +579,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     <option value="miles">miles</option>
                   </select>
                 </span>
-                <input type="number" min="0" max="100000" id="km_reception_vehi" name="km_reception_vehi" value="" class="form-control" placeholder="Saisissez le kilométrage en km ou en miles" />
+                <input type="text" id="km_reception_vehi" maxlength="6" name="km_reception_vehi" value="" class="form-control" placeholder="Saisissez le kilométrage en km ou en miles" />
               </div>
             </div>
 

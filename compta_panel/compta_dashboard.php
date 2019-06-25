@@ -5,8 +5,8 @@ $total_paid = 0;
 $total_due = 0;
 
 $settings = $wms->getWebsiteSettingsInformation($link);
-$total_car =$wms->getCustomerRepairCarList($link, $_SESSION['objRecep']['user_id']);
-$car_repair = $wms->getAllRepairCarEstimateList($link, $_SESSION['objRecep']['user_id']);
+$total_car =$wms->getCustomerRepairCarList($link, $_SESSION['objCompta']['user_id']);
+$car_repair = $wms->getAllRepairCarEstimateList($link, $_SESSION['objCompta']['user_id']);
 if(!empty($car_repair)) {
 	foreach($car_repair as $xcr) {
 		$total_paid += (float)$xcr['payment_done'];
@@ -32,7 +32,7 @@ $months = array(
 
 $total_salary = 0;
 $salary_default_data = '0,0,0,0,0,0';
-$s_data = $wms->getCustomerRepairReportChartData($link, date('Y'), $_SESSION['objRecep']['user_id']);
+$s_data = $wms->getCustomerRepairReportChartData($link, date('Y'), $_SESSION['objCompta']['user_id']);
 
 if(!empty($s_data)) {
 	$salary_report_data= '';
@@ -143,7 +143,7 @@ function arrayValueExist($array, $value) {
   </div> -->
   <div class="row">
         <div class="col-xs-12">
-            <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>recep_panel/recep_repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
+            <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>compta_panel/recep_repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
             <div class="box box-success">
                 <div class="box-header">
                     <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
@@ -167,7 +167,7 @@ function arrayValueExist($array, $value) {
                         <tbody>
                             <?php
 
-                            $result = $wms->getAllRecepRepairCarListByRecepId($link, $_SESSION['objRecep']['user_id']);
+                            $result = $wms->getAllRecepRepairCarListByRecepId($link, $_SESSION['objCompta']['user_id']);
 
                             // var_dump($result);
 

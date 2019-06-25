@@ -891,6 +891,9 @@ $image_url = uploadImage();
 if (empty($image_url)) {
 	$image_url = $_POST['img_exist'];
 }
+if(isset($_POST['recep_id'])){
+	$_POST['recep_id'] = (int)$_POST['recep_id'];
+}
 
 // var_dump($_POST);
 // die();
