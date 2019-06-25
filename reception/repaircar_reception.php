@@ -161,6 +161,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Formulaire de réception d'un véhicule</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script type="text/javascript" src="<?php echo WEB_URL; ?>reception/repaircar_reception_validation.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -268,18 +271,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 </div>
                 <!-- One "tab" for each step in the form: -->
                 <div class="tab">
-                    <h1 style="text-align:center;">Enregistrement du véhicule</h1>
-
-                    <div class="form-group row">
-                        <div class="col-md-11">
-                            <!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
-                            <input onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
-                        </div>
-                        <div class=" col-md-1">
-                            <a class="btn btn-success" data-toggle="tooltip" data-original-title="Ajouter une nouvelle voiture" target="_blank" onclick="getImmaValue();"><i class="fa fa-plus"></i></a>
-                            <!-- <a class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal" data-original-title="Ajouter un véhicule"><i class="fa fa-plus"></i></a> -->
-                        </div>
-                    </div>
+                    
 
                     <!-- <p>
                         <select class='form-control' id="ddlCustomerList" name="ddlCustomerList" onchange="loadMarqueModeleVoiture(this.value);">
@@ -312,27 +304,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         </select>
                     </p> -->
 
-                    <div class="form-group" id="marque_modele_vehi_box">
-                        <input readonly onfocus="loadVehiData();" type="text" name="modeleMarqueVehi" id="marque_modele_vehi" class="form-control" value="">
-                    </div>
-
-                    <p>
-                        <!-- Date de réception du véhicule -->
-                        <input type="text" name="add_date" value="<?php echo $c_add_date; ?>" id="add_date" class="form-control datepicker" placeholder="Saisissez la date de reception du véhicule" />
-                    </p>
-                    <fieldset>
-                        <legend>Ajouter des fichiers joints</legend>
-                        <div class="row">
-                            <div class="col-md-1">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1" onchange="loadFile(event)" />
-                                </span>
-                            </div>
-                            <div class="col-md-1 col-md-onset-10">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2" onchange="loadFile(event)" />
-                                </span>
-                            </div>
-                        </div>
-                    </fieldset>
+                    
                     <!-- </div> -->
                     <!-- <div class="tab"> -->
                     <h1 style="text-align:center;">Prise en charge</h1>
@@ -365,7 +337,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                                 <label class="form-check-label" for="nivo_carbu_recep_vehi">0/4</label>
                             </div>
                             <div class="col-md-2 form-check" style="padding-left:0px;">
-                                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_2" value="1/2">
+                                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_2" value="1/2" checked>
                                 <label class="form-check-label" for="nivo_carbu_recep_vehi">1/2</label>
                             </div>
                             <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -373,7 +345,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                                 <label class="form-check-label" for="nivo_carbu_recep_vehi">2/4</label>
                             </div>
                             <div class="col-md-3 form-check" style="padding-left:0px;">
-                                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_3_4" value="3/4" checked>
+                                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_3_4" value="3/4">
                                 <label class="form-check-label" for="nivo_carbu_recep_vehi">3/4</label>
                             </div>
                         </div>
@@ -655,6 +627,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         </div>
                     </div>
 
+                    
+
                     <fieldset>
                         <legend>Ajouter des fichiers joints</legend>
                         <div class="row">
@@ -668,6 +642,30 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                             </div>
                         </div>
                     </fieldset>
+
+                    <h1 style="text-align:center;">Enregistrement du véhicule</h1>
+
+                    <div class="form-group row">
+                        <div class="col-md-11">
+                            <!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
+                            <input required onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
+                        </div>
+                        <div class=" col-md-1">
+                            <a class="btn btn-success" data-toggle="tooltip" data-original-title="Ajouter une nouvelle voiture" target="_blank" onclick="getImmaValue();"><i class="fa fa-plus"></i></a>
+                            <!-- <a class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal" data-original-title="Ajouter un véhicule"><i class="fa fa-plus"></i></a> -->
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="marque_modele_vehi_box">
+                        <input readonly onfocus="loadVehiData();" type="text" name="modeleMarqueVehi" id="marque_modele_vehi" class="form-control" value="">
+                    </div>
+
+                    <p>
+                        <!-- Date de réception du véhicule -->
+                        <input type="text" name="add_date" value="<?php echo $c_add_date; ?>" id="add_date" class="form-control datepicker" placeholder="Saisissez la date de reception du véhicule" />
+                    </p>
+                    
+                    
                 </div>
                 <div class="tab">
                     <h1 style="text-align:center;">Etat du véhicule à l'arrivée</h1>

@@ -149,7 +149,7 @@ if (isset($_POST['car_names'])) {
 if (isset($_GET['id']) && $_GET['id'] != '') {
   $row = $wms->getRepairCarInfoByRepairCarId($link, $_GET['id']);
 
-  // var_dump($genre);
+  // var_dump($row);
   // die();
 
   if (!empty($row)) {
@@ -165,7 +165,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     $couleur_vehi = $row['couleur_vehi'];
     $fisc_vehi = $row['fisc_vehi'];
 
-    $cus_id = $row['customer_id'];
+    $cus_id = (int)$row['customer_id'];
     $car_names = $row['car_name'];
     $c_make = $row['car_make'];
     $c_model = $row['car_model'];
@@ -561,8 +561,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
                 <label for="assurance_vehi_recep"><span style="color:red;">*</span> Client :</label>
                 <div class="row">
                   <div class="col-md-11">
-                    <input type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client" onfocus="">
-                    <!-- <select class='form-control' id="ddlCustomerList" name="ddlCustomerList">
+                    
+                    <!-- <input type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client" onfocus=""> -->
+                    <select class='form-control' id="ddlCustomerList" name="ddlCustomerList">
                       <option value="">--Saisissez ou sélectionnez un client--</option>
                       <?php
                       $customer_list = $wms->getAllCustomerList($link);
@@ -574,7 +575,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
                         }
                       }
                       ?>
-                    </select> -->
+                    </select>
                   </div>
                   <div class="col-md-1" id="client">
                     <a class="btn btn-success" data-toggle="modal" data-target="#client-modal" data-original-title="Ajouter un nouveau client"><i class="fa fa-plus"></i></a>

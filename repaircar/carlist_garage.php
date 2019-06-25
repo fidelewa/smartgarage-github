@@ -56,7 +56,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
               <tr>
                 <!-- <th>Repair ID</th>
                 <th>Image</th> -->
-                <th>Nom de la voiture</th>
+                <th>Immatriculation</th>
                 <th>Chasis No</th>
                 <th>Emplacement du véhicule</th>
                 <th>Date d'entrée au garage</th>
@@ -90,19 +90,19 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                 <tr>
                   <!-- <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td> -->
                   <!-- <td><img class="photo_img_round" style="width:50px;height:50px;" src="<?php echo $image;  ?>" /></td> -->
-                  <td><?php echo $row['car_name']; ?></td>
+                  <td><?php echo $row['VIN']; ?></td>
                   <td><span class="label label-danger"><?php echo $row['chasis_no']; ?></span></td>
                   <td><span class="label label-success"><?php echo $row['stat_empla_vehi']; ?></span></td>
                   <td><?php echo $row['date_emplacement']; ?></td>
                   <!-- <td><?php echo $row['c_name']; ?></td> -->
                   <!-- <td><?php echo $row['make_name']; ?></td>
-                              <td><?php echo $row['model_name']; ?></td>
-                              <td><?php echo $row['year_name']; ?></td> -->
+                                  <td><?php echo $row['model_name']; ?></td>
+                                  <td><?php echo $row['year_name']; ?></td> -->
 
                   <td>
                     <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Voir l'historique des emplacements du véhicule"><i class="fa fa-eye"></i></a>
                     <!-- <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                      <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a> -->
+                          <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a> -->
                     <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
@@ -111,10 +111,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                             <h3 class="modal-title">Historique des emplacements du véhicule</h3>
                           </div>
                           <!-- <div class="modal-body model_view" align="center">&nbsp;
-                                  <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>
-                                  <div class="model_title"><?php echo $row['car_name']; ?></div>
-                                  <div style="color:#fff;font-size:15px;font-weight:bold;">Facture No: <?php echo $row['repair_car_id']; ?></div>
-                                </div> -->
+                                      <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>
+                                      <div class="model_title"><?php echo $row['car_name']; ?></div>
+                                      <div style="color:#fff;font-size:15px;font-weight:bold;">Facture No: <?php echo $row['repair_car_id']; ?></div>
+                                    </div> -->
                           <div class="modal-body">
                             <!-- <h3 style="text-decoration:underline;">Détails de la voiture Information</h3> -->
                             <div class="row">
@@ -152,28 +152,29 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                           </div>
                           <!-- /.modal-content -->
                           <!-- <div class="modal-content">
-                                  <div class="modal-header orange_header">
-                                    <h3 class="modal-title">Détails du client</h3>
-                                  </div>
-                                  <div class="modal-body model_view" align="center">&nbsp;
-                                    <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image_customer;  ?>" /></div>
-                                    <div class="model_title"><?php echo $row['c_name']; ?></div>
-                                  </div>
-                                  <div class="modal-body">
-                                    <h3 style="text-decoration:underline;">Détails du client Information</h3>
-                                    <div class="row">
-                                      <div class="col-xs-12">
-                                        <b>Nom du client :</b> <?php echo $row['c_name']; ?><br />
-                                        <b> Email Client :</b> <?php echo $row['c_email']; ?><br />
-                                        <b> Telephone Client :</b> <?php echo $row['c_mobile']; ?><br />
-
+                                      <div class="modal-header orange_header">
+                                        <h3 class="modal-title">Détails du client</h3>
                                       </div>
-                                    </div>
-                                  </div>
-                                </div> -->
+                                      <div class="modal-body model_view" align="center">&nbsp;
+                                        <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image_customer;  ?>" /></div>
+                                        <div class="model_title"><?php echo $row['c_name']; ?></div>
+                                      </div>
+                                      <div class="modal-body">
+                                        <h3 style="text-decoration:underline;">Détails du client Information</h3>
+                                        <div class="row">
+                                          <div class="col-xs-12">
+                                            <b>Nom du client :</b> <?php echo $row['c_name']; ?><br />
+                                            <b> Email Client :</b> <?php echo $row['c_email']; ?><br />
+                                            <b> Telephone Client :</b> <?php echo $row['c_mobile']; ?><br />
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div> -->
                           <!-- /.modal-content -->
                         </div>
                       </div>
+                    </div>
                   </td>
                 </tr>
               <?php }

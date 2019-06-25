@@ -1934,8 +1934,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             if (!y[i].checked) {
               // Si l'élément en question n'est pas checked, alors il est invalide
               y[i].className += " invalid";
-              valid = true;
-              // valid = false;
+              // valid = true;
+              valid = false;
               alert("Veuillez cochez l'assurance SVP !!!");
             }
 
@@ -1948,8 +1948,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             if (!y[i].checked) {
               // Si l'élément en question n'est pas checked, alors il est invalide
               y[i].className += " invalid";
-              valid = true;
-              // valid = false;
+              // valid = true;
+              valid = false;
               alert("Veuillez cochez la clé du véhicule SVP !!!");
             }
 
@@ -1962,8 +1962,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             if (!y[i].checked) {
               // Si l'élément en question n'est pas checked, alors il est invalide
               y[i].className += " invalid";
-              // valid = false;
-              valid = true;
+              valid = false;
+              // valid = true;
               alert("Veuillez cochez la visite technique SVP !!!");
             }
 
@@ -1974,8 +1974,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             // On vérifie que l'élément ayant cet id est checked
             if (!y[i].checked) {
               // Si l'élément en question n'est pas checked, alors il est invalide
-              // y[i].className += " invalid";
-              valid = true;
+              y[i].className += " invalid";
+              valid = false;
+              // valid = true;
               // alert("Veuillez cochez le statut remorqué SVP !!!");
             }
 
@@ -2001,8 +2002,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                   // Si le champ text est invalide, une alerte est déclenchée
                   y[i].className += " invalid";
-                  // valid = false;
-                  valid = true;
+                  valid = false;
+                  // valid = true;
                   alert("Veuillez renseigner ce champ SVP lorsque le véhicule est rémorqué !!!");
                 }
 
@@ -2013,7 +2014,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 if (y[i].value == "") {
 
                   // console.log(y[i]);
-
                   valid = true;
                 }
 
@@ -2034,8 +2034,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               // add an "invalid" class to the field:
               y[i].className += " invalid";
               // and set the current valid statut to false
-              // valid = false;
-              valid = true;
+              valid = false;
+              // valid = true;
               // valid = true;
             }
 
@@ -2067,8 +2067,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           // add an "invalid" class to the field:
           z[i].className += " invalid";
           // and set the current valid statut to false
-          // valid = false;
-          valid = true;
+          valid = false;
+          // valid = true;
           // valid = true;
         }
       }

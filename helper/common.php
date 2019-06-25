@@ -2,11 +2,121 @@
 //include_once('../config.php');v
 class wms_core
 {
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getHistoEmplaListByCarId($con, $car_id)
+	{
+		$data = array();
+		$result = mysql_query("SELECT id, emplacement_vehi, date_emplacement
+		FROM tbl_histo_emplacement_vehicule 
+		WHERE car_id = '" . (int)$car_id . "'
+		ORDER BY id DESC", $con);
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getHistoDevisListByCarId($con, $car_id)
+	{
+		$data = array();
+
+		$query = "SELECT *
+		FROM tbl_histo_devis_vehicule
+		WHERE car_id = '".$car_id."'";
+        	
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getComparPrixPieceRechangeMinByDiagId($con, $diagId)
+	{
+		$data = array();
+		if (!empty($diagId)) {
+
+			$query = "SELECT designation_piece_rechange, marque_piece_rechange, qte_piece_rechange, 
+			MIN(prix_piece_rechange) AS prix_piece_rechange_min, s_name, repaircar_diagnostic_id, su.supplier_id
+			FROM tbl_compar_prix_piece_rechange cppr
+			JOIN tbl_add_supplier su ON su.supplier_id = cppr.supplier_id 
+			-- JOIN tbl_repaircar_diagnostic rd ON rd.id = cppr.repaircar_dignostic_id
+			-- JOIN tbl_add_car cr ON cr.car_id = rd.car_id
+			GROUP BY designation_piece_rechange, qte_piece_rechange, repaircar_diagnostic_id
+			HAVING repaircar_diagnostic_id = " . $diagId;
+
+			$result = mysql_query($query, $con);
+
+			if (!$result) {
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+
+			// On parcours le jeu de résultat puis pour chaque ligne du jeu de résultat
+			// On la stocke dans un array associatif de données
+			while ($row = mysql_fetch_assoc($result)) {
+				$data[] = $row;
+			}
+		}
+		return $data;
+	}
+
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRepairCarList($con)
+	{
+		$data = array();
+
+		$query = "SELECT ac.added_date, VIN, note, car_id, chasis_no, car_name, ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,ac.repair_car_id, ac.year
+		,add_date_visitetech, add_date_assurance, add_date_assurance_fin, princ_tel, m.*, mo.*, VIN, c_name
+		FROM tbl_add_car ac inner join tbl_add_customer c on c.customer_id = ac.customer_id 
+		inner join tbl_make m on m.make_id = ac.car_make 
+		inner join tbl_model mo on mo.model_id = ac.car_model 
+		order by ac.car_id DESC";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+		
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
 
 	public function getAllPersoPointage($con)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_pointage", $con);
+
+		$query = "SELECT po.*, per.per_name FROM tbl_add_pointage po
+		JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel 
+		";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -563,7 +673,7 @@ class wms_core
 			left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
 			left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
-			join tbl_add_reception recep on recep.reception_id = rvr.attrib_recep
+			join tbl_add_user usr on usr.usr_id = rvr.attrib_recep
 			where attrib_recep ='" . (int)$recepId . "'
 			";
 
@@ -1713,35 +1823,6 @@ class wms_core
 		// Puis dans l'array
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
-		}
-		return $data;
-	}
-
-	public function getComparPrixPieceRechangeMinByDiagId($con, $diagId)
-	{
-		$data = array();
-		if (!empty($diagId)) {
-
-			$query = "SELECT designation_piece_rechange, marque_piece_rechange, qte_piece_rechange, 
-			MIN(prix_piece_rechange) AS prix_piece_rechange_min, s_name, repaircar_diagnostic_id, su.supplier_id
-			FROM tbl_compar_prix_piece_rechange cppr
-			INNER JOIN tbl_add_supplier su ON su.supplier_id = cppr.supplier_id 
-			GROUP BY designation_piece_rechange, qte_piece_rechange, repaircar_diagnostic_id
-			HAVING repaircar_diagnostic_id = " . $diagId;
-
-			$result = mysql_query($query, $con);
-
-			if (!$result) {
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
-			}
-
-			// On parcours le jeu de résultat puis pour chaque ligne du jeu de résultat
-			// On la stocke dans un array associatif de données
-			while ($row = mysql_fetch_assoc($result)) {
-				$data[] = $row;
-			}
 		}
 		return $data;
 	}
@@ -3111,23 +3192,7 @@ class wms_core
 		return $data;
 	}
 
-	/*
-	* @get all Voiture de réparation list
-	*/
-	public function getAllRepairCarList($con)
-	{
-		$data = array();
-		$result = mysql_query("SELECT ac.added_date, VIN, note, car_id, chasis_no, car_name, ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,ac.repair_car_id, ac.year
-		, add_date_visitetech, add_date_assurance, add_date_assurance_fin, princ_tel, m.*, mo.*, VIN, c_name
-		FROM tbl_add_car ac inner join tbl_add_customer c on c.customer_id = ac.customer_id 
-		inner join tbl_make m on m.make_id = ac.car_make 
-		inner join tbl_model mo on mo.model_id = ac.car_model 
-		order by ac.car_id DESC", $con);
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
+	
 
 	/*
 	* @get all Voiture de réparation list
@@ -3135,7 +3200,7 @@ class wms_core
 	public function getAllRepairCarListAtGarage($con)
 	{
 		$data = array();
-		$result = mysql_query("SELECT ac.car_id, car_name, chasis_no, stat_empla_vehi, date_emplacement
+		$result = mysql_query("SELECT ac.car_id, car_name, chasis_no, stat_empla_vehi, date_emplacement, VIN
 		FROM tbl_add_car ac inner join tbl_histo_emplacement_vehicule hev on hev.car_id = ac.car_id 
 		inner join tbl_recep_vehi_repar rvr on rvr.add_car_id = ac.car_id 
 		group by ac.car_id, car_name, chasis_no, stat_empla_vehi, date_emplacement
@@ -3164,21 +3229,7 @@ class wms_core
 	// 	return $data;
 	// }
 
-	/*
-	* @get all Voiture de réparation list
-	*/
-	public function getHistoEmplaListByCarId($con, $car_id)
-	{
-		$data = array();
-		$result = mysql_query("SELECT id, emplacement_vehi, date_emplacement
-		FROM tbl_histo_emplacement_vehicule 
-		WHERE car_id = '" . (int)$car_id . "'
-		ORDER BY id DESC", $con);
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
+	
 
 	/*
 	* @get all Voiture de réparation list

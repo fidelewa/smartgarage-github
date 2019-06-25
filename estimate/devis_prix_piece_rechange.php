@@ -49,6 +49,25 @@ if (isset($_POST) && !empty($_POST)) {
         $message .= 'Whole query: ' . $query;
         die($message);
     } else {
+        // Lors de l'enregistrement du devis lié au diagnostic d'un véhicule
+        // On persiste les données d'historisation du devis lié à un diagnostic donné concernant un véhicule
+
+        $queryInsHistoDevVehi = "INSERT INTO tbl_histo_devis_vehicule (diag_id, devis_id, devis_date, car_id, imma_vehi) 
+        SELECT rd.id as diag_id, dev.devis_id, dev.date_devis, cr.car_id, cr.VIN
+		FROM tbl_add_devis dev 
+		JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
+		JOIN tbl_add_car cr on rd.car_id = cr.car_id 
+        WHERE rd.id = '" . $_GET[vehi_diag_id] . "'";
+
+        $resultInsHistoDevVehi = mysql_query($queryInsHistoDevVehi, $link);
+
+        // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
+        if (!$resultInsHistoDevVehi) {
+            $message  = 'Invalid query: ' . mysql_error() . "\n";
+            $message .= 'Whole query: ' . $queryInsHistoDevVehi;
+            die($message);
+        }
+
         // Redirection vers la liste des devis
         $url = WEB_URL . 'estimate/repaircar_diagnostic_devis_list.php?m=add';
         header("Location: $url");
@@ -68,10 +87,10 @@ if (isset($_POST) && !empty($_POST)) {
         <h1> Formulaire de création du devis de réparation du véhicule
         </h1>
         <!-- <ol class="breadcrumb">
-            <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="<?php echo WEB_URL ?>repaircar/carlist.php"> véhicule à faire réparer</a></li>
-            <li class="active">Ajout de véhicule à faire réparer</li>
-        </ol> -->
+                <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="<?php echo WEB_URL ?>repaircar/carlist.php"> véhicule à faire réparer</a></li>
+                <li class="active">Ajout de véhicule à faire réparer</li>
+            </ol> -->
     </section>
 
     <div class="container">
@@ -88,19 +107,19 @@ if (isset($_POST) && !empty($_POST)) {
 
                             <div class="box box-success">
                                 <!-- <div class="box-header">
-                                <h3 class="box-title"><i class="fa fa-plus"></i> Formulaire client</h3>
-                            </div> -->
+                                    <h3 class="box-title"><i class="fa fa-plus"></i> Formulaire client</h3>
+                                </div> -->
                                 <div class="box-body">
 
                                     <!-- <div class="form-group">
-                                    <label for="type_client"><span style="color:red;">*</span> Type de client :</label>
-                                    <select class='form-control' id="type_client" name="type_client">
-                                        <option value="<?php echo $c_type_client; ?>">--Sélectionner le type du client--</option>
-                                        <option value="Société">Société</option>
-                                        <option value="Particulier">Particulier</option>
-                                        <option value="Autre">Autre</option>
-                                    </select>
-                                </div> -->
+                                        <label for="type_client"><span style="color:red;">*</span> Type de client :</label>
+                                        <select class='form-control' id="type_client" name="type_client">
+                                            <option value="<?php echo $c_type_client; ?>">--Sélectionner le type du client--</option>
+                                            <option value="Société">Société</option>
+                                            <option value="Particulier">Particulier</option>
+                                            <option value="Autre">Autre</option>
+                                        </select>
+                                    </div> -->
 
                                     <div class="row">
                                         <div class="col-md-12">
@@ -147,8 +166,8 @@ if (isset($_POST) && !empty($_POST)) {
                                                                     <input type="text" value="<?php echo $row['designation_piece_rechange']; ?>" id="parts_desc_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][designation_piece_rechange_devis]" class="form-control" />
                                                                 </td>
                                                                 <!-- <td>
-                                                                        <input type="text" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" class="form-control" />
-                                                                    </td> -->
+                                                                                            <input type="text" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" class="form-control" />
+                                                                                        </td> -->
                                                                 <td>
                                                                     <input type="text" value="<?php echo $row['qte_piece_rechange']; ?>" id="qty_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][qte_piece_rechange_devis]" class="form-control" />
                                                                 </td>
@@ -169,8 +188,8 @@ if (isset($_POST) && !empty($_POST)) {
 
                                                             <!-- Récupération des données du devis -->
                                                             <!-- <input type="hidden" value="<?php echo $row['designation_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][designation_piece_rechange_devis]" />
-                                                                                <input type="hidden" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" />
-                                                                                <input type="hidden" value="<?php echo $row['qte_piece_rechange']; ?>" id="qty_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][qte_piece_rechange_devis]" /> -->
+                                                                                                    <input type="hidden" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" />
+                                                                                                    <input type="hidden" value="<?php echo $row['qte_piece_rechange']; ?>" id="qty_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][qte_piece_rechange_devis]" /> -->
 
                                                             <?php
                                                             // Incrémentation du compteur
@@ -244,36 +263,36 @@ if (isset($_POST) && !empty($_POST)) {
                                 <h3 class="box-title"><i class="fa fa-search"></i> Rechercher des pièces</h3>
                             </div>
                             <!-- <div class="form-group col-md-6">
-                                <label for="ddlMake">Marque :</label>
-                                <select class="form-control" onchange="loadYear(this.value);" name="ddlMake" id="ddlMake">
-                                    <option value=''>--Sélectionnez Marque--</option>
-                                    <?php
-                                    $make_list = $wms->get_all_make_list($link);
-                                    foreach ($make_list as $make) {
-                                        echo "<option value='" . $make['make_id'] . "'>" . $make['make_name'] . "</option>";
-                                    }
+                                    <label for="ddlMake">Marque :</label>
+                                    <select class="form-control" onchange="loadYear(this.value);" name="ddlMake" id="ddlMake">
+                                        <option value=''>--Sélectionnez Marque--</option>
+                                        <?php
+                                        $make_list = $wms->get_all_make_list($link);
+                                        foreach ($make_list as $make) {
+                                            echo "<option value='" . $make['make_id'] . "'>" . $make['make_name'] . "</option>";
+                                        }
 
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="ddl_model">Modèle :</label>
-                                <select class="form-control" onchange="loadPartsData();" name="ddlModel" id="ddl_model">
-                                    <option value=''>--Choisir un modèle--</option>
-                                </select>
-                            </div> -->
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="ddl_model">Modèle :</label>
+                                    <select class="form-control" onchange="loadPartsData();" name="ddlModel" id="ddl_model">
+                                        <option value=''>--Choisir un modèle--</option>
+                                    </select>
+                                </div> -->
                             <!-- <div class="form-group col-md-4">
-                                <label for="ddl_model">Modèle :</label>
-                                <select class="form-control" onchange="loadYearData(this.value);" name="ddlModel" id="ddl_model">
-                                    <option value=''>--Choisir un modèle--</option>
-                                </select>
-                            </div> -->
+                                    <label for="ddl_model">Modèle :</label>
+                                    <select class="form-control" onchange="loadYearData(this.value);" name="ddlModel" id="ddl_model">
+                                        <option value=''>--Choisir un modèle--</option>
+                                    </select>
+                                </div> -->
                             <!-- <div class="form-group col-md-4">
-                                <label for="ddlYear">Année :</label>
-                                <select class="form-control" name="ddlYear" onchange="loadPartsData();" id="ddlYear">
-                                    <option value=''>--Sélectionnez Année--</option>
-                                </select>
-                            </div> -->
+                                    <label for="ddlYear">Année :</label>
+                                    <select class="form-control" name="ddlYear" onchange="loadPartsData();" id="ddlYear">
+                                        <option value=''>--Sélectionnez Année--</option>
+                                    </select>
+                                </div> -->
                             <div class="form-group col-md-12">
                                 <label for="txtPartsName">Saisissez le nom ou le code barre de la pièce :</label>
                                 <input class="form-control" type="text" name="txtPartsName" id="txtPartsName" />

@@ -77,17 +77,7 @@ if (isset($_GET['car_id']) && $_GET['car_id'] != '') {
     <!-- Full Width boxes (Stat box) -->
     <div class="row">
         <div class="col-md-12">
-            <!-- <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
-                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-                <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
-                <?php echo $del_msg; ?>
-            </div>
-            <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
-                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-                <h4><i class="icon fa fa-check"></i> Success!</h4>
-                <?php echo $msg; ?>
-            </div> -->
-            <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>setting/carsetting.php" data-original-title="Refresh Page"><i class="fa fa-refresh"></i></a> </div>
+            <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_assur_vistech.php?car_id=<?php echo $_GET['car_id']; ?>" data-original-title="Re-charger la page"><i class="fa fa-refresh"></i></a> </div>
             <div class="box box-success">
                 <div class="box-body">
                     <div class="box-header">

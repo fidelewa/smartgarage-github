@@ -185,6 +185,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                             }
                           }
                           ?>
+                            <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_devis_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des devis du véhicule"><i class="fa fa-eye"></i></a>
                             <a class="btn btn-success" style="background-color:gray;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_assur_vistech.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des assurances et des visites techniques du véhicule"><i class="fa fa-eye"></i></a>
                             <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Voir le détail des informations du véhicule"><i class="fa fa-eye"></i></a>
                             <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
