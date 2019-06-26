@@ -461,16 +461,16 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
                     </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
-                                  echo 'active';
-                                } ?>">
-                      <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
-                    </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
-                                  echo 'active';
-                                } ?>">
-                      <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
-                    </li>
+                    <!-- <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
+                                      echo 'active';
+                                    } ?>">
+                            <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
+                          </li>
+                          <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
+                                        echo 'active';
+                                      } ?>">
+                            <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
+                          </li> -->
 
                   </ul>
                 </li>
@@ -606,6 +606,10 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
                     </li>
+                    <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
+                                          echo 'active';
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
+                    </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Présences</span> </a>
@@ -718,16 +722,16 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
                     </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
-                                  echo 'active';
-                                } ?>">
-                      <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
-                    </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
-                                  echo 'active';
-                                } ?>">
-                      <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
-                    </li>
+                    <!-- <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
+                                      echo 'active';
+                                    } ?>">
+                            <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
+                          </li>
+                          <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
+                                        echo 'active';
+                                      } ?>">
+                            <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
+                          </li> -->
 
                   </ul>
                 </li>
@@ -863,6 +867,10 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
                     </li>
+                    <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
+                                          echo 'active';
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
+                    </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Présences</span> </a>
@@ -976,16 +984,16 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
                     </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
-                                  echo 'active';
-                                } ?>">
-                      <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
-                    </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
-                                  echo 'active';
-                                } ?>">
-                      <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
-                    </li>
+                    <!-- <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
+                                      echo 'active';
+                                    } ?>">
+                            <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
+                          </li>
+                          <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
+                                        echo 'active';
+                                      } ?>">
+                            <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
+                          </li> -->
 
                   </ul>
                 </li>
@@ -1121,6 +1129,10 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
                     </li>
+                    <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
+                                          echo 'active';
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
+                    </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Présences</span> </a>
@@ -1233,16 +1245,16 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
                     </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
-                                  echo 'active';
-                                } ?>">
-                      <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
-                    </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
-                                  echo 'active';
-                                } ?>">
-                      <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
-                    </li>
+                    <!-- <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
+                                      echo 'active';
+                                    } ?>">
+                            <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
+                          </li>
+                          <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
+                                        echo 'active';
+                                      } ?>">
+                            <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
+                          </li> -->
 
                   </ul>
                 </li>
@@ -1377,6 +1389,10 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'addPersonnel' || $page_name == 'personnellist') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
+                    </li>
+                    <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
+                                          echo 'active';
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                           echo 'active';
@@ -1579,6 +1595,10 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addPersonnel' || $page_name == 'personnellist') {
                                       echo 'active';
                                     } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
+                </li>
+                <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
+                                      echo 'active';
+                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
                 </li>
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                       echo 'active';

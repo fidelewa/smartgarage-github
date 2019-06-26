@@ -124,7 +124,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                                         // Si le client et le receptionniste ont signé au dépot la fiche de reception du véhicule
                                         if (isset($row['sign_cli_depot']) && isset($row['sign_recep_depot'])) {?>
 
-                                            <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien"><i class="fa fa-user"></i></a>
+                                            <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien ou un électricien"><i class="fa fa-user"></i></a>
                                             
                                         <?php } 
                                         

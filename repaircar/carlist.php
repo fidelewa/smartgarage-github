@@ -16,6 +16,45 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
   $addinfo = 'block';
   $msg = "Updated Voiture de réparation Information Successfully";
 }
+if (isset($_GET['m']) && $_GET['m'] == 'exp_assur_sms_succes') {
+  $addinfo = 'block';
+  $msg = "SMS de rappel de l'assurance envoyé avec succès";
+}
+
+if (isset($_GET['m']) && $_GET['m'] == 'exp_vistech_sms_succes') {
+  $addinfo = 'block';
+  $msg = "SMS de rappel de la visite technique envoyé avec succès";
+}
+
+if (isset($_GET['m']) && $_GET['m'] == 'av_exp_assur_sms_succes') {
+  $addinfo = 'block';
+  $msg = "SMS de rappel de l'assurance envoyé avec succès";
+}
+
+if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_succes') {
+  $addinfo = 'block';
+  $msg = "SMS de rappel de la visite technique envoyé avec succès";
+}
+
+if (isset($_GET['m']) && $_GET['m'] == 'exp_assur_sms_failed') {
+  $failedinfo = 'block';
+  $msg = "L'envoi du SMS de rappel de l'assurance à échoué";
+}
+
+if (isset($_GET['m']) && $_GET['m'] == 'exp_vistech_sms_failed') {
+  $failedinfo = 'block';
+  $msg = "L'envoi du SMS de rappel de la visite technique à échoué";
+}
+
+if (isset($_GET['m']) && $_GET['m'] == 'av_exp_assur_sms_failed') {
+  $failedinfo = 'block';
+  $msg = "L'envoi du SMS de rappel de l'assurance à échoué";
+}
+
+if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
+  $failedinfo = 'block';
+  $msg = "L'envoi du SMS de rappel de la visite technique à échoué";
+}
 ?>
 <!-- Content Header (Page header) -->
 
@@ -31,6 +70,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
   <!-- Full Width boxes (Stat box) -->
   <div class="row">
     <div class="col-xs-12">
+      <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+        <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
+        <?php echo $msg; ?>
+      </div>
       <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
         <h4><i class="icon fa fa-ban"></i> Deleted!</h4>

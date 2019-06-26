@@ -2,6 +2,29 @@
 //include_once('../config.php');v
 class wms_core
 {
+
+	public function getRecepVehiSignatureByRecepId($con, $recep_vehi_id)
+	{
+		$data = array();
+
+		$query = "SELECT sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie
+		FROM tbl_recep_vehi_repar
+		WHERE car_id = '".$recep_vehi_id."'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+		
+		return $row;
+	}
+
 	/*
 	* @get all Voiture de réparation list
 	*/

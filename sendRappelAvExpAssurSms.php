@@ -21,9 +21,10 @@ $smsApi = new SmsApi();
 $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
 if($resultSmsSent){
-    echo "SMS envoyé avec succès !";
-    // $url = WEB_URL.'confirmDevisSmsSent.php';
-    // header("Location: $url");
+    // echo "SMS envoyé avec succès !";
+    $url = WEB_URL.'repaircar/carlist.php?m=av_exp_assur_sms_succes';
+    header("Location: $url");
 } else {
-    echo "L'envoi du SMS a échoué !";
+    $url = WEB_URL.'repaircar/carlist.php?m=av_exp_assur_sms_failed';
+    header("Location: $url");
 }

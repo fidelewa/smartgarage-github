@@ -42,13 +42,12 @@ if (isset($_GET['cid']) && (int)$_GET['cid'] > 0) {
 
 // var_dump($_SESSION);
 
-if(isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
+if (isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
 
     $recep_id = $_SESSION['objRecep']['user_id'];
-  
-  } else {
+} else {
     $recep_id = 0;
-  }
+}
 
 // if (isset($_SESSION['immat']) && !empty($_SESSION['immat'])) { // Quand le paramètre immat existe dans l'url
 
@@ -271,7 +270,28 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 </div>
                 <!-- One "tab" for each step in the form: -->
                 <div class="tab">
-                    
+
+                    <h1 style="text-align:center;">Enregistrement du véhicule</h1>
+
+                    <div class="form-group row">
+                        <div class="col-md-11">
+                            <!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
+                            <input required onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
+                        </div>
+                        <div class=" col-md-1">
+                            <a class="btn btn-success" data-toggle="tooltip" data-original-title="Ajouter une nouvelle voiture" target="_blank" onclick="getImmaValue();"><i class="fa fa-plus"></i></a>
+                            <!-- <a class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal" data-original-title="Ajouter un véhicule"><i class="fa fa-plus"></i></a> -->
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="marque_modele_vehi_box">
+                        <input readonly onfocus="loadVehiData();" type="text" name="modeleMarqueVehi" id="marque_modele_vehi" class="form-control" value="">
+                    </div>
+
+                    <p>
+                        <!-- Date de réception du véhicule -->
+                        <input type="text" name="add_date" value="<?php echo $c_add_date; ?>" id="add_date" class="form-control datepicker" placeholder="Saisissez la date de reception du véhicule" />
+                    </p>
 
                     <!-- <p>
                         <select class='form-control' id="ddlCustomerList" name="ddlCustomerList" onchange="loadMarqueModeleVoiture(this.value);">
@@ -304,7 +324,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         </select>
                     </p> -->
 
-                    
+
                     <!-- </div> -->
                     <!-- <div class="tab"> -->
                     <h1 style="text-align:center;">Prise en charge</h1>
@@ -627,7 +647,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         </div>
                     </div>
 
-                    
+
 
                     <fieldset>
                         <legend>Ajouter des fichiers joints</legend>
@@ -643,16 +663,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         </div>
                     </fieldset>
 
-                    <h1 style="text-align:center;">Enregistrement du véhicule</h1>
+                    <!-- <h1 style="text-align:center;">Enregistrement du véhicule</h1>
 
                     <div class="form-group row">
                         <div class="col-md-11">
-                            <!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
+                            
                             <input required onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
                         </div>
                         <div class=" col-md-1">
                             <a class="btn btn-success" data-toggle="tooltip" data-original-title="Ajouter une nouvelle voiture" target="_blank" onclick="getImmaValue();"><i class="fa fa-plus"></i></a>
-                            <!-- <a class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal" data-original-title="Ajouter un véhicule"><i class="fa fa-plus"></i></a> -->
+                            
                         </div>
                     </div>
 
@@ -661,11 +681,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     </div>
 
                     <p>
-                        <!-- Date de réception du véhicule -->
+                    
                         <input type="text" name="add_date" value="<?php echo $c_add_date; ?>" id="add_date" class="form-control datepicker" placeholder="Saisissez la date de reception du véhicule" />
-                    </p>
-                    
-                    
+                    </p> -->
+
+
                 </div>
                 <div class="tab">
                     <h1 style="text-align:center;">Etat du véhicule à l'arrivée</h1>
@@ -1672,6 +1692,20 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                     }
                 } else if (y[i].type == "text") { // Traitement des champs de type text
+
+                    if (y[i].id == "immat") {
+
+                        // Si la valeur ou le contenu de l'élément text courant est vide alors il est invalid
+                        if (y[i].value == "") {
+
+                            // console.log(y[i]);
+
+                            // Si le champ text est invalide, une alerte est déclenchée
+                            y[i].className += " invalid";
+                            valid = false;
+                            alert("Veuillez renseigner ce champ SVP lorsque vous réceptionnez un véhicule !!!");
+                        }
+                    }
 
                     // Si l'élément courant est celui recherché
                     if (y[i].id == "arriv_remarq_recep_vehi_text") {

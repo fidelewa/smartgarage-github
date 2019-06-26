@@ -329,10 +329,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 </div>
               </div>
               <div class="form-group">
-                <label for="assurance_vehi_recep"><span style="color:red;">*</span> Client :</label>
+                <label for="assurance_vehi_recep"><span style="color:red;">*</span> Client :<span style="color:red;"> (si le client n'existe pas encore, veuillez cliquer sur le bouton "+" pour l'enregistrer)</span></label>
                 <div class="row">
                   <div class="col-md-11">
-                    <input type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client" onfocus="">
+                    <input type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus="">
                     <!-- <select class='form-control' id="ddlCustomerList" name="ddlCustomerList">
                       <option value="">--Saisissez ou sélectionnez un client--</option>
                       <?php
@@ -590,7 +590,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <label class="form-check-label" for="nivo_carbu_recep_vehi">0/4</label>
               </div>
               <div class="col-md-2 form-check" style="padding-left:0px;">
-                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_2" value="1/2">
+                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_2" value="1/2" checked>
                 <label class="form-check-label" for="nivo_carbu_recep_vehi">1/2</label>
               </div>
               <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -598,7 +598,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <label class="form-check-label" for="nivo_carbu_recep_vehi">2/4</label>
               </div>
               <div class="col-md-3 form-check" style="padding-left:0px;">
-                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_3_4" value="3/4" checked>
+                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_3_4" value="3/4">
                 <label class="form-check-label" for="nivo_carbu_recep_vehi">3/4</label>
               </div>
             </div>
@@ -1768,7 +1768,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             </div>
             <div class="form-group">
               <label for="princ_tel"><span style="color:red;">*</span> Téléphone principal :<span style="color:red;">(ce numéro de téléphone est le mot de passe)</span></label>
-              <input type="text" name="princ_tel" value="" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" />
+              <input type="text" name="princ_tel" maxlength="10" value="" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" />
             </div>
             <div class="form-group">
               <label for="txtCEmail"> <span style="color:red;">*</span>Email (ou numéro de téléphone si vous n'avez pas d'email):</label>

@@ -22,9 +22,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                                border: 1px dotted rgb(0, 0, 0);
-                                border-radius: 1px;
-                            } */
+                                                                border: 1px dotted rgb(0, 0, 0);
+                                                                border-radius: 1px;
+                                                            } */
         </style>
         <script src="<?php echo WEB_URL; ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
     </head>
@@ -683,76 +683,87 @@ if (!empty($row) && count($row) > 0) { ?>
                                 <div class="col-sm-2" style="font-weight:bold;font-style:italic">
                                     (Dépôt)
                                 </div>
+
                                 <div class="col-sm-5">
                                     <div style="border:solid #000 1px; height:45px; width:100px;" id="sign_client_depot">
                                         <?php
                                         // Si le fichier image de la signature au depot vient du client et n'existe pas encore en base de données
-                                        if (empty($row['sign_cli_depot']) || !isset($row['sign_cli_depot'])) {
 
-                                            if (isset($_GET['image']) && $_GET['sign'] == 'client' && $_GET['etat'] == 'depot') {
+                                        if (isset($_GET['image']) && $_GET['sign'] == 'client' && $_GET['etat'] == 'depot') {
 
-                                                // On extrait le nom de l'image du chemin vers l'image
-                                                $name_image_sign_client_depot = str_replace('./doc_signs/', '', $_GET['image']);
+                                            // On extrait le nom de l'image du chemin vers l'image
+                                            // $name_image_sign_client_depot = str_replace('./doc_signs/', '', $_GET['image']);
+                                            $name_image_sign_client_depot = str_replace('../img/signature/', '', $_GET['image']);
 
-                                                // Enregistrement du nom du fichier image de la signature au dépot du client en base de données
-                                                $query = "UPDATE tbl_recep_vehi_repar SET sign_cli_depot='" . $name_image_sign_client_depot . "' WHERE car_id='" . (int)$row['car_id'] . "'";
+                                            // Enregistrement du nom du fichier image de la signature au dépot du client en base de données
+                                            $query = "UPDATE tbl_recep_vehi_repar SET sign_cli_depot='" . $name_image_sign_client_depot . "' WHERE car_id='" . (int)$row['car_id'] . "'";
 
-                                                // Exécution de la requête
-                                                $result = mysql_query($query, $link);
+                                            // Exécution de la requête
+                                            $result = mysql_query($query, $link);
 
-                                                // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-                                                if (!$result) {
-                                                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                                    $message .= 'Whole query: ' . $query;
-                                                    die($message);
-                                                }
-                                                ?>
+                                            // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
+                                            if (!$result) {
+                                                $message  = 'Invalid query: ' . mysql_error() . "\n";
+                                                $message .= 'Whole query: ' . $query;
+                                                die($message);
+                                            }
+                                            ?>
 
-                                                <!-- On place l'image de la signature du client à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                                                                                                                                                                                                                                                        de la signature du client -->
-                                                <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_client_depot) ?>" alt="" height="40" width="80">
-                                            <?php } ?>
+                                            <!-- On place l'image de la signature du client à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
+                                                                                                                                                                                                                                                                                                                                                                                                                                        de la signature du client -->
+                                            <!-- <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_client_depot) ?>" alt="" height="40" width="80"> -->
+                                            <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_client_depot) ?>" alt="" height="40" width="80">
+                                        <?php } else {
 
-                                        <?php } else { ?>
-                                            <!--  Si le nom du fichier image de la signature au dépot du client existe déjà en base de données on récupère le nom de ce fichier image -->
-                                            <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($row['sign_cli_depot']) ?>" alt="" height="40" width="80">
+                                        // Sinon on récupère la signature enregistrer en base de données
+                                        $rowsRecepVehiSignatureByRecepId = $wms->getRecepVehiSignatureByRecepId($link, $_GET['car_id']);
+                                        ?>
+                                            <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($rowsRecepVehiSignatureByRecepId['sign_cli_depot']) ?>" alt="" height="40" width="80">
+
                                         <?php } ?>
+
                                     </div>
                                 </div>
                                 <div class="col-md-offset-1 col-sm-4" style="padding-right:0px;">
                                     <div style="border:solid #000 1px; height:45px; width:100px" id="sign_recep_depot">
                                         <?php
                                         // Si la signature au dépot vient du réceptionniste et n'existe pas encore en base de données
-                                        if (empty($row['sign_recep_depot']) || !isset($row['sign_recep_depot'])) {
 
-                                            if (isset($_GET['image']) && $_GET['sign'] == 'recep' && $_GET['etat'] == 'depot') {
 
-                                                // On extrait le nom de l'image du chemin vers l'image
-                                                $name_image_sign_recep_depot = str_replace('./doc_signs/', '', $_GET['image']);
+                                        if (isset($_GET['image']) && $_GET['sign'] == 'recep' && $_GET['etat'] == 'depot') {
 
-                                                // Enregistrement du nom du fichier image de la signature du client en base de données
-                                                $query = "UPDATE tbl_recep_vehi_repar SET sign_recep_depot='" . $name_image_sign_recep_depot . "' WHERE car_id='" . (int)$row['car_id'] . "'";
+                                            // On extrait le nom de l'image du chemin vers l'image
+                                            // $name_image_sign_recep_depot = str_replace('./doc_signs/', '', $_GET['image']);
+                                            $name_image_sign_recep_depot = str_replace('../img/signature/', '', $_GET['image']);
 
-                                                // On teste le résultat de la requête
-                                                $result = mysql_query($query, $link);
+                                            // Enregistrement du nom du fichier image de la signature du client en base de données
+                                            $query = "UPDATE tbl_recep_vehi_repar SET sign_recep_depot='" . $name_image_sign_recep_depot . "' WHERE car_id='" . (int)$row['car_id'] . "'";
 
-                                                if (!$result) {
-                                                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                                    $message .= 'Whole query: ' . $query;
-                                                    die($message);
-                                                }
+                                            // On teste le résultat de la requête
+                                            $result = mysql_query($query, $link);
 
-                                                ?>
+                                            if (!$result) {
+                                                $message  = 'Invalid query: ' . mysql_error() . "\n";
+                                                $message .= 'Whole query: ' . $query;
+                                                die($message);
+                                            }
 
-                                                <!-- On place l'image de la signature du réceptionniste à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                                                                                                                                                                                                                                                        de la signature du réceptionniste -->
-                                                <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_recep_depot) ?>" alt="" height="40" width="80">
-                                            <?php } ?>
+                                            ?>
 
-                                        <?php } else { ?>
-                                            <!--  Si la signature du réceptionniste existe déjà en base de données on récupère le nom du fichier image -->
-                                            <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($row['sign_recep_depot']) ?>" alt="" height="40" width="80">
+                                            <!-- On place l'image de la signature du réceptionniste à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
+                                                                                                                                                                                                                                                                                                                                                                                                                                        de la signature du réceptionniste -->
+                                            <!-- <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_recep_depot) ?>" alt="" height="40" width="80"> -->
+                                            <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_recep_depot) ?>" alt="" height="40" width="80">
+                                        <?php } else {
+
+                                        // Sinon on récupère la signature enregistrer en base de données
+                                        $rowsRecepVehiSignatureByRecepId = $wms->getRecepVehiSignatureByRecepId($link, $_GET['car_id']);
+                                        ?>
+                                            <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($rowsRecepVehiSignatureByRecepId['sign_recep_depot']) ?>" alt="" height="40" width="80">
+
                                         <?php } ?>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -772,71 +783,77 @@ if (!empty($row) && count($row) > 0) { ?>
                                     <div style="border:solid #000 1px; height:45px; width:100px;" id="sign_client_sortie">
                                         <?php
                                         // Si le fichier image de la signature à la sortie vient du client et n'existe pas encore en base de données
-                                        if (empty($row['sign_cli_sortie']) || !isset($row['sign_cli_sortie'])) {
 
-                                            if (isset($_GET['image']) && $_GET['sign'] == 'client' && $_GET['etat'] == 'sortie') {
+                                        if (isset($_GET['image']) && $_GET['sign'] == 'client' && $_GET['etat'] == 'sortie') {
 
-                                                // On extrait le nom de l'image du chemin vers l'image
-                                                $name_image_sign_client_sortie = str_replace('./doc_signs/', '', $_GET['image']);
+                                            // On extrait le nom de l'image du chemin vers l'image
+                                            // $name_image_sign_client_sortie = str_replace('./doc_signs/', '', $_GET['image']);
+                                            $name_image_sign_client_sortie = str_replace('../img/signature/', '', $_GET['image']);
 
-                                                // Enregistrement du nom du fichier image de la signature au dépot du client en base de données
-                                                $query = "UPDATE tbl_recep_vehi_repar SET sign_cli_sortie='" . $name_image_sign_client_sortie . "' WHERE car_id='" . (int)$row['car_id'] . "'";
+                                            // Enregistrement du nom du fichier image de la signature au dépot du client en base de données
+                                            $query = "UPDATE tbl_recep_vehi_repar SET sign_cli_sortie='" . $name_image_sign_client_sortie . "' WHERE car_id='" . (int)$row['car_id'] . "'";
 
-                                                // Exécution de la requête
-                                                $result = mysql_query($query, $link);
+                                            // Exécution de la requête
+                                            $result = mysql_query($query, $link);
 
-                                                // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-                                                if (!$result) {
-                                                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                                    $message .= 'Whole query: ' . $query;
-                                                    die($message);
-                                                }
-                                                ?>
+                                            // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
+                                            if (!$result) {
+                                                $message  = 'Invalid query: ' . mysql_error() . "\n";
+                                                $message .= 'Whole query: ' . $query;
+                                                die($message);
+                                            }
+                                            ?>
 
-                                                <!-- On place l'image de la signature du client à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                                                                                                                                                                                                                                                        de la signature du client -->
-                                                <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_client_sortie) ?>" alt="" height="40" width="80">
-                                            <?php } ?>
+                                            <!-- On place l'image de la signature du client à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        de la signature du client -->
+                                            <!-- <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_client_sortie) ?>" alt="" height="40" width="80"> -->
+                                            <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_client_sortie) ?>" alt="" height="40" width="80">
+                                        <?php } else {
 
-                                        <?php } else { ?>
-                                            <!--  Si le nom du fichier image de la signature au dépot du client existe déjà en base de données on récupère le nom de ce fichier image -->
-                                            <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($row['sign_cli_sortie']) ?>" alt="" height="40" width="80">
+                                        // Sinon on récupère la signature enregistrer en base de données
+                                        $rowsRecepVehiSignatureByRecepId = $wms->getRecepVehiSignatureByRecepId($link, $_GET['car_id']);
+                                        ?>
+                                            <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($rowsRecepVehiSignatureByRecepId['sign_cli_sortie']) ?>" alt="" height="40" width="80">
+
                                         <?php } ?>
+
                                     </div>
                                 </div>
                                 <div class="col-md-offset-1 col-sm-4" style="padding-right:0px;">
                                     <div style="border:solid #000 1px; height:45px; width:100px" id="sign_recep_sortie">
                                         <?php
-                                        // Si la signature au dépot vient du réceptionniste et n'existe pas encore en base de données
-                                        if (empty($row['sign_recep_sortie']) || !isset($row['sign_recep_sortie'])) {
 
-                                            if (isset($_GET['image']) && $_GET['sign'] == 'recep' && $_GET['etat'] == 'sortie') {
+                                        if (isset($_GET['image']) && $_GET['sign'] == 'recep' && $_GET['etat'] == 'sortie') {
 
-                                                // On extrait le nom de l'image du chemin vers l'image
-                                                $name_image_sign_recep_sortie = str_replace('./doc_signs/', '', $_GET['image']);
+                                            // On extrait le nom de l'image du chemin vers l'image
+                                            // $name_image_sign_recep_sortie = str_replace('./doc_signs/', '', $_GET['image']);
+                                            $name_image_sign_recep_sortie = str_replace('../img/signature/', '', $_GET['image']);
 
-                                                // Enregistrement du nom du fichier image de la signature du client en base de données
-                                                $query = "UPDATE tbl_recep_vehi_repar SET sign_recep_sortie='" . $name_image_sign_recep_sortie . "' WHERE car_id='" . (int)$row['car_id'] . "'";
+                                            // Enregistrement du nom du fichier image de la signature du client en base de données
+                                            $query = "UPDATE tbl_recep_vehi_repar SET sign_recep_sortie='" . $name_image_sign_recep_sortie . "' WHERE car_id='" . (int)$row['car_id'] . "'";
 
-                                                // On teste le résultat de la requête
-                                                $result = mysql_query($query, $link);
+                                            // On teste le résultat de la requête
+                                            $result = mysql_query($query, $link);
 
-                                                if (!$result) {
-                                                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                                    $message .= 'Whole query: ' . $query;
-                                                    die($message);
-                                                }
+                                            if (!$result) {
+                                                $message  = 'Invalid query: ' . mysql_error() . "\n";
+                                                $message .= 'Whole query: ' . $query;
+                                                die($message);
+                                            }
 
-                                                ?>
+                                            ?>
 
-                                                <!-- On place l'image de la signature du réceptionniste à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                                                                                                                                                                                                                                                        de la signature du réceptionniste -->
-                                                <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_recep_sortie) ?>" alt="" height="40" width="80">
-                                            <?php } ?>
+                                            <!-- On place l'image de la signature du réceptionniste à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    de la signature du réceptionniste -->
+                                            <!-- <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_recep_sortie) ?>" alt="" height="40" width="80"> -->
+                                            <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_recep_sortie) ?>" alt="" height="40" width="80">
+                                        <?php } else {
 
-                                        <?php } else { ?>
-                                            <!--  Si la signature du réceptionniste existe déjà en base de données on récupère le nom du fichier image -->
-                                            <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($row['sign_recep_sortie']) ?>" alt="" height="40" width="80">
+                                        // Sinon on récupère la signature enregistrer en base de données
+                                        $rowsRecepVehiSignatureByRecepId = $wms->getRecepVehiSignatureByRecepId($link, $_GET['car_id']);
+                                        ?>
+                                            <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($rowsRecepVehiSignatureByRecepId['sign_recep_sortie']) ?>" alt="" height="40" width="80">
+
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -946,8 +963,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
 
             @media print {
 
@@ -984,7 +1001,8 @@ if (!empty($row) && count($row) > 0) { ?>
             });
 
             function reloadPage() {
-                location.reload(true);
+
+                window.location.reload();
             }
         </script>
     </body>

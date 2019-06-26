@@ -9,7 +9,7 @@ $nom_client = $_GET['nom_client'];
 $mobile_customer = $_GET['mobile_customer'];
 
 // Message de confirmation du devis
-$content_msg = 'Cher client '.$nom_client.', nous vous informons que la date de la visite technique de votre voiture '.$marque.' '.$modele.' '.$imma.' est depassee ! Pensez donc a la repasser !';
+$content_msg = 'Cher client ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' est depassee ! Pensez donc a la repasser !';
 
 // importation du fichier
 require_once(ROOT_PATH . '/SmsApi.php');
@@ -20,10 +20,24 @@ $smsApi = new SmsApi();
 // Exécution de la méthode d'envoi 
 $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
-if($resultSmsSent){
-    echo "SMS envoyé avec succès !";
-    // $url = WEB_URL.'confirmDevisSmsSent.php';
-    // header("Location: $url");
-} else {
-    echo "L'envoi du SMS a échoué !";
+var_dump($resultSmsSent);
+die();
+
+try {
+    // Exécution de la méthode d'envoi 
+    $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
+    $url = WEB_URL . 'repaircar/carlist.php?m=exp_vistech_sms_succes';
+    header("Location: $url");
+} catch (Exception $e) {
+    $url = WEB_URL . 'repaircar/carlist.php?m=exp_vistech_sms_failed';
+    header("Location: $url");
 }
+
+// if($resultSmsSent){
+//     // echo "SMS envoyé avec succès !";
+//     $url = WEB_URL.'repaircar/carlist.php?m=exp_vistech_sms_succes';
+//     header("Location: $url");
+// } else {
+//     $url = WEB_URL.'repaircar/carlist.php?m=exp_vistech_sms_failed';
+//     header("Location: $url");
+// }

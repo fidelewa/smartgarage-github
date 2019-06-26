@@ -100,7 +100,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 				$msg = "Pointage déjà éffectué, à demain " . $dataEmploye['per_name'];
 				// echo($msg);
 
-				$html = '<div class="alert alert-success alert-dismissable" style="display:block">
+				$html = '<div class="alert alert-danger alert-dismissable" style="display:block">
 				<button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
 				<h4>' . $msg . '</h4>
 				</div>';

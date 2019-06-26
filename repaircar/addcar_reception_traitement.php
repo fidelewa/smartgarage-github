@@ -901,11 +901,11 @@ if(isset($_POST['recep_id'])){
 // Si c'est le récetionniste qui fait la reception, alors on fait une redirection vers son dashboard
 if(isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])){
 	if ((int)$_POST['repair_car'] > 0) {
-		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=up';
+		$url = WEB_URL . 'recep_panel/recep_repaircar_reception_list.php?m=up';
 		header("Location: $url");
 	} else {
 	
-		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=add';
+		$url = WEB_URL . 'recep_panel/recep_repaircar_reception_list.php?m=add';
 		header("Location: $url");
 	}
 }
