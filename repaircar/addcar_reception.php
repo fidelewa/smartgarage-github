@@ -12,6 +12,8 @@ $vin = '';
 $c_registration = '';
 $c_note = '';
 $c_add_date = date_format(date_create('now'), 'd/m/Y');
+$add_date_vidange = "";
+$km_last_vidange = "";
 
 $car_pneu_av = '';
 $car_gente_ar = '';
@@ -431,6 +433,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               <div class="form-group">
                 <label for="add_date"><span style="color:red;">*</span> Date de la prochaine visite technique:</label>
                 <input type="text" name="add_date_visitetech_car" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+              </div>
+
+              <div class="form-group">
+                <label for="km_last_vidange"> Kilométrage de dernière vidange :</label>
+                <input type="text" id="km_last_vidange" maxlength="5" name="km_last_vidange" class='form-control' value="<?php echo $km_last_vidange; ?>" placeholder="Veuillez saisir le kilométrage de la dernière vidange" />
               </div>
               <!-- <div class="form-group">
                 <label for="add_date_ctr_tech"><span style="color:red;">*</span> Date du contrôle technique:</label>

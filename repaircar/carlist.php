@@ -2,6 +2,7 @@
 <?php
 $delinfo = 'none';
 $addinfo = 'none';
+$failedinfo = 'none';
 $msg = "";
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
   $wms->deleteRepairCar($link, $_GET['id']);

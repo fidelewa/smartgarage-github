@@ -5866,7 +5866,7 @@ class wms_core
 				add_date_mise_circu, add_date_imma, nb_cylindre, couleur_vehi, fisc_vehi,
 				pj1_url, pj2_url, pj3_url, pj4_url, pj5_url, pj6_url, pj7_url, pj8_url, pj9_url, pj10_url, pj11_url, pj12_url,
 				duree_assurance, add_date_ctr_tech, delai_ctr_tech, add_date_derniere_vidange, add_date_changement_filtre_air,
-				add_date_changement_filtre_huile, add_date_changement_filtre_pollen
+				add_date_changement_filtre_huile, add_date_changement_filtre_pollen, km_last_vidange
 				)
                    values('$data[hfInvoiceId]','$data[car_names]','$data[ddlCustomerList]','$data[ddlMake]','$data[ddlModel]',
 				   '$data[ddlYear]','$data[car_chasis_no]','$data[vin]','$data[car_note]','$data[add_date]',
@@ -5878,7 +5878,7 @@ class wms_core
 				   '$data[pj8_url]','$data[pj9_url]','$data[pj10_url]','$data[pj11_url]','$data[pj12_url]','$data[duree_assurance]',
 				   '$data[add_date_ctr_tech]','$data[delai_ctr_tech]','$data[add_date_derniere_vidange]',
 				   '$data[add_date_changement_filtre_air]','$data[add_date_changement_filtre_huile]',
-				   '$data[add_date_changement_filtre_pollen]'
+				   '$data[add_date_changement_filtre_pollen]','$data[km_last_vidange]'
 				   )";
 				$result = mysql_query($query, $con);
 			} else {
@@ -5898,7 +5898,8 @@ class wms_core
 				`add_date_derniere_vidange`='" . $data['add_date_derniere_vidange'] . "',
 				`add_date_changement_filtre_air`='" . $data['add_date_changement_filtre_air'] . "', 
 				`add_date_changement_filtre_huile`='" . $data['add_date_changement_filtre_huile'] . "',
-				`add_date_changement_filtre_pollen`='" . $data['add_date_changement_filtre_pollen'] . "'
+				`add_date_changement_filtre_pollen`='" . $data['add_date_changement_filtre_pollen'] . "',
+				`km_last_viange`='" . $data['km_last_viange'] . "'
 				WHERE car_id='" . $data['repair_car'] . "'";
 				$result = mysql_query($query, $con);
 			}

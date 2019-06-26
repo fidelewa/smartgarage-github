@@ -49,12 +49,14 @@ if (!empty($row) && count($row) > 0) { ?>
         <title>devis de réparation d'un véhicule</title>
         <link href="<?php echo WEB_URL; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+        <script src="<?php echo WEB_URL; ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                                    border: 1px dotted rgb(0, 0, 0);
-                                    border-radius: 1px;
-                                } */
+                                                                            border: 1px dotted rgb(0, 0, 0);
+                                                                            border-radius: 1px;
+                                                                        } */
         </style>
     </head>
 
@@ -88,7 +90,7 @@ if (!empty($row) && count($row) > 0) { ?>
                 #info_gene {
                     border-radius: 20px;
                     /* width: 400px;
-                                                                                height: 175px; */
+                                                                                                                        height: 175px; */
                     border: solid 2px #000;
                     padding: 15px;
                     margin-bottom: 20pt;
@@ -97,7 +99,7 @@ if (!empty($row) && count($row) > 0) { ?>
                 .cadre {
                     border-radius: 20px;
                     /* width: 400px;
-                                                                                height: 175px; */
+                                                                                                                        height: 175px; */
                     border: solid 2px #000;
                     padding: 15px;
                     margin-bottom: 20pt;
@@ -140,7 +142,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
                         </div>
                         <div class="col-sm-3 col-sm-offset-7">
-                            <p><?php echo date_format(date_create($row['date_devis']), 'd/m/Y'); ?></p>
+                            <p><?php echo $row['date_devis']; ?></p>
                         </div>
                     </div>
                     <div class="row" id="content_1">
@@ -226,27 +228,27 @@ if (!empty($row) && count($row) > 0) { ?>
                                 </div>
                             </div>
                             <!-- <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <p>Première mise en circulation</p>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <p><?php echo $row['add_date_mise_circu']; ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <p>Prochain controle technique</p>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <p><?php echo $row['add_date_visitetech']; ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <p>Première mise en circulation</p>
+                                                                                    </div>
+                                                                                    <div class="col-sm-6">
+                                                                                        <p><?php echo $row['add_date_mise_circu']; ?></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <p>Prochain controle technique</p>
+                                                                                    </div>
+                                                                                    <div class="col-sm-6">
+                                                                                        <p><?php echo $row['add_date_visitetech']; ?></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> -->
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -279,13 +281,17 @@ if (!empty($row) && count($row) > 0) { ?>
                                                     <td><?php echo $devis['designation']; ?></td>
                                                     <!-- <td><?php echo $devis['marque']; ?></td> -->
                                                     <td><?php echo $devis['quantity']; ?></td>
-                                                    <td><?php echo $devis['price']; ?></td>
+                                                    <td id="article_price_<?php echo $i; ?>"><?php echo $devis['price']; ?></td>
                                                     <td><?php echo $devis['remise_piece_rechange_devis']; ?></td>
-                                                    <td><?php echo $devis['total_prix_piece_rechange_devis_ht']; ?></td>
-                                                    <td><?php echo $devis['total_prix_piece_rechange_devis_ttc']; ?></td>
+                                                    <td id="article_total_ht_<?php echo $i; ?>"><?php echo $devis['total_prix_piece_rechange_devis_ht']; ?></td>
+                                                    <td id="article_total_ttc_<?php echo $i; ?>"><?php echo $devis['total_prix_piece_rechange_devis_ttc']; ?></td>
                                                 </tr>
                                                 <?php $i++;
-                                            } ?>
+                                            }
+
+                                            // On retourne la représentation JSON du tableau
+                                            $devis_data_json = json_encode($devis_data);
+                                            ?>
                                             <tr>
                                                 <td colspan="6" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
                                                 <td><?php echo $row['main_oeuvre_piece_rechange_devis']; ?></td>
@@ -307,18 +313,18 @@ if (!empty($row) && count($row) > 0) { ?>
                                     <div class="col-sm-6 cadre">
                                         <div class="row">
                                             <div class="col-sm-6">Total HT</div>
-                                            <div class="col-sm-6"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
+                                            <div class="col-sm-6" id="total_ht"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">Total TVA</div>
-                                            <div class="col-sm-6"><?php echo $row['total_tva'] . ' ' . $currency; ?></div>
+                                            <div class="col-sm-6" id="total_tva"><?php echo $row['total_tva'] . ' ' . $currency; ?></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <p style="font-size:11pt;font-weight:bold">Total TTC</p>
                                             </div>
                                             <div class="col-sm-6">
-                                                <p style="font-size:11pt;font-weight:bold">
+                                                <p style="font-size:11pt;font-weight:bold" id="total_ttc">
                                                     <?php echo $row['total_ttc_gene_piece_rechange_devis'] . ' ' . $currency; ?>
                                                 </p>
                                             </div>
@@ -418,8 +424,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
 
             @media print {
 
@@ -448,14 +454,70 @@ if (!empty($row) && count($row) > 0) { ?>
             <a style="" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
         <!-- <div id="mobile-preview-close_2">
-                <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
-                <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
-            </div> -->
-        <script>
-            jQuery(document).ready(function() {
-                location.reload(true);
-                window.onload = timedRefresh(500);
+                                                        <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
+                                                        <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
+                                                    </div> -->
+        <script type="text/javascript">
+
+            // Définition de la locale en français
+            numeral.register('locale', 'fr', {
+                delimiters: {
+                    thousands: ' ',
+                    decimal: ','
+                },
+                abbreviations: {
+                    thousand: 'k',
+                    million: 'm',
+                    billion: 'b',
+                    trillion: 't'
+                },
+                currency: {
+                    symbol: 'FCFA'
+                }
             });
+
+            // Sélection de la locale en français
+            numeral.locale('fr');
+
+            // Initialisation des variables
+            var total_ttc = "<?php echo $row['total_ttc_gene_piece_rechange_devis']; ?>";
+            var total_ht = "<?php echo $row['total_ht_gene_piece_rechange_devis']; ?>";
+            var total_tva = "<?php echo $row['total_tva']; ?>";
+            // var row = <?php echo $i; ?>;
+
+            // analyse de la chaîne de caractères JSON et 
+            // construction de la valeur JavaScript ou l'objet décrit par cette chaîne
+            var devis_data_obj = JSON.parse('<?= $devis_data_json; ?>');
+
+            // Déclaration et initialisation de l'objet itérateur
+            var iterateur = devis_data_obj.keys();
+
+            // Déclaration et initialisation de l'indice
+            var row = iterateur.next().value + 1;
+
+            // Parcours du tableau d'objet
+            for (const key of devis_data_obj) {
+
+                // Conversion en flottant
+                key.price = parseFloat(key.price);
+                key.total_prix_piece_rechange_devis_ht = parseFloat(key.total_prix_piece_rechange_devis_ht);
+                key.total_prix_piece_rechange_devis_ttc = parseFloat(key.total_prix_piece_rechange_devis_ttc);
+
+                // Affectation des nouvelles valeurs
+                $("#article_price_" + row).html(numeral(key.price).format('0,0.00 $'));
+                $("#article_total_ht_" + row).html(numeral(key.total_prix_piece_rechange_devis_ht).format('0,0.00 $'));
+                $("#article_total_ttc_" + row).html(numeral(key.total_prix_piece_rechange_devis_ttc).format('0,0.00 $'));
+
+            }
+
+            // Conversion des variables en flottant
+            total_ttc = parseFloat(total_ttc);
+            total_ht = parseFloat(total_ht);
+            total_tva = parseFloat(total_tva);
+
+            $("#total_ttc").html(numeral(total_ttc).format('0,0.00 $'));
+            $("#total_ht").html(numeral(total_ht).format('0,0.00 $'));
+            $("#total_tva").html(numeral(total_tva).format('0,0.00 $'));
         </script>
     </body>
 
