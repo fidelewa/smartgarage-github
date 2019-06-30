@@ -29,40 +29,40 @@ if (isset($_POST['txtCName'])) {
 	// var_dump($_FILES["pj_1"]);
 
 	// Récupération des URL des pièces jointes
-	if(isset($_FILES["pj_1"]) && !empty($_FILES["pj_1"])){
+	if (isset($_FILES["pj_1"]) && !empty($_FILES["pj_1"])) {
 		$_POST['pj1_url'] = uploadPJ_1();
 	}
-	if(isset($_FILES["pj_2"]) && !empty($_FILES["pj_2"])){
+	if (isset($_FILES["pj_2"]) && !empty($_FILES["pj_2"])) {
 		$_POST['pj2_url'] = uploadPJ_2();
 	}
-	if(isset($_FILES["pj_3"]) && !empty($_FILES["pj_3"])){
+	if (isset($_FILES["pj_3"]) && !empty($_FILES["pj_3"])) {
 		$_POST['pj3_url'] = uploadPJ_3();
 	}
-	if(isset($_FILES["pj_4"]) && !empty($_FILES["pj_4"])){
+	if (isset($_FILES["pj_4"]) && !empty($_FILES["pj_4"])) {
 		$_POST['pj4_url'] = uploadPJ_4();
 	}
-	if(isset($_FILES["pj_5"]) && !empty($_FILES["pj_5"])){
+	if (isset($_FILES["pj_5"]) && !empty($_FILES["pj_5"])) {
 		$_POST['pj5_url'] = uploadPJ_5();
 	}
-	if(isset($_FILES["pj_6"]) && !empty($_FILES["pj_6"])){
+	if (isset($_FILES["pj_6"]) && !empty($_FILES["pj_6"])) {
 		$_POST['pj6_url'] = uploadPJ_6();
 	}
-	if(isset($_FILES["pj_7"]) && !empty($_FILES["pj_7"])){
+	if (isset($_FILES["pj_7"]) && !empty($_FILES["pj_7"])) {
 		$_POST['pj7_url'] = uploadPJ_7();
 	}
-	if(isset($_FILES["pj_8"]) && !empty($_FILES["pj_8"])){
+	if (isset($_FILES["pj_8"]) && !empty($_FILES["pj_8"])) {
 		$_POST['pj8_url'] = uploadPJ_8();
 	}
-	if(isset($_FILES["pj_9"]) && !empty($_FILES["pj_9"])){
+	if (isset($_FILES["pj_9"]) && !empty($_FILES["pj_9"])) {
 		$_POST['pj9_url'] = uploadPJ_9();
 	}
-	if(isset($_FILES["pj_10"]) && !empty($_FILES["pj_10"])){
+	if (isset($_FILES["pj_10"]) && !empty($_FILES["pj_10"])) {
 		$_POST['pj10_url'] = uploadPJ_10();
 	}
-	if(isset($_FILES["pj_11"]) && !empty($_FILES["pj_11"])){
+	if (isset($_FILES["pj_11"]) && !empty($_FILES["pj_11"])) {
 		$_POST['pj11_url'] = uploadPJ_11();
 	}
-	if(isset($_FILES["pj_12"]) && !empty($_FILES["pj_12"])){
+	if (isset($_FILES["pj_12"]) && !empty($_FILES["pj_12"])) {
 		$_POST['pj12_url'] = uploadPJ_12();
 	}
 
@@ -426,7 +426,9 @@ function uploadPJ_12()
 						</div>
 						<div class="form-group">
 							<label for="princ_tel"><span style="color:red;">*</span> Téléphone principal :<span style="color:red;">(ce numéro de téléphone est le mot de passe)</span></label>
-							<input required type="text" name="princ_tel" value="<?php echo $c_princ_tel; ?>" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" />
+							<input onkeyup="verifTelClient(this.value);" required type="text" name="princ_tel" value="<?php echo $c_princ_tel; ?>" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" /><span id="telclibox"></span>
+							<!-- <input onkeyup="verifTelClient(this.value);" type="text" name="princ_tel" maxlength="10" value="" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" /> -->
+							<!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
 						</div>
 						<div class="form-group">
 							<label for="txtCEmail"> <span style="color:red;">*</span>E-mail (ou numéro de téléphone si vous n'avez pas d'adresse e-mail):</label>

@@ -3,25 +3,645 @@
 class wms_core
 {
 
-	public function getRecepVehiSignatureByRecepId($con, $recep_vehi_id)
+	public function getFactureSimuFromDevisSimu($con, $devisId)
 	{
-		$data = array();
 
-		$query = "SELECT sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie
-		FROM tbl_recep_vehi_repar
-		WHERE car_id = '".$recep_vehi_id."'";
+		$query = "SELECT *
+			FROM tbl_add_devis_simulation devsim
+			JOIN tbl_add_facture_simulation facsim on facsim.devis_simulation_id = devsim.devis_id
+			WHERE devsim.devis_id ='" . (int) $devisId . "'";
 
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
-			var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
 		}
 
 		$row = mysql_fetch_assoc($result);
-		
+
+		return $row;
+	}
+
+
+	/*
+	* @get supplier info by id
+	*/
+	public function getInfoComptaBySupplierId($con, $supplier_id)
+	{
+		$data = array();
+
+		$query = "SELECT gfc.*, s_name
+		FROM tbl_ges_four_compta gfc
+		JOIN tbl_add_supplier su ON su.supplier_id = gfc.supplier_id
+		WHERE gfc.supplier_id = '" . (int) $supplier_id . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+
+		return $data;
+	}
+
+	public function getSupplierInfoBySupplierIdAndBcmd($con, $supplier_id)
+	{
+		$data = array();
+
+		$query = "SELECT s_name, boncmde_num, boncmde_designation, boncmde_date_creation, bon_cmde_type
+		FROM tbl_add_supplier su
+		JOIN tbl_add_boncmde bcde ON su.supplier_id = bcde.supplier_id
+		WHERE su.supplier_id = '" . (int) $supplier_id . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+
+		return $data;
+	}
+
+	public function updateAbsenceEmplo($con, $data)
+	{
+		// Instanciation de la date du jour
+		$dateJour = new \Datetime("now");
+
+		// Récupération du numéro du mois de la date du jour
+		$numeroMoisDateJour = $dateJour->format('n');
+
+		// Recherche dans la table 
+		$queryGetSalInfoByPer = "SELECT * FROM tbl_emplo_conge_abs 
+		WHERE per_id='" . $data['per_id'] . "' AND mois='" . $numeroMoisDateJour . "'";
+
+		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
+
+		if (!$resultSalInfoByPer) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
+			die($message);
+		}
+
+		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
+
+		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
+		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false ) {
+			
+			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id) 
+			VALUES (null, '$data[nb_jour_abs_employ]', '$numeroMoisDateJour', '$data[per_id]')";
+			$result = mysql_query($query, $con);
+
+		} else { // Sinon on fait une mise à jour
+
+			$query = "UPDATE tbl_emplo_conge_abs
+				SET `nb_jour_abs_justifie`='" . $data['nb_jour_abs_employ'] . "',
+				`mois`='" . $numeroMoisDateJour . "'
+				WHERE per_id='" . $data['per_id'] . "' AND mois='" . $numeroMoisDateJour . "'";
+			$result = mysql_query($query, $con);
+		}
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function updateCongePayeEmplo($con, $data)
+	{
+		// Instanciation de la date du jour
+		$dateJour = new \Datetime("now");
+
+		// Récupération du numéro du mois de la date du jour
+		$numeroMoisDateJour = $dateJour->format('n');
+
+		// Recherche dans la table 
+		$queryGetSalInfoByPer = "SELECT * FROM tbl_emplo_conge_abs 
+		WHERE per_id='" . $data['per_id'] . "' AND mois='" . $numeroMoisDateJour . "'";
+
+		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
+
+		if (!$resultSalInfoByPer) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
+			die($message);
+		}
+
+		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
+
+		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
+		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false ) {
+			
+			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id) 
+			VALUES ('$data[nb_jour_conge_paye]', null, '$numeroMoisDateJour', '$data[per_id]')";
+			$result = mysql_query($query, $con);
+
+		} else { // Sinon on fait une mise à jour
+
+			$query = "UPDATE tbl_emplo_conge_abs
+				SET `nb_jour_conge_paye`='" . $data['nb_jour_conge_paye'] . "',
+				`mois`='" . $numeroMoisDateJour . "'
+				WHERE per_id='" . $data['per_id'] . "' AND mois='" . $numeroMoisDateJour . "'";
+			$result = mysql_query($query, $con);
+		}
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+	}
+
+	public function getAllPersoSalaire($con, $numeroMoisDateJour)
+	{
+		$data = array();
+
+		$query = "SELECT per.per_id, per_name, per_sal as salaire_base,
+		sum(nb_heure_sup) as nb_heure_sup_periode, eca.nb_jour_conge_paye, eca.nb_jour_abs_justifie,
+		sum(montant_avance) as montant_avance_periode, sum(montant_prime) as montant_prime_periode
+		FROM tbl_add_pointage po
+		JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel 
+		LEFT JOIN tbl_avance_personnel ap ON ap.per_id = per.per_id
+        LEFT JOIN tbl_prime_personnel pp ON pp.per_id = per.per_id
+		JOIN tbl_emplo_conge_abs eca ON eca.per_id = per.per_id
+        WHERE mois_date_arrivee = '" . $numeroMoisDateJour . "' OR
+		mois_date_depart = '" . $numeroMoisDateJour . "' AND eca.mois = '" . $numeroMoisDateJour . "'
+        GROUP BY per_name, per.per_id;
+		";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllPersoPointage($con, $numeroMoisDateJour)
+	{
+		$data = array();
+
+		$query = "SELECT po.*, per.per_name 
+		FROM tbl_add_pointage po
+		JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel
+		WHERE mois_date_arrivee = '" . $numeroMoisDateJour . "' OR
+		mois_date_arrivee = '" . $numeroMoisDateJour . "'
+		ORDER BY date_arrivee DESC
+		";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllSalaireDataByPerId($con, $per_id)
+	{
+		// Recherche dans la table 
+		$queryGetSalInfoByPer = "SELECT * FROM tbl_salaire_personnel_list WHERE per_id='" . $per_id . "'";
+
+		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
+
+		if (!$resultSalInfoByPer) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
+			die($message);
+		}
+
+		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
+
+		return $rowSalInfoByPer;
+	}
+
+	public function getAllPersoSalaire_2($con, $dateDebutPeriode, $dateFinPeriode)
+	{
+		$data = array();
+
+		// Selection
+		$query = "SELECT per.per_id, date_arrivee, per_name, per_sal as salaire_base, sum(montant_avance) as montant_avance_periode, 
+		sum(montant_prime) as montant_prime_periode, sum(nb_heure_sup) as nb_heure_sup_periode,
+		MONTH($dateDebutPeriode) as mois_remuneration, sum(absence), sum(conge_payer)
+		FROM tbl_add_pointage po
+		JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel 
+		LEFT JOIN tbl_avance_personnel ap ON ap.per_id = per.per_id
+        LEFT JOIN tbl_prime_personnel pp ON pp.per_id = per.per_id
+		LEFT JOIN tbl_salaire_personnel_list spl ON spl.per_id = per.per_id
+        WHERE date_arrivee BETWEEN '" . $dateDebutPeriode . "' AND '" . $dateFinPeriode . "' OR 
+		date_depart BETWEEN '" . $dateDebutPeriode . "' AND '" . $dateFinPeriode . "'
+        GROUP BY per_name, per.per_id;
+		";
+
+		// Exécution
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// Pour chaque enregistrement du jeu de résultat, on vérifie s'il y a une correspondance dans la table
+		// tbl_salaire_personnel_list
+		while ($row = mysql_fetch_assoc($result)) {
+
+			$per_id = $row['per_id'];
+
+			$rltSalaireDataByPerId = $this->getAllSalaireDataByPerId($con, $per_id);
+
+			// S'il n'y a aucune correspondance, on fait une insertion dans la table
+			// tbl_salaire_personnel_list
+			if (empty($rltSalaireDataByPerId)) {
+
+				// INSERTION - SELECTION
+				$query = " INSERT INTO tbl_salaire_personnel_list (nom_prenom, salaire_brute, absence, hr_sup, prime, avance, conge_payer, salaire_net_a_payer, mois, per_id)
+				SELECT per_name, per_sal as salaire_base, null, sum(nb_heure_sup) as nb_heure_sup_periode, sum(montant_prime) as montant_prime_periode,
+				sum(montant_avance) as montant_avance_periode, null, null, MONTHNAME($dateDebutPeriode) as mois_remuneration, 
+				per.per_id
+				FROM tbl_add_pointage po
+				JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel 
+				LEFT JOIN tbl_avance_personnel ap ON ap.per_id = per.per_id
+        		LEFT JOIN tbl_prime_personnel pp ON pp.per_id = per.per_id
+				LEFT JOIN tbl_salaire_personnel_list spl ON spl.per_id = per.per_id
+       			WHERE date_arrivee BETWEEN '" . $dateDebutPeriode . "' AND '" . $dateFinPeriode . "' OR 
+				date_depart BETWEEN '" . $dateDebutPeriode . "' AND '" . $dateFinPeriode . "'
+        		GROUP BY per_name, per.per_id;
+				";
+
+				// Exécution
+				$result = mysql_query($query, $con);
+
+				if (!$result) {
+					// var_dump($data);
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $query;
+					die($message);
+				}
+			}
+		}
+		return $data;
+	}
+
+
+
+	public function updateAbsenceEmplo_2($con, $data)
+	{
+		// Recherche dans la table 
+		$queryGetSalInfoByPer = "SELECT * FROM tbl_salaire_personnel_list WHERE per_id='" . $data['per_id'] . "'";
+
+		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
+
+		if (!$resultSalInfoByPer) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
+			die($message);
+		}
+
+		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
+
+		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
+		if (empty($rowSalInfoByPer)) {
+
+			$query = " INSERT INTO tbl_salaire_personnel_list (nom_prenom, salaire_brute, absence, hr_sup, prime, conge_payer, salaire_net_a_payer, mois)
+			SELECT per_name, per_sal as salaire_base, null, sum(nb_heure_sup) as nb_heure_sup_periode
+			sum(montant_avance) as montant_avance_periode, 
+			sum(montant_prime) as montant_prime_periode, , sum(conge_payer),
+			MONTHNAME(CURDATE()), per.per_id
+			FROM tbl_add_pointage po
+			JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel 
+			LEFT JOIN tbl_avance_personnel ap ON ap.per_id = per.per_id
+        	LEFT JOIN tbl_prime_personnel pp ON pp.per_id = per.per_id
+			LEFT JOIN tbl_salaire_personnel_list spl ON spl.per_id = per.per_id
+        	GROUP BY per_name, per.per_id;
+			";
+
+			// Exécution de la requête
+			$result = mysql_query($query, $con);
+
+			// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
+			if (!$result) {
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		} else { // Sinon on fait une mise à jour
+
+			$query = "UPDATE tbl_salaire_personnel_list
+				SET `absence`='" . $data['nb_jour_abs_employ'] . "'
+				WHERE per_id='" . $data['per_id'] . "'";
+			$result = mysql_query($query, $con);
+
+			if (!$result) {
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		}
+	}
+
+	public function getAllPieceInfo($con)
+	{
+		$data = array();
+
+		$query = "SELECT *
+		FROM tbl_add_piece
+		";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+
+		return $data;
+	}
+
+	public function getAllAvancePrimeListByEmploye($con, $per_id)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT per_name FROM tbl_add_personnel per
+		LEFT JOIN tbl_avance_personnel ap ON ap.per_id = per.per_id
+        LEFT JOIN tbl_prime_personnel pp ON pp.per_id = per.per_id 
+		WHERE per.per_id = '" . (int) $per_id . "'";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get all car model list
+	*/
+	public function getHistoPrimeListByPerId($con, $per_id)
+	{
+
+		// On initialise un array vide
+		$data = array();
+
+		$query = "SELECT * FROM tbl_prime_personnel WHERE per_id='" . $per_id . "' ORDER BY date_prime";
+
+		$result = mysql_query($query, $con);
+
+		// S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// On parcours le jeu de résultat puis pour chaque ligne du jeu de résultat
+		// On la stocke dans un array associatif de données
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get all car model list
+	*/
+	public function getHistoAvanceListByPerId($con, $per_id)
+	{
+
+		// On initialise un array vide
+		$data = array();
+
+		$query = "SELECT * FROM tbl_avance_personnel WHERE per_id='" . $per_id . "' ORDER BY date_avance";
+
+		$result = mysql_query($query, $con);
+
+		// S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// On parcours le jeu de résultat puis pour chaque ligne du jeu de résultat
+		// On la stocke dans un array associatif de données
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getPieceCurrentStockByPieceId($con, $piece_id)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_piece_stock where piece_stock_id = '" . (int) $piece_id . "'", $con);
+		if ($row = mysql_fetch_array($result)) {
+			$data = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get Stock de pièces information by parts id
+	*/
+	public function getPieceStockInfoByPieceId($con, $piece_id)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_add_piece p where p.add_piece_id = '" . (int) $piece_id . "'", $con);
+		if ($row = mysql_fetch_array($result)) {
+			$data = $row;
+		}
+		return $data;
+	}
+
+	public function updatePieceStock($con, $data, $currentQty)
+	{
+		if (!empty($data)) {
+
+			// On récupère l'id de la pièce
+			$piece_id = $data['piece_id'];
+
+			// if ((int)$piece_id > 0) {
+
+			// On récupère la quantité actuelle du stock de l'article
+			$old_qty = $currentQty;
+
+			// On récupère la nouvelle quantité de l'article
+			$new_qty = $data['stock_article'];
+			$stock_table = $this->getPieceStockStatusFromStockTable($con, $piece_id);
+
+			// var_dump($old_qty);
+			// var_dump($new_qty);
+			// var_dump($stock_table);
+			// die();
+
+			if (!empty($stock_table)) {
+
+				// On récupère la quantité actuelle du stock de l'article
+				$current_qty = (int) $stock_table['stock_piece'];
+
+				// On fait la différence entre la quantité actuelle du stock de l'article en BDD avec celle
+				// de l'ancienne quantité pour l'annuler
+				$current_qty = (int) $current_qty - (int) $old_qty;
+
+				// On ajoute la nouvelle quantité saisie à partir du formulaire
+				$current_qty = (int) $current_qty + (int) $new_qty;
+
+				// On met à jour la quantié de l'article dans la table du stock des articles (pièces)
+				//$this->saveUpdatePartsVirtualStockTable($con, $parts_id, $current_qty, 'u');
+				$query = "UPDATE `tbl_piece_stock`
+						SET `stock_piece`='" . (int) $current_qty . "' WHERE piece_stock_id = '" . (int) $piece_id . "'";
+
+				// On exécute la requête
+				$result = mysql_query($query, $con);
+
+				if (!$result) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $query;
+					die($message);
+				}
+			}
+			// }
+		}
+	}
+
+	public function updateQtyPieceStock($con, $data)
+	{
+		$result_parts = mysql_query("SELECT * FROM tbl_piece_stock where piece_stock_id=" . (int) $data['piece_rechange_id'], $con);
+		if ($row_parts = mysql_fetch_array($result_parts)) {
+			// Quantité de la pièce de rechange en stock
+			$qty = $row_parts['stock_piece'];
+			if ((int) $qty > 0) {
+				// On fait la différence entre la quantité des pièces de rechange facturées avec celles en stock
+				$qty = (int) $qty - (int) $data['qte_piece_rechange_facture'];
+				mysql_query("UPDATE tbl_piece_stock SET stock_piece=" . (int) $qty . " WHERE piece_stock_id=" . (int) $data['piece_rechange_id'], $con);
+			}
+		}
+	}
+
+	public function saveAvancePerso($con, $montant_avance, $per_id)
+	{
+
+		// Instanciation de la date de l'avance à partir de la date du jour
+		$dateAvance = new \Datetime("now");
+
+		// Récupération du numéro du mois de la date de l'avance
+		$numeroMoisDateAvance = $dateAvance->format('n');
+
+		// Récupération de la date de l'avance en chaine de caractères 
+		$dateAvanceStr = $dateAvance->format('Y-m-d');
+
+		$query = "INSERT INTO tbl_avance_personnel(montant_avance, date_avance, mois_date_avance, per_id)
+		values('$montant_avance','$dateAvanceStr','$numeroMoisDateAvance','$per_id')";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function savePrimePerso($con, $montant_prime, $per_id)
+	{
+
+		// Instanciation de la date de la prime à partir de la date du jour
+		$datePrime = new \Datetime("now");
+
+		// Récupération du numéro du mois de la date de la prime
+		$numeroMoisDatePrime = $datePrime->format('n');
+
+		// Récupération de la date de la prime en chaine de caractères 
+		$datePrimeStr = $datePrime->format('Y-m-d');
+
+		$query = "INSERT INTO tbl_prime_personnel(montant_prime, date_prime, mois_date_prime, per_id)
+		values('$montant_prime','$datePrimeStr','$numeroMoisDatePrime','$per_id')";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function getRecepVehiSignatureByRecepId($con, $recep_vehi_id)
+	{
+		$data = array();
+
+		$query = "SELECT sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie
+		FROM tbl_recep_vehi_repar
+		WHERE car_id = '" . $recep_vehi_id . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+
 		return $row;
 	}
 
@@ -33,7 +653,7 @@ class wms_core
 		$data = array();
 		$result = mysql_query("SELECT id, emplacement_vehi, date_emplacement
 		FROM tbl_histo_emplacement_vehicule 
-		WHERE car_id = '" . (int)$car_id . "'
+		WHERE car_id = '" . (int) $car_id . "'
 		ORDER BY id DESC", $con);
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
@@ -47,8 +667,8 @@ class wms_core
 
 		$query = "SELECT *
 		FROM tbl_histo_devis_vehicule
-		WHERE car_id = '".$car_id."'";
-        	
+		WHERE car_id = '" . $car_id . "'";
+
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
@@ -111,97 +731,21 @@ class wms_core
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
-			var_dump($data);
+			// var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
 		}
-		
+
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
 		}
 		return $data;
 	}
 
-	public function getAllPersoPointage($con)
-	{
-		$data = array();
-
-		$query = "SELECT po.*, per.per_name FROM tbl_add_pointage po
-		JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel 
-		";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		while ($row = mysql_fetch_assoc($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
-	/*
-	* @get supplier info by id
-	*/
-	public function getInfoComptaBySupplierId($con, $supplier_id)
-	{
-		$data = array();
-
-		$query = "SELECT gfc.*, s_name
-		FROM tbl_ges_four_compta gfc
-		JOIN tbl_add_supplier su ON su.supplier_id = gfc.supplier_id
-		WHERE gfc.supplier_id = '" . (int)$supplier_id . "'";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		while ($row = mysql_fetch_assoc($result)) {
-			$data[] = $row;
-		}
-
-		return $data;
-	}
-
-	public function getSupplierInfoBySupplierIdAndBcmd($con, $supplier_id)
-	{
-		$data = array();
-
-		$query = "SELECT s_name, boncmde_num, boncmde_designation, boncmde_date_creation, bon_cmde_type
-		FROM tbl_add_supplier su
-		JOIN tbl_add_boncmde bcde ON su.supplier_id = bcde.supplier_id
-		WHERE su.supplier_id = '" . (int)$supplier_id . "'";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		while ($row = mysql_fetch_assoc($result)) {
-			$data[] = $row;
-		}
-
-		return $data;
-	}
-
 	public function getNbHeureWorkByMois($con, $num_tel, $dateDebutMois, $dateFinMois)
 	{
-		
+
 		// $data = array();
 		$query = "SELECT sum(nb_heure_work) as nb_heure_work FROM tbl_add_pointage WHERE num_tel ='" . $num_tel . "'
 		AND date_depart BETWEEN '" . $dateDebutMois . "' AND '" . $dateFinMois . "'";
@@ -234,7 +778,7 @@ class wms_core
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
 			inner join tbl_add_facture fac on fac.devis_id = dev.devis_id
-			WHERE cus.customer_id ='" . (int)$cusId . "' LIMIT 10";
+			WHERE cus.customer_id ='" . (int) $cusId . "' LIMIT 10";
 
 		$result = mysql_query($query, $con);
 
@@ -256,7 +800,7 @@ class wms_core
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
 			inner join tbl_add_facture fac on fac.devis_id = dev.devis_id
-			WHERE cus.customer_id ='" . (int)$cusId . "'";
+			WHERE cus.customer_id ='" . (int) $cusId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -278,7 +822,7 @@ class wms_core
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
 			left join tbl_add_facture fac on fac.devis_id = dev.devis_id
-			WHERE cus.customer_id ='" . (int)$cusId . "'";
+			WHERE cus.customer_id ='" . (int) $cusId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -302,7 +846,7 @@ class wms_core
 		inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id 
 		join tbl_add_user us on us.usr_id = rvr.attribution_mecanicien
 		left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
-		WHERE us.usr_id = '" . (int)$mecanicien_id . "' LIMIT 10 ";
+		WHERE us.usr_id = '" . (int) $mecanicien_id . "' LIMIT 10 ";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -337,7 +881,7 @@ class wms_core
 		inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id 
 		join tbl_add_user us on us.usr_id = rvr.attribution_mecanicien
 		left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
-		WHERE us.usr_id = '" . (int)$mecanicien_id . "'";
+		WHERE us.usr_id = '" . (int) $mecanicien_id . "'";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -372,7 +916,6 @@ class wms_core
 				$query = "INSERT INTO tbl_add_user(usr_name, usr_email, usr_password, usr_type, usr_image) 
 				values('$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]', '$image_url')";
 				$result = mysql_query($query, $con);
-
 			} else {
 
 				$query = "UPDATE `tbl_add_user` 
@@ -401,9 +944,8 @@ class wms_core
 
 				$query = "INSERT INTO tbl_add_supplier(s_name,s_email,s_address,country_id,state_id,phone_number,fax_number,post_code,website_url,s_password,image) 
 				values('$data[txtSName]','$data[txtSEmail]','$data[txtSAddress]',null,null,'$data[txtPhonenumber]',null,null,null,null,'$image_url')";
-				
+
 				$result = mysql_query($query, $con);
-		
 			} else {
 
 				$query = "UPDATE `tbl_add_supplier` 
@@ -412,7 +954,6 @@ class wms_core
 				WHERE supplier_id='" . $data['supplier_id'] . "'";
 
 				$result = mysql_query($query, $con);
-			
 			}
 
 			if (!$result) {
@@ -514,7 +1055,7 @@ class wms_core
 	{
 		$query = "SELECT status_sortie_vehicule
 			from tbl_recep_vehi_repar
-			where car_id ='" . (int)$car_recep_id . "' AND status_sortie_vehicule is null
+			where car_id ='" . (int) $car_recep_id . "' AND status_sortie_vehicule is null
 			";
 
 		// Exécution de la requête
@@ -552,7 +1093,7 @@ class wms_core
 			inner join tbl_make ma on cr.car_make = ma.make_id 
 			inner join tbl_model mo on cr.car_model = mo.model_id 
 			inner join tbl_add_customer cus on cus.customer_id = cr.customer_id
-			WHERE fac.facture_id ='" . (int)$facId . "'";
+			WHERE fac.facture_id ='" . (int) $facId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -575,7 +1116,7 @@ class wms_core
 			join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
 			left join tbl_add_car cr on cr.VIN = adv.imma_vehi_client
             left join tbl_add_customer cus on cus.customer_id = cr.customer_id
-			WHERE facsim.facture_id ='" . (int)$facSimuId . "'";
+			WHERE facsim.facture_id ='" . (int) $facSimuId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -697,7 +1238,7 @@ class wms_core
 			left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
 			join tbl_add_user usr on usr.usr_id = rvr.attrib_recep
-			where attrib_recep ='" . (int)$recepId . "'
+			where attrib_recep ='" . (int) $recepId . "'
 			";
 
 		// Exécution et stockage du résultat de la requête
@@ -747,7 +1288,7 @@ class wms_core
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
-			var_dump($data);
+			// var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
@@ -781,7 +1322,7 @@ class wms_core
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
-			var_dump($data);
+			// var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
@@ -826,7 +1367,7 @@ class wms_core
 			}
 
 			if (!$result) {
-				var_dump($data);
+				// var_dump($data);
 				$message  = 'Invalid query: ' . mysql_error() . "\n";
 				$message .= 'Whole query: ' . $query;
 				die($message);
@@ -845,7 +1386,7 @@ class wms_core
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
-			var_dump($data);
+			// var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
@@ -908,8 +1449,9 @@ class wms_core
 				// mysql_query("INSERT INTO tbl_parts_stock(invoice_id,parts_id,parts_name,supplier_id,manufacturer_id,parts_condition,parts_buy_price,parts_quantity,parts_sku,parts_warranty,total_amount,given_amount,pending_amount,parts_image,parts_added_date) values('$data[invoice_id]','$parts_id','$data[parts_names]','$data[ddl_supplier]','$data[ddl_load_manufracturer]','$data[txtCondition]','$data[buy_prie]','$data[parts_quantity]','$data[parts_sku]','$data[parts_warranty]','$data[total_amount]','$data[given_amount]','$data[pending_amount]','$image_url','" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "')", $con);
 
 				// On enregistre cette pièce dans le stock des pièces
+				// Lorsqu'on enregistre une nouvelle pièce en stock, son stock de départ est null
 				$queryInsertPieceStock = "INSERT INTO tbl_piece_stock(piece_stock_id, code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc, stock_piece, image_url)
-                values('$piece_id','$data[code_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]','$data[prix_base_ttc]','$data[coeff]',
+                values('$piece_id','$data[code_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]','$data[prix_base_ttc]',0,
 				'$image_url'
 				)";
 
@@ -934,7 +1476,7 @@ class wms_core
 				`prix_revient`='" . $data['prix_revient'] . "',`coefficient`='" . $data['coeff'] . "',
 				`prix_base_ht`='" . $data['prix_base_ht'] . "',`prix_base_ttc`='" . $data['prix_base_ttc'] . "',
 				`image_url`='" . $image_url . "'
-				WHERE add_piece_id='" . (int)$data['piece_id'] . "'";
+				WHERE add_piece_id='" . (int) $data['piece_id'] . "'";
 
 				$result = mysql_query($query, $con);
 
@@ -942,38 +1484,6 @@ class wms_core
 					$message  = 'Invalid query: ' . mysql_error() . "\n";
 					$message .= 'Whole query: ' . $query;
 					die($message);
-				}
-
-				if ((int)$piece_id > 0) {
-					$old_qty = $data['old_qty'];
-					$new_qty = $data['coeff'];
-					$stock_table = $this->getPieceStockStatusFromStockTable($con, $piece_id);
-
-					// var_dump($old_qty);
-					// var_dump($new_qty);
-					// var_dump($stock_table);
-					// die();
-
-					if (!empty($stock_table)) {
-						$current_qty = (int)$stock_table['stock_piece'];
-						$current_qty = (int)$current_qty - (int)$old_qty;
-						$current_qty = (int)$current_qty + (int)$new_qty;
-						//update stock table
-						//$this->saveUpdatePartsVirtualStockTable($con, $parts_id, $current_qty, 'u');
-						$query_2 = "UPDATE `tbl_piece_stock`
-						SET `code_piece` = '" . $data['code_piece'] . "', `image_url`='" . $image_url . "', 
-						`type_piece`='" . $data['type_piece'] . "',`famille_piece`='" . $data['famille_piece'] . "', 
-						`prix_base_ttc`='" . $data['prix_base_ttc'] . "',
-						`stock_piece`='" . (int)$current_qty . "' WHERE piece_stock_id = '" . (int)$piece_id . "'";
-
-						$result = mysql_query($query_2, $con);
-
-						if (!$result) {
-							$message  = 'Invalid query: ' . mysql_error() . "\n";
-							$message .= 'Whole query: ' . $query;
-							die($message);
-						}
-					}
 				}
 			}
 		}
@@ -985,7 +1495,7 @@ class wms_core
 	public function getPiecesStockStatusFromStockTable($con, $parts_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_piece_stock WHERE parts_id=" . (int)$parts_id, $con);
+		$result = mysql_query("SELECT * FROM tbl_piece_stock WHERE parts_id=" . (int) $parts_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -1000,12 +1510,12 @@ class wms_core
 		$data = array();
 
 		$query = "SELECT * FROM tbl_add_supplier su
-		WHERE su.supplier_id = '" . (int)$supplier_id . "'";
+		WHERE su.supplier_id = '" . (int) $supplier_id . "'";
 
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
-			var_dump($data);
+			// var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
@@ -1029,7 +1539,7 @@ class wms_core
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
-			var_dump($data);
+			// var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
@@ -1050,20 +1560,6 @@ class wms_core
 			$data[] = $row;
 		}
 		return $data;
-	}
-
-	public function updateQtyPieceStock($con, $data)
-	{
-		$result_parts = mysql_query("SELECT * FROM tbl_piece_stock where piece_stock_id=" . (int)$data['piece_rechange_id'], $con);
-		if ($row_parts = mysql_fetch_array($result_parts)) {
-			// Quantité de la pièce de rechange en stock
-			$qty = $row_parts['stock_piece'];
-			if ((int)$qty > 0) {
-				// On fait la différence entre la quantité des pièces de rechange facturées avec celles en stock
-				$qty = (int)$qty - (int)$data['qte_piece_rechange_facture'];
-				mysql_query("UPDATE tbl_piece_stock SET stock_piece=" . (int)$qty . " WHERE piece_stock_id=" . (int)$data['piece_rechange_id'], $con);
-			}
-		}
 	}
 
 	public function getAllRepairCarSimuDevisList($con)
@@ -1127,14 +1623,14 @@ class wms_core
 
 	public function updateQtyPartsStock($con, $data)
 	{
-		$result_parts = mysql_query("SELECT * FROM tbl_parts_stock_manage where parts_id=" . (int)$data['piece_rechange_id'], $con);
+		$result_parts = mysql_query("SELECT * FROM tbl_parts_stock_manage where parts_id=" . (int) $data['piece_rechange_id'], $con);
 		if ($row_parts = mysql_fetch_array($result_parts)) {
 			// Quantité de la pièce de rechange en stock
 			$qty = $row_parts['quantity'];
-			if ((int)$qty > 0) {
+			if ((int) $qty > 0) {
 				// On fait la différence entre la quantité des pièces de rechange facturées avec celles en stock
-				$qty = (int)$qty - (int)$data['qte_piece_rechange_facture'];
-				mysql_query("UPDATE tbl_parts_stock_manage SET quantity=" . (int)$qty . " WHERE parts_id=" . (int)$data['piece_rechange_id'], $con);
+				$qty = (int) $qty - (int) $data['qte_piece_rechange_facture'];
+				mysql_query("UPDATE tbl_parts_stock_manage SET quantity=" . (int) $qty . " WHERE parts_id=" . (int) $data['piece_rechange_id'], $con);
 			}
 		}
 	}
@@ -1149,7 +1645,7 @@ class wms_core
             left join tbl_add_customer cus on cus.customer_id = cr.customer_id
 			-- inner join tbl_make ma on cr.car_make = ma.make_id 
 			-- inner join tbl_model mo on cr.car_model = mo.model_id 
-			WHERE devis_id ='" . (int)$devisSimuId . "'";
+			WHERE devis_id ='" . (int) $devisSimuId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -1176,7 +1672,7 @@ class wms_core
 			left join tbl_make ma on cr.car_make = ma.make_id 
 			left join tbl_model mo on cr.car_model = mo.model_id
 			inner join tbl_add_facture_simulation facsim on facsim.devis_simulation_id = devsim.devis_id
-			WHERE devsim.devis_id ='" . (int)$devisId . "'";
+			WHERE devsim.devis_id ='" . (int) $devisId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -1202,7 +1698,7 @@ class wms_core
             left join tbl_add_customer cus on cus.customer_id = cr.customer_id
 			left join tbl_make ma on cr.car_make = ma.make_id 
 			left join tbl_model mo on cr.car_model = mo.model_id
-			WHERE devis_id ='" . (int)$devisId . "'";
+			WHERE devis_id ='" . (int) $devisId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -1222,7 +1718,7 @@ class wms_core
 		$query = "SELECT bcde.*, s_name
 			from tbl_add_boncmde bcde
 			inner join tbl_add_supplier su ON su.supplier_id = bcde.supplier_id
-			WHERE boncmde_id = " . (int)$bcdeId;
+			WHERE boncmde_id = " . (int) $bcdeId;
 
 		$result = mysql_query($query, $con);
 
@@ -1245,7 +1741,7 @@ class wms_core
 
 			// exécution de la réquête
 
-			$query = "SELECT * from tbl_add_car WHERE vin = '" . (string)$imma_vehi . "'";
+			$query = "SELECT * from tbl_add_car WHERE vin = '" . (string) $imma_vehi . "'";
 
 			// On stocke le résultat de la requête sous forme de ressource
 			$result = mysql_query($query, $con);
@@ -1268,7 +1764,7 @@ class wms_core
 
 		$query = "SELECT *
 			from tbl_add_devis_simulation
-			WHERE devis_id ='" . (int)$devisSimuId . "'";
+			WHERE devis_id ='" . (int) $devisSimuId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -1422,7 +1918,7 @@ class wms_core
 	public function getRoleMecanoEletroInfoByRoleName($con, $supplier_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_supplier where supplier_id=" . (int)$supplier_id, $con);
+		$result = mysql_query("SELECT * FROM tbl_add_supplier where supplier_id=" . (int) $supplier_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -1432,7 +1928,7 @@ class wms_core
 	public function getPersonnelInfoByPersonnelId($con, $perso_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_personnel where per_id=" . (int)$perso_id, $con);
+		$result = mysql_query("SELECT * FROM tbl_add_personnel where per_id=" . (int) $perso_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -1442,7 +1938,7 @@ class wms_core
 	public function getUserInfoByUserId($con, $user_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_user where usr_id=" . (int)$user_id, $con);
+		$result = mysql_query("SELECT * FROM tbl_add_user where usr_id=" . (int) $user_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -1492,7 +1988,7 @@ class wms_core
 			}
 
 			if (!$result) {
-				var_dump($data);
+				// var_dump($data);
 				$message  = 'Invalid query: ' . mysql_error() . "\n";
 				$message .= 'Whole query: ' . $query;
 				die($message);
@@ -1523,7 +2019,7 @@ class wms_core
 			}
 
 			if (!$result) {
-				var_dump($data);
+				// var_dump($data);
 				$message  = 'Invalid query: ' . mysql_error() . "\n";
 				$message .= 'Whole query: ' . $query;
 				die($message);
@@ -1564,7 +2060,7 @@ class wms_core
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
-			WHERE attribution_mecanicien = " . (int)$mecanicien_id;
+			WHERE attribution_mecanicien = " . (int) $mecanicien_id;
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -1593,7 +2089,7 @@ class wms_core
 		inner join tbl_add_mechanics mec on mec.mechanics_id = rvr.attribution_mecanicien
 		inner join tbl_mechanics_designation mecdes on mecdes.designation_id = mec.designation_id
 		left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
-		WHERE attribution_mecanicien = '" . (int)$mecanicien_id . "' LIMIT 10 ";
+		WHERE attribution_mecanicien = '" . (int) $mecanicien_id . "' LIMIT 10 ";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -1626,7 +2122,7 @@ class wms_core
 			inner join tbl_make ma on cr.car_make = ma.make_id 
 			inner join tbl_model mo on cr.car_model = mo.model_id 
 			inner join tbl_add_customer cus on cus.customer_id = cr.customer_id
-			WHERE repaircar_diagnostic_id ='" . (int)$diagId . "' AND dev.devis_id ='" . (int)$devisId . "'";
+			WHERE repaircar_diagnostic_id ='" . (int) $diagId . "' AND dev.devis_id ='" . (int) $devisId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -1651,7 +2147,7 @@ class wms_core
 			inner join tbl_make ma on cr.car_make = ma.make_id 
 			inner join tbl_model mo on cr.car_model = mo.model_id 
 			inner join tbl_add_customer cus on cus.customer_id = cr.customer_id
-			WHERE repaircar_diagnostic_id ='" . (int)$diagId . "' AND devis_id ='" . (int)$devisId . "'";
+			WHERE repaircar_diagnostic_id ='" . (int) $diagId . "' AND devis_id ='" . (int) $devisId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -1677,7 +2173,7 @@ class wms_core
 			inner join tbl_make ma on cr.car_make = ma.make_id 
 			inner join tbl_model mo on cr.car_model = mo.model_id 
 			inner join tbl_add_customer cus on cus.customer_id = cr.customer_id
-			WHERE repaircar_diagnostic_id ='" . (int)$diagId . "' AND dev.devis_id ='" . (int)$devisId . "'";
+			WHERE repaircar_diagnostic_id ='" . (int) $diagId . "' AND dev.devis_id ='" . (int) $devisId . "'";
 
 		$result = mysql_query($query, $con);
 
@@ -1752,7 +2248,7 @@ class wms_core
 			from tbl_add_devis dev
 			inner join tbl_repaircar_diagnostic diag on diag.id = dev.repaircar_diagnostic_id
 			inner join tbl_add_facture fac on fac.devis_id = dev.devis_id
-			WHERE repaircar_diagnostic_id = " . (int)$diagId;
+			WHERE repaircar_diagnostic_id = " . (int) $diagId;
 
 		$result = mysql_query($query, $con);
 
@@ -1780,7 +2276,7 @@ class wms_core
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
 			-- inner join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
-			WHERE cus.customer_id ='" . (int)$cusId . "' LIMIT 10";
+			WHERE cus.customer_id ='" . (int) $cusId . "' LIMIT 10";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -1805,7 +2301,7 @@ class wms_core
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
-			WHERE cus.customer_id ='" . (int)$cusId . "' AND confirm_devis = 1 LIMIT 10 ";
+			WHERE cus.customer_id ='" . (int) $cusId . "' AND confirm_devis = 1 LIMIT 10 ";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -1856,7 +2352,7 @@ class wms_core
 			from tbl_add_devis dev
 			left join tbl_repaircar_diagnostic diag on diag.id = dev.repaircar_diagnostic_id
 			-- left join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
-			WHERE repaircar_diagnostic_id = " . (int)$diagId;
+			WHERE repaircar_diagnostic_id = " . (int) $diagId;
 
 		$result = mysql_query($query, $con);
 
@@ -1912,7 +2408,7 @@ class wms_core
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
 			-- inner join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
 			inner join tbl_add_facture fac on fac.devis_id = dev.devis_id
-			WHERE cus.customer_id ='" . (int)$cusId . "'";
+			WHERE cus.customer_id ='" . (int) $cusId . "'";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -1938,7 +2434,7 @@ class wms_core
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
 			-- inner join tbl_add_boncmde bcmd on bcmd.devis_id = dev.devis_id
-			WHERE cus.customer_id ='" . (int)$cusId . "'";
+			WHERE cus.customer_id ='" . (int) $cusId . "'";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -1963,7 +2459,7 @@ class wms_core
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			inner join tbl_repaircar_diagnostic rd on rd.car_id = rvr.add_car_id
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
-			WHERE cus.customer_id ='" . (int)$cusId . "' AND confirm_devis = 1 ";
+			WHERE cus.customer_id ='" . (int) $cusId . "' AND confirm_devis = 1 ";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2029,7 +2525,7 @@ class wms_core
 		inner join tbl_repaircar_diagnostic diag on diag.id = dev.repaircar_diagnostic_id 
 		inner join tbl_add_mechanics mec on mec.mechanics_id = diag.mech_id
 		-- left join tbl_add_mechanics mec on mec.mechanics_id = diag.mech_id
-		where dev.devis_id = '" . (int)$devis_id . "'";
+		where dev.devis_id = '" . (int) $devis_id . "'";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2083,7 +2579,7 @@ class wms_core
 			from tbl_recep_vehi_repar
 			inner join tbl_add_customer on tbl_recep_vehi_repar.customer_name = tbl_add_customer.customer_id
 			inner join tbl_repaircar_diagnostic on tbl_repaircar_diagnostic.car_id = tbl_recep_vehi_repar.add_car_id
-			WHERE attribution_mecanicien = " . (int)$mecanicien_id;
+			WHERE attribution_mecanicien = " . (int) $mecanicien_id;
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2149,7 +2645,7 @@ class wms_core
 			$query = "SELECT s_name, cppr.*
 			from tbl_compar_prix_piece_rechange cppr
 			inner join tbl_add_supplier su on su.supplier_id = cppr.supplier_id
-			WHERE repaircar_diagnostic_id = " . (int)$diagId;
+			WHERE repaircar_diagnostic_id = " . (int) $diagId;
 
 			$result = mysql_query($query, $con);
 
@@ -2199,7 +2695,7 @@ class wms_core
 			join tbl_add_car cr on cr.car_id = rvr.add_car_id
 			inner join tbl_make ma on rvr.car_make = ma.make_id 
 			inner join tbl_model mo on rvr.car_model = mo.model_id 
-			WHERE tbl_repaircar_diagnostic.id = " . (int)$diagId;
+			WHERE tbl_repaircar_diagnostic.id = " . (int) $diagId;
 			$result = mysql_query($query, $con);
 			if ($row = mysql_fetch_array($result)) {
 				$data = $row;
@@ -2222,7 +2718,7 @@ class wms_core
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id 
 			-- inner join tbl_make ma on rvr.car_make = ma.make_id 
 			-- inner join tbl_model mo on rvr.car_model = mo.model_id 
-			WHERE rvr.add_car_id ='" . (int)$addCarId . "' AND rvr.car_id ='" . (int)$carId . "'";
+			WHERE rvr.add_car_id ='" . (int) $addCarId . "' AND rvr.car_id ='" . (int) $carId . "'";
 			$result = mysql_query($query, $con);
 			if ($row = mysql_fetch_array($result)) {
 				$data = $row;
@@ -2296,8 +2792,8 @@ class wms_core
 	public function saveUpdatePrixPrestationService($con, $data)
 	{
 		if (!empty($data)) {
-			if ((int)$data['submit_token'] > 0) {
-				mysql_query("UPDATE tbl_prix_prestation_service SET presta_serv_id = '" . $data['ddlPresta'] . "', prix_presta_serv = '" . trim($data['txtPrixPrestaServ']) . "' WHERE prix_presta_serv_id = " . (int)$data['submit_token'], $con);
+			if ((int) $data['submit_token'] > 0) {
+				mysql_query("UPDATE tbl_prix_prestation_service SET presta_serv_id = '" . $data['ddlPresta'] . "', prix_presta_serv = '" . trim($data['txtPrixPrestaServ']) . "' WHERE prix_presta_serv_id = " . (int) $data['submit_token'], $con);
 			} else {
 				mysql_query("INSERT INTO tbl_prix_prestation_service(prix_presta_serv, presta_serv_id) values('$data[txtPrixPrestaServ]','$data[ddlPresta]')", $con);
 			}
@@ -2309,7 +2805,7 @@ class wms_core
 	*/
 	public function deletePrixPrestationData($con, $prix_presta_serv_id)
 	{
-		mysql_query("DELETE from tbl_prix_prestation_service where prix_presta_serv_id = " . (int)$prix_presta_serv_id, $con);
+		mysql_query("DELETE from tbl_prix_prestation_service where prix_presta_serv_id = " . (int) $prix_presta_serv_id, $con);
 	}
 
 	/*
@@ -2318,7 +2814,7 @@ class wms_core
 	public function getPrixPrestationDataByPrixPrestationId($con, $prix_presta_serv_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_prix_prestation_service where prix_presta_serv_id = '" . (int)$prix_presta_serv_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_prix_prestation_service where prix_presta_serv_id = '" . (int) $prix_presta_serv_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -2330,7 +2826,7 @@ class wms_core
 	*/
 	public function deleteAssuranceData($con, $assur_vehi_id)
 	{
-		mysql_query("DELETE from tbl_assurance_vehicule where assur_vehi_id = " . (int)$assur_vehi_id, $con);
+		mysql_query("DELETE from tbl_assurance_vehicule where assur_vehi_id = " . (int) $assur_vehi_id, $con);
 	}
 
 	/*
@@ -2339,7 +2835,7 @@ class wms_core
 	public function getPrestationDataByPrestationId($con, $presta_serv_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_prestation_service where presta_serv_id = '" . (int)$presta_serv_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_prestation_service where presta_serv_id = '" . (int) $presta_serv_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -2349,7 +2845,7 @@ class wms_core
 	public function getAssuranceDataByAssuranceId($con, $assur_vehi_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_assurance_vehicule where assur_vehi_id = '" . (int)$assur_vehi_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_assurance_vehicule where assur_vehi_id = '" . (int) $assur_vehi_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -2410,8 +2906,8 @@ class wms_core
 	public function saveUpdateAssuranceVehicule($con, $data)
 	{
 		if (!empty($data)) {
-			if ((int)$data['submit_token'] > 0) {
-				mysql_query("UPDATE tbl_assurance_vehicule SET assur_vehi_libelle = '" . trim($data['txtAssurVehiLib']) . "' WHERE assur_vehi_id = " . (int)$data['submit_token'], $con);
+			if ((int) $data['submit_token'] > 0) {
+				mysql_query("UPDATE tbl_assurance_vehicule SET assur_vehi_libelle = '" . trim($data['txtAssurVehiLib']) . "' WHERE assur_vehi_id = " . (int) $data['submit_token'], $con);
 			} else {
 				mysql_query("INSERT INTO tbl_assurance_vehicule(assur_vehi_libelle) values('$data[txtAssurVehiLib]')", $con);
 			}
@@ -2424,8 +2920,8 @@ class wms_core
 	public function saveUpdatePrestationService($con, $data)
 	{
 		if (!empty($data)) {
-			if ((int)$data['submit_token'] > 0) {
-				mysql_query("UPDATE tbl_prestation_service SET presta_serv_name = '" . trim($data['txtPrestaServName']) . "' WHERE presta_serv_id = " . (int)$data['submit_token'], $con);
+			if ((int) $data['submit_token'] > 0) {
+				mysql_query("UPDATE tbl_prestation_service SET presta_serv_name = '" . trim($data['txtPrestaServName']) . "' WHERE presta_serv_id = " . (int) $data['submit_token'], $con);
 			} else {
 				mysql_query("INSERT INTO tbl_prestation_service(presta_serv_name) values('$data[txtPrestaServName]')", $con);
 			}
@@ -2472,7 +2968,7 @@ class wms_core
 
 		$query = "SELECT * 
 		FROM tbl_add_customer c
-		WHERE c.customer_id = '" . (int)$customer_id . "'";
+		WHERE c.customer_id = '" . (int) $customer_id . "'";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2502,7 +2998,7 @@ class wms_core
 		$query = "SELECT * 
 		FROM tbl_recep_vehi_repar rvr
 		inner join tbl_add_customer c on rvr.customer_name = c.customer_id 
-		WHERE c.customer_id = '" . (int)$customer_id . "'";
+		WHERE c.customer_id = '" . (int) $customer_id . "'";
 
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2526,7 +3022,7 @@ class wms_core
 	public function updateDateSignRecepDepot($con, $dateSignRecepDepot, $car_id)
 	{
 		// Enregistrement du nom du fichier image de la signature du client en base de données
-		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_recep_depot='" . $dateSignRecepDepot . "' WHERE car_id='" . (int)$car_id . "'";
+		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_recep_depot='" . $dateSignRecepDepot . "' WHERE car_id='" . (int) $car_id . "'";
 
 		// On teste le résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2541,7 +3037,7 @@ class wms_core
 	public function updateDateSignRecepSortie($con, $dateSignRecepSortie, $car_id)
 	{
 		// Enregistrement du nom du fichier image de la signature du client en base de données
-		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_recep_sortie='" . $dateSignRecepSortie . "' WHERE car_id='" . (int)$car_id . "'";
+		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_recep_sortie='" . $dateSignRecepSortie . "' WHERE car_id='" . (int) $car_id . "'";
 
 		// On teste le résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2556,7 +3052,7 @@ class wms_core
 	public function updateDateSignCliDepot($con, $dateSignClientDepot, $car_id)
 	{
 		// Enregistrement du nom du fichier image de la signature du client en base de données
-		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_cli_depot='" . $dateSignClientDepot . "' WHERE car_id='" . (int)$car_id . "'";
+		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_cli_depot='" . $dateSignClientDepot . "' WHERE car_id='" . (int) $car_id . "'";
 
 		// On teste le résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2571,7 +3067,7 @@ class wms_core
 	public function updateDateSignCliSortie($con, $dateSignClientSortie, $car_id)
 	{
 		// Enregistrement du nom du fichier image de la signature du client en base de données
-		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_cli_sortie='" . $dateSignClientSortie . "' WHERE car_id='" . (int)$car_id . "'";
+		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_cli_sortie='" . $dateSignClientSortie . "' WHERE car_id='" . (int) $car_id . "'";
 
 		// On teste le résultat de la requête
 		$result = mysql_query($query, $con);
@@ -2708,7 +3204,7 @@ class wms_core
 		if (isset($cust_id) && !empty($cust_id)) {
 
 			// exécution de la réquête
-			$query = "SELECT * from tbl_add_car WHERE customer_id = " . (int)$cust_id;
+			$query = "SELECT * from tbl_add_car WHERE customer_id = " . (int) $cust_id;
 
 			// On stocke le résultat de la requête sous forme de ressource
 			$result = mysql_query($query, $con);
@@ -2740,7 +3236,7 @@ class wms_core
 			FROM tbl_add_car JOIN tbl_make ON tbl_add_car.car_make = tbl_make.make_id 
 			JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model 
 			JOIN tbl_add_customer cus ON tbl_add_car.customer_id = cus.customer_id
-			WHERE vin = '" . (string)$imma_vehi . "'";
+			WHERE vin = '" . (string) $imma_vehi . "'";
 
 		// Exécution et stockage du résultat de la requête sous forme de ressource
 		$result = mysql_query($query, $con);
@@ -2770,7 +3266,7 @@ class wms_core
 			-- JOIN tbl_make ON tbl_add_car.car_make = tbl_make.make_id 
 			-- JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model 
 			JOIN tbl_add_customer cus ON cr.customer_id = cus.customer_id
-			WHERE vin = '" . (string)$imma_vehi . "'";
+			WHERE vin = '" . (string) $imma_vehi . "'";
 
 			// Exécution et stockage du résultat de la requête sous forme de ressource
 			$result = mysql_query($query, $con);
@@ -2798,7 +3294,7 @@ class wms_core
 
 			// formulation de la réquête
 			$query = "SELECT tbl_make.make_id, tbl_model.model_id, make_name, model_name, VIN, tbl_add_customer.customer_id, tbl_add_car.car_id as add_car_id FROM tbl_add_car JOIN tbl_make ON tbl_add_car.car_make = tbl_make.make_id 
-			JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model JOIN tbl_add_customer ON tbl_add_car.customer_id = tbl_add_customer.customer_id WHERE tbl_add_customer.customer_id = '" . (int)$cust_id . "'";
+			JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model JOIN tbl_add_customer ON tbl_add_car.customer_id = tbl_add_customer.customer_id WHERE tbl_add_customer.customer_id = '" . (int) $cust_id . "'";
 
 			// Exécution et stockage du résultat de la requête sous forme de ressource
 			$result = mysql_query($query, $con);
@@ -2830,7 +3326,7 @@ class wms_core
 			FROM tbl_add_car 
 			-- JOIN tbl_make ON tbl_add_car.car_make = tbl_make.make_id 
 			-- JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model 
-			WHERE vin = '" . (string)$imma_vehi . "'";
+			WHERE vin = '" . (string) $imma_vehi . "'";
 
 		// Exécution et stockage du résultat de la requête sous forme de ressource
 		$result = mysql_query($query, $con);
@@ -2856,7 +3352,7 @@ class wms_core
 
 			// formulation de la réquête
 			$query = "SELECT add_date_visitetech, add_date_assurance FROM tbl_add_car JOIN tbl_make ON tbl_add_car.car_make = tbl_make.make_id 
-			JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model WHERE vin = '" . (string)$imma_vehi . "'";
+			JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model WHERE vin = '" . (string) $imma_vehi . "'";
 
 			// Exécution et stockage du résultat de la requête sous forme de ressource
 			$result = mysql_query($query, $con);
@@ -2909,7 +3405,7 @@ class wms_core
 			// exécution de la réquête
 			// $query = "SELECT * from tbl_add_car inner join tbl_make on tbl_add_car.car_make = tbl_make.make_id WHERE tbl_add_car.VIN = ".(string)$imma_vehi;
 
-			$query = "SELECT make_id, make_name from tbl_add_car inner join tbl_make on tbl_add_car.car_make = tbl_make.make_id WHERE vin = '" . (string)$imma_vehi . "'";
+			$query = "SELECT make_id, make_name from tbl_add_car inner join tbl_make on tbl_add_car.car_make = tbl_make.make_id WHERE vin = '" . (string) $imma_vehi . "'";
 
 			// On stocke le résultat de la requête sous forme de ressource
 			$result = mysql_query($query, $con);
@@ -2936,7 +3432,7 @@ class wms_core
 			inner join tbl_make on tbl_recep_vehi_repar.car_make = tbl_make.make_id 
 			-- join tbl_add_car cr on cr.car_id = tbl_recep_vehi_repar.add_car_id
 			inner join tbl_add_customer on tbl_recep_vehi_repar.customer_name = tbl_add_customer.customer_id 
-			WHERE tbl_recep_vehi_repar.car_id = " . (int)$carId;
+			WHERE tbl_recep_vehi_repar.car_id = " . (int) $carId;
 			$result = mysql_query($query, $con);
 			if ($row = mysql_fetch_array($result)) {
 				$data = $row;
@@ -3068,7 +3564,7 @@ class wms_core
 	public function saveUpdateDatePointage($con, $data)
 	{
 
-		mysql_query("UPDATE `tbl_pointage` SET `date_depart`='" . $data['date_depart_modif'] . "' WHERE id='" . (int)$data['pointage_id'] . "'", $con);
+		mysql_query("UPDATE `tbl_pointage` SET `date_depart`='" . $data['date_depart_modif'] . "' WHERE id='" . (int) $data['pointage_id'] . "'", $con);
 	}
 
 	/*
@@ -3090,7 +3586,7 @@ class wms_core
 	public function getPointageInfoByEmploye($con, $pointage_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_pointage where id = '" . (int)$pointage_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_pointage where id = '" . (int) $pointage_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -3102,7 +3598,7 @@ class wms_core
 	*/
 	public function deletePointage($con, $cid)
 	{
-		mysql_query("DELETE FROM `tbl_pointage` WHERE id = " . (int)$cid, $con);
+		mysql_query("DELETE FROM `tbl_pointage` WHERE id = " . (int) $cid, $con);
 	}
 
 	public function getAllCountries($con)
@@ -3122,7 +3618,7 @@ class wms_core
 	public function getStateByCountryId($con, $cid)
 	{
 		$states = array();
-		$result = mysql_query("SELECT * FROM tbl_states WHERE country_id = " . (int)$cid . " order by name ASC", $con);
+		$result = mysql_query("SELECT * FROM tbl_states WHERE country_id = " . (int) $cid . " order by name ASC", $con);
 		while ($row = mysql_fetch_array($result)) {
 			$states[] = array(
 				'id'	=> $row['id'],
@@ -3151,7 +3647,7 @@ class wms_core
 	public function getAllWorkStatusList($con, $mech_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_daily_work WHERE mechanic_id = '" . (int)$mech_id . "' order by work_id DESC", $con);
+		$result = mysql_query("SELECT * FROM tbl_daily_work WHERE mechanic_id = '" . (int) $mech_id . "' order by work_id DESC", $con);
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
 		}
@@ -3190,7 +3686,7 @@ class wms_core
 	public function getAllStateData($con, $country_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * from tbl_states where country_id = " . (int)$country_id, $con);
+		$result = mysql_query("SELECT * from tbl_states where country_id = " . (int) $country_id, $con);
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
 		}
@@ -3208,14 +3704,14 @@ class wms_core
 		inner join tbl_make ma on ma.make_id = ac.car_make 
 		inner join tbl_model mo on mo.model_id = ac.car_model 
 		-- inner join tbl_year y on y.year_id = ac.year 
-		WHERE c.customer_id = '" . (int)$customer_id . "'", $con);
+		WHERE c.customer_id = '" . (int) $customer_id . "'", $con);
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
 		}
 		return $data;
 	}
 
-	
+
 
 	/*
 	* @get all Voiture de réparation list
@@ -3252,7 +3748,7 @@ class wms_core
 	// 	return $data;
 	// }
 
-	
+
 
 	/*
 	* @get all Voiture de réparation list
@@ -3280,7 +3776,7 @@ class wms_core
 	public function getCustomerRepairCarList($con, $customer_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT *,ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,y.year_name,ac.repair_car_id FROM tbl_add_car ac inner join tbl_add_customer c on c.customer_id = ac.customer_id inner join tbl_make m on m.make_id = ac.car_make inner join tbl_model mo on mo.model_id = ac.car_model inner join tbl_year y on y.year_id = ac.year WHERE ac.customer_id = " . (int)$customer_id . " order by ac.car_id DESC", $con);
+		$result = mysql_query("SELECT *,ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,y.year_name,ac.repair_car_id FROM tbl_add_car ac inner join tbl_add_customer c on c.customer_id = ac.customer_id inner join tbl_make m on m.make_id = ac.car_make inner join tbl_model mo on mo.model_id = ac.car_model inner join tbl_year y on y.year_id = ac.year WHERE ac.customer_id = " . (int) $customer_id . " order by ac.car_id DESC", $con);
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
 		}
@@ -3294,7 +3790,7 @@ class wms_core
 	public function getCustomerRepairCarDetails($con, $customer_id, $repair_car_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT *,ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,y.year_name,ac.repair_car_id FROM tbl_add_car ac inner join tbl_add_customer c on c.customer_id = ac.customer_id inner join tbl_make m on m.make_id = ac.car_make inner join tbl_model mo on mo.model_id = ac.car_model inner join tbl_year y on y.year_id = ac.year WHERE ac.customer_id = " . (int)$customer_id . " AND ac.repair_car_id = " . (int)$repair_car_id . " order by ac.car_id DESC", $con);
+		$result = mysql_query("SELECT *,ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,y.year_name,ac.repair_car_id FROM tbl_add_car ac inner join tbl_add_customer c on c.customer_id = ac.customer_id inner join tbl_make m on m.make_id = ac.car_make inner join tbl_model mo on mo.model_id = ac.car_model inner join tbl_year y on y.year_id = ac.year WHERE ac.customer_id = " . (int) $customer_id . " AND ac.repair_car_id = " . (int) $repair_car_id . " order by ac.car_id DESC", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -3307,7 +3803,7 @@ class wms_core
 	public function ajaxPartsListByMakeModelYear($con, $post)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * from tbl_parts_fit_data fd INNER JOIN  tbl_parts_stock_manage ps ON ps.parts_id = fd.parts_id where fd.make_id = '" . (int)$post['make_id'] . "' AND fd.model_id = '" . (int)$post['model_id'] . "' AND fd.year_id = '" . (int)$post['year_id'] . "'", $con);
+		$result = mysql_query("SELECT * from tbl_parts_fit_data fd INNER JOIN  tbl_parts_stock_manage ps ON ps.parts_id = fd.parts_id where fd.make_id = '" . (int) $post['make_id'] . "' AND fd.model_id = '" . (int) $post['model_id'] . "' AND fd.year_id = '" . (int) $post['year_id'] . "'", $con);
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
 		}
@@ -3333,7 +3829,7 @@ class wms_core
 	public function ajaxGetMechanicsSalary($con, $mid)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * from tbl_add_mechanics where mechanics_id = '" . (int)$mid . "'", $con);
+		$result = mysql_query("SELECT * from tbl_add_mechanics where mechanics_id = '" . (int) $mid . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -3346,7 +3842,7 @@ class wms_core
 	public function ajaxGetMechanicsMonthTotalHour($con, $mechanic_id, $month_id, $year_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT sum(total_hour) as total_hour from tbl_daily_work where mechanic_id = '" . (int)$mechanic_id . "' AND MONTH(work_date) = '" . $month_id . "' AND YEAR(work_date) = '" . $year_id . "'", $con);
+		$result = mysql_query("SELECT sum(total_hour) as total_hour from tbl_daily_work where mechanic_id = '" . (int) $mechanic_id . "' AND MONTH(work_date) = '" . $month_id . "' AND YEAR(work_date) = '" . $year_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -3379,7 +3875,7 @@ class wms_core
 	public function getManufacturersForSupplier($con, $sid)
 	{
 		$supplierManufacturer = array();
-		$result = mysql_query("SELECT *,m.manufacturer_name,m.manufacturer_image FROM tbl_supplier_manufacturer sm inner join tbl_manufacturer m on m.manufacturer_id = sm.manufacturer_id WHERE sm.supplier_id = " . (int)$sid . " order by sm.manufacturer_id ASC", $con);
+		$result = mysql_query("SELECT *,m.manufacturer_name,m.manufacturer_image FROM tbl_supplier_manufacturer sm inner join tbl_manufacturer m on m.manufacturer_id = sm.manufacturer_id WHERE sm.supplier_id = " . (int) $sid . " order by sm.manufacturer_id ASC", $con);
 		while ($row = mysql_fetch_array($result)) {
 			$image = '';
 			if ($row['manufacturer_image'] != '') {
@@ -3441,11 +3937,11 @@ class wms_core
 		$count = 0;
 		$result = array();
 		if (!empty($data['make']) && !empty($data['model']) && !empty($data['year'])) {
-			$result = mysql_query("SELECT count(ps.parts_id) as total FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int)$data['make'] . " AND pft.model_id = " . (int)$data['model'] . " AND pft.year_id = " . (int)$data['year'] . " ORDER BY ps.parts_name ASC", $con);
+			$result = mysql_query("SELECT count(ps.parts_id) as total FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int) $data['make'] . " AND pft.model_id = " . (int) $data['model'] . " AND pft.year_id = " . (int) $data['year'] . " ORDER BY ps.parts_name ASC", $con);
 		} else if (!empty($data['make']) && !empty($data['model'])) {
-			$result = mysql_query("SELECT count(ps.parts_id) as total FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int)$data['make'] . " AND pft.model_id = " . (int)$data['model'] . " ORDER BY ps.parts_name ASC", $con);
+			$result = mysql_query("SELECT count(ps.parts_id) as total FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int) $data['make'] . " AND pft.model_id = " . (int) $data['model'] . " ORDER BY ps.parts_name ASC", $con);
 		} else if (!empty($data['make'])) {
-			$result = mysql_query("SELECT count(ps.parts_id) as total FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int)$data['make'] . " ORDER BY ps.parts_name ASC", $con);
+			$result = mysql_query("SELECT count(ps.parts_id) as total FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int) $data['make'] . " ORDER BY ps.parts_name ASC", $con);
 		}
 		if (!empty($result)) {
 			if ($row = mysql_fetch_array($result)) {
@@ -3464,11 +3960,11 @@ class wms_core
 		$start_from = ($page - 1) * $limit;
 		$result = '';
 		if (!empty($data['make']) && !empty($data['model']) && !empty($data['year'])) {
-			$result = mysql_query("SELECT *,s.s_name,mu.manufacturer_name FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int)$data['make'] . " AND pft.model_id = " . (int)$data['model'] . " AND pft.year_id = " . (int)$data['year'] . " ORDER BY ps.parts_name ASC LIMIT " . $start_from . "," . $limit, $con);
+			$result = mysql_query("SELECT *,s.s_name,mu.manufacturer_name FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int) $data['make'] . " AND pft.model_id = " . (int) $data['model'] . " AND pft.year_id = " . (int) $data['year'] . " ORDER BY ps.parts_name ASC LIMIT " . $start_from . "," . $limit, $con);
 		} else if (!empty($data['make']) && !empty($data['model'])) {
-			$result = mysql_query("SELECT *,s.s_name,mu.manufacturer_name FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int)$data['make'] . " AND pft.model_id = " . (int)$data['model'] . " ORDER BY ps.parts_name ASC LIMIT " . $start_from . "," . $limit, $con);
+			$result = mysql_query("SELECT *,s.s_name,mu.manufacturer_name FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int) $data['make'] . " AND pft.model_id = " . (int) $data['model'] . " ORDER BY ps.parts_name ASC LIMIT " . $start_from . "," . $limit, $con);
 		} else if (!empty($data['make'])) {
-			$result = mysql_query("SELECT *,s.s_name,mu.manufacturer_name FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int)$data['make'] . " ORDER BY ps.parts_name ASC LIMIT " . $start_from . "," . $limit, $con);
+			$result = mysql_query("SELECT *,s.s_name,mu.manufacturer_name FROM tbl_parts_fit_data pft INNER JOIN tbl_parts_stock_manage ps ON ps.parts_id = pft.parts_id LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE pft.make_id = " . (int) $data['make'] . " ORDER BY ps.parts_name ASC LIMIT " . $start_from . "," . $limit, $con);
 		}
 		if (!empty($result)) {
 			while ($row = mysql_fetch_array($result)) {
@@ -3533,7 +4029,7 @@ class wms_core
 	public function getPartsInformationById($parts_id, $con)
 	{
 		$parts_list = array();
-		$result = mysql_query("SELECT *,s.s_name,mu.manufacturer_name FROM tbl_parts_stock_manage ps LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE parts_id = '" . (int)$parts_id . "'", $con);
+		$result = mysql_query("SELECT *,s.s_name,mu.manufacturer_name FROM tbl_parts_stock_manage ps LEFT JOIN tbl_add_supplier s ON s.supplier_id = ps.supplier_id LEFT JOIN tbl_manufacturer mu ON mu.manufacturer_id = ps.manufacturer_id WHERE parts_id = '" . (int) $parts_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$image = '';
 			if ($row['parts_image'] != '') {
@@ -3630,7 +4126,7 @@ class wms_core
 	public function getCustomerAndCarDetailsByCarId($con, $car_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT *,cu.customer_id, cu.c_name, cu.c_email FROM tbl_add_car ca INNER JOIN tbl_add_customer cu on ca.customer_id = cu.customer_id WHERE ca.car_id = '" . (int)$car_id . "'", $con);
+		$result = mysql_query("SELECT *,cu.customer_id, cu.c_name, cu.c_email FROM tbl_add_car ca INNER JOIN tbl_add_customer cu on ca.customer_id = cu.customer_id WHERE ca.car_id = '" . (int) $car_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -3653,23 +4149,10 @@ class wms_core
 	/*
 	* @get Stock de pièces information by parts id
 	*/
-	public function getPieceStockInfoByPieceId($con, $piece_id)
-	{
-		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_piece p where p.add_piece_id = '" . (int)$piece_id . "'", $con);
-		if ($row = mysql_fetch_array($result)) {
-			$data = $row;
-		}
-		return $data;
-	}
-
-	/*
-	* @get Stock de pièces information by parts id
-	*/
 	public function getPartsStockInfoByPartsId($con, $parts_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_parts_stock_manage psm where psm.parts_id = '" . (int)$parts_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_parts_stock_manage psm where psm.parts_id = '" . (int) $parts_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -3693,7 +4176,7 @@ class wms_core
 	*/
 	public function saveCustomerRemindDetails($con, $invoice_id, $car_id, $customer_id, $progress)
 	{
-		mysql_query("INSERT INTO tbl_customer_notification(invoice_id, car_id, customer_id, progress, notify_date) VALUES('" . $invoice_id . "'," . (int)$car_id . "," . (int)$customer_id . "," . (int)$progress . ",'" . date('Y-m-d H:i:s') . "')", $con);
+		mysql_query("INSERT INTO tbl_customer_notification(invoice_id, car_id, customer_id, progress, notify_date) VALUES('" . $invoice_id . "'," . (int) $car_id . "," . (int) $customer_id . "," . (int) $progress . ",'" . date('Y-m-d H:i:s') . "')", $con);
 	}
 
 	/*
@@ -3727,7 +4210,7 @@ class wms_core
 	public function getCarAndCustomerInformationByInvoiceId($con, $invoice_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT *,ac.image as car_image,c.c_name,c.image as customer_image,c.c_address,c.c_email,c.c_mobile,m.make_name,mo.model_name,y.year_name,ac.estimate_no FROM tbl_add_car ac inner join tbl_add_customer c on c.customer_id = ac.customer_id inner join tbl_make m on m.make_id = ac.car_make inner join tbl_model mo on mo.model_id = ac.car_model inner join tbl_year y on y.year_id = ac.year WHERE ac.estimate_no = '" . (int)$invoice_id . "'", $con);
+		$result = mysql_query("SELECT *,ac.image as car_image,c.c_name,c.image as customer_image,c.c_address,c.c_email,c.c_mobile,m.make_name,mo.model_name,y.year_name,ac.estimate_no FROM tbl_add_car ac inner join tbl_add_customer c on c.customer_id = ac.customer_id inner join tbl_make m on m.make_id = ac.car_make inner join tbl_model mo on mo.model_id = ac.car_model inner join tbl_year y on y.year_id = ac.year WHERE ac.estimate_no = '" . (int) $invoice_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -3867,7 +4350,7 @@ class wms_core
 	public function getMechaniceMonthlyHourData($con, $year, $mech_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT MONTHNAME(`work_date`) as month_name,sum(`total_hour`) as total_hour FROM tbl_daily_work WHERE YEAR(`work_date`) = '" . $year . "' AND mechanic_id = " . (int)$mech_id . " GROUP BY MONTH(`work_date`) ORDER BY MONTH(`work_date`) ASC", $con);
+		$result = mysql_query("SELECT MONTHNAME(`work_date`) as month_name,sum(`total_hour`) as total_hour FROM tbl_daily_work WHERE YEAR(`work_date`) = '" . $year . "' AND mechanic_id = " . (int) $mech_id . " GROUP BY MONTH(`work_date`) ORDER BY MONTH(`work_date`) ASC", $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -3894,7 +4377,7 @@ class wms_core
 	public function getMechaniceSalaryReportChartData($con, $year, $mech_id)
 	{
 		$data = array();
-		$result = mysql_query("select MONTHNAME(STR_TO_DATE(`month_id`, '%m')) as month_name, paid_amount from tbl_mcncsslary WHERE year_id = " . $year . " AND mechanics_id=" . (int)$mech_id, $con);
+		$result = mysql_query("select MONTHNAME(STR_TO_DATE(`month_id`, '%m')) as month_name, paid_amount from tbl_mcncsslary WHERE year_id = " . $year . " AND mechanics_id=" . (int) $mech_id, $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -3907,7 +4390,7 @@ class wms_core
 	public function getCustomerRepairReportChartData($con, $year, $cust_id)
 	{
 		$data = array();
-		$result = mysql_query("select MONTHNAME(`created_date`) as month_name, total_cost as paid_amount from tbl_car_estimate WHERE job_status = 1 AND YEAR(created_date) = " . $year . " AND customer_id=" . (int)$cust_id, $con);
+		$result = mysql_query("select MONTHNAME(`created_date`) as month_name, total_cost as paid_amount from tbl_car_estimate WHERE job_status = 1 AND YEAR(created_date) = " . $year . " AND customer_id=" . (int) $cust_id, $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -3920,7 +4403,7 @@ class wms_core
 	public function getMechaniceTotalHourList($con, $mech_id)
 	{
 		$data = 0;
-		$result = mysql_query("select sum(total_hour) as total_hour from tbl_daily_work WHERE mechanic_id=" . (int)$mech_id, $con);
+		$result = mysql_query("select sum(total_hour) as total_hour from tbl_daily_work WHERE mechanic_id=" . (int) $mech_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row['total_hour'];
 		}
@@ -3933,7 +4416,7 @@ class wms_core
 	public function getMechaniceTotalPaidAmount($con, $mech_id)
 	{
 		$data = array();
-		$result = mysql_query("select sum(total) as total, sum(paid_amount) as total_paid_amount, sum(due_amount) as total_due_amount from tbl_mcncsslary WHERE mechanics_id=" . (int)$mech_id, $con);
+		$result = mysql_query("select sum(total) as total, sum(paid_amount) as total_paid_amount, sum(due_amount) as total_due_amount from tbl_mcncsslary WHERE mechanics_id=" . (int) $mech_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -3962,7 +4445,7 @@ class wms_core
 		$data = array();
 		$sql = '';
 		if ($filter['condition'] != 'both') {
-			$sql = "SELECT * FROM tbl_carsell cs left join tbl_buycar bc on bc.buycar_id = cs.car_id WHERE cs.car_condition = '" . (string)$filter['condition'] . "' AND cs.is_return = 0";
+			$sql = "SELECT * FROM tbl_carsell cs left join tbl_buycar bc on bc.buycar_id = cs.car_id WHERE cs.car_condition = '" . (string) $filter['condition'] . "' AND cs.is_return = 0";
 		} else {
 			$sql = "SELECT * FROM tbl_carsell cs left join tbl_buycar bc on bc.buycar_id = cs.car_id WHERE cs.is_return = 0";
 		}
@@ -3998,9 +4481,9 @@ class wms_core
 		$data = array();
 		$sql = '';
 		if ($filter['condition'] != 'both') {
-			$sql = "SELECT *,cc.color_name,cd.door_name,m.make_name,mo.model_name,y.year_name FROM tbl_buycar bc left join tbl_carcolor cc on cc.color_id = bc.car_color left join tbl_cardoor cd on cd.door_id = bc.car_door left join tbl_make m on m.make_id = bc.make_id left join tbl_model mo on mo.model_id = bc.model_id left join tbl_year y on y.year_id = bc.year_id WHERE bc.car_status = '" . (int)$filter['status'] . "' AND bc.car_condition = '" . (string)$filter['condition'] . "'";
+			$sql = "SELECT *,cc.color_name,cd.door_name,m.make_name,mo.model_name,y.year_name FROM tbl_buycar bc left join tbl_carcolor cc on cc.color_id = bc.car_color left join tbl_cardoor cd on cd.door_id = bc.car_door left join tbl_make m on m.make_id = bc.make_id left join tbl_model mo on mo.model_id = bc.model_id left join tbl_year y on y.year_id = bc.year_id WHERE bc.car_status = '" . (int) $filter['status'] . "' AND bc.car_condition = '" . (string) $filter['condition'] . "'";
 		} else {
-			$sql = "SELECT *,cc.color_name,cd.door_name,m.make_name,mo.model_name,y.year_name FROM tbl_buycar bc left join tbl_carcolor cc on cc.color_id = bc.car_color left join tbl_cardoor cd on cd.door_id = bc.car_door left join tbl_make m on m.make_id = bc.make_id left join tbl_model mo on mo.model_id = bc.model_id left join tbl_year y on y.year_id = bc.year_id WHERE bc.car_status = '" . (int)$filter['status'] . "'";
+			$sql = "SELECT *,cc.color_name,cd.door_name,m.make_name,mo.model_name,y.year_name FROM tbl_buycar bc left join tbl_carcolor cc on cc.color_id = bc.car_color left join tbl_cardoor cd on cd.door_id = bc.car_door left join tbl_make m on m.make_id = bc.make_id left join tbl_model mo on mo.model_id = bc.model_id left join tbl_year y on y.year_id = bc.year_id WHERE bc.car_status = '" . (int) $filter['status'] . "'";
 		}
 
 		if (!empty($filter['date'])) {
@@ -4298,7 +4781,7 @@ class wms_core
 	public function getModelListByMakeId($con, $makeId)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_model WHERE make_id = " . (int)$makeId . " order by model_name ASC", $con);
+		$result = mysql_query("SELECT * FROM tbl_model WHERE make_id = " . (int) $makeId . " order by model_name ASC", $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -4311,7 +4794,7 @@ class wms_core
 	public function getYearlListByMakeIdAndModelId($con, $makeId, $modelId)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_year WHERE model_id = " . (int)$modelId . " AND make_id = " . (int)$makeId . " order by year_name ASC", $con);
+		$result = mysql_query("SELECT * FROM tbl_year WHERE model_id = " . (int) $modelId . " AND make_id = " . (int) $makeId . " order by year_name ASC", $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -4323,7 +4806,7 @@ class wms_core
 	*/
 	public function deleteNotificationEmailAlert($con, $n_id)
 	{
-		mysql_query("DELETE FROM tbl_customer_notification WHERE n_id = '" . (int)$n_id . "'", $con);
+		mysql_query("DELETE FROM tbl_customer_notification WHERE n_id = '" . (int) $n_id . "'", $con);
 	}
 
 	/*
@@ -4331,7 +4814,7 @@ class wms_core
 	*/
 	public function deleteMakeData($con, $make_id)
 	{
-		mysql_query("DELETE from tbl_make where make_id = " . (int)$make_id, $con);
+		mysql_query("DELETE from tbl_make where make_id = " . (int) $make_id, $con);
 	}
 
 	/*
@@ -4339,7 +4822,7 @@ class wms_core
 	*/
 	public function deleteModelData($con, $model_id)
 	{
-		mysql_query("DELETE from tbl_model where model_id = " . (int)$model_id, $con);
+		mysql_query("DELETE from tbl_model where model_id = " . (int) $model_id, $con);
 	}
 
 	/*
@@ -4347,7 +4830,7 @@ class wms_core
 	*/
 	public function deleteYearData($con, $year_id)
 	{
-		mysql_query("DELETE from tbl_year where year_id = " . (int)$year_id, $con);
+		mysql_query("DELETE from tbl_year where year_id = " . (int) $year_id, $con);
 	}
 
 	/*
@@ -4355,7 +4838,7 @@ class wms_core
 	*/
 	public function deleteCarColorData($con, $color_id)
 	{
-		mysql_query("DELETE from tbl_carcolor where color_id = '" . (int)$color_id . "'", $con);
+		mysql_query("DELETE from tbl_carcolor where color_id = '" . (int) $color_id . "'", $con);
 	}
 
 	/*
@@ -4363,7 +4846,7 @@ class wms_core
 	*/
 	public function deleteCarDoorData($con, $door_id)
 	{
-		mysql_query("DELETE from tbl_cardoor where door_id = '" . (int)$door_id . "'", $con);
+		mysql_query("DELETE from tbl_cardoor where door_id = '" . (int) $door_id . "'", $con);
 	}
 
 	/*
@@ -4371,12 +4854,12 @@ class wms_core
 	*/
 	public function deletePersoInfo($con, $p_id)
 	{
-		mysql_query("DELETE FROM `tbl_add_personnel` WHERE perso_id = " . (int)$p_id, $con);
+		mysql_query("DELETE FROM `tbl_add_personnel` WHERE perso_id = " . (int) $p_id, $con);
 	}
 
 	public function deleteBonCmdeInfo($con, $bcde_id)
 	{
-		mysql_query("DELETE FROM `tbl_add_boncmde` WHERE boncmde_id = " . (int)$bcde_id, $con);
+		mysql_query("DELETE FROM `tbl_add_boncmde` WHERE boncmde_id = " . (int) $bcde_id, $con);
 	}
 
 	/*
@@ -4384,7 +4867,7 @@ class wms_core
 	*/
 	public function deleteSupplierInformation($con, $s_id)
 	{
-		mysql_query("DELETE FROM `tbl_add_supplier` WHERE supplier_id = " . (int)$s_id, $con);
+		mysql_query("DELETE FROM `tbl_add_supplier` WHERE supplier_id = " . (int) $s_id, $con);
 	}
 
 	/*
@@ -4405,8 +4888,8 @@ class wms_core
 
 	public function deleteStockPartsInformation($con, $parts_id)
 	{
-		mysql_query("DELETE FROM `tbl_piece_stock` WHERE piece_stock_id = " . (int)$parts_id, $con);
-		mysql_query("DELETE FROM `tbl_add_piece` WHERE add_piece_id = " . (int)$parts_id, $con);
+		mysql_query("DELETE FROM `tbl_piece_stock` WHERE piece_stock_id = " . (int) $parts_id, $con);
+		mysql_query("DELETE FROM `tbl_add_piece` WHERE add_piece_id = " . (int) $parts_id, $con);
 	}
 
 	/*
@@ -4414,7 +4897,7 @@ class wms_core
 	*/
 	public function deleteCarInformation($con, $car_id)
 	{
-		mysql_query("DELETE FROM `tbl_buycar` WHERE buycar_id = " . (int)$car_id, $con);
+		mysql_query("DELETE FROM `tbl_buycar` WHERE buycar_id = " . (int) $car_id, $con);
 	}
 
 	/*
@@ -4422,7 +4905,7 @@ class wms_core
 	*/
 	public function deleteCustomer($con, $cid)
 	{
-		mysql_query("DELETE FROM `tbl_add_customer` WHERE customer_id = " . (int)$cid, $con);
+		mysql_query("DELETE FROM `tbl_add_customer` WHERE customer_id = " . (int) $cid, $con);
 	}
 
 	/*
@@ -4430,7 +4913,7 @@ class wms_core
 	*/
 	public function deleteWorkStatus($con, $wid)
 	{
-		mysql_query("DELETE FROM `tbl_daily_work` WHERE work_id = " . (int)$wid, $con);
+		mysql_query("DELETE FROM `tbl_daily_work` WHERE work_id = " . (int) $wid, $con);
 	}
 
 	/*
@@ -4438,7 +4921,7 @@ class wms_core
 	*/
 	public function deleteMechanicSalery($con, $sid)
 	{
-		mysql_query("DELETE FROM `tbl_mcncsslary` WHERE m_salary_id = " . (int)$sid, $con);
+		mysql_query("DELETE FROM `tbl_mcncsslary` WHERE m_salary_id = " . (int) $sid, $con);
 	}
 
 	/*
@@ -4446,7 +4929,7 @@ class wms_core
 	*/
 	public function deleteRepairCar($con, $cid)
 	{
-		mysql_query("DELETE FROM `tbl_add_car` WHERE car_id = " . (int)$cid, $con);
+		mysql_query("DELETE FROM `tbl_add_car` WHERE car_id = " . (int) $cid, $con);
 	}
 
 	/*
@@ -4551,7 +5034,7 @@ class wms_core
 	{
 		$data = array();
 		if (!empty($sell_id)) {
-			$result = mysql_query("SELECT * FROM tbl_carsell WHERE carsell_id = '" . (int)$sell_id . "'", $con);
+			$result = mysql_query("SELECT * FROM tbl_carsell WHERE carsell_id = '" . (int) $sell_id . "'", $con);
 			if ($row = mysql_fetch_array($result)) {
 				$data = $row;
 			}
@@ -4577,8 +5060,8 @@ class wms_core
 	*/
 	public function returnSellCarInformation($con, $rid, $rcarid)
 	{
-		mysql_query("UPDATE tbl_carsell SET is_return = 1 WHERE carsell_id = " . (int)$rid, $con);
-		mysql_query("UPDATE tbl_buycar SET car_status = 0 WHERE buycar_id = " . (int)$rcarid, $con);
+		mysql_query("UPDATE tbl_carsell SET is_return = 1 WHERE carsell_id = " . (int) $rid, $con);
+		mysql_query("UPDATE tbl_buycar SET car_status = 0 WHERE buycar_id = " . (int) $rcarid, $con);
 	}
 
 	/*
@@ -4586,7 +5069,7 @@ class wms_core
 	*/
 	public function deleteCarSellInformation($con, $id)
 	{
-		mysql_query("DELETE FROM `tbl_carsell` WHERE carsell_id = " . (int)$id, $con);
+		mysql_query("DELETE FROM `tbl_carsell` WHERE carsell_id = " . (int) $id, $con);
 	}
 
 	/*
@@ -4599,7 +5082,7 @@ class wms_core
 			mysql_query($query, $con);
 
 			//update sold status
-			$query_sold = "UPDATE tbl_buycar set car_status = 1 WHERE buycar_id = " . (int)$_POST['carid'];
+			$query_sold = "UPDATE tbl_buycar set car_status = 1 WHERE buycar_id = " . (int) $_POST['carid'];
 			mysql_query($query_sold, $con);
 		}
 	}
@@ -4621,7 +5104,7 @@ class wms_core
 	public function ajaxUpdateEstimateData($con, $data)
 	{
 		if (!empty($data)) {
-			mysql_query("UPDATE tbl_car_estimate SET delivery_status = '" . (int)$data['deliver'] . "', discount = '" . (float)$data['discount'] . "',payment_done = '" . (float)$data['payment_done'] . "', payment_due = '" . (float)$data['payment_due'] . "', grand_total = '" . (float)$data['grand_total'] . "', delivery_done_date = '" . $this->datepickerDateToMySqlDate($data['deliver_date']) . "' WHERE car_id = '" . (int)$data['car_id'] . "' AND estimate_no = '" . (string)$data['estimate_no'] . "' AND customer_id = '" . (string)$data['customer_id'] . "'", $con);
+			mysql_query("UPDATE tbl_car_estimate SET delivery_status = '" . (int) $data['deliver'] . "', discount = '" . (float) $data['discount'] . "',payment_done = '" . (float) $data['payment_done'] . "', payment_due = '" . (float) $data['payment_due'] . "', grand_total = '" . (float) $data['grand_total'] . "', delivery_done_date = '" . $this->datepickerDateToMySqlDate($data['deliver_date']) . "' WHERE car_id = '" . (int) $data['car_id'] . "' AND estimate_no = '" . (string) $data['estimate_no'] . "' AND customer_id = '" . (string) $data['customer_id'] . "'", $con);
 		}
 	}
 
@@ -4641,7 +5124,7 @@ class wms_core
 	{
 		$data = array();
 		if (!empty($car_id)) {
-			$result = mysql_query("SELECT * FROM tbl_car_estimate WHERE car_id = '" . (int)$car_id . "' AND customer_id = '" . (int)$customer_id . "' ORDER BY estimate_id DESC", $con);
+			$result = mysql_query("SELECT * FROM tbl_car_estimate WHERE car_id = '" . (int) $car_id . "' AND customer_id = '" . (int) $customer_id . "' ORDER BY estimate_id DESC", $con);
 			while ($row = mysql_fetch_array($result)) {
 				$data[] = $row;
 			}
@@ -4656,7 +5139,7 @@ class wms_core
 	{
 		$data = array();
 		if (!empty($customer_id)) {
-			$result = mysql_query("SELECT * FROM tbl_car_estimate WHERE customer_id = '" . (int)$customer_id . "' ORDER BY estimate_id DESC", $con);
+			$result = mysql_query("SELECT * FROM tbl_car_estimate WHERE customer_id = '" . (int) $customer_id . "' ORDER BY estimate_id DESC", $con);
 			while ($row = mysql_fetch_array($result)) {
 				$data[] = $row;
 			}
@@ -4685,7 +5168,7 @@ class wms_core
 		$row = $this->getRepairCarEstimateData($con, $data['estimate_no']);
 		if (!empty($row) && count($row) > 0) {
 			//update
-			mysql_query("UPDATE tbl_car_estimate SET estimate_data = '" . (string)$data['estimate_data'] . "', job_status = '" . (int)$data['job_status'] . "', work_status = '" . (int)$data['work_status'] . "', total_cost = '" . (float)$data['total_cost'] . "', payment_due = '" . (float)$data['payment_due'] . "', grand_total = '" . (float)$data['grand_total'] . "', estimate_delivery_date = '" . $data['estimate_delivery_date'] . "' WHERE estimate_no = '" . (string)trim($data['estimate_no']) . "' AND customer_id = '" . (int)$data['customer_id'] . "' AND car_id = '" . (int)$data['car_id'] . "'", $con);
+			mysql_query("UPDATE tbl_car_estimate SET estimate_data = '" . (string) $data['estimate_data'] . "', job_status = '" . (int) $data['job_status'] . "', work_status = '" . (int) $data['work_status'] . "', total_cost = '" . (float) $data['total_cost'] . "', payment_due = '" . (float) $data['payment_due'] . "', grand_total = '" . (float) $data['grand_total'] . "', estimate_delivery_date = '" . $data['estimate_delivery_date'] . "' WHERE estimate_no = '" . (string) trim($data['estimate_no']) . "' AND customer_id = '" . (int) $data['customer_id'] . "' AND car_id = '" . (int) $data['car_id'] . "'", $con);
 		} else {
 			//insert;
 			mysql_query("INSERT INTO `tbl_car_estimate`(`estimate_no`, `car_id`, `work_status`, `job_status`, `estimate_data`, `total_cost`, `payment_due`, `grand_total`, `customer_id`, `created_date`, `estimate_delivery_date`) VALUES ('" . trim($data['estimate_no']) . "','" . $data['car_id'] . "','" . $data['work_status'] . "','" . $data['job_status'] . "','" . $data['estimate_data'] . "','" . $data['total_cost'] . "','" . $data['payment_due'] . "','" . $data['grand_total'] . "','" . $data['customer_id'] . "','" . date('Y-m-d H:i:s') . "','" . $data['estimate_delivery_date'] . "')", $con);
@@ -4702,12 +5185,12 @@ class wms_core
 			$sold_id = mysql_insert_id();
 			foreach ($_SESSION['parts_cart'] as $cartdata) {
 				mysql_query("INSERT INTO tbl_parts_sell(sold_id, parts_name, parts_warranty, parts_id, quantity, parts_price,parts_condition) values($sold_id, '$cartdata[name]', '$cartdata[warranty]', '$cartdata[parts_id]', '$cartdata[qty]', '$cartdata[price]', '$cartdata[condition]')", $con);
-				$result_parts = mysql_query("SELECT * FROM tbl_parts_stock_manage where parts_id=" . (int)$cartdata['parts_id'], $con);
+				$result_parts = mysql_query("SELECT * FROM tbl_parts_stock_manage where parts_id=" . (int) $cartdata['parts_id'], $con);
 				if ($row_parts = mysql_fetch_array($result_parts)) {
 					$qty = $row_parts['quantity'];
-					if ((int)$qty > 0) {
-						$qty = (int)$qty - (int)$cartdata['qty'];
-						mysql_query("UPDATE tbl_parts_stock_manage SET quantity=" . (int)$qty . " WHERE parts_id=" . (int)$cartdata['parts_id'], $con);
+					if ((int) $qty > 0) {
+						$qty = (int) $qty - (int) $cartdata['qty'];
+						mysql_query("UPDATE tbl_parts_stock_manage SET quantity=" . (int) $qty . " WHERE parts_id=" . (int) $cartdata['parts_id'], $con);
 					}
 				}
 			}
@@ -4731,12 +5214,12 @@ class wms_core
 	*/
 	public function deleteAndReturnPartsData($con, $sold_id, $parts_id, $sold_qty = 0)
 	{
-		$result_parts = mysql_query("SELECT * FROM tbl_parts_stock where parts_id=" . (int)$parts_id, $con);
+		$result_parts = mysql_query("SELECT * FROM tbl_parts_stock where parts_id=" . (int) $parts_id, $con);
 		if ($row_parts = mysql_fetch_array($result_parts)) {
-			$qty = (int)$row_parts['parts_quantity'] + (int)$sold_qty;
-			mysql_query("UPDATE tbl_parts_stock SET parts_quantity=" . (int)$qty . " WHERE parts_id=" . (int)$parts_id, $con);
+			$qty = (int) $row_parts['parts_quantity'] + (int) $sold_qty;
+			mysql_query("UPDATE tbl_parts_stock SET parts_quantity=" . (int) $qty . " WHERE parts_id=" . (int) $parts_id, $con);
 		}
-		mysql_query("DELETE FROM tbl_parts_sell WHERE sold_id=" . (int)$sold_id . " AND parts_id=" . (int)$parts_id, $con);
+		mysql_query("DELETE FROM tbl_parts_sell WHERE sold_id=" . (int) $sold_id . " AND parts_id=" . (int) $parts_id, $con);
 	}
 
 	/*
@@ -4746,7 +5229,7 @@ class wms_core
 	{
 		$data = array();
 		if (!empty($psid)) {
-			$result = mysql_query("SELECT *,pas.parts_name,pas.parts_condition,pas.parts_warranty,pas.parts_sku FROM tbl_parts_sell ps INNER JOIN tbl_parts_stock pas on pas.parts_id = ps.parts_id where ps.parts_sell_id=" . (int)$psid, $con);
+			$result = mysql_query("SELECT *,pas.parts_name,pas.parts_condition,pas.parts_warranty,pas.parts_sku FROM tbl_parts_sell ps INNER JOIN tbl_parts_stock pas on pas.parts_id = ps.parts_id where ps.parts_sell_id=" . (int) $psid, $con);
 			if ($row = mysql_fetch_array($result)) {
 				$data = $row;
 			}
@@ -4772,8 +5255,8 @@ class wms_core
 	*/
 	public function deletePartsSoldItem($con, $sold_id)
 	{
-		mysql_query("DELETE FROM `tbl_parts_sold_invoice` WHERE sold_id = " . (int)$sold_id, $con);
-		mysql_query("DELETE FROM `tbl_parts_sell` WHERE sold_id = " . (int)$sold_id, $con);
+		mysql_query("DELETE FROM `tbl_parts_sold_invoice` WHERE sold_id = " . (int) $sold_id, $con);
+		mysql_query("DELETE FROM `tbl_parts_sell` WHERE sold_id = " . (int) $sold_id, $con);
 	}
 
 	/*
@@ -4783,13 +5266,13 @@ class wms_core
 	{
 		$data = array();
 		if (!empty($invoiceId)) {
-			$result = mysql_query("SELECT * FROM tbl_parts_sold_invoice WHERE invoice_id =" . (int)$invoiceId, $con);
+			$result = mysql_query("SELECT * FROM tbl_parts_sold_invoice WHERE invoice_id =" . (int) $invoiceId, $con);
 			if ($row = mysql_fetch_assoc($result)) {
 				$data['invoice'] = $row;
-				$result_parts = mysql_query("SELECT * FROM tbl_parts_sell WHERE sold_id =" . (int)$row['sold_id'], $con);
+				$result_parts = mysql_query("SELECT * FROM tbl_parts_sell WHERE sold_id =" . (int) $row['sold_id'], $con);
 				$gtotal = 0;
 				while ($row_parts = mysql_fetch_assoc($result_parts)) {
-					$xtotal = (float)$row_parts['parts_price'] * (int)$row_parts['quantity'];
+					$xtotal = (float) $row_parts['parts_price'] * (int) $row_parts['quantity'];
 					$data['parts'][] = array(
 						'parts_id'			=> $row_parts['parts_id'],
 						'parts_name'		=> $row_parts['parts_name'],
@@ -4799,7 +5282,7 @@ class wms_core
 						'parts_price'		=> $row_parts['parts_price'],
 						'total'				=> number_format($xtotal, 2)
 					);
-					$gtotal += (float)$xtotal;
+					$gtotal += (float) $xtotal;
 				}
 				$data['total'] = number_format($gtotal, 2);
 			}
@@ -4829,13 +5312,13 @@ class wms_core
 	{
 		$data = array();
 		if (!empty($sold_id)) {
-			$result = mysql_query("SELECT * FROM tbl_parts_sold_invoice WHERE sold_id =" . (int)$sold_id, $con);
+			$result = mysql_query("SELECT * FROM tbl_parts_sold_invoice WHERE sold_id =" . (int) $sold_id, $con);
 			if ($row = mysql_fetch_assoc($result)) {
 				$data['invoice'] = $row;
-				$result_parts = mysql_query("SELECT * FROM tbl_parts_sell WHERE sold_id =" . (int)$sold_id, $con);
+				$result_parts = mysql_query("SELECT * FROM tbl_parts_sell WHERE sold_id =" . (int) $sold_id, $con);
 				$gtotal = 0;
 				while ($row_parts = mysql_fetch_assoc($result_parts)) {
-					$xtotal = (float)$row_parts['parts_price'] * (int)$row_parts['quantity'];
+					$xtotal = (float) $row_parts['parts_price'] * (int) $row_parts['quantity'];
 					$data['parts'][] = array(
 						'parts_id'			=> $row_parts['parts_id'],
 						'parts_name'		=> $row_parts['parts_name'],
@@ -4844,7 +5327,7 @@ class wms_core
 						'parts_price'		=> $row_parts['parts_price'],
 						'total'				=> number_format($xtotal, 2)
 					);
-					$gtotal += (float)$xtotal;
+					$gtotal += (float) $xtotal;
 				}
 				$data['total'] = number_format($gtotal, 2);
 			}
@@ -4860,7 +5343,7 @@ class wms_core
 		$data = 0;
 		if (isset($_SESSION['parts_cart']) && !empty($_SESSION['parts_cart'])) {
 			foreach ($_SESSION['parts_cart'] as $cartdata) {
-				$data += (int)$cartdata['qty'];
+				$data += (int) $cartdata['qty'];
 			}
 		}
 		return $data;
@@ -4876,8 +5359,8 @@ class wms_core
 			$total = 0;
 			$settings = $this->getWebsiteSettingsInformation($con);
 			foreach ($_SESSION['parts_cart'] as $cartdata) {
-				$parts_total = (float)$cartdata['price'] * $cartdata['qty'];
-				$total += (float)$parts_total;
+				$parts_total = (float) $cartdata['price'] * $cartdata['qty'];
+				$total += (float) $parts_total;
 				$parts_total = number_format($parts_total, 2);
 				$parts_info = $this->getPartsInformationById($cartdata['parts_id'], $con);
 				$html .= "<tr>";
@@ -4957,8 +5440,8 @@ class wms_core
 			$due_amount = 0;
 			$settings = $this->getWebsiteSettingsInformation($con);
 			foreach ($cartInfo as $cartdata) {
-				$parts_total = (float)$cartdata['parts_price'] * $cartdata['quantity'];
-				$total += (float)$parts_total;
+				$parts_total = (float) $cartdata['parts_price'] * $cartdata['quantity'];
+				$total += (float) $parts_total;
 				$parts_total = number_format($parts_total, 2);
 				$parts_info = $this->getPartsInformationById($cartdata['parts_id'], $con);
 				$html .= "<tr>";
@@ -4973,13 +5456,13 @@ class wms_core
 				$html .= "</tr>";
 			}
 			/*Discount*/
-			if ((float)$discount > 0) {
-				$grand_total = (float)((float)$total - (float)((float)((float)$total * (float)$discount) / 100));
+			if ((float) $discount > 0) {
+				$grand_total = (float) ((float) $total - (float) ((float) ((float) $total * (float) $discount) / 100));
 			} else {
 				$grand_total = $total;
 			}
-			if ((float)$paid_amount > 0) {
-				$due_amount = (float)$grand_total - (float)$paid_amount;
+			if ((float) $paid_amount > 0) {
+				$due_amount = (float) $grand_total - (float) $paid_amount;
 			}
 			$html .= "<tr>";
 			$html .= "	<td>&nbsp;</td>";
@@ -5234,7 +5717,7 @@ class wms_core
 	{
 		if (!empty($data)) {
 			$cmspage = 0;
-			if (isset($data['rbCMSPage']) && is_numeric($data['rbCMSPage']) && (int)$data['rbCMSPage'] > 0) {
+			if (isset($data['rbCMSPage']) && is_numeric($data['rbCMSPage']) && (int) $data['rbCMSPage'] > 0) {
 				$cmspage = $data['rbCMSPage'];
 			}
 			if ($data['service_id'] == '0') {
@@ -5261,7 +5744,7 @@ class wms_core
 			if ($data['cms_id'] == '0') {
 				mysql_query("INSERT INTO tbl_cms(page_title,seo_url,cms_status,page_details) values('$data[txtPtitle]','$seo_url','$data[txtStatus]','$desc')", $con);
 			} else {
-				mysql_query("UPDATE `tbl_cms` SET `page_title`='" . $data['txtPtitle'] . "',`seo_url`='" . $seo_url . "',`cms_status`='" . $data['txtStatus'] . "',`page_details`='" . $desc . "' WHERE cms_id='" . (int)$data['cms_id'] . "'", $con);
+				mysql_query("UPDATE `tbl_cms` SET `page_title`='" . $data['txtPtitle'] . "',`seo_url`='" . $seo_url . "',`cms_status`='" . $data['txtStatus'] . "',`page_details`='" . $desc . "' WHERE cms_id='" . (int) $data['cms_id'] . "'", $con);
 			}
 		}
 	}
@@ -5272,7 +5755,7 @@ class wms_core
 	public function getServiceInfoByServiceId($con, $service_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_service where service_id = '" . (int)$service_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_service where service_id = '" . (int) $service_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -5285,7 +5768,7 @@ class wms_core
 	public function getSliderInfoBySliderId($con, $slider_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_slider where slider_id = '" . (int)$slider_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_slider where slider_id = '" . (int) $slider_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -5298,7 +5781,7 @@ class wms_core
 	public function getCommentsInfoByCommentsId($con, $comments_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_customer_comments where comments_id = '" . (int)$comments_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_customer_comments where comments_id = '" . (int) $comments_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -5311,7 +5794,7 @@ class wms_core
 	public function getNewsCommentsInfoByCommentsId($con, $comments_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_blog_comments where comments_id = '" . (int)$comments_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_blog_comments where comments_id = '" . (int) $comments_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -5324,7 +5807,7 @@ class wms_core
 	public function getBlogAllCommentsByBlogId($con, $blog_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_blog_comments WHERE status = 1 AND approve = 1 AND blog_id = " . (int)$blog_id . " ORDER BY comments_id DESC", $con);
+		$result = mysql_query("SELECT * FROM tbl_blog_comments WHERE status = 1 AND approve = 1 AND blog_id = " . (int) $blog_id . " ORDER BY comments_id DESC", $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$image = WEB_URL . 'img/no_comment.png';
 			if ($row['image'] != '' && file_exists(ROOT_PATH . 'img/upload/' . $row['image'])) {
@@ -5349,7 +5832,7 @@ class wms_core
 	*/
 	public function deleteService($con, $service_id)
 	{
-		mysql_query("DELETE FROM tbl_service where service_id = '" . (int)$service_id . "'", $con);
+		mysql_query("DELETE FROM tbl_service where service_id = '" . (int) $service_id . "'", $con);
 	}
 
 	/*
@@ -5357,7 +5840,7 @@ class wms_core
 	*/
 	public function deleteSlider($con, $slider_id)
 	{
-		mysql_query("DELETE FROM tbl_slider where slider_id = '" . (int)$slider_id . "'", $con);
+		mysql_query("DELETE FROM tbl_slider where slider_id = '" . (int) $slider_id . "'", $con);
 	}
 
 	/*
@@ -5365,7 +5848,7 @@ class wms_core
 	*/
 	public function deleteComments($con, $comments_id)
 	{
-		mysql_query("DELETE FROM tbl_customer_comments where comments_id = '" . (int)$comments_id . "'", $con);
+		mysql_query("DELETE FROM tbl_customer_comments where comments_id = '" . (int) $comments_id . "'", $con);
 	}
 
 	/*
@@ -5373,7 +5856,7 @@ class wms_core
 	*/
 	public function deleteNewsComments($con, $comments_id)
 	{
-		mysql_query("DELETE FROM tbl_blog_comments where comments_id = '" . (int)$comments_id . "'", $con);
+		mysql_query("DELETE FROM tbl_blog_comments where comments_id = '" . (int) $comments_id . "'", $con);
 	}
 
 	/*
@@ -5381,8 +5864,8 @@ class wms_core
 	*/
 	public function deleteGallery($con, $gallery_id)
 	{
-		mysql_query("DELETE FROM tbl_gallery_category where gallery_id = '" . (int)$gallery_id . "'", $con);
-		mysql_query("DELETE FROM tbl_gallery_images where category_id = '" . (int)$gallery_id . "'", $con);
+		mysql_query("DELETE FROM tbl_gallery_category where gallery_id = '" . (int) $gallery_id . "'", $con);
+		mysql_query("DELETE FROM tbl_gallery_images where category_id = '" . (int) $gallery_id . "'", $con);
 	}
 
 	/*
@@ -5390,7 +5873,7 @@ class wms_core
 	*/
 	public function deleteCMS($con, $cms_id)
 	{
-		mysql_query("DELETE FROM `tbl_cms` WHERE cms_id = " . (int)$cms_id, $con);
+		mysql_query("DELETE FROM `tbl_cms` WHERE cms_id = " . (int) $cms_id, $con);
 	}
 
 	/*
@@ -5463,7 +5946,7 @@ class wms_core
 			}
 		}
 		if ($gallery_id > 0) {
-			mysql_query("DELETE FROM  tbl_gallery_images where category_id = '" . (int)$gallery_id . "'", $con);
+			mysql_query("DELETE FROM  tbl_gallery_images where category_id = '" . (int) $gallery_id . "'", $con);
 		}
 		return $gallery_id;
 	}
@@ -5519,7 +6002,7 @@ class wms_core
 	public function getAllGalleryImagesByCategoryId($con, $category_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_gallery_images WHERE category_id = " . (int)$category_id . " ORDER BY sort_order ASC", $con);
+		$result = mysql_query("SELECT * FROM tbl_gallery_images WHERE category_id = " . (int) $category_id . " ORDER BY sort_order ASC", $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$image = '';
 			if ($row['image_url'] != '') {
@@ -5537,7 +6020,7 @@ class wms_core
 	public function getGalleryInformationById($con, $category_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_gallery_category WHERE gallery_id = " . (int)$category_id . " ORDER BY gallery_name ASC", $con);
+		$result = mysql_query("SELECT * FROM tbl_gallery_category WHERE gallery_id = " . (int) $category_id . " ORDER BY gallery_name ASC", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = array(
 				'gallery_id'	=> $row['gallery_id'],
@@ -5568,13 +6051,13 @@ class wms_core
 				`m_present_address`='" . $data['present_address'] . "',`m_permanent_address`='" . $data['permanent_address'] . "',
 				`m_notes`='" . $data['notes'] . "',`m_image`='" . $image_url . "',designation_id='" . $data['designation'] . "',
 				status='" . $data['status'] . "',joining_date='" . $join_date . "'
-				WHERE mechanics_id='" . (int)$data['mechanics_id'] . "'";
+				WHERE mechanics_id='" . (int) $data['mechanics_id'] . "'";
 				$result = mysql_query($query, $con);
 			}
 		}
 
 		if (!$result) {
-			var_dump($data);
+			// var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
@@ -5606,13 +6089,13 @@ class wms_core
 				`c_password`='" . $data['txtCPassword'] . "',`image`='" . $image_url . "' ,
 				`type_client`='" . $data['type_client'] . "', `civilite_client`='" . $data['civilite_client'] . "', 
 				`princ_tel`='" . $data['princ_tel'] . "', `tel_wa`='" . $data['tel_wa'] . "'
-				WHERE customer_id='" . (int)$data['customer_id'] . "'";
+				WHERE customer_id='" . (int) $data['customer_id'] . "'";
 				$result = mysql_query($query, $con);
 			}
 		}
 
 		if (!$result) {
-			var_dump($data);
+			// var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
@@ -5628,7 +6111,7 @@ class wms_core
 			if ($data['work_id'] == '0') {
 				mysql_query("INSERT INTO tbl_daily_work(mechanic_id,work_date, total_hour, work_details) values('$data[mechanic_id]','" . $this->datepickerDateToMySqlDate($data['txtWorkDate']) . "','$data[txtTotalHour]','$data[txtWorkDetails]')", $con);
 			} else {
-				mysql_query("UPDATE `tbl_daily_work` SET `work_date`='" . $this->datepickerDateToMySqlDate($data['txtWorkDate']) . "',`total_hour`='" . $data['txtTotalHour'] . "',`work_details`='" . $data['txtWorkDetails'] . "' WHERE work_id='" . (int)$data['work_id'] . "'", $con);
+				mysql_query("UPDATE `tbl_daily_work` SET `work_date`='" . $this->datepickerDateToMySqlDate($data['txtWorkDate']) . "',`total_hour`='" . $data['txtTotalHour'] . "',`work_details`='" . $data['txtWorkDetails'] . "' WHERE work_id='" . (int) $data['work_id'] . "'", $con);
 			}
 		}
 	}
@@ -5639,7 +6122,7 @@ class wms_core
 	public function updateAdminUserProfile($con, $data, $image_url)
 	{
 		if (!empty($data)) {
-			mysql_query("UPDATE `tbl_admin` SET `name`='" . $data['txtUserName'] . "',`email`='" . $data['txtEmail'] . "',`password`='" . $data['txtPassword'] . "',`image`='" . $image_url . "' WHERE user_id = '" . (int)$data['hdnUserId'] . "'", $con);
+			mysql_query("UPDATE `tbl_admin` SET `name`='" . $data['txtUserName'] . "',`email`='" . $data['txtEmail'] . "',`password`='" . $data['txtPassword'] . "',`image`='" . $image_url . "' WHERE user_id = '" . (int) $data['hdnUserId'] . "'", $con);
 		}
 	}
 
@@ -5649,7 +6132,7 @@ class wms_core
 	public function updateMechanicesUserProfile($con, $data, $image_url)
 	{
 		if (!empty($data)) {
-			mysql_query("UPDATE `tbl_add_mechanics` SET `m_name`='" . $data['txtUserName'] . "',`m_email`='" . $data['txtEmail'] . "',`m_password`='" . $data['txtPassword'] . "',`m_image`='" . $image_url . "' WHERE mechanics_id = '" . (int)$data['hdnUserId'] . "'", $con);
+			mysql_query("UPDATE `tbl_add_mechanics` SET `m_name`='" . $data['txtUserName'] . "',`m_email`='" . $data['txtEmail'] . "',`m_password`='" . $data['txtPassword'] . "',`m_image`='" . $image_url . "' WHERE mechanics_id = '" . (int) $data['hdnUserId'] . "'", $con);
 		}
 	}
 
@@ -5659,7 +6142,7 @@ class wms_core
 	public function updateCustomerUserProfile($con, $data, $image_url)
 	{
 		if (!empty($data)) {
-			mysql_query("UPDATE `tbl_add_customer` SET `c_name`='" . $data['txtUserName'] . "',`c_email`='" . $data['txtEmail'] . "',`c_password`='" . $data['txtPassword'] . "',`image`='" . $image_url . "' WHERE customer_id = '" . (int)$data['hdnUserId'] . "'", $con);
+			mysql_query("UPDATE `tbl_add_customer` SET `c_name`='" . $data['txtUserName'] . "',`c_email`='" . $data['txtEmail'] . "',`c_password`='" . $data['txtPassword'] . "',`image`='" . $image_url . "' WHERE customer_id = '" . (int) $data['hdnUserId'] . "'", $con);
 		}
 	}
 
@@ -5709,12 +6192,12 @@ class wms_core
 	{
 		if (!empty($data)) {
 
-				$query = "INSERT INTO tbl_add_reception(r_name,r_email,r_password) 
+			$query = "INSERT INTO tbl_add_reception(r_name,r_email,r_password) 
 				values('$data[txtSName]','$data[txtSEmail]','$data[txtSPassword]')";
-				$result = mysql_query($query, $con);
+			$result = mysql_query($query, $con);
 
 			if (!$result) {
-				var_dump($data);
+				// var_dump($data);
 				$message  = 'Invalid query: ' . mysql_error() . "\n";
 				$message .= 'Whole query: ' . $query;
 				die($message);
@@ -5729,21 +6212,21 @@ class wms_core
 	{
 		if (!empty($data)) {
 			$parts_id = $data['parts_id'];
-			if (!empty($data['ddl_e_parts']) && (int)$data['ddl_e_parts'] > 0) {
+			if (!empty($data['ddl_e_parts']) && (int) $data['ddl_e_parts'] > 0) {
 				//buy exisiting
 				//insert into putchase invoice table
 				$parts_id = $data['ddl_e_parts'];
 				mysql_query("INSERT INTO tbl_parts_stock(invoice_id,parts_id,parts_name,supplier_id,manufacturer_id,parts_condition,parts_buy_price,parts_quantity,parts_sku,parts_warranty,total_amount,given_amount,pending_amount,parts_image,parts_added_date) values('$data[invoice_id]','$parts_id','$data[parts_names]','$data[ddl_supplier]','$data[ddl_load_manufracturer]','$data[txtCondition]','$data[buy_prie]','$data[parts_quantity]','$data[parts_sku]','$data[parts_warranty]','$data[total_amount]','$data[given_amount]','$data[pending_amount]','$image_url','" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "')", $con);
 				$stock_table = $this->getPartsStockStatusFromStockTable($con, $parts_id);
 				if (!empty($stock_table)) {
-					$qty = (int)$stock_table['quantity'] + (int)$data['parts_quantity'];
-					mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . (int)$qty . "' WHERE parts_id = '" . (int)$parts_id . "'", $con);
+					$qty = (int) $stock_table['quantity'] + (int) $data['parts_quantity'];
+					mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . (int) $qty . "' WHERE parts_id = '" . (int) $parts_id . "'", $con);
 				}
 			} else {
 				$parts_id = $data['parts_id'];
 				if ($parts_id == '0') {
 					//insert into stock table
-					mysql_query("INSERT INTO `tbl_parts_stock_manage`(`parts_id`, `parts_name`, `parts_image`, `part_no`, `price`, `condition`, `parts_warranty`, `supplier_id`, `manufacturer_id`,`quantity`) VALUES (" . (int)$parts_id . ",'" . $data['parts_names'] . "','" . $image_url . "','" . $data['parts_sku'] . "','" . $data['parts_sell_price'] . "','" . $data['txtCondition'] . "','" . $data['parts_warranty'] . "','" . $data['ddl_supplier'] . "','" . $data['ddl_load_manufracturer'] . "','" . $data['parts_quantity'] . "')", $con);
+					mysql_query("INSERT INTO `tbl_parts_stock_manage`(`parts_id`, `parts_name`, `parts_image`, `part_no`, `price`, `condition`, `parts_warranty`, `supplier_id`, `manufacturer_id`,`quantity`) VALUES (" . (int) $parts_id . ",'" . $data['parts_names'] . "','" . $image_url . "','" . $data['parts_sku'] . "','" . $data['parts_sell_price'] . "','" . $data['txtCondition'] . "','" . $data['parts_warranty'] . "','" . $data['ddl_supplier'] . "','" . $data['ddl_load_manufracturer'] . "','" . $data['parts_quantity'] . "')", $con);
 
 					$parts_id = mysql_insert_id();
 
@@ -5752,27 +6235,27 @@ class wms_core
 				} else {
 					mysql_query("UPDATE `tbl_parts_stock` SET `parts_name`='" . $data['parts_names'] . "',`supplier_id`='" . $data['ddl_supplier'] . "',`manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`parts_condition`='" . $data['txtCondition'] . "',`parts_buy_price`='" . $data['buy_prie'] . "',`parts_quantity`='" . $data['parts_quantity'] . "',`parts_sku`='" . $data['parts_sku'] . "',`parts_warranty`='" . $data['parts_warranty'] . "',`total_amount`='" . $data['total_amount'] . "',`given_amount`='" . $data['given_amount'] . "',`pending_amount`='" . $data['pending_amount'] . "',`parts_image`='" . $image_url . "',`parts_added_date`='" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "' WHERE invoice_id='" . trim($data['invoice_id']) . "'", $con);
 
-					if ((int)$parts_id > 0) {
+					if ((int) $parts_id > 0) {
 						$old_qty = $data['old_qty'];
 						$new_qty = $data['parts_quantity'];
 						$stock_table = $this->getPartsStockStatusFromStockTable($con, $parts_id);
 						if (!empty($stock_table)) {
-							$current_qty = (int)$stock_table['quantity'];
-							$current_qty = (int)$current_qty - (int)$old_qty;
-							$current_qty = (int)$current_qty + (int)$new_qty;
+							$current_qty = (int) $stock_table['quantity'];
+							$current_qty = (int) $current_qty - (int) $old_qty;
+							$current_qty = (int) $current_qty + (int) $new_qty;
 							//update stock table
 							//$this->saveUpdatePartsVirtualStockTable($con, $parts_id, $current_qty, 'u');
-							mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . (int)$current_qty . "' WHERE parts_id = '" . (int)$parts_id . "'", $con);
+							mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . (int) $current_qty . "' WHERE parts_id = '" . (int) $parts_id . "'", $con);
 						}
 					}
 				}
 			}
 			//clear filter tabale for this parts
-			mysql_query("DELETE FROM `tbl_parts_fit_data` WHERE parts_id = " . (int)$parts_id, $con);
+			mysql_query("DELETE FROM `tbl_parts_fit_data` WHERE parts_id = " . (int) $parts_id, $con);
 			//add again new
 			if (isset($data['partsfilter']) && $data['partsfilter'] != '' && $parts_id > 0) {
 				foreach ($data['partsfilter'] as $partsdata) {
-					mysql_query("INSERT INTO tbl_parts_fit_data SET parts_id = '" . (int)$parts_id . "',make_id = '" . (int)$partsdata['make'] . "',model_id = '" . (int)$partsdata['model'] . "',year_id = '" . (int)$partsdata['year'] . "'", $con);
+					mysql_query("INSERT INTO tbl_parts_fit_data SET parts_id = '" . (int) $parts_id . "',make_id = '" . (int) $partsdata['make'] . "',model_id = '" . (int) $partsdata['model'] . "',year_id = '" . (int) $partsdata['year'] . "'", $con);
 				}
 			}
 		}
@@ -5786,12 +6269,12 @@ class wms_core
 	{
 		$parts_id = $data['parts_id'];
 		if (!empty($data)) {
-			mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . $data['parts_quantity'] . "',`status`='" . $data['ddl_status'] . "' WHERE parts_id = '" . (int)$parts_id . "'", $con);
+			mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . $data['parts_quantity'] . "',`status`='" . $data['ddl_status'] . "' WHERE parts_id = '" . (int) $parts_id . "'", $con);
 		}
-		mysql_query("DELETE FROM `tbl_parts_fit_data` WHERE parts_id = " . (int)$parts_id, $con);
+		mysql_query("DELETE FROM `tbl_parts_fit_data` WHERE parts_id = " . (int) $parts_id, $con);
 		if (isset($data['partsfilter']) && $data['partsfilter'] != '' && $parts_id > 0) {
 			foreach ($data['partsfilter'] as $partsdata) {
-				mysql_query("INSERT INTO tbl_parts_fit_data SET parts_id = '" . (int)$parts_id . "',make_id = '" . (int)$partsdata['make'] . "',model_id = '" . (int)$partsdata['model'] . "',year_id = '" . (int)$partsdata['year'] . "'", $con);
+				mysql_query("INSERT INTO tbl_parts_fit_data SET parts_id = '" . (int) $parts_id . "',make_id = '" . (int) $partsdata['make'] . "',model_id = '" . (int) $partsdata['model'] . "',year_id = '" . (int) $partsdata['year'] . "'", $con);
 			}
 		}
 	}
@@ -5802,7 +6285,7 @@ class wms_core
 	public function getPartsStockStatusFromStockTable($con, $parts_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_parts_stock_manage WHERE parts_id=" . (int)$parts_id, $con);
+		$result = mysql_query("SELECT * FROM tbl_parts_stock_manage WHERE parts_id=" . (int) $parts_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -5812,7 +6295,7 @@ class wms_core
 	public function getPieceStockStatusFromStockTable($con, $piece_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_piece_stock WHERE piece_stock_id=" . (int)$piece_id, $con);
+		$result = mysql_query("SELECT * FROM tbl_piece_stock WHERE piece_stock_id=" . (int) $piece_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -5825,7 +6308,7 @@ class wms_core
 	public function saveUpdatePartsVirtualStockTable($con, $parts_id, $stock, $token, $data)
 	{
 		if ($token == 'u') {
-			mysql_query("UPDATE `tbl_parts_stock_manage` SET `stock`='" . (int)$stock . "' WHERE parts_id='" . (int)$parts_id . "'", $con);
+			mysql_query("UPDATE `tbl_parts_stock_manage` SET `stock`='" . (int) $stock . "' WHERE parts_id='" . (int) $parts_id . "'", $con);
 		} else { }
 	}
 
@@ -5835,7 +6318,7 @@ class wms_core
 	public function getAllPartsFitDate($con, $parts_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_parts_fit_data WHERE parts_id=" . (int)$parts_id, $con);
+		$result = mysql_query("SELECT * FROM tbl_parts_fit_data WHERE parts_id=" . (int) $parts_id, $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -5906,7 +6389,7 @@ class wms_core
 		}
 
 		if (!$result) {
-			var_dump($data);
+			// var_dump($data);
 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 			$message .= 'Whole query: ' . $query;
 			die($message);
@@ -5919,7 +6402,7 @@ class wms_core
 	public function saveUpdateMechanicsPageInformation($con, $data)
 	{
 		if (!empty($data)) {
-			mysql_query("DELETE FROM tbl_mechanics_page where mechanic_id = '" . (int)$data['mechanics_id'] . "'", $con);
+			mysql_query("DELETE FROM tbl_mechanics_page where mechanic_id = '" . (int) $data['mechanics_id'] . "'", $con);
 			$show_header = 0;
 			if (isset($data['chkPageTitle']) && $data['chkPageTitle'] == 'on') {
 				$show_header = 1;
@@ -5937,7 +6420,7 @@ class wms_core
 		if (!empty($data)) {
 			$fixed_url = '';
 			$cmspage = 0;
-			if (isset($data['rbCMSPage']) && is_numeric($data['rbCMSPage']) && (int)$data['rbCMSPage'] > 0) {
+			if (isset($data['rbCMSPage']) && is_numeric($data['rbCMSPage']) && (int) $data['rbCMSPage'] > 0) {
 				$cmspage = $data['rbCMSPage'];
 			} else if (isset($data['rbCMSPage']) && is_string($data['rbCMSPage']) && !empty($data['rbCMSPage'])) {
 				$fixed_url = $data['rbCMSPage'];
@@ -5945,7 +6428,7 @@ class wms_core
 			if ($data['menu_id'] == '0') {
 				mysql_query("INSERT INTO tbl_menu(parent_id,menu_name,url_slug,menu_sort_order,cms_page,fixed_page_url,menu_status) values('$data[txtParent]','$data[txtMenuname]','$data[txtParentUrlSlug]','$data[txtSortodder]','$cmspage','$fixed_url','$data[txtStatus]')", $con);
 			} else {
-				mysql_query("UPDATE `tbl_menu` SET `parent_id`='" . $data['txtParent'] . "',`menu_name`='" . $data['txtMenuname'] . "',`url_slug`='" . $data['txtParentUrlSlug'] . "',`menu_sort_order`='" . $_POST['txtSortodder'] . "',`menu_status`='" . $_POST['txtStatus'] . "',`cms_page`='" . $cmspage . "',`fixed_page_url`='" . $fixed_url . "' WHERE menu_id='" . (int)$data['menu_id'] . "'", $con);
+				mysql_query("UPDATE `tbl_menu` SET `parent_id`='" . $data['txtParent'] . "',`menu_name`='" . $data['txtMenuname'] . "',`url_slug`='" . $data['txtParentUrlSlug'] . "',`menu_sort_order`='" . $_POST['txtSortodder'] . "',`menu_status`='" . $_POST['txtStatus'] . "',`cms_page`='" . $cmspage . "',`fixed_page_url`='" . $fixed_url . "' WHERE menu_id='" . (int) $data['menu_id'] . "'", $con);
 			}
 		}
 	}
@@ -5970,7 +6453,7 @@ class wms_core
 	*/
 	public function deleteMechanics($con, $mechanics_id)
 	{
-		mysql_query("DELETE FROM tbl_add_mechanics where mechanics_id = '" . (int)$mechanics_id . "'", $con);
+		mysql_query("DELETE FROM tbl_add_mechanics where mechanics_id = '" . (int) $mechanics_id . "'", $con);
 	}
 
 	/*
@@ -5978,7 +6461,7 @@ class wms_core
 	*/
 	public function deleteManufacturer($con, $manufacturer_id)
 	{
-		mysql_query("DELETE FROM `tbl_manufacturer` WHERE manufacturer_id = " . (int)$manufacturer_id, $con);
+		mysql_query("DELETE FROM `tbl_manufacturer` WHERE manufacturer_id = " . (int) $manufacturer_id, $con);
 	}
 
 	/*
@@ -5986,7 +6469,7 @@ class wms_core
 	*/
 	public function deleteMenu($con, $menu_id)
 	{
-		mysql_query("DELETE FROM `tbl_menu` WHERE menu_id = " . (int)$menu_id, $con);
+		mysql_query("DELETE FROM `tbl_menu` WHERE menu_id = " . (int) $menu_id, $con);
 	}
 
 	/*
@@ -5995,7 +6478,7 @@ class wms_core
 	public function getMechanicsInfoByMechanicsId($con, $mechanics_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_user where usr_id = '" . (int)$mechanics_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_add_user where usr_id = '" . (int) $mechanics_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6008,7 +6491,7 @@ class wms_core
 	public function getCustomerInfoByCustomerId($con, $customer_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_customer where customer_id = '" . (int)$customer_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_add_customer where customer_id = '" . (int) $customer_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6021,7 +6504,7 @@ class wms_core
 	public function getWorkStatusInfoById($con, $w_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_daily_work where work_id = '" . (int)$w_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_daily_work where work_id = '" . (int) $w_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6034,7 +6517,7 @@ class wms_core
 	public function getManufacturerInfoByManufacturerId($con, $manufacturer_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_manufacturer where manufacturer_id = '" . (int)$manufacturer_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_manufacturer where manufacturer_id = '" . (int) $manufacturer_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6047,7 +6530,7 @@ class wms_core
 	public function getBuyCarInfoById($con, $buycar_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_buycar where buycar_id = '" . (int)$buycar_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_buycar where buycar_id = '" . (int) $buycar_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6060,7 +6543,7 @@ class wms_core
 	public function getMechanicSlaeryInfoBySaleryId($con, $salery_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT *,m.m_name FROM `tbl_mcncsslary` ms inner join tbl_add_mechanics m on m.mechanics_id = ms.mechanics_id where ms.m_salary_id = '" . (int)$salery_id . "'", $con);
+		$result = mysql_query("SELECT *,m.m_name FROM `tbl_mcncsslary` ms inner join tbl_add_mechanics m on m.mechanics_id = ms.mechanics_id where ms.m_salary_id = '" . (int) $salery_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6070,7 +6553,7 @@ class wms_core
 	public function getReceptonnisteInfoByReceptonnistId($con, $receptionniste_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_reception where reception_id=" . (int)$receptionniste_id, $con);
+		$result = mysql_query("SELECT * FROM tbl_add_reception where reception_id=" . (int) $receptionniste_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6083,7 +6566,7 @@ class wms_core
 	public function getCustomerCarInfoByCardId($con, $car_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT *,m.make_name,mo.model_name,y.year_name FROM tbl_add_car c left join tbl_make m on m.make_id = c.car_make left join tbl_model mo on mo.model_id = c.car_model left join tbl_year y on y.year_id = c.year where c.car_id = " . (int)$car_id, $con);
+		$result = mysql_query("SELECT *,m.make_name,mo.model_name,y.year_name FROM tbl_add_car c left join tbl_make m on m.make_id = c.car_make left join tbl_model mo on mo.model_id = c.car_model left join tbl_year y on y.year_id = c.year where c.car_id = " . (int) $car_id, $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6096,7 +6579,7 @@ class wms_core
 	public function getRepairCarInfoByRepairCarId($con, $car_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_car where car_id = '" . (int)$car_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_add_car where car_id = '" . (int) $car_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6109,7 +6592,7 @@ class wms_core
 	public function getMenuInfoByMenuId($con, $menu_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_menu where menu_id = '" . (int)$menu_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_menu where menu_id = '" . (int) $menu_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6122,7 +6605,7 @@ class wms_core
 	public function getMechanicsPageInfoByMechanicsId($con, $mechanics_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_mechanics_page where mechanic_id = '" . (int)$mechanics_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_mechanics_page where mechanic_id = '" . (int) $mechanics_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6292,7 +6775,7 @@ class wms_core
 	public function getCMSDetailsByCMSId($con, $cms_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_cms where cms_id='" . (int)$cms_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_cms where cms_id='" . (int) $cms_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6373,7 +6856,7 @@ class wms_core
 	public function getAuthorDataByAuthorId($con, $authod_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_author where author_id = '" . (int)$authod_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_author where author_id = '" . (int) $authod_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6385,7 +6868,7 @@ class wms_core
 	*/
 	public function deleteAuthor($con, $author_id)
 	{
-		mysql_query("DELETE FROM `tbl_author` WHERE author_id = " . (int)$author_id, $con);
+		mysql_query("DELETE FROM `tbl_author` WHERE author_id = " . (int) $author_id, $con);
 	}
 
 	/*
@@ -6397,7 +6880,7 @@ class wms_core
 			if ($data['author_id'] == '0') {
 				mysql_query("INSERT INTO tbl_author(author_name) values('$data[author_name]')", $con);
 			} else {
-				mysql_query("UPDATE `tbl_author` SET `author_name`='" . $data['author_name'] . "' WHERE author_id='" . (int)$data['author_id'] . "'", $con);
+				mysql_query("UPDATE `tbl_author` SET `author_name`='" . $data['author_name'] . "' WHERE author_id='" . (int) $data['author_id'] . "'", $con);
 			}
 		}
 	}
@@ -6415,7 +6898,7 @@ class wms_core
 			if ($data['category_id'] == '0') {
 				mysql_query("INSERT INTO tbl_category(category_name,seo_url) values('$data[category_name]','$seo_url')", $con);
 			} else {
-				mysql_query("UPDATE `tbl_category` SET `category_name`='" . $data['category_name'] . "',`seo_url`='" . $seo_url . "' WHERE category_id='" . (int)$data['category_id'] . "'", $con);
+				mysql_query("UPDATE `tbl_category` SET `category_name`='" . $data['category_name'] . "',`seo_url`='" . $seo_url . "' WHERE category_id='" . (int) $data['category_id'] . "'", $con);
 			}
 		}
 	}
@@ -6424,7 +6907,7 @@ class wms_core
 	*/
 	public function deleteCategory($con, $category_id)
 	{
-		mysql_query("DELETE FROM `tbl_category` WHERE category_id = " . (int)$category_id, $con);
+		mysql_query("DELETE FROM `tbl_category` WHERE category_id = " . (int) $category_id, $con);
 	}
 
 	/*
@@ -6433,7 +6916,7 @@ class wms_core
 	public function getCategoryDataByCategoryId($con, $category_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_category where category_id = '" . (int)$category_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_category where category_id = '" . (int) $category_id . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6502,7 +6985,7 @@ class wms_core
 	*/
 	public function setCarRequestStatus($con, $car_request_id)
 	{
-		mysql_query("UPDATE tbl_car_request set status = 1 WHERE car_request_id = " . (int)$car_request_id, $con);
+		mysql_query("UPDATE tbl_car_request set status = 1 WHERE car_request_id = " . (int) $car_request_id, $con);
 	}
 
 	/*
@@ -6510,7 +6993,7 @@ class wms_core
 	*/
 	public function setContactStatus($con, $contact_id)
 	{
-		mysql_query("UPDATE tbl_contact set status = 1 WHERE contact_id = " . (int)$contact_id, $con);
+		mysql_query("UPDATE tbl_contact set status = 1 WHERE contact_id = " . (int) $contact_id, $con);
 	}
 
 	/*
@@ -6520,8 +7003,8 @@ class wms_core
 	{
 		$data = array();
 		$result = '';
-		if ((int)$aid > 0) {
-			$result = mysql_query("SELECT * FROM tbl_apointment WHERE apointment_id = " . (int)$aid, $con);
+		if ((int) $aid > 0) {
+			$result = mysql_query("SELECT * FROM tbl_apointment WHERE apointment_id = " . (int) $aid, $con);
 		} else {
 			$result = mysql_query("SELECT * FROM tbl_apointment order by apointment_id DESC", $con);
 		}
@@ -6538,8 +7021,8 @@ class wms_core
 	{
 		$data = array();
 		$result = '';
-		if ((int)$rid > 0) {
-			$result = mysql_query("SELECT *,car_name,car_image FROM tbl_car_request cr INNER JOIN tbl_buycar bc ON bc.buycar_id = cr.car_id WHERE car_request_id = " . (int)$rid, $con);
+		if ((int) $rid > 0) {
+			$result = mysql_query("SELECT *,car_name,car_image FROM tbl_car_request cr INNER JOIN tbl_buycar bc ON bc.buycar_id = cr.car_id WHERE car_request_id = " . (int) $rid, $con);
 		} else {
 			$result = mysql_query("SELECT *,car_name,car_image FROM tbl_car_request cr INNER JOIN tbl_buycar bc ON bc.buycar_id = cr.car_id order by car_request_id DESC", $con);
 		}
@@ -6556,8 +7039,8 @@ class wms_core
 	{
 		$data = array();
 		$result = '';
-		if ((int)$cid > 0) {
-			$result = mysql_query("SELECT * FROM tbl_contact WHERE contact_id = " . (int)$cid, $con);
+		if ((int) $cid > 0) {
+			$result = mysql_query("SELECT * FROM tbl_contact WHERE contact_id = " . (int) $cid, $con);
 		} else {
 			$result = mysql_query("SELECT * FROM tbl_contact order by contact_id DESC", $con);
 		}
@@ -6692,7 +7175,7 @@ class wms_core
 	public function getNewsDataByNewsId($con, $newsid)
 	{
 		$data = array();
-		$result = mysql_query("SELECT *,c.category_id,b.seo_url as blog_seo_url,c.seo_url as category_seo_url FROM tbl_blog b LEFT JOIN tbl_category c ON c.category_id = b.blog_cat where b.blog_id = '" . (int)$newsid . "'", $con);
+		$result = mysql_query("SELECT *,c.category_id,b.seo_url as blog_seo_url,c.seo_url as category_seo_url FROM tbl_blog b LEFT JOIN tbl_category c ON c.category_id = b.blog_cat where b.blog_id = '" . (int) $newsid . "'", $con);
 		if ($row = mysql_fetch_assoc($result)) {
 			$data = $row;
 		}
@@ -6909,7 +7392,7 @@ class wms_core
 	*/
 	public function deleteNews($con, $newsid)
 	{
-		mysql_query("DELETE FROM `tbl_blog` WHERE blog_id = " . (int)$newsid, $con);
+		mysql_query("DELETE FROM `tbl_blog` WHERE blog_id = " . (int) $newsid, $con);
 	}
 
 	/*
@@ -6917,7 +7400,7 @@ class wms_core
 	*/
 	public function deleteApointmentRequest($con, $apointment_id)
 	{
-		mysql_query("DELETE FROM `tbl_apointment` WHERE apointment_id = " . (int)$apointment_id, $con);
+		mysql_query("DELETE FROM `tbl_apointment` WHERE apointment_id = " . (int) $apointment_id, $con);
 	}
 
 	/*
@@ -6925,7 +7408,7 @@ class wms_core
 	*/
 	public function deleteCarRequest($con, $car_request_id)
 	{
-		mysql_query("DELETE FROM `tbl_car_request` WHERE car_request_id = " . (int)$car_request_id, $con);
+		mysql_query("DELETE FROM `tbl_car_request` WHERE car_request_id = " . (int) $car_request_id, $con);
 	}
 
 	/*
@@ -6933,7 +7416,7 @@ class wms_core
 	*/
 	public function deleteContactRequest($con, $contact_id)
 	{
-		mysql_query("DELETE FROM `tbl_contact` WHERE contact_id = " . (int)$contact_id, $con);
+		mysql_query("DELETE FROM `tbl_contact` WHERE contact_id = " . (int) $contact_id, $con);
 	}
 
 	/*
@@ -6942,8 +7425,8 @@ class wms_core
 	public function saveUpdateCarColor($con, $data)
 	{
 		if (!empty($data)) {
-			if ((int)$data['submit_token'] > 0) {
-				mysql_query("UPDATE tbl_carcolor SET color_name = '" . trim($data['txtColorname']) . "' WHERE color_id = " . (int)$data['submit_token'], $con);
+			if ((int) $data['submit_token'] > 0) {
+				mysql_query("UPDATE tbl_carcolor SET color_name = '" . trim($data['txtColorname']) . "' WHERE color_id = " . (int) $data['submit_token'], $con);
 			} else {
 				mysql_query("INSERT INTO tbl_carcolor(color_name) values('$data[txtColorname]')", $con);
 			}
@@ -6956,8 +7439,8 @@ class wms_core
 	public function saveUpdateCarDoor($con, $data)
 	{
 		if (!empty($data)) {
-			if ((int)$data['submit_token'] > 0) {
-				mysql_query("UPDATE tbl_cardoor SET door_name = '" . $data['txtDoor'] . "' WHERE door_id = " . (int)$data['submit_token'], $con);
+			if ((int) $data['submit_token'] > 0) {
+				mysql_query("UPDATE tbl_cardoor SET door_name = '" . $data['txtDoor'] . "' WHERE door_id = " . (int) $data['submit_token'], $con);
 			} else {
 				mysql_query("INSERT INTO tbl_cardoor(door_name) values('$data[txtDoor]')", $con);
 			}
@@ -6970,8 +7453,8 @@ class wms_core
 	public function saveUpdateMakeSetup($con, $data)
 	{
 		if (!empty($data)) {
-			if ((int)$data['submit_token'] > 0) {
-				mysql_query("UPDATE tbl_make SET make_name = '" . trim($data['txtMakeName']) . "' WHERE make_id = " . (int)$data['submit_token'], $con);
+			if ((int) $data['submit_token'] > 0) {
+				mysql_query("UPDATE tbl_make SET make_name = '" . trim($data['txtMakeName']) . "' WHERE make_id = " . (int) $data['submit_token'], $con);
 			} else {
 				mysql_query("INSERT INTO tbl_make(make_name) values('$data[txtMakeName]')", $con);
 			}
@@ -6984,8 +7467,8 @@ class wms_core
 	public function saveUpdateModelSetup($con, $data)
 	{
 		if (!empty($data)) {
-			if ((int)$data['submit_token'] > 0) {
-				mysql_query("UPDATE tbl_model SET make_id = '" . $data['ddlMake'] . "', model_name = '" . trim($data['txtModelName']) . "' WHERE model_id = " . (int)$data['submit_token'], $con);
+			if ((int) $data['submit_token'] > 0) {
+				mysql_query("UPDATE tbl_model SET make_id = '" . $data['ddlMake'] . "', model_name = '" . trim($data['txtModelName']) . "' WHERE model_id = " . (int) $data['submit_token'], $con);
 			} else {
 				mysql_query("INSERT INTO tbl_model(make_id, model_name) values('$data[ddlMake]', '$data[txtModelName]')", $con);
 			}
@@ -6998,8 +7481,8 @@ class wms_core
 	public function saveUpdateYearSetup($con, $data)
 	{
 		if (!empty($data)) {
-			if ((int)$data['submit_token'] > 0) {
-				mysql_query("UPDATE tbl_year SET make_id = '" . $data['ddlMake'] . "',model_id = '" . $data['ddlModel'] . "', year_name = '" . trim($data['txtYear']) . "' WHERE year_id = " . (int)$data['submit_token'], $con);
+			if ((int) $data['submit_token'] > 0) {
+				mysql_query("UPDATE tbl_year SET make_id = '" . $data['ddlMake'] . "',model_id = '" . $data['ddlModel'] . "', year_name = '" . trim($data['txtYear']) . "' WHERE year_id = " . (int) $data['submit_token'], $con);
 			} else {
 				mysql_query("INSERT INTO tbl_year(make_id, model_id, year_name) values('$data[ddlMake]', '$data[ddlModel]', '$data[txtYear]')", $con);
 			}
@@ -7012,7 +7495,7 @@ class wms_core
 	public function getCarMakeDataByMakeId($con, $make_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_make where make_id = '" . (int)$make_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_make where make_id = '" . (int) $make_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -7025,7 +7508,7 @@ class wms_core
 	public function getCarModelDataByModelId($con, $model_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_model where model_id = '" . (int)$model_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_model where model_id = '" . (int) $model_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -7038,7 +7521,7 @@ class wms_core
 	public function getCarYearDataByYearId($con, $year_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_year where year_id = '" . (int)$year_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_year where year_id = '" . (int) $year_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -7051,7 +7534,7 @@ class wms_core
 	public function getCarColorDataByColorId($con, $color_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_carcolor where color_id = '" . (int)$color_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_carcolor where color_id = '" . (int) $color_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}
@@ -7064,7 +7547,7 @@ class wms_core
 	public function getCarDoorDataByDoorId($con, $door_id)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_cardoor where door_id = '" . (int)$door_id . "'", $con);
+		$result = mysql_query("SELECT * FROM tbl_cardoor where door_id = '" . (int) $door_id . "'", $con);
 		if ($row = mysql_fetch_array($result)) {
 			$data = $row;
 		}

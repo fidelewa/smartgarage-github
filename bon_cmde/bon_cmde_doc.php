@@ -116,7 +116,7 @@ if (!empty($row) && count($row) > 0) { ?>
                     <div class="row" id="content_1">
                         <div class="col-sm-6" style="text-align:center;">
                             <p style="font-size:10pt;">
-                                Date : <?php echo $row['boncmde_date_creation']; ?>
+                                Date : <?php echo date_format(date_create($row['boncmde_date_creation']), 'd/m/Y'); ?>
                             </p>
                         </div>
                         <div class="col-sm-6" style="text-align:center;">

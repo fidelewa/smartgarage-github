@@ -29,6 +29,8 @@ include('config.php');
 	<script type='text/javascript' src="<?php echo WEB_URL; ?>pointage/js/html2canvas.js"></script>
 	<script type="text/javascript" src="<?php echo WEB_URL; ?>pointage/js/date_heure.js"></script>
 	<script src="<?php echo WEB_URL; ?>pointage/js/json2.min.js"></script>
+	<script src="<?php echo WEB_URL; ?>dist/js/common.js"></script>
+	<script type="text/javascript" src="<?php echo WEB_URL; ?>dist/js/typeahead.js"></script>
 
 </head>
 

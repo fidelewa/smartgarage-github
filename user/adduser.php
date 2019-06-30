@@ -14,8 +14,11 @@ if (isset($_POST) && !empty($_POST)) {
         $image_url = $_POST['img_exist'];
     }
 
-    // var_dump($_POST);
-    // die();
+    // échappement des espaces blancs et des caractères spéciaux lors de la définition du nom de l'utilisateur
+    $_POST['txtUserName'] = mysql_real_escape_string(trim($_POST['txtUserName']));
+
+    // échappement des espaces blancs et des caractères spéciaux lors de la définition du mot de passe de l'utilisateur
+    $_POST['txtUserPassword'] = mysql_real_escape_string(trim($_POST['txtUserPassword']));
 
     // Si l'insertion à réussi
     $wms->saveUpdateUserInformation($link, $_POST, $image_url);

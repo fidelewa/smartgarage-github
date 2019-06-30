@@ -29,14 +29,46 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
     $url = WEB_URL . 'user/listepersonnel.php';
     header("Location: $url");
 }
+
+// Récupération du numéro du mois de la date courante
+
+$dateDuJour = new \Datetime("now");
+$numeroMoisDateJour = $dateDuJour->format('n');
+$AnneeDateJour = $dateDuJour->format('Y');
+
+if ($numeroMoisDateJour == "1") {
+    $dateMoisJour = "Janvier";
+} else if ($numeroMoisDateJour == "2") {
+    $dateMoisJour = "Févier";
+} else if ($numeroMoisDateJour == "3") {
+    $dateMoisJour = "Mars";
+} else if ($numeroMoisDateJour == "4") {
+    $dateMoisJour = "Avril";
+} else if ($numeroMoisDateJour == "5") {
+    $dateMoisJour = "Mai";
+} else if ($numeroMoisDateJour == "6") {
+    $dateMoisJour = "Juin";
+} else if ($numeroMoisDateJour == "7") {
+    $dateMoisJour = "Juillet";
+} else if ($numeroMoisDateJour == "8") {
+    $dateMoisJour = "Août";
+} else if ($numeroMoisDateJour == "9") {
+    $dateMoisJour = "Septembre";
+} else if ($numeroMoisDateJour == "10") {
+    $dateMoisJour = "Octobre";
+} else if ($numeroMoisDateJour == "11") {
+    $dateMoisJour = "Novembre";
+} else if ($numeroMoisDateJour == "12") {
+    $dateMoisJour = "Décembre";
+}
 ?>
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1> Liste de présence du personnel </h1>
+    <h1> Liste de présence du personnel - mois de <?php echo '<b>'.strtoupper($dateMoisJour).' '.$AnneeDateJour.'</b>' ?></h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Liste de présence du personnel</li>
+        <li class="active">Liste de présence du personnel - mois de <?php echo $dateMoisJour; ?> </li>
     </ol>
 </section>
 <!-- Main content -->
@@ -54,30 +86,29 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 <?php echo $msg; ?>
             </div>
-            <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/addpersonnel.php" data-original-title="Ajouter un membre du personnel"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
+            <!-- <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/addpersonnel.php" data-original-title="Ajouter un membre du personnel"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div> -->
             <div class="box box-success">
-                <div class="box-header">
-                    <h3 class="box-title">Liste de présence du personnel</h3>
-                </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+
                     <table class="table sakotable table-bordered table-striped dt-responsive">
                         <thead>
                             <tr>
                                 <th>Nom employé</th>
                                 <th>Date arrivée</th>
-                                <th>Heure d'arrivée</th>
+                                <th>Heure arrivée</th>
                                 <th>Date départ</th>
                                 <th>Heure départ</th>
                                 <th>Nombre d'heures travaillés</th>
-                                <th>Nombre d'heures de retard</th>
+                                <!-- <th>Nombre d'heures de retard</th> -->
                                 <th>Nombre d'heures supplémentaires</th>
                                 <!-- <th>Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $results = $wms->getAllPersoPointage($link);
+
+                            $results = $wms->getAllPersoPointage($link, $numeroMoisDateJour);
 
                             // var_dump($results);
 
@@ -109,8 +140,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                     <td><?php echo $date_depart; ?></td>
                                     <td><?php echo $row['heure_depart']; ?></td>
                                     <td><?php echo $row['nb_heure_work']; ?></td>
-                                    <td><?php echo $row['nb_heure_retard']; ?></td>
                                     <td><?php echo $row['nb_heure_sup']; ?></td>
+                                    <!-- <td><?php echo $row['nb_heure_retard']; ?></td> -->
                                     <!-- <td> -->
                                     <!-- <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#employe_info_modal').modal('show');" data-original-title="Voir la description de l'employé"><i class="fa fa-eye"></i></a> -->
                                     <!-- <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/addpersonnel.php?id=<?php echo $row['per_id']; ?>" data-original-title="Modifier"><i class="fa fa-pencil"></i></a> -->

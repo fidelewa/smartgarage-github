@@ -12,22 +12,6 @@ if (!empty($result_settings)) {
     $address = $result_settings['address'];
 }
 
-// function ctrTechCalculate($date_ctr_tech, $delai_ctr_tech)
-// {
-
-//     // On récupère la date en chaine de caratère que l'on converti en objet DateTime
-//     $datectrtech = DateTime::createFromFormat('d/m/Y', $date_ctr_tech);
-
-//     // Si l'objet récupéré est une instance de la classe DateTime
-//     if ($datectrtech instanceof DateTime) {
-
-//         // On calcul la date du prochain contrôle technique
-//         $dateprochctrtech = $datectrtech->add(new \DateInterval($delai_ctr_tech));
-//     }
-
-//     // On retourne le format chaine de caractère de la date du prochain contrôle technique
-//     return $dateprochctrtech->format('d/m/Y');
-// }
 
 // $row = $wms->getRepairCarDiagnosticInfoByDiagId($link, $_GET['vehi_diag_id'], $_GET['devis_id']);
 $row = $wms->getRepairCarDiagnosticDevisInfoByDiagId($link, $_GET['vehi_diag_id'], $_GET['devis_id']);
@@ -141,7 +125,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
                         </div>
                         <div class="col-md-3 col-md-offset-7">
-                            <p><?php echo $row['date_devis']; ?></p>
+                            <p><?php echo date_format(date_create($row['date_devis']), 'd/m/Y'); ?></p>
                         </div>
                     </div>
                     <div class="row" id="content_1">
@@ -268,7 +252,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                                 <?php $i++;
                                             } ?>
                                             <tr>
-                                                <td colspan="7" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
+                                                <td colspan="6" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
                                                 <td><?php echo $row['main_oeuvre_piece_rechange_devis']; ?></td>
                                             </tr>
                                         </tbody>

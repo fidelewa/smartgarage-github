@@ -118,8 +118,10 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
   <!-- <script src="<?php echo WEB_URL; ?>plugins/datepicker/bootstrap-datepicker.min.js" type="text/javascript"></script> -->
   <!-- <script src="<?php echo WEB_URL; ?>plugins/datepicker/locales/bootstrap-datepicker.fr.js" type="text/javascript"></script> -->
   <script src="<?php echo WEB_URL; ?>dist/js/addcar_reception.js"></script>
+  <!-- <script src="<?php echo WEB_URL; ?>dist/js/personnel_salaire.js"></script> -->
   <!-- <script src="<?php echo WEB_URL; ?>dist/js/adddevis.js"></script> -->
   <script type="text/javascript" src="<?php echo WEB_URL; ?>dist/js/typeahead.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
   <style>
     .typeahead {
       border: 2px solid #FFF;
@@ -612,12 +614,12 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                           echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Présences</span> </a>
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
                     </li>
-                    <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
+                    <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
-                    </li>
+                    </li> -->
                   </ul>
                 </li>
               <?php }
@@ -873,12 +875,12 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                           echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Présences</span> </a>
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
                     </li>
-                    <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
+                    <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
-                    </li>
+                    </li> -->
                   </ul>
                 </li>
               <?php }
@@ -1135,12 +1137,12 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                           echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Présences</span> </a>
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
                     </li>
-                    <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
+                    <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
-                    </li>
+                    </li> -->
                   </ul>
                 </li>
               <?php }
@@ -1396,12 +1398,12 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                           echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Présences</span> </a>
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
                     </li>
-                    <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
+                    <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
-                    </li>
+                    </li> -->
                   </ul>
                 </li>
               <?php }
@@ -1602,11 +1604,11 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                 </li>
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
                                       echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Présences</span> </a>
+                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
                 </li>
-                <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
+                <li class="treeview <?php if ($page_name != '' && $page_name == 'salpersolist') {
                                       echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
+                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/salpersolist.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
                 </li>
               </ul>
             </li>

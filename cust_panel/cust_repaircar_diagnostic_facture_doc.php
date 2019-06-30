@@ -10,23 +10,6 @@ if (!empty($result_settings)) {
     $email = $result_settings['email'];
 }
 
-// function ctrTechCalculate($date_ctr_tech, $delai_ctr_tech)
-// {
-
-//     // On récupère la date en chaine de caratère que l'on converti en objet DateTime
-//     $datectrtech = DateTime::createFromFormat('d/m/Y', $date_ctr_tech);
-
-//     // Si l'objet récupéré est une instance de la classe DateTime
-//     if ($datectrtech instanceof DateTime) {
-
-//         // On calcul la date du prochain contrôle technique
-//         $dateprochctrtech = $datectrtech->add(new \DateInterval($delai_ctr_tech));
-//     }
-
-//     // On retourne le format chaine de caractère de la date du prochain contrôle technique
-//     return $dateprochctrtech->format('d/m/Y');
-// }
-
 // $row = $wms->getRepairCarDiagnosticDevisInfoByDiagId($link, $_GET['vehi_diag_id'], $_GET['devis_id']);
 $row = $wms->getRepairCarDiagnosticFactureInfoByDiagId($link, $_GET['vehi_diag_id'], $_GET['devis_id']);
 
@@ -139,7 +122,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
                         </div>
                         <div class="col-md-3 col-md-offset-7">
-                            <p><?php echo $row['date_facture']; ?></p>
+                            <p><?php echo date_format(date_create($row['date_facture']), 'd/m/Y'); ?></p>
                         </div>
                     </div>
                     <div class="row" id="content_1">

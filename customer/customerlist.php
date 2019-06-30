@@ -19,7 +19,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-  <h1><i class="fa fa-users"></i> Client </h1>
+  <h1><i class="fa fa-list"></i> client - Liste des clients </h1>
   <ol class="breadcrumb">
     <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active">Client Liste</li>
@@ -32,19 +32,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
     <div class="col-xs-12">
       <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-        <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
+        <h4><i class="icon fa fa-ban"></i> Supprimé!</h4>
         Supprimer les informations client réussies.
       </div>
       <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-        <h4><i class="icon fa fa-check"></i> Success!</h4>
+        <h4><i class="icon fa fa-check"></i> Réussi!</h4>
         <?php echo $msg; ?>
       </div>
-      <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/addcustomer.php" data-original-title="Add Customer"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
+      <!-- <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/addcustomer.php" data-original-title="Add Customer"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div> -->
       <div class="box box-success">
-        <div class="box-header">
-          <h3 class="box-title"><i class="fa fa-list"></i> Liste de clients</h3>
-        </div>
         <!-- /.box-header -->
         <div class="box-body">
           <table class="table sakotable table-bordered table-striped dt-responsive">
@@ -62,6 +59,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
             <tbody>
               <?php
               $result = $wms->getAllCustomerList($link);
+
+              // var_dump($result);
+
               foreach ($result as $row) {
                 $image = WEB_URL . 'img/no_image.jpg';
                 if (file_exists(ROOT_PATH . '/img/upload/' . $row['image']) && $row['image'] != '') {
@@ -96,14 +96,13 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                             <div class="model_title"><?php echo $row['c_name']; ?></div>
                           </div>
                           <div class="modal-body">
-                            <h3 style="text-decoration:underline;">Details Information</h3>
+                            <h3 style="text-decoration:underline;"></h3>
                             <div class="row">
-                              <div class="col-xs-12"> <b>Name :</b> <?php echo $row['c_name']; ?><br />
-                                <b>Email :</b> <?php echo $row['c_email']; ?><br />
-                                <b>Addresse :</b> <?php echo $row['c_address']; ?><br />
-                                <b>Maison Tel :</b> <?php echo $row['c_home_tel']; ?><br />
-                                <b>Travail Tel :</b> <?php echo $row['c_work_tel']; ?><br />
-                                <b>Mobile Tel :</b> <?php echo $row['c_mobile']; ?> </div>
+                              <div class="col-xs-12"> <b>Nom du client :</b> <?php echo $row['c_name']; ?><br />
+                                <b>Adresse e-mail :</b> <?php echo $row['c_email']; ?><br />
+                                <b>Adresse géographique :</b> <?php echo $row['c_address']; ?><br />
+                                <b>Téléphone :</b> <?php echo $row['princ_tel']; ?><br />
+                                <b>Type de client :</b> <?php echo $row['type_client']; ?><br />
                             </div>
                           </div>
                         </div>

@@ -77,7 +77,10 @@ if (isset($_GET['car_id']) && $_GET['car_id'] != '') {
     <!-- Full Width boxes (Stat box) -->
     <div class="row">
         <div class="col-md-12">
-            <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_assur_vistech.php?car_id=<?php echo $_GET['car_id']; ?>" data-original-title="Re-charger la page"><i class="fa fa-refresh"></i></a> </div>
+            <div align="right" style="margin-bottom:1%;"> 
+                <a class="btn btn-success" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_assur_vistech.php?car_id=<?php echo $_GET['car_id']; ?>" data-original-title="Re-charger la page"><i class="fa fa-refresh"></i></a> 
+                <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/carlist.php" data-original-title="Retour"><i class="fa fa-reply"></i></a>
+            </div>
             <div class="box box-success">
                 <div class="box-body">
                     <div class="box-header">
@@ -85,7 +88,7 @@ if (isset($_GET['car_id']) && $_GET['car_id'] != '') {
                     </div>
                     <br>
                     <div>
-                        <table class="table table-bordered table-striped dt-responsive">
+                        <table class="table sakotable table-bordered table-striped dt-responsive">
                             <thead>
                                 <tr>
                                     <!-- <th>#</th> -->

@@ -10,6 +10,8 @@ $rows = $wms->getComparPrixPieceRechangeInfoByDiagId($link, $_GET['vehi_diag_id'
 
 // die();
 
+$i = 0;
+
 if (!empty($rows) && count($rows) > 0) { ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -21,6 +23,8 @@ if (!empty($rows) && count($rows) > 0) { ?>
         <title>Fiche de comparaison des prix des pièces de rechange par fournisseurs</title>
         <link href="<?php echo WEB_URL; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+        <script src="<?php echo WEB_URL; ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
@@ -141,11 +145,18 @@ if (!empty($rows) && count($rows) > 0) { ?>
                                                     <td><?php echo $row['designation_piece_rechange']; ?></td>
                                                     <td><?php echo $row['marque_piece_rechange']; ?></td>
                                                     <td><?php echo $row['qte_piece_rechange']; ?></td>
-                                                    <td><?php echo $row['prix_piece_rechange']; ?></td>
+                                                    <td id="piece_price_<?php echo $i; ?>"><?php echo $row['prix_piece_rechange']; ?></td>
                                                     <td><?php echo $row['s_name']; ?></td>
                                                 </tr>
                                                 <?php
-                                            } ?>
+                                                $i++;
+                                            } 
+
+                                            // var_dump($rows);
+                                            
+                                            // On retourne la représentation JSON du tableau
+                                            $piece_rechange_compar_list_json = json_encode($rows);
+                                            ?>
                                         </tbody>
                                         <!-- <tfoot>
                                                             <tr>
@@ -276,10 +287,54 @@ if (!empty($rows) && count($rows) > 0) { ?>
             <a style="" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>"> Créer un devis </a>
         </div>
         <script>
-            jQuery(document).ready(function() {
-                location.reload(true);
-                window.onload = timedRefresh(500);
+
+
+            // Définition de la locale en français
+            numeral.register('locale', 'fr', {
+                delimiters: {
+                    thousands: ' ',
+                    decimal: ','
+                },
+                abbreviations: {
+                    thousand: 'k',
+                    million: 'm',
+                    billion: 'b',
+                    trillion: 't'
+                },
+                currency: {
+                    symbol: 'FCFA'
+                }
             });
+
+            // Sélection de la locale en français
+            numeral.locale('fr');
+
+            // analyse de la chaîne de caractères JSON et 
+            // construction de la valeur JavaScript ou l'objet décrit par cette chaîne
+            var piece_rechange_compar_list_obj = JSON.parse('<?= $piece_rechange_compar_list_json; ?>');
+
+            // Déclaration et initialisation de l'objet itérateur
+            var iterateur = piece_rechange_compar_list_obj.keys();
+
+            // Déclaration et initialisation de l'indice ou compteur
+            var row = iterateur.next().value;
+
+            // Parcours du tableau d'objet
+            for (const key of piece_rechange_compar_list_obj) {
+
+                // Conversion en flottant
+                key.prix_piece_rechange = parseFloat(key.prix_piece_rechange);
+
+                console.log(numeral(key.prix_piece_rechange).format('0,0 $'));
+
+                // Affectation des nouvelles valeurs
+                $("#piece_price_" + row).html(numeral(key.prix_piece_rechange).format('0,0 $'));
+
+                // incrémentation du compteur
+                row++;
+
+            }
+
         </script>
     </body>
 

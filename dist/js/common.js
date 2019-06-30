@@ -1098,9 +1098,26 @@ function verifImma(immatriculation) {
 				$("#immabox").html(data);
 			}
 		});
-
 	}
+}
 
+function verifTelClient(telCli) {
+
+	var telcli = telCli;
+
+	if (telcli != '') {
+
+		$.ajax({
+			url: '../ajax/verif_telcli.php',
+			type: 'POST',
+			data: 'telcli=' + escape(telcli),
+			dataType: 'html',
+			success: function (data) {
+				// On défini le contenu html de l'élément avec des données
+				$("#telclibox").html(data);
+			}
+		});
+	}
 }
 
 	$('#ddlMake').typeahead({
@@ -1193,6 +1210,7 @@ function verifImma(immatriculation) {
 			});
 		}
 	});
+	
 
 function loadYearData(moid) {
 	var mid = $("#ddlMake").val();

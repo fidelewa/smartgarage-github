@@ -154,7 +154,7 @@ if (isset($_GET['pid']) && $_GET['pid'] != '') {
 		$coefficient = $existing_parts['coefficient'];
 		$prix_base_ht = $existing_parts['prix_base_ht'];
 		$prix_base_ttc = $existing_parts['prix_base_ttc'];
-		$quantity = $existing_parts['coefficient'];
+		// $quantity = $existing_parts['coefficient'];
 		// $sku = $existing_parts['part_no'];
 		if ($existing_parts['image_url'] != '') {
 			$image_cus = WEB_URL . 'img/upload/' . $existing_parts['image_url'];
@@ -264,7 +264,7 @@ if (isset($_GET['pid']) && $_GET['pid'] != '') {
 									<input type="number" name="prix_revient" value="<?php echo $prix_revient ?>" id="prix_revient" class="form-control" />
 								</div>
 								<div class="form-group col-md-12">
-									<label for="coeff"> Coefficient (quantité):</label>
+									<label for="coeff"> Coefficient:</label>
 									<input type="number" name="coeff" value="<?php echo $coefficient ?>" id="coeff" class="form-control" />
 								</div>
 								<div class="form-group col-md-12">
@@ -295,7 +295,7 @@ if (isset($_GET['pid']) && $_GET['pid'] != '') {
 		</div>
 
 		<input type="hidden" value="<?php echo $hdnid; ?>" name="piece_id" />
-		<input type="hidden" value="<?php echo $quantity; ?>" name="old_qty" />
+		<!-- <input type="hidden" value="<?php echo $quantity; ?>" name="old_qty" /> -->
 
 		<div class="pull-right">
 			<button type="submit" class="btn btn-success btnsp"><i class="fa fa-save fa-2x"></i><br />

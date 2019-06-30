@@ -48,7 +48,7 @@ $result = $wms->getAllRecepCarListByCustomer($link, $_GET['cid']);
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 <?php echo $msg; ?>
             </div>
-            <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php" data-original-title="Add Voiture de réparation"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
+            <!-- <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php" data-original-title="Add Voiture de réparation"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div> -->
             <div class="box box-success">
                 <div class="box-header">
                     <h3 class="box-title"><i class="fa fa-list"></i> Liste des voitures réceptionnés appartenant au client <?php
@@ -69,7 +69,7 @@ $result = $wms->getAllRecepCarListByCustomer($link, $_GET['cid']);
                                 <th>Date exp. assur</th>
                                 <th>Date exp. vis. tech.</th>
                                 <!-- <th>Attribué à</th> -->
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -99,7 +99,7 @@ $result = $wms->getAllRecepCarListByCustomer($link, $_GET['cid']);
                                     <td><?php echo $row['add_date_assurance']; ?></td>
                                     <td><?php echo $row['add_date_visitetech']; ?></td>
                                     <!-- <td><?php echo $row['m_name']; ?></td> -->
-                                    <td>
+                                    <!-- <td> -->
                                         <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a> <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a> -->
                                         <!-- <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
                                             <!-- <div class="modal-dialog"> -->
@@ -155,7 +155,7 @@ $result = $wms->getAllRecepCarListByCustomer($link, $_GET['cid']);
                                             <!-- /.modal-content -->
                                             <!-- </div> -->
                                         <!-- </div> -->
-                                    </td>
+                                    <!-- </td> -->
                                 </tr>
                             <?php }
                         mysql_close($link); ?>

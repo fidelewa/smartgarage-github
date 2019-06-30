@@ -170,6 +170,19 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
 						// conversion en entier du temps supplémentaire
 						$nbHoursSupplementaire = (int)$nbHoursSupplementaire;
+
+						// Si le nombre d'heures supplémentaires est négatif, cela signifie que l'employé est parti
+						// à l'heure de descente dans ce cas il n'a pas travaillé plus
+						if($nbHoursSupplementaire < 0) {
+							$nbHoursSupplementaire  = 0;
+						}
+					}
+
+					// Récupération du numéro du mois de la date courante
+					if ($dateHeure instanceof DateTime) {
+
+						$numeroMoisDateDepart =  $dateHeure->format('n');
+						
 					}
 
 					$query_3 = "UPDATE tbl_add_pointage SET 
@@ -177,7 +190,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					heure_depart = '" . $heureComplete . "', 
 					signa_depart = '" . $filenameDepart . "',
 					nb_heure_work = '" . $nbHoursWork . "',
-					nb_heure_sup = '" . $nbHoursSupplementaire . "'
+					nb_heure_sup = '" . $nbHoursSupplementaire . "',
+					mois_date_depart = '" . $numeroMoisDateDepart . "'
 					WHERE date_arrivee = '" . htmlentities($dateStr) . "' AND  
 					num_tel =  '" . htmlentities($_POST['phone_number']) . "'";
 
@@ -223,17 +237,32 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
 					if ($heureArrive instanceof DateTime) {
 
-						// Calcul du temps de retard en minutes
-						$nbHoursRetard = $heureArrive->diff($heureDebutWork)->format('%H');;
+						// Calcul du temps de retard en heures
+						// $nbHoursRetard = $heureArrive->diff($heureDebutWork)->format('%H');
+						$nbHoursRetard = $heureDebutWork->diff($heureArrive)->format('%R%H');
 
 						// conversion en entier du temps de retard
 						$nbHoursRetard = (int)$nbHoursRetard;
+
+						// Si l'heure de retard est négatif, cela signifi que l'enmployé est en avance
+						// dans ce cas il n'a pas d'heures de retard
+						if($nbHoursRetard < 0) {
+							$nbHoursRetard = 0;
+						}
+					}
+
+					// Récupération du numéro du mois de la date courante
+					if ($dateHeure instanceof DateTime) {
+
+						$numeroMoisDateArrive =  $dateHeure->format('n');
+						
 					}
 
 					$query_2 = "INSERT INTO tbl_add_pointage(date_arrivee, heure_arrivee, signa_arrivee, 
-					date_depart, heure_depart, signa_depart, num_tel, nb_heure_work, date_heure_arrive, nb_heure_sup, nb_heure_retard) 
+					date_depart, heure_depart, signa_depart, num_tel, nb_heure_work, date_heure_arrive, nb_heure_sup, nb_heure_retard,
+					mois_date_arrivee, mois_date_depart) 
 					VALUES ('$dateStr','$heureComplete','$filenameArrive',null,null,null,'$_POST[phone_number]',null,
-					'$dateHeurStr',null,$nbHoursRetard)";
+					'$dateHeurStr',null,$nbHoursRetard, $numeroMoisDateArrive, null)";
 
 					$result_2 = mysql_query($query_2, $link);
 

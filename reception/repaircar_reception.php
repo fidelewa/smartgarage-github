@@ -251,7 +251,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 <body>
 
     <section class="content-header">
-        <h1> Formulaire de réception d'un véhicule</h1>
+        <h1> Réception de véhicule - Formulaire de réception d'un véhicule</h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Accueil</a></li>
             <li><a href="<?php echo WEB_URL ?>repaircar/carlist.php"> réception d'un véhicule</a></li>

@@ -78,7 +78,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'exiting_piece') {
               <?php
 
               // On récupère la liste de toutes les pièce de véhicule en stock
-              $resultsPieceStockData = $wms->getAllPieceStockData($link);
+              $resultsPieceStockData = $wms->getAllPieceInfo($link);
 
               foreach ($resultsPieceStockData as $row) {
 
@@ -99,11 +99,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'exiting_piece') {
                   <td><?php echo $row['type_piece']; ?></td>
                   <td><?php echo $row['famille_piece']; ?></td>
                   <td><?php echo $row['prix_base_ttc']; ?></td>
-                  <td><?php echo $row['stock_piece']; ?></td>
+                  <td><?php echo $row['coefficient']; ?></td>
                   <td>
                     <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a>  -->
-                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>parts_stock/buyparts.php?pid=<?php echo $row['piece_stock_id']; ?>" data-original-title="Modifier l'article"><i class="fa fa-pencil"></i></a>
-                    <a class="btn btn-danger" data-toggle="tooltip" onClick="deletePartStock(<?php echo $row['piece_stock_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>parts_stock/buyparts.php?pid=<?php echo $row['add_piece_id']; ?>" data-original-title="Modifier l'article"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-danger" data-toggle="tooltip" onClick="deletePartStock(<?php echo $row['add_piece_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
                   </td>
                 </tr>
               <?php

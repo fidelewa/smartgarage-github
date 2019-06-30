@@ -140,7 +140,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td colspan="8"></td>
+                                                        <td colspan="7"></td>
                                                         <td class="text-left"><button type="button" onclick="addEstimate();" data-toggle="tooltip" title="Ajouter une estimation" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                                     </tr>
                                                     <tr>

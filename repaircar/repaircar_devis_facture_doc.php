@@ -10,23 +10,6 @@ if (!empty($result_settings)) {
     $email = $result_settings['email'];
 }
 
-// function ctrTechCalculate($date_ctr_tech, $delai_ctr_tech)
-// {
-
-//     // On récupère la date en chaine de caratère que l'on converti en objet DateTime
-//     $datectrtech = DateTime::createFromFormat('d/m/Y', $date_ctr_tech);
-
-//     // Si l'objet récupéré est une instance de la classe DateTime
-//     if ($datectrtech instanceof DateTime) {
-
-//         // On calcul la date du prochain contrôle technique
-//         $dateprochctrtech = $datectrtech->add(new \DateInterval($delai_ctr_tech));
-//     }
-
-//     // On retourne le format chaine de caractère de la date du prochain contrôle technique
-//     return $dateprochctrtech->format('d/m/Y');
-// }
-
 $row = $wms->getRepairCarDevisFactureInfoByDiagId($link, $_GET['vehi_diag_id'], $_GET['devis_id']);
 
 // $dateProchCtrTech = ctrTechCalculate($row['add_date_ctr_tech'], $row['delai_ctr_tech']);
@@ -47,6 +30,8 @@ if (!empty($row) && count($row) > 0) { ?>
         <title>Facture du devis de réparation d'un véhicule</title>
         <link href="<?php echo WEB_URL; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+        <script src="<?php echo WEB_URL; ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
@@ -109,6 +94,10 @@ if (!empty($row) && count($row) > 0) { ?>
                     font-size: 13pt;
                 }
 
+                #content_3 p {
+                    font-size: 10pt;
+                }
+
                 h3 {
                     text-align: center
                 }
@@ -138,7 +127,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
                         </div>
                         <div class="col-sm-3 col-sm-offset-7">
-                            <p><?php echo $row['date_facture']; ?></p>
+                            <p><?php echo date_format(date_create($row['date_facture']), 'd/m/Y'); ?></p>
                         </div>
                     </div>
                     <div class="row" id="content_1">
@@ -261,69 +250,61 @@ if (!empty($row) && count($row) > 0) { ?>
                                                     <td><?php echo $facture['designation_piece_rechange_facture']; ?></td>
                                                     <!-- <td><?php echo $facture['marque_piece_rechange_facture']; ?></td> -->
                                                     <td><?php echo $facture['qte_piece_rechange_facture']; ?></td>
-                                                    <td><?php echo $facture['prix_piece_rechange_min_facture']; ?></td>
+                                                    <td id="facture_article_price_<?php echo $i; ?>"><?php echo $facture['prix_piece_rechange_min_facture']; ?></td>
                                                     <td><?php echo $facture['remise_piece_rechange_facture']; ?></td>
-                                                    <td><?php echo $facture['total_prix_piece_rechange_facture_ht']; ?></td>
-                                                    <td><?php echo $facture['total_prix_piece_rechange_facture_ttc']; ?></td>
+                                                    <td id="facture_article_total_ht_<?php echo $i; ?>"><?php echo $facture['total_prix_piece_rechange_facture_ht']; ?></td>
+                                                    <td id="facture_article_total_ttc_<?php echo $i; ?>"><?php echo $facture['total_prix_piece_rechange_facture_ttc']; ?></td>
                                                 </tr>
                                                 <?php $i++;
-                                            } ?>
+                                            } 
+                                            
+                                            // On retourne la représentation JSON du tableau
+                                            $facture_data_json = json_encode($facture_data);
+                                            ?>
                                             <tr>
-                                                <td colspan="7" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
-                                                <td><?php echo $row['montant_main_oeuvre_facture']; ?></td>
+                                                <td colspan="6" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
+                                                <td id="facture_montant_labour"><?php echo $row['montant_main_oeuvre_facture']; ?></td>
                                             </tr>
                                         </tbody>
-                                        <tfoot>
-                                            <!-- <tr>
-                                                        <td colspan="7" class="text-right">Total HT:</td>
-                                                        <td><?php echo $row['total_ht_gene_piece_rechange_facture']; ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="7" class="text-right">Total TVA (<?php echo $currency; ?>):</td>
-                                                        <td><?php echo $row['total_tva_facture']; ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="7" class="text-right">Total TTC (<?php echo $currency; ?>):</td>
-                                                        <td><?php echo $row['total_ttc_gene_piece_rechange_facture']; ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="7" class="text-right">Montant dû (<?php echo $currency; ?>):</td>
-                                                        <td><?php echo $row['montant_du_piece_rechange_facture']; ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="7" class="text-right">Montant payé (<?php echo $currency; ?>):</td>
-                                                        <td><?php echo $row['montant_paye_piece_rechange_facture']; ?></td>
-                                                    </tr> -->
-                                        </tfoot>
 
                                     </table>
+
+                                    <div class="col-sm-7">
+                                        <div class="row">
+                                            <div class="col-sm-12" id="content_3">
+                                                <p style="display:inline-block">AVANCE 75% = <span id="avance"></span></p>
+                                                <p style="display:inline-block">ET RESTE 25% = <span id="reste_a_payer"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="row">
-                                        <div class="col-md-6 col-md-offset-6 cadre">
+                                        <div class="col-md-5 cadre">
                                             <div class="row">
                                                 <div class="col-md-6">Total HT</div>
-                                                <div class="col-md-6"><?php echo $row['total_ht_gene_piece_rechange_facture'] . ' ' . $currency; ?></div>
+                                                <div class="col-md-6" id="facture_total_ht"><?php echo $row['total_ht_gene_piece_rechange_facture'] . ' ' . $currency; ?></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">Total TVA</div>
-                                                <div class="col-md-6"><?php echo $row['total_tva_facture'] . ' ' . $currency; ?></div>
+                                                <div class="col-md-6" id="facture_total_tva"><?php echo $row['total_tva_facture'] . ' ' . $currency; ?></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <p style="font-size:11pt;font-weight:bold">Total TTC</p>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p style="font-size:11pt;font-weight:bold">
+                                                    <p style="font-size:11pt;font-weight:bold" id="facture_total_ttc">
                                                         <?php echo $row['total_ttc_gene_piece_rechange_facture'] . ' ' . $currency; ?>
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">Montant dû</div>
-                                                <div class="col-md-6"><?php echo $row['montant_du_piece_rechange_facture'] . ' ' . $currency; ?></div>
+                                                <div class="col-md-6" id="facture_mont_du"><?php echo $row['montant_du_piece_rechange_facture'] . ' ' . $currency; ?></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">Montant payé</div>
-                                                <div class="col-md-6"><?php echo $row['montant_paye_piece_rechange_facture'] . ' ' . $currency; ?></div>
+                                                <div class="col-md-6" id="facture_mont_paye"><?php echo $row['montant_paye_piece_rechange_facture'] . ' ' . $currency; ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -454,10 +435,98 @@ if (!empty($row) && count($row) > 0) { ?>
             <a style="" href="<?php echo WEB_URL; ?>sendCustomerFactureSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&facture_id=<?php echo $row['facture_id']; ?>&date_facture=<?php echo $row['date_facture']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
         </div>
         <script>
-            jQuery(document).ready(function() {
-                location.reload(true);
-                window.onload = timedRefresh(500);
+            
+            // Définition de la locale en français
+            numeral.register('locale', 'fr', {
+                delimiters: {
+                    thousands: ' ',
+                    decimal: ','
+                },
+                abbreviations: {
+                    thousand: 'k',
+                    million: 'm',
+                    billion: 'b',
+                    trillion: 't'
+                },
+                currency: {
+                    symbol: 'FCFA'
+                }
             });
+
+            // Sélection de la locale en français
+            numeral.locale('fr');
+
+            // Initialisation des variables
+            var total_ttc = "<?php echo $row['total_ttc_gene_piece_rechange_facture']; ?>";
+            var total_ht = "<?php echo $row['total_ht_gene_piece_rechange_facture']; ?>";
+            var total_tva = "<?php echo $row['total_tva_facture']; ?>";
+            var montant_labour = "<?php echo $row['montant_main_oeuvre_facture']; ?>";
+            var avance = 0;
+            var reste_a_payer = 0;
+            var montant_du = "<?php echo $row['montant_du_piece_rechange_facture']; ?>";
+            var montant_paye = "<?php echo $row['montant_paye_piece_rechange_facture']; ?>";
+
+            // analyse de la chaîne de caractères JSON et 
+            // construction de la valeur JavaScript ou l'objet décrit par cette chaîne
+            var facture_data_obj = JSON.parse('<?= $facture_data_json; ?>');
+
+            // Déclaration et initialisation de l'objet itérateur
+            var iterateur = facture_data_obj.keys();
+
+            // Déclaration et initialisation de l'indice ou compteur
+            var row = iterateur.next().value + 1;
+
+            // Parcours du tableau d'objet
+            for (const key of facture_data_obj) {
+
+                console.log(key);
+
+                // Conversion en flottant
+                key.prix_piece_rechange_min_facture = parseFloat(key.prix_piece_rechange_min_facture);
+                key.total_prix_piece_rechange_facture_ht = parseFloat(key.total_prix_piece_rechange_facture_ht);
+                key.total_prix_piece_rechange_facture_ttc = parseFloat(key.total_prix_piece_rechange_facture_ttc);
+
+                // Affectation des nouvelles valeurs
+                $("#facture_article_price_" + row).html(numeral(key.prix_piece_rechange_min_facture).format('0,0 $'));
+                $("#facture_article_total_ht_" + row).html(numeral(key.total_prix_piece_rechange_facture_ht).format('0,0 $'));
+                $("#facture_article_total_ttc_" + row).html(numeral(key.total_prix_piece_rechange_facture_ttc).format('0,0 $'));
+
+                // incrémentation du compteur
+                row++;
+            }
+
+            // Conversion des variables en flottant
+            total_ttc = parseFloat(total_ttc);
+            total_ht = parseFloat(total_ht);
+            total_tva = parseFloat(total_tva);
+            montant_labour = parseFloat(montant_labour);
+            montant_du = parseFloat(montant_du);
+            montant_paye = parseFloat(montant_paye);
+
+            // calcul de l'avance et du reste à payer
+            avance = 0.75 * total_ttc;
+            reste_a_payer = 0.25 * total_ttc;
+
+            // Conversion de l'avance et du reste à payer en flottant
+            avance = parseFloat(avance);
+            reste_a_payer = parseFloat(reste_a_payer);
+
+            // Formatage de l'avance et du reste à payer
+            avance = numeral(avance).format('0,0 $');
+            reste_a_payer = numeral(reste_a_payer).format('0,0 $');
+
+            // console.log(avance);
+            // console.log(reste_a_payer);
+
+            $("#facture_total_ttc").html(numeral(total_ttc).format('0,0 $'));
+            $("#facture_total_ht").html(numeral(total_ht).format('0,0 $'));
+            $("#facture_total_tva").html(numeral(total_tva).format('0,0 $'));
+            $("#facture_montant_labour").html(numeral(montant_labour).format('0,0 $'));
+            $("#avance").html(avance);
+            $("#reste_a_payer").html(reste_a_payer);
+            $("#facture_mont_paye").html(numeral(montant_paye).format('0,0 $'));
+            $("#facture_mont_du").html(numeral(montant_du).format('0,0 $'));
+
         </script>
     </body>
 

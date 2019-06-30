@@ -12,23 +12,6 @@ if (!empty($result_settings)) {
     $address = $result_settings['address'];
 }
 
-// function ctrTechCalculate($date_ctr_tech, $delai_ctr_tech)
-// {
-
-//     // On récupère la date en chaine de caratère que l'on converti en objet DateTime
-//     $datectrtech = DateTime::createFromFormat('d/m/Y', $date_ctr_tech);
-
-//     // Si l'objet récupéré est une instance de la classe DateTime
-//     if ($datectrtech instanceof DateTime) {
-
-//         // On calcul la date du prochain contrôle technique
-//         $dateprochctrtech = $datectrtech->add(new \DateInterval($delai_ctr_tech));
-//     }
-
-//     // On retourne le format chaine de caractère de la date du prochain contrôle technique
-//     return $dateprochctrtech->format('d/m/Y');
-// }
-
 $row = $wms->getRepairCarDevisSimuInfo($link, $_GET['devis_id']);
 
 // $dateProchCtrTech = ctrTechCalculate($row['add_date_ctr_tech'], $row['delai_ctr_tech']);
@@ -54,9 +37,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                                                                            border: 1px dotted rgb(0, 0, 0);
-                                                                            border-radius: 1px;
-                                                                        } */
+                border: 1px dotted rgb(0, 0, 0);
+                border-radius: 1px;
+            } */
         </style>
     </head>
 
@@ -90,7 +73,7 @@ if (!empty($row) && count($row) > 0) { ?>
                 #info_gene {
                     border-radius: 20px;
                     /* width: 400px;
-                                                                                                                        height: 175px; */
+                                                                                                                                height: 175px; */
                     border: solid 2px #000;
                     padding: 15px;
                     margin-bottom: 20pt;
@@ -99,7 +82,7 @@ if (!empty($row) && count($row) > 0) { ?>
                 .cadre {
                     border-radius: 20px;
                     /* width: 400px;
-                                                                                                                        height: 175px; */
+                                                                                                                                height: 175px; */
                     border: solid 2px #000;
                     padding: 15px;
                     margin-bottom: 20pt;
@@ -111,6 +94,10 @@ if (!empty($row) && count($row) > 0) { ?>
 
                 #content_2 p {
                     font-size: 13pt;
+                }
+
+                #content_3 p {
+                    font-size: 10pt;
                 }
 
                 h3 {
@@ -142,7 +129,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
                         </div>
                         <div class="col-sm-3 col-sm-offset-7">
-                            <p><?php echo $row['date_devis']; ?></p>
+                            <p><?php echo date_format(date_create($row['date_devis']), 'd/m/Y');?></p>
                         </div>
                     </div>
                     <div class="row" id="content_1">
@@ -228,27 +215,27 @@ if (!empty($row) && count($row) > 0) { ?>
                                 </div>
                             </div>
                             <!-- <div class="row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
                                                                                     <div class="col-sm-6">
-                                                                                        <p>Première mise en circulation</p>
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <p>Première mise en circulation</p>
+                                                                                            </div>
+                                                                                            <div class="col-sm-6">
+                                                                                                <p><?php echo $row['add_date_mise_circu']; ?></p>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
                                                                                     <div class="col-sm-6">
-                                                                                        <p><?php echo $row['add_date_mise_circu']; ?></p>
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <p>Prochain controle technique</p>
+                                                                                            </div>
+                                                                                            <div class="col-sm-6">
+                                                                                                <p><?php echo $row['add_date_visitetech']; ?></p>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-6">
-                                                                                        <p>Prochain controle technique</p>
-                                                                                    </div>
-                                                                                    <div class="col-sm-6">
-                                                                                        <p><?php echo $row['add_date_visitetech']; ?></p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div> -->
+                                                                                </div> -->
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -294,7 +281,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             ?>
                                             <tr>
                                                 <td colspan="6" class="text-right">Montant main d'oeuvre (<?php echo $currency; ?>):</td>
-                                                <td><?php echo $row['main_oeuvre_piece_rechange_devis']; ?></td>
+                                                <td id="mont_labour"><?php echo $row['main_oeuvre_piece_rechange_devis']; ?></td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
@@ -303,14 +290,16 @@ if (!empty($row) && count($row) > 0) { ?>
                                     </table>
                                     <!-- <div class="row"> -->
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-7">
                                         <div class="row">
-                                            <div class="col-sm-6">Avance 75% = ET RESTE 25%</div>
-                                            <div class="col-sm-6"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
+                                            <div class="col-sm-12" id="content_3">
+                                                <p style="display:inline-block">AVANCE 75% = <span id="avance"></span></p>
+                                                <p style="display:inline-block">ET RESTE 25% = <span id="reste_a_payer"></span></p>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 cadre">
+                                    <div class="col-sm-5 cadre">
                                         <div class="row">
                                             <div class="col-sm-6">Total HT</div>
                                             <div class="col-sm-6" id="total_ht"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
@@ -424,8 +413,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
 
             @media print {
 
@@ -454,11 +443,10 @@ if (!empty($row) && count($row) > 0) { ?>
             <a style="" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
         <!-- <div id="mobile-preview-close_2">
-                                                        <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
-                                                        <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
-                                                    </div> -->
+                                                                <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
+                                                                <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
+                                                            </div> -->
         <script type="text/javascript">
-
             // Définition de la locale en français
             numeral.register('locale', 'fr', {
                 delimiters: {
@@ -483,6 +471,10 @@ if (!empty($row) && count($row) > 0) { ?>
             var total_ttc = "<?php echo $row['total_ttc_gene_piece_rechange_devis']; ?>";
             var total_ht = "<?php echo $row['total_ht_gene_piece_rechange_devis']; ?>";
             var total_tva = "<?php echo $row['total_tva']; ?>";
+            var montant_labour = "<?php echo $row['main_oeuvre_piece_rechange_devis']; ?>";
+            var avance = 0;
+            var reste_a_payer = 0;
+
             // var row = <?php echo $i; ?>;
 
             // analyse de la chaîne de caractères JSON et 
@@ -492,7 +484,7 @@ if (!empty($row) && count($row) > 0) { ?>
             // Déclaration et initialisation de l'objet itérateur
             var iterateur = devis_data_obj.keys();
 
-            // Déclaration et initialisation de l'indice
+            // Déclaration et initialisation de l'indice ou compteur
             var row = iterateur.next().value + 1;
 
             // Parcours du tableau d'objet
@@ -504,9 +496,12 @@ if (!empty($row) && count($row) > 0) { ?>
                 key.total_prix_piece_rechange_devis_ttc = parseFloat(key.total_prix_piece_rechange_devis_ttc);
 
                 // Affectation des nouvelles valeurs
-                $("#article_price_" + row).html(numeral(key.price).format('0,0.00 $'));
-                $("#article_total_ht_" + row).html(numeral(key.total_prix_piece_rechange_devis_ht).format('0,0.00 $'));
-                $("#article_total_ttc_" + row).html(numeral(key.total_prix_piece_rechange_devis_ttc).format('0,0.00 $'));
+                $("#article_price_" + row).html(numeral(key.price).format('0,0 $'));
+                $("#article_total_ht_" + row).html(numeral(key.total_prix_piece_rechange_devis_ht).format('0,0 $'));
+                $("#article_total_ttc_" + row).html(numeral(key.total_prix_piece_rechange_devis_ttc).format('0,0 $'));
+
+                // incrémentation du compteur
+                row++;
 
             }
 
@@ -514,10 +509,29 @@ if (!empty($row) && count($row) > 0) { ?>
             total_ttc = parseFloat(total_ttc);
             total_ht = parseFloat(total_ht);
             total_tva = parseFloat(total_tva);
+            montant_labour = parseFloat(montant_labour);
 
-            $("#total_ttc").html(numeral(total_ttc).format('0,0.00 $'));
-            $("#total_ht").html(numeral(total_ht).format('0,0.00 $'));
-            $("#total_tva").html(numeral(total_tva).format('0,0.00 $'));
+            // calcul de l'avance et du reste à payer
+            avance = 0.75 * total_ttc;
+            reste_a_payer = 0.25 * total_ttc;
+
+            // Conversion de l'avance et du reste à payer en flottant
+            avance = parseFloat(avance);
+            reste_a_payer = parseFloat(reste_a_payer);
+
+            // Formatage de l'avance et du reste à payer
+            avance = numeral(avance).format('0,0 $');
+            reste_a_payer = numeral(reste_a_payer).format('0,0 $');
+
+            console.log(avance);
+            console.log(reste_a_payer);
+
+            $("#total_ttc").html(numeral(total_ttc).format('0,0 $'));
+            $("#total_ht").html(numeral(total_ht).format('0,0 $'));
+            $("#total_tva").html(numeral(total_tva).format('0,0 $'));
+            $("#mont_labour").html(numeral(montant_labour).format('0,0 $'));
+            $("#avance").html(avance);
+            $("#reste_a_payer").html(reste_a_payer);
         </script>
     </body>
 
