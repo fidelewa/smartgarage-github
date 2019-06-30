@@ -530,12 +530,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
                       foreach ($make_list as $make) {
                         if ($c_make == $make['make_id']) { ?>
 
-                          <input type="text" class='form-control' value="<?php echo $make['make_name']; ?>" name="ddlMake" id="ddlMake" placeholder="Saisissez le modèle de la voiture">
+                          <input type="text" class='form-control' value="<?php echo $make['make_name']; ?>" name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
 
                         <?php }
                     }
                   } else { ?>
-                      <input type="text" class='form-control' value="<?php echo $model['model_name']; ?>" name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture">
+                      <input type="text" class='form-control' value="<?php echo $model['model_name']; ?>" name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
                     <?php
                   }
                   ?>

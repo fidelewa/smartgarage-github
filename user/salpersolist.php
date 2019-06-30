@@ -114,7 +114,7 @@ $i = 1;
                                 <th>Nom et prénoms</th>
                                 <th>Salaire de base</th>
                                 <th>Avance sur salaire</th>
-                                <th>Prime</th>
+                                <!-- <th>Prime</th> -->
                                 <th>Nombre d'heures suplémentaires</th>
                                 <th>Nombre de jours de congés payés</th>
                                 <th>Nombre de jours d'absence justifiée</th>
@@ -139,7 +139,7 @@ $i = 1;
                                     <td><?php echo $row['per_name'] ?></td>
                                     <td id="salaire_base_perso_<?php echo $i; ?>"><?php echo $row['salaire_base']; ?></td>
                                     <td id="avance_perso_<?php echo $i; ?>"><?php echo $row['montant_avance_periode']; ?></td>
-                                    <td id="prime_perso_<?php echo $i; ?>"><?php echo $row['montant_prime_periode']; ?></td>
+                                    <!-- <td id="prime_perso_<?php echo $i; ?>"><?php echo $row['montant_prime_periode']; ?></td> -->
                                     <td><?php echo $row['nb_heure_sup_periode']; ?></td>
                                     <td><?php echo $row['nb_jour_conge_paye']; ?></td>
                                     <td><?php echo $row['nb_jour_abs_justifie']; ?></td>

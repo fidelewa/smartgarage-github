@@ -34,7 +34,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1> Liste des utilisateurs </h1>
+    <h1> <i class="fa fa-list"></i> Liste des utilisateurs </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Liste des utilisateurs</li>
@@ -57,9 +57,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
             </div>
             <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php" data-original-title="Ajouter un utilisateur"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
             <div class="box box-success">
-                <div class="box-header">
+                <!-- <div class="box-header">
                     <h3 class="box-title">Liste des utilisateurs</h3>
-                </div>
+                </div> -->
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table class="table sakotable table-bordered table-striped dt-responsive">

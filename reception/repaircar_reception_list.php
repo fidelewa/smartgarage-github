@@ -26,7 +26,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
 
         $addinfo = 'block';
         // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
-        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma']. " à été attribuée au mécanicien " . $_GET['mech_name'];
+        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à été attribuée au mécanicien " . $_GET['mech_name'];
     }
 }
 ?>
@@ -120,80 +120,74 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                                         if (!empty($rows)) { ?>
                                             <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule"><i class="fa fa-file-text-o"></i></a>
                                         <?php }
-                                        
+
                                         // Si le client et le receptionniste ont signé au dépot la fiche de reception du véhicule
-                                        if (isset($row['sign_cli_depot']) && isset($row['sign_recep_depot'])) {?>
+                                        if (isset($row['sign_cli_depot']) && isset($row['sign_recep_depot'])) { ?>
 
                                             <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien ou un électricien"><i class="fa fa-user"></i></a>
-                                            
-                                        <?php } 
-                                        
+
+                                        <?php }
+
                                         // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
-                                        $rowsGetStatutEtatVehiSortie = $wms->getStatutEtatVehiSortie($link, $row['car_id']); 
-                                        
-                                        if (!empty($rowsGetStatutEtatVehiSortie)) {?>
-                                        <a class="btn btn-primary" style="background-color:#021254;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/etat_vehicule_sortie.php?cid=<?php echo $row['car_id']; ?>" data-original-title="Définir l'état du véhicule à la sortie"><i class="fa fa-car"></i></a>
+                                        $rowsGetStatutEtatVehiSortie = $wms->getStatutEtatVehiSortie($link, $row['car_id']);
+
+                                        if (!empty($rowsGetStatutEtatVehiSortie)) { ?>
+                                            <a class="btn btn-primary" style="background-color:#021254;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/etat_vehicule_sortie.php?cid=<?php echo $row['car_id']; ?>" data-original-title="Définir l'état du véhicule à la sortie"><i class="fa fa-car"></i></a>
                                         <?php } ?>
 
                                         <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien"><i class="fa fa-eye"></i></a> -->
                                         <!-- <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> -->
                                         <!-- <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a> -->
-                                        <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header orange_header">
-                                                        <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                                                        <h3 class="modal-title">Attribution du véhicule réceptionné</h3>
-                                                    </div>
-                                                    <!-- <div class="modal-body model_view" align="center">&nbsp;
-                                                                                        <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image; ?>" /></div>
-                                                                                        <div class="model_title"><?php echo $row['car_name']; ?></div>
-                                                                                        <div style="color:#fff;font-size:15px;font-weight:bold;">Facture
-                                                                                            No: <?php echo $row['repair_car_id']; ?></div>
-                                                                                    </div> -->
-                                                    <div class="modal-body">
-                                                        <h3 style="text-decoration:underline;">Sélection du responsable approprié</h3>
-                                                        <div class="row" style="margin: 0 auto;">
-
-                                                            <form action="../diagnostic/attribution_mecanicien_traitement.php" method="post">
-                                                                <div class="row">
-                                                                    <div class="form-group col-md-8">
-                                                                        <!-- <label for="type_client"><span style="color:red;">*</span> Type de client :</label> -->
-                                                                        <select required class='form-control' id="mecanicienList" name="mecanicienList">
-                                                                            <option selected value="">--Veuillez saisir ou sélectionner le responsable approprié--</option>
-                                                                            <?php
-                                                                            $mecanicien_list = $wms->getAllMechanicsListByTitle($link);
-                                                                            foreach ($mecanicien_list as $mrow) {
-                                                                                // if ($cus_id > 0 && $cus_id == $mrow['customer_id']) {
-                                                                                echo '<option value="' . $mrow['usr_id'] . '">' . $mrow['usr_name'] .' - '. $mrow['usr_type'] . '</option>';
-                                                                                // } else {
-                                                                                // echo '<option value="' . $mrow['customer_id'] . '">' . $mrow['c_name'] . '</option>';
-                                                                                // }
-                                                                            }
-                                                                            ?>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <button type="submit" class="btn btn-primary">Attribuer</button>
-                                                                    </div>
-
-                                                                </div>
-                                                               
-                                                                <input type="hidden" value="<?php echo $row['add_car_id'] ?>" name="car_id" />
-                                                                <input type="hidden" value="<?php echo $row['car_id'] ?>" name="reception_id" />
-                                                                <input type="hidden" value="<?php echo $row['num_matricule'] ?>" name="imma_vehi" />
-                                                            </form>
-
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </td>
                                 </tr>
+                                <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <a class="close" data-dismiss="modal">×</a>
+                                                <h3>Formulaire d'attribution du véhicule réceptionné</h3>
+                                            </div>
+
+                                            <form id="avanceSalForm" name="avance_sal" role="form" enctype="multipart/form-data" method="POST" action="../diagnostic/attribution_mecanicien_traitement.php">
+
+                                                <div class="modal-body">
+
+                                                    <div class="form-group">
+                                                        <label for="txtCName"> Sélectionner un mécanicien ou un électricien :</label>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <select required class='form-control' id="mecanicienList" name="mecanicienList">
+                                                                    <option selected value="">--Veuillez saisir ou sélectionner le responsable approprié--</option>
+                                                                    <?php
+                                                                    $mecanicien_list = $wms->getAllMechanicsListByTitle($link);
+                                                                    foreach ($mecanicien_list as $mrow) {
+                                                                        // if ($cus_id > 0 && $cus_id == $mrow['customer_id']) {
+                                                                        echo '<option value="' . $mrow['usr_id'] . '">' . $mrow['usr_name'] . ' - ' . $mrow['usr_type'] . '</option>';
+                                                                        // } else {
+                                                                        // echo '<option value="' . $mrow['customer_id'] . '">' . $mrow['c_name'] . '</option>';
+                                                                        // }
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="hidden" value="<?php echo $row['add_car_id'] ?>" name="car_id" />
+                                                    <input type="hidden" value="<?php echo $row['car_id'] ?>" name="reception_id" />
+                                                    <input type="hidden" value="<?php echo $row['num_matricule'] ?>" name="imma_vehi" />
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                    <button type="submit" class="btn btn-success" id="submit">Valider</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
                             <?php }
-                        mysql_close($link); ?>
+                            mysql_close($link); ?>
                         </tbody>
                     </table>
                 </div>

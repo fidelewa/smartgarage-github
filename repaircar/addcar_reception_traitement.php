@@ -240,7 +240,7 @@ if (isset($_POST['car_names'])) {
 	// Si le nom du client soumis via le formulaire correspond à un nom de client existant en BDD
 	// on récupère l'id de cet client en BDD que l'on affecte à la variable $_POST['ddlCustomerList']
 	if ($client_id != null) {
-		(int)$_POST['ddlCustomerList'] = (int)$client_id;
+		(int) $_POST['ddlCustomerList'] = (int) $client_id;
 	}
 
 	// MARQUE
@@ -274,9 +274,9 @@ if (isset($_POST['car_names'])) {
 		$rowMakeId = mysql_fetch_assoc($resultMakeId);
 
 		// affectation de la valeur de l'identifiant de la marque
-		$modeleMakeId = (int)$rowMakeId['make_id'];
+		$modeleMakeId = (int) $rowMakeId['make_id'];
 		// On rédéfini la valeur de l'identifiant de la marque qui sera persistée dans la table tbl_add_car
-		$_POST['ddlMake'] = (int)$modeleMakeId;
+		$_POST['ddlMake'] = (int) $modeleMakeId;
 
 		// var_dump($rowMakeId);
 		// die();
@@ -284,8 +284,8 @@ if (isset($_POST['car_names'])) {
 	} else {
 		// Si une marque exitant en BDD correspond à la valeur de la marque soumise via le formulaire de saisie
 		//  On récupère la valeur de son id et on rédéfini la valeur de l'identifiant de la marque qui sera persistée dans la table tbl_add_car
-		$modeleMakeId = (int)$make_id;
-		$_POST['ddlMake'] = (int)$make_id;
+		$modeleMakeId = (int) $make_id;
+		$_POST['ddlMake'] = (int) $make_id;
 		// var_dump($make_id);
 	}
 
@@ -321,7 +321,7 @@ if (isset($_POST['car_names'])) {
 		$rowModeleId = mysql_fetch_assoc($resultModeleId);
 
 		// On rédéfini la valeur de l'identifiant du modèle qui sera persistée dans la table tbl_add_car
-		$_POST['ddlModel'] = (int)$rowModeleId['model_id'];
+		$_POST['ddlModel'] = (int) $rowModeleId['model_id'];
 
 		// var_dump($rowModeleId);
 		// die();
@@ -329,14 +329,14 @@ if (isset($_POST['car_names'])) {
 	} else {
 		// Si un modèle exitant en BDD correspond à la valeur du modèle soumis via le formulaire de saisie
 		//  On récupère la valeur de son id et on rédéfini la valeur de l'identifiant du modèle qui sera persistée dans la table tbl_add_car
-		$modele_id = (int)$modele_id;
-		$_POST['ddlModel'] = (int)$modele_id;
+		$modele_id = (int) $modele_id;
+		$_POST['ddlModel'] = (int) $modele_id;
 		// var_dump($modele_id);
 		// die();
 	}
 
 	// Récupération du nom de la marque qui a pour id la valeur retourné par le component $_POST['ddlMake']
-	$query = "SELECT make_name FROM tbl_make WHERE make_id='" . (int)$_POST['ddlMake'] . "'";
+	$query = "SELECT make_name FROM tbl_make WHERE make_id='" . (int) $_POST['ddlMake'] . "'";
 
 	// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 	$result = mysql_query($query, $link);
@@ -357,6 +357,9 @@ if (isset($_POST['car_names'])) {
 	$_POST['add_date_assurance'] = $_POST['add_date_assurance_car'];
 
 	// var_dump($_POST);
+	// die();
+
+	// var_dump($_SESSION);
 	// die();
 
 	// On insère la nouvelle valeur de la colonne car_name en BDD
@@ -891,32 +894,39 @@ $image_url = uploadImage();
 if (empty($image_url)) {
 	$image_url = $_POST['img_exist'];
 }
-if(isset($_POST['recep_id'])){
-	$_POST['recep_id'] = (int)$_POST['recep_id'];
+if (isset($_POST['recep_id'])) {
+	$_POST['recep_id'] = (int) $_POST['recep_id'];
 }
+
+// Conversion d'ajustement en entier de l'identifiant de la voiture
+$_POST['add_car_id'] = (int) $_POST['add_car_id'];
 
 // var_dump($_POST);
 // die();
 
-// Si c'est le récetionniste qui fait la reception, alors on fait une redirection vers son dashboard
-if(isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])){
-	if ((int)$_POST['repair_car'] > 0) {
-		$url = WEB_URL . 'recep_panel/recep_repaircar_reception_list.php?m=up';
-		header("Location: $url");
-	} else {
-	
-		$url = WEB_URL . 'recep_panel/recep_repaircar_reception_list.php?m=add';
-		header("Location: $url");
-	}
-}
-
 // Exécution de la réquête et redirection vers la liste des voitures à faire réparer
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
-if ((int)$_POST['repair_car'] > 0) {
-	$url = WEB_URL . 'reception/repaircar_reception_list.php?m=up';
-	header("Location: $url");
+
+// Si c'est le récetionniste qui fait la reception, alors on fait une redirection vers son dashboard
+if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {
+
+	if ((int) $_POST['repair_car'] > 0) {
+		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=up';
+		header("Location: $url");
+	} else {
+
+		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=add';
+		header("Location: $url");
+	
+	}
 } else {
 
-	$url = WEB_URL . 'reception/repaircar_reception_list.php?m=add';
-	header("Location: $url");
+	if ((int) $_POST['repair_car'] > 0) {
+		$url = WEB_URL . 'reception/repaircar_reception_list.php?m=up';
+		header("Location: $url");
+	} else {
+
+		$url = WEB_URL . 'reception/repaircar_reception_list.php?m=add';
+		header("Location: $url");
+	}
 }

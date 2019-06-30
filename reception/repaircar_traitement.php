@@ -532,8 +532,8 @@ if (empty($image_url)) {
 // Exécution de la réquête et redirection vers la liste des voitures à faire réparer
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
 
-// Si c'est le récetionniste qui fait la reception, alors on fait une redirection vers son dashboard
-if(isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])){
+if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {
+
 	if ((int)$_POST['repair_car'] > 0) {
 		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=up';
 		header("Location: $url");
@@ -542,14 +542,17 @@ if(isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])){
 		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=add';
 		header("Location: $url");
 	}
-}
 
-if ((int)$_POST['repair_car'] > 0) {
-    $url = WEB_URL . 'reception/repaircar_reception_list.php?m=up';
-    header("Location: $url");
 } else {
 
-    $url = WEB_URL . 'reception/repaircar_reception_list.php?m=add';
-    header("Location: $url");
+	if ((int)$_POST['repair_car'] > 0) {
+		$url = WEB_URL . 'reception/repaircar_reception_list.php?m=up';
+		header("Location: $url");
+	} else {
+	
+		$url = WEB_URL . 'reception/repaircar_reception_list.php?m=add';
+		header("Location: $url");
+	}
 }
+
   

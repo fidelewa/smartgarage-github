@@ -184,11 +184,14 @@ if (!empty($_POST)) {
                                 </div>
                             <?php } ?>
                             <?php if (!empty($facture_four_list)) {
+
+                                // var_dump($facture_four_list);
+
                                 $total_pending = 0.00;
                                 $total_paid = 0.00;
                                 foreach ($facture_four_list as $rdata) {
                                     $total_pending += (float)$rdata['credit'];
-                                    $total_paid += (float)$rdata['credit'];
+                                    $total_paid += (float)$rdata['debit'];
                                 }
                                 ?>
                                 <div class="row">

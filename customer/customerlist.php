@@ -103,6 +103,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                 <b>Adresse géographique :</b> <?php echo $row['c_address']; ?><br />
                                 <b>Téléphone :</b> <?php echo $row['princ_tel']; ?><br />
                                 <b>Type de client :</b> <?php echo $row['type_client']; ?><br />
+                                <b>Civilité du client :</b> <?php echo $row['civilite_client']; ?><br />
                             </div>
                           </div>
                         </div>

@@ -2,6 +2,114 @@
 //include_once('../config.php');v
 class wms_core
 {
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepRepairCarListByRecepId($con, $recepId)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, m_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
+		add_car_id, diag.id as vehi_diag_id
+			from tbl_recep_vehi_repar rvr
+			left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
+			left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
+			join tbl_add_user usr on usr.usr_id = rvr.attrib_recep
+			where attrib_recep ='" . (int) $recepId . "'
+			ORDER BY rvr.car_id DESC 
+			LIMIT 10 ";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllPersoSalaire($con, $numeroMoisDateJour)
+	{
+		$data = array();
+
+		$query = "SELECT 
+    pp.per_id,
+    per_name,
+    salaire_base,
+    nb_heure_sup_periode,
+    nb_jour_conge_paye,
+    SUM(montant_avance) AS montant_avance_periode,
+    nb_jour_abs_justifie
+FROM
+    (SELECT 
+        per.per_id,
+            per_name,
+            per_sal AS salaire_base,
+            SUM(nb_heure_sup) AS nb_heure_sup_periode,
+            eca.nb_jour_conge_paye,
+            eca.nb_jour_abs_justifie
+    FROM
+        tbl_add_pointage po
+    LEFT JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel
+    LEFT JOIN tbl_emplo_conge_abs eca ON eca.per_id = per.per_id
+    WHERE mois_date_arrivee = '" . $numeroMoisDateJour . "' OR
+		mois_date_depart = '" . $numeroMoisDateJour . "' AND eca.mois = '" . $numeroMoisDateJour . "'
+    GROUP BY per.per_id) AS pointage_personnel
+        JOIN
+    tbl_avance_personnel pp ON pp.per_id = pointage_personnel.per_id
+GROUP BY pp.per_id";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllPersoSalaire_3($con, $numeroMoisDateJour)
+	{
+		$data = array();
+
+		$query = "SELECT per.per_id, per_name, per_sal as salaire_base,
+		sum(nb_heure_sup) as nb_heure_sup_periode, eca.nb_jour_conge_paye, eca.nb_jour_abs_justifie,
+		sum(montant_avance) as montant_avance_periode, sum(montant_prime) as montant_prime_periode
+		FROM tbl_add_pointage po
+		JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel 
+		LEFT JOIN tbl_avance_personnel ap ON ap.per_id = per.per_id
+        LEFT JOIN tbl_prime_personnel pp ON pp.per_id = per.per_id
+		JOIN tbl_emplo_conge_abs eca ON eca.per_id = per.per_id
+        WHERE mois_date_arrivee = '" . $numeroMoisDateJour . "' OR
+		mois_date_depart = '" . $numeroMoisDateJour . "' AND eca.mois = '" . $numeroMoisDateJour . "'
+        GROUP BY per_name, per.per_id;
+		";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
 
 	public function getFactureSimuFromDevisSimu($con, $devisId)
 	{
@@ -23,7 +131,6 @@ class wms_core
 
 		return $row;
 	}
-
 
 	/*
 	* @get supplier info by id
@@ -102,12 +209,11 @@ class wms_core
 		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
 
 		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
-		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false ) {
-			
+		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false) {
+
 			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id) 
 			VALUES (null, '$data[nb_jour_abs_employ]', '$numeroMoisDateJour', '$data[per_id]')";
 			$result = mysql_query($query, $con);
-
 		} else { // Sinon on fait une mise à jour
 
 			$query = "UPDATE tbl_emplo_conge_abs
@@ -148,12 +254,11 @@ class wms_core
 		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
 
 		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
-		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false ) {
-			
+		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false) {
+
 			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id) 
 			VALUES ('$data[nb_jour_conge_paye]', null, '$numeroMoisDateJour', '$data[per_id]')";
 			$result = mysql_query($query, $con);
-
 		} else { // Sinon on fait une mise à jour
 
 			$query = "UPDATE tbl_emplo_conge_abs
@@ -168,39 +273,6 @@ class wms_core
 			$message .= 'Whole query: ' . $query;
 			die($message);
 		}
-
-	}
-
-	public function getAllPersoSalaire($con, $numeroMoisDateJour)
-	{
-		$data = array();
-
-		$query = "SELECT per.per_id, per_name, per_sal as salaire_base,
-		sum(nb_heure_sup) as nb_heure_sup_periode, eca.nb_jour_conge_paye, eca.nb_jour_abs_justifie,
-		sum(montant_avance) as montant_avance_periode, sum(montant_prime) as montant_prime_periode
-		FROM tbl_add_pointage po
-		JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel 
-		LEFT JOIN tbl_avance_personnel ap ON ap.per_id = per.per_id
-        LEFT JOIN tbl_prime_personnel pp ON pp.per_id = per.per_id
-		JOIN tbl_emplo_conge_abs eca ON eca.per_id = per.per_id
-        WHERE mois_date_arrivee = '" . $numeroMoisDateJour . "' OR
-		mois_date_depart = '" . $numeroMoisDateJour . "' AND eca.mois = '" . $numeroMoisDateJour . "'
-        GROUP BY per_name, per.per_id;
-		";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			// var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		while ($row = mysql_fetch_assoc($result)) {
-			$data[] = $row;
-		}
-		return $data;
 	}
 
 	public function getAllPersoPointage($con, $numeroMoisDateJour)
@@ -1223,35 +1295,7 @@ class wms_core
 		return $data;
 	}
 
-	/*
-	* @get all Voiture de réparation list
-	*/
-	public function getAllRecepRepairCarListByRecepId($con, $recepId)
-	{
-		// Déclaration et initialisation d'un array vide
-		$data = array();
 
-		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, m_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
-		add_car_id, diag.id as vehi_diag_id
-			from tbl_recep_vehi_repar rvr
-			left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
-			left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
-			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
-			join tbl_add_user usr on usr.usr_id = rvr.attrib_recep
-			where attrib_recep ='" . (int) $recepId . "'
-			";
-
-		// Exécution et stockage du résultat de la requête
-		$result = mysql_query($query, $con);
-
-		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
-		// Pour chaque ligne, on l'affecte à une variable tampon
-		// Puis dans l'array
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
 
 	public function saveStockPiece($con, $data, $image_url)
 	{
@@ -4906,6 +4950,11 @@ class wms_core
 	public function deleteCustomer($con, $cid)
 	{
 		mysql_query("DELETE FROM `tbl_add_customer` WHERE customer_id = " . (int) $cid, $con);
+	}
+
+	public function deleteutilisateurInformation($con, $uid)
+	{
+		mysql_query("DELETE FROM `tbl_add_user` WHERE usr_id = " . (int) $uid, $con);
 	}
 
 	/*

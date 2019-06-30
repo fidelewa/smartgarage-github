@@ -80,7 +80,7 @@ if (isset($_POST['txtCName'])) {
 		$image_url = $_POST['img_exist'];
 	}
 	$wms->saveUpdateCustomerInformation($link, $_POST, $image_url);
-	if ((int)$_POST['customer_id'] > 0) {
+	if ((int) $_POST['customer_id'] > 0) {
 		$url = WEB_URL . 'customer/customerlist.php?m=up';
 		header("Location: $url");
 	} else {
@@ -95,6 +95,9 @@ if (isset($_POST['txtCName'])) {
 
 if (isset($_GET['id']) && $_GET['id'] != '') {
 	$row = $wms->getCustomerInfoByCustomerId($link, $_GET['id']);
+
+	// var_dump($row);
+
 	if (!empty($row)) {
 		$c_name = $row['c_name'];
 		$c_email = $row['c_email'];
@@ -114,7 +117,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 		$c_tel_dom = $row['tel_dom'];
 		$hdnid = $_GET['id'];
 		$title = 'Update Customer';
-		$button_text = "Update Information";
+		$button_text = "Modifier les informations";
 		$successful_msg = "Update Customer Successfully";
 		$form_url = WEB_URL . "customer/addcustomer.php?id=" . $_GET['id'];
 	}
@@ -404,20 +407,59 @@ function uploadPJ_12()
 						<div class="form-group">
 							<label for="type_client"><span style="color:red;">*</span> Type de client :</label>
 							<select required class='form-control' id="type_client" name="type_client">
-								<option value="<?php echo $c_type_client; ?>">--Sélectionner le type du client--</option>
-								<option value="Société">Société</option>
-								<option value="Particulier">Particulier</option>
-								<option value="Autre">Autre</option>
+								<option value="">--Sélectionner le type du client--</option>
+								<?php if (isset($c_type_client) && ($c_type_client == "Société")) {
+									echo "<option selected value='" . $c_type_client . "'>Société</option>";
+									echo "<option value='Particulier'>Particulier</option>";
+									echo "<option value='Autre'>Autre</option>";
+								} elseif (isset($c_type_client) && ($c_type_client == "Particulier")) {
+									echo "<option value='Société'>Société</option>";
+									echo "<option selected value='" . $c_type_client . "'>Particulier</option>";
+									echo "<option value='Autre'>Autre</option>";
+								} elseif (isset($c_type_client) && ($c_type_client == "Autre")) {
+									echo "<option value='Société'>Société</option>";
+									echo "<option value='Particulier'>Particulier</option>";
+									echo "<option selected value='" . $c_type_client . "'>Autre</option>";
+								} else {
+									echo "<option value='Société'>Société</option>";
+									echo "<option value='Particulier'>Particulier</option>";
+									echo "<option value='Autre'>Autre</option>";
+								}
+								?>
 							</select>
 						</div>
 						<div class="form-group">
 							<label for="civilite_client"><span style="color:red;">*</span> Civilité du client (Sélectionner aucun pour une société) :</label>
 							<select required class='form-control' id="civilite_client" name="civilite_client">
 								<option value="<?php echo $c_civilite_client; ?>">--Sélectionner la civilité du client--</option>
-								<option value="Monsieur">Monsieur (M)</option>
-								<option value="Madame">Madame (Mme)</option>
-								<option value="Mademoiselle">Mademoiselle (Mlle)</option>
-								<option value="Aucun">Aucun</option>
+								<?php if (isset($c_civilite_client) && ($c_civilite_client == "Monsieur")) {
+									echo "<option selected value='" . $c_civilite_client . "'>Monsieur (M)</option>";
+									echo "<option value='Madame'>Madame (Mme)</option>";
+									echo "<option value='Mademoiselle'>Mademoiselle (Mlle)</option>";
+									echo "<option value='Aucun'>Aucun</option>";
+								} elseif (isset($c_civilite_client) && ($c_civilite_client == "Madame")) {
+									echo "<option value='Monsieur'>Monsieur (M)</option>";
+									echo "<option selected value='" . $c_civilite_client . "'>Madame (Mme)</option>";
+									echo "<option value='Mademoiselle'>Mademoiselle (Mlle)</option>";
+									echo "<option value='Aucun'>Aucun</option>";
+								} elseif (isset($c_civilite_client) && ($c_civilite_client == "Mademoiselle")) {
+									echo "<option value='Monsieur'>Monsieur (M)</option>";
+									echo "<option value='Madame'>Madame (Mme)</option>";
+									echo "<option selected value='" . $c_civilite_client . "'>Mademoiselle (Mlle)</option>";
+									echo "<option value='Aucun'>Aucun</option>";
+								} elseif (isset($c_civilite_client) && ($c_civilite_client == "Aucun")) {
+									echo "<option value='Monsieur'>Monsieur (M)</option>";
+									echo "<option value='Madame'>Madame (Mme)</option>";
+									echo "<option value='Mademoiselle'>Mademoiselle (Mlle)</option>";
+									echo "<option selected value='" . $c_civilite_client . "'>Aucun</option>";
+								} else {
+									echo "<option value='Monsieur'>Monsieur (M)</option>";
+									echo "<option value='Madame'>Madame (Mme)</option>";
+									echo "<option value='Mademoiselle'>Mademoiselle (Mlle)</option>";
+									echo "<option value='Aucun'>Aucun</option>";
+								}
+								?>
+
 							</select>
 						</div>
 						<div class="form-group">
@@ -432,7 +474,7 @@ function uploadPJ_12()
 						</div>
 						<div class="form-group">
 							<label for="txtCEmail"> <span style="color:red;">*</span>E-mail (ou numéro de téléphone si vous n'avez pas d'adresse e-mail):</label>
-							<input required type="text" name="txtCEmail" value="<?php echo $c_email; ?>" id="txtCEmail" class="form-control" />
+							<input onkeyup="verifEmailClient(this.value);" required type="text" name="txtCEmail" value="<?php echo $c_email; ?>" id="txtCEmail" class="form-control" /><span id="emailclibox"></span>
 						</div>
 						<!-- Champ caché pour le mot de passe -->
 						<input type="hidden" value="" name="txtCPassword" />
@@ -467,51 +509,51 @@ function uploadPJ_12()
 						<fieldset>
 							<legend>Ajouter des fichiers joints</legend>
 							<div class="row">
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_3" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_4" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11" onchange="loadFile(event)" />
 									</span>
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-1 col-sm-1">
 									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12" onchange="loadFile(event)" />
 									</span>
 								</div>
@@ -527,11 +569,11 @@ function uploadPJ_12()
 				<div class="pull-right">
 					<button type="submit" class="btn btn-success btnsp"><i class="fa fa-save fa-2x"></i><br />
 						<?php echo $button_text; ?></button>&emsp;
-					<?php if (isset($_GET['id']) && $_GET['id'] != '') { ?>
-						<button type="button" onclick="javascript:window.print();" class="btn btn-danger btnsp"><i class="fa fa-print fa-2x"></i><br />
-							Imprimer</button>&emsp;
-					<?php } ?>
-					<a class="btn btn-warning btnsp" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php" data-original-title="Retour"><i class="fa fa-reply  fa-2x"></i><br />
+					<!-- <?php if (isset($_GET['id']) && $_GET['id'] != '') { ?>
+								<button type="button" onclick="javascript:window.print();" class="btn btn-danger btnsp"><i class="fa fa-print fa-2x"></i><br />
+									Imprimer</button>&emsp;
+					<?php } ?> -->
+					<a class="btn btn-warning btnsp" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Retour"><i class="fa fa-reply  fa-2x"></i><br />
 						Retour</a> </div>
 			</div>
 		</div>

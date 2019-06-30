@@ -1120,6 +1120,25 @@ function verifTelClient(telCli) {
 	}
 }
 
+function verifEmailClient(emailCli) {
+
+	var emailcli = emailCli;
+
+	if (emailcli != '') {
+
+		$.ajax({
+			url: '../ajax/verif_emailcli.php',
+			type: 'POST',
+			data: 'emailcli=' + escape(emailcli),
+			dataType: 'html',
+			success: function (data) {
+				// On défini le contenu html de l'élément avec des données
+				$("#emailclibox").html(data);
+			}
+		});
+	}
+}
+
 	$('#ddlMake').typeahead({
 		source: function (query, result) {
 			$.ajax({

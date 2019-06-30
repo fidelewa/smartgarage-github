@@ -1775,7 +1775,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             </div>
             <div class="form-group">
               <label for="princ_tel"><span style="color:red;">*</span> Téléphone principal :<span style="color:red;">(ce numéro de téléphone est le mot de passe)</span></label>
-              <input onkeyup="verifTelClient(this.value);" type="text" name="princ_tel" maxlength="10" value="" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" /><span id="telclibox"></span> -->
+              <input onkeyup="verifTelClient(this.value);" type="text" name="princ_tel" maxlength="10" value="" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" /><span id="telclibox"></span>
               <!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
             </div>
             <div class="form-group">
