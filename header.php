@@ -519,7 +519,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
                                   echo 'active';
                                 } ?>">
-                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de simulation</a>
+                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
                     </li>
                   </ul>
                 </li>
@@ -539,7 +539,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
                                   echo 'active';
                                 } ?>">
-                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de simulation</a>
+                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
                     </li>
                   </ul>
                 </li>
@@ -780,7 +780,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
                                   echo 'active';
                                 } ?>">
-                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de simulation</a>
+                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
                     </li>
                   </ul>
                 </li>
@@ -800,7 +800,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
                                   echo 'active';
                                 } ?>">
-                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de simulation</a>
+                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
                     </li>
                   </ul>
                 </li>
@@ -1042,7 +1042,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
                                   echo 'active';
                                 } ?>">
-                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de simulation</a>
+                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
                     </li>
                   </ul>
                 </li>
@@ -1062,7 +1062,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
                                   echo 'active';
                                 } ?>">
-                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de simulation</a>
+                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
                     </li>
                   </ul>
                 </li>
@@ -1303,7 +1303,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
                                   echo 'active';
                                 } ?>">
-                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de simulation</a>
+                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
                     </li>
                   </ul>
                 </li>
@@ -1323,7 +1323,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
                                   echo 'active';
                                 } ?>">
-                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de simulation</a>
+                      <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
                     </li>
                   </ul>
                 </li>
@@ -1523,7 +1523,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                 <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
                               echo 'active';
                             } ?>">
-                  <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de simulation</a>
+                  <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
                 </li>
               </ul>
             </li>
@@ -1540,7 +1540,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                 <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
                               echo 'active';
                             } ?>">
-                  <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de simulation</a>
+                  <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
                 </li>
               </ul>
             </li>

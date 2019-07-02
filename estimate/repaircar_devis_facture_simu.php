@@ -136,7 +136,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                             <td><input type="text" id="codepiece_<?php echo $i; ?>" value="<?php echo $devis['code_piece']; ?>" name="facture_data[<?php echo $i; ?>][code_piece_rechange_facture]" class="form-control" /></td>
                                                             <td><input type="text" id="designation_<?php echo $i; ?>" value="<?php echo $devis['designation']; ?>" name="facture_data[<?php echo $i; ?>][designation_piece_rechange_facture]" class="form-control" /></td>
                                                             <!-- <td><input type="text" value="<?php echo $devis['marque']; ?>" name="facture_data[<?php echo $i; ?>][marque_piece_rechange_facture]" class="form-control" /></td> -->
-                                                            <td><input type="text" id="qty_<?php echo $i; ?>" value="<?php echo $devis['quantity']; ?>" name="facture_data[<?php echo $i; ?>][qte_piece_rechange_facture]" class="form-control eFire allownumberonly" /></td>
+                                                            <td><input type="text" id="qty_<?php echo $i; ?>" value="<?php echo $devis['quantity']; ?>" name="facture_data[<?php echo $i; ?>][qte_piece_rechange_facture]" class="form-control eFireQty allownumberonly" /></td>
                                                             <td><input type="text" id="price_<?php echo $i; ?>" value="<?php echo $devis['price']; ?>" name="facture_data[<?php echo $i; ?>][prix_piece_rechange_min_facture]" class="form-control eFirePrice" /></td>
                                                             <td><input type="text" id="remise_<?php echo $i; ?>" value="<?php echo $devis['remise_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][remise_piece_rechange_facture]" class="form-control eFireRemise allownumberonly" /></td>
                                                             <td><input type="text" id="totalht_<?php echo $i; ?>" value="<?php echo $devis['total_prix_piece_rechange_devis_ht']; ?>" name="facture_data[<?php echo $i; ?>][total_prix_piece_rechange_facture_ht]" class="form-control allownumberonly" /></td>
@@ -201,7 +201,7 @@ if (isset($_POST) && !empty($_POST)) {
             html += '  <td class="text-right"><input id="codepiece_' + row + '" type="text" name="facture_data[' + row + '][code_piece_rechange_facture]" class="form-control"></td>';
             html += '  <td class="text-right"><input id="designation_' + row + '" type="text" name="facture_data[' + row + '][designation_piece_rechange_facture]" class="form-control"></td>';
             // html += '  <td class="text-right"><input type="text" id="marque_' + row + '" name="facture_data[' + row + '][marque_piece_rechange_facture]" value="" class="form-control" /></td>';
-            html += '  <td class="text-right"><input id="qty_' + row + '" type="text" name="facture_data[' + row + '][qte_piece_rechange_facture]" value="0" class="form-control eFire allownumberonly" /></td>';
+            html += '  <td class="text-right"><input id="qty_' + row + '" type="text" name="facture_data[' + row + '][qte_piece_rechange_facture]" value="0" class="form-control eFireQty allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="price_' + row + '" name="facture_data[' + row + '][prix_piece_rechange_min_facture]" value="0.00" class="form-control eFirePrice" /></td>';
             html += '  <td class="text-right"><input type="text" id="remise_' + row + '" name="facture_data[' + row + '][remise_piece_rechange_facture]" value="0.00" class="form-control eFireRemise allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="totalht_' + row + '" name="facture_data[' + row + '][total_prix_piece_rechange_facture_ht]" value="0.00" class="form-control allownumberonly" /></td>';
@@ -211,6 +211,11 @@ if (isset($_POST) && !empty($_POST)) {
             $('#labour_table tbody').append(html);
 
             $(".eFirePrice").keyup(function() {
+                // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
+                totalHtCalculate(this.id);
+            });
+
+            $(".eFireQty").keyup(function() {
                 // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
                 totalHtCalculate(this.id);
             });
@@ -233,6 +238,11 @@ if (isset($_POST) && !empty($_POST)) {
         $(document).ready(function() {
 
             $(".eFirePrice").keyup(function() {
+                // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
+                totalHtCalculate(this.id);
+            });
+
+            $(".eFireQty").keyup(function() {
                 // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
                 totalHtCalculate(this.id);
             });

@@ -33,7 +33,7 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-  <h1> Liste Fournisseurs </h1>
+  <h1> <i class="fa fa-list"></i> Liste Fournisseurs </h1>
   <ol class="breadcrumb">
     <li><a href="<?php echo WEB_URL?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active">Liste Fournisseurs</li>
@@ -46,7 +46,7 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
   <div class="col-xs-12">
     <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
       <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-      <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
+      <h4><i class="icon fa fa-ban"></i> Supprimé!</h4>
         Suppression des informations de fournisseur avec succès. </div>
     <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
       <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
@@ -54,9 +54,9 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
       <?php echo $msg; ?> </div>
     <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>supplier/addsupplier.php" data-original-title="Ajouter un fournisseur"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
     <div class="box box-success">
-      <div class="box-header">
+      <!-- <div class="box-header">
         <h3 class="box-title">Liste de fournisseurs</h3>
-      </div>
+      </div> -->
       <!-- /.box-header -->
       <div class="box-body">
         <table class="table sakotable table-bordered table-striped dt-responsive">
@@ -64,9 +64,9 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
             <tr>
               <th>Image</th>
              <th>Nom</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Fax</th>
+              <th>E-mail</th>
+              <th>Téléphone</th>
+              <th>Adresse</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -85,7 +85,7 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
               <td><?php echo $row['s_name']; ?></td>
               <td><?php echo $row['s_email']; ?></td>
               <td><?php echo $row['phone_number']; ?></td>
-              <td><?php echo $row['fax_number']; ?></td>
+              <td><?php echo $row['s_address']; ?></td>
               <td><a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['supplier_id']; ?>').modal('show');" data-original-title="Aperçu"><i class="fa fa-eye"></i></a> 
               <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL;?>supplier/addsupplier.php?id=<?php echo $row['supplier_id']; ?>" data-original-title="Modifier"><i class="fa fa-pencil"></i></a> 
               <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['supplier_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
@@ -105,8 +105,8 @@ if(isset($_GET['m']) && $_GET['m'] == 'up'){
                           <div class="col-xs-6">
                             <h3 style="text-decoration:underline;">Détails des informations</h3>
                             <b>Nom :</b> <?php echo $row['s_name']; ?><br/>
-                            <b>Email :</b> <?php echo $row['s_email']; ?><br/>
-                            <b>Addresse :</b> <?php echo $row['s_address']; ?><br/>
+                            <b>E-mail :</b> <?php echo $row['s_email']; ?><br/>
+                            <b>Adresse :</b> <?php echo $row['s_address']; ?><br/>
                             <!-- <b>Country :</b> <?php echo $row['country_name']; ?><br/>
                             <b>State :</b> <?php echo $row['state_name']; ?><br/> -->
                             <b>Téléphone :</b> <?php echo $row['phone_number']; ?><br/>

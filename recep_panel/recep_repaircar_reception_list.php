@@ -33,7 +33,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1> Liste des véhicules réceptionnés</h1>
+    <h1><i class="fa fa-list"></i> Liste de toutes les voitures réceptionnées par <?php echo '<b>'.$_SESSION['objRecep']['name'].'</b>'; ?></h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Liste des voitures réceptionnées</li>
@@ -56,12 +56,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 <?php echo $msg; ?>
             </div>
-            <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>recep_panel/recep_repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
+            <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>recep_panel/recep_repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>recep_panel/recep_dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
             <div class="box box-success">
-                <div class="box-header">
-                    <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
+                <!-- <div class="box-header">
                     <h3 class="box-title"><i class="fa fa-list"></i> Liste des voitures réceptionnées</h3>
-                </div>
+                </div> -->
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table class="table sakotable table-bordered table-striped dt-responsive">

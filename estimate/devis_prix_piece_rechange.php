@@ -84,13 +84,13 @@ if (isset($_POST) && !empty($_POST)) {
 <body>
 
     <section class="content-header">
-        <h1> Formulaire de création du devis de réparation du véhicule
+        <h1> Formulaire de création du devis après diagnostic
         </h1>
-        <!-- <ol class="breadcrumb">
-                <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="<?php echo WEB_URL ?>repaircar/carlist.php"> véhicule à faire réparer</a></li>
-                <li class="active">Ajout de véhicule à faire réparer</li>
-            </ol> -->
+        <ol class="breadcrumb">
+                <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Réception de véhicules</a></li>
+                <li><a href="<?php echo WEB_URL ?>reception/repaircar_diagnostic_list.php"> Liste des diagnostics des véhicules réceptionnés</a></li>
+                <li class="active">Création de devis</li>
+            </ol>
     </section>
 
     <div class="container">
@@ -175,7 +175,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                                     <input id="price_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][prix_piece_rechange_min_devis]" type="text" value="<?php echo $row['prix_piece_rechange_min']; ?>" class="form-control eFirePrice" />
                                                                 </td>
                                                                 <td>
-                                                                    <input id="remise_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][remise_piece_rechange_devis]" type="text" value="0.00" class="form-control eFireRemise" />
+                                                                    <input id="remise_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][remise_piece_rechange_devis]" type="text" value="" class="form-control eFireRemise" required/>
                                                                 </td>
                                                                 <td>
                                                                     <input id="totalht_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][total_prix_piece_rechange_devis_ht]" type="text" value="<?php echo $total_prix_piece_rechange; ?>" class="form-control allownumberonly" />
@@ -207,7 +207,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                         </tr>
                                                         <tr>
                                                             <td colspan="7" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
-                                                            <td><input id="labour" name="main_oeuvre_piece_rechange_devis" type="text" class="form-control allownumberonly" /></td>
+                                                            <td><input id="labour" name="main_oeuvre_piece_rechange_devis" type="text" class="form-control allownumberonly" required/></td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="7" class="text-right">Total HT:</td>
@@ -335,7 +335,7 @@ if (isset($_POST) && !empty($_POST)) {
             // html += '  <td class="text-right"><input type="text" id="marque_' + row + '" name="devis_data[' + row + '][marque_piece_rechange_devis]" value="" class="form-control" /></td>';
             html += '  <td class="text-right"><input id="qty_' + row + '" type="text" name="devis_data[' + row + '][qte_piece_rechange_devis]" value="0" class="form-control eFire allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="price_' + row + '" name="devis_data[' + row + '][prix_piece_rechange_min_devis]" value="0.00" class="form-control eFirePrice" /></td>';
-            html += '  <td class="text-right"><input type="text" id="remise_' + row + '" name="devis_data[' + row + '][remise_piece_rechange_devis]" value="0.00" class="form-control eFireRemise allownumberonly" /></td>';
+            html += '  <td class="text-right"><input type="text" id="remise_' + row + '" name="devis_data[' + row + '][remise_piece_rechange_devis]" value="" class="form-control eFireRemise allownumberonly" required/></td>';
             html += '  <td class="text-right"><input type="text" id="totalht_' + row + '" name="devis_data[' + row + '][total_prix_piece_rechange_devis_ht]" value="0.00" class="form-control allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="totalttc_' + row + '" name="devis_data[' + row + '][total_prix_piece_rechange_devis_ttc]" value="0.00" class="form-control allownumberonly etotal" /></td>';
             html += '  <td class="text-left"><button type="button" onclick="$(\'#estimate-row' + row + '\').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
@@ -389,7 +389,7 @@ if (isset($_POST) && !empty($_POST)) {
 
             $(".eFirePrice").keyup(function() {
                 // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
-                console.log('fgkldfgkl');
+                // console.log('fgkldfgkl');
                 totalHtCalculate(this.id);
             });
 

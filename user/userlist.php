@@ -47,12 +47,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
         <div class="col-xs-12">
             <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-                <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
+                <h4><i class="icon fa fa-ban"></i> Suppression!</h4>
                 <?php echo $msg; ?>
             </div>
             <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <h4><i class="icon fa fa-check"></i> Succès!</h4>
                 <?php echo $msg; ?>
             </div>
             <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php" data-original-title="Ajouter un utilisateur"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
@@ -88,8 +88,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                     <td><?php echo $row['usr_type']; ?></td>
                                     <td>
                                         <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['usr_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a>  -->
-                                        <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php?id=<?php echo $row['usr_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> 
-                                        <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['usr_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                        <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php?id=<?php echo $row['usr_id']; ?>" data-original-title="Modifier"><i class="fa fa-pencil"></i></a> 
+                                        <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['usr_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
                                         <div id="nurse_view_<?php echo $row['usr_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">

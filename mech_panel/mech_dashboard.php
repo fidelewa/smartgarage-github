@@ -133,7 +133,7 @@ function NewGuid()
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Liste de mes 10 derniers véhicules réceptionnés pour diagnostic</h3>
+          <h3 class="box-title">Liste des derniers véhicules réceptionnés pour diagnostic par <?php echo '<b>'.$_SESSION['objMech']['name'].'</b>'; ?></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">

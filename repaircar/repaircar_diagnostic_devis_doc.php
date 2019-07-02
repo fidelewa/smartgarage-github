@@ -229,7 +229,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                                 <!-- <th>Marque</th> -->
                                                 <th>Quantité</th>
                                                 <th>Tarif HT</th>
-                                                <th>Remise</th>
+                                                <th>Remise (%)</th>
                                                 <th>Total HT</th>
                                                 <th>Total TTC</th>
                                             </tr>
@@ -474,12 +474,12 @@ if (!empty($row) && count($row) > 0) { ?>
                 // console.log(key);
 
                 // Conversion en flottant
-                key.price = parseFloat(key.price);
+                key.prix_piece_rechange_min_devis = parseFloat(key.prix_piece_rechange_min_devis);
                 key.total_prix_piece_rechange_devis_ht = parseFloat(key.total_prix_piece_rechange_devis_ht);
                 key.total_prix_piece_rechange_devis_ttc = parseFloat(key.total_prix_piece_rechange_devis_ttc);
 
                 // Affectation des nouvelles valeurs
-                $("#article_devis_price_" + row).html(numeral(key.price).format('0,0 $'));
+                $("#article_devis_price_" + row).html(numeral(key.prix_piece_rechange_min_devis).format('0,0 $'));
                 $("#article_devis_total_ht_" + row).html(numeral(key.total_prix_piece_rechange_devis_ht).format('0,0 $'));
                 $("#article_devis_total_ttc_" + row).html(numeral(key.total_prix_piece_rechange_devis_ttc).format('0,0 $'));
 

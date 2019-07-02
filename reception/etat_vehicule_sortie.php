@@ -1,5 +1,5 @@
 <?php include('../header.php');
-$button_text = "Enregistrer information";
+$button_text = "Enregistrer";
 
 if (isset($_POST) && !empty($_POST)) {
 

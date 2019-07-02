@@ -58,10 +58,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                     <table class="table sakotable table-bordered table-striped dt-responsive">
                         <thead>
                             <tr>
-                                <th>ID Reparation</th>
+                                <th>ID diagnostic</th>
                                 <th>Immatriculation</th>
                                 <th>Client</th>
-                                <th>Date reception</th>
+                                <!-- <th>Date reception</th> -->
                                 <th>Date exp. assur</th>
                                 <th>Date exp. vis. tech.</th>
                                 <!-- <th>Attribué à</th> -->
@@ -80,10 +80,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 
                                 ?>
                                 <tr>
-                                    <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td>
-                                    <td><?php echo $row['num_matricule']; ?></td>
+                                    <!-- <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td> -->
+                                    <td><span class="label label-success"><?php echo $row['vehi_diag_id']; ?></span></td>
+                                    <td><?php echo $row['VIN']; ?></td>
                                     <td><?php echo $row['c_name']; ?></td>
-                                    <td><?php echo $row['add_date_recep_vehi']; ?></td>
+                                    <!-- <td><?php echo $row['add_date_recep_vehi']; ?></td> -->
                                     <td><?php echo $row['add_date_assurance']; ?></td>
                                     <td><?php echo $row['add_date_visitetech']; ?></td>
                                     <!-- <td><?php echo $row['m_name']; ?></td> -->
@@ -105,44 +106,14 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 
                                             <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_comparaison_piece.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un formulaire de comparaison des prix des pièces de rechange par fournisseur"><i class="fa fa-plus"></i></a>
 
-                                        <?php }
+                                        <?php } ?>
 
-                                    // On vérifie qu'un devis confirmé par un bon de commande correspond au diagnostic courant
-                                    // $rows = $wms->getComparPrixPieceRechangeInfoByDiagId($link, $row['vehi_diag_id']);
-                                    $ligne = $wms->getDevisInfoByDiagId($link, $row['vehi_diag_id']);
-
-                                    if (!empty($ligne)) {
-                                        // if ($ligne['statut_reparation'] == 'Terminer') { 
-                                        ?>
-                                            <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $ligne['devis_id']; ?>" data-original-title="Consulter le devis de réparation du véhicule" style="background-color:orange;color:#ffffff"><i class="fa fa-file-text-o"></i></a>
-
-                                        <?php //}
-                                    } else { ?>
-
-                                            <a class="btn btn-info" style="background-color:orange;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un devis"><i class="fa fa-plus"></i></a>
-
-                                        <?php }
-
-                                    $record = $wms->getFactureInfoByDiagId($link, $row['vehi_diag_id']);
-
-                                    if (!empty($record)) {
-                                        // if ($ligne['statut_reparation'] == 'Terminer') { 
-                                        ?>
-                                            <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_devis_facture_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $ligne['devis_id']; ?>" data-original-title="Consulter la facture de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
-
-                                        <?php //}
-                                    } else { ?>
-
-                                            <a class="btn btn-info" style="background-color:gray;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $ligne['devis_id']; ?>" data-original-title="Créer une facture"><i class="fa fa-plus"></i></a>
-
-                                        <?php }
-
-                                    ?>
+                                        <a class="btn btn-info" style="background-color:orange;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un devis"><i class="fa fa-plus"></i></a>
 
                                     </td>
                                 </tr>
                             <?php }
-                        mysql_close($link); ?>
+                            mysql_close($link); ?>
                         </tbody>
                     </table>
                 </div>

@@ -119,11 +119,11 @@ if (isset($_POST) && !empty($_POST)) {
                                                             <td><input type="text" value="<?php echo $devis['code_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][code_piece_rechange_facture]" class="form-control" /></td>
                                                             <td><input type="text" value="<?php echo $devis['designation_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][designation_piece_rechange_facture]" class="form-control" /></td>
                                                             <!-- <td><input type="text" value="<?php echo $devis['marque_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][marque_piece_rechange_facture]" class="form-control" /></td> -->
-                                                            <td><input type="text" value="<?php echo $devis['qte_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][qte_piece_rechange_facture]" class="form-control" /></td>
-                                                            <td><input type="text" value="<?php echo $devis['prix_piece_rechange_min_devis']; ?>" name="facture_data[<?php echo $i; ?>][prix_piece_rechange_min_facture]" class="form-control" /></td>
-                                                            <td><input type="text" value="<?php echo $devis['remise_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][remise_piece_rechange_facture]" class="form-control" /></td>
-                                                            <td><input type="text" value="<?php echo $devis['total_prix_piece_rechange_devis_ht']; ?>" name="facture_data[<?php echo $i; ?>][total_prix_piece_rechange_facture_ht]" class="form-control" /></td>
-                                                            <td><input type="text" value="<?php echo $devis['total_prix_piece_rechange_devis_ttc']; ?>" name="facture_data[<?php echo $i; ?>][total_prix_piece_rechange_facture_ttc]" class="form-control" /></td>
+                                                            <td><input id="qty_<?php echo $i; ?>" type="text" value="<?php echo $devis['qte_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][qte_piece_rechange_facture]" class="form-control eFireQty" /></td>
+                                                            <td><input id="price_<?php echo $i; ?>" type="text" value="<?php echo $devis['prix_piece_rechange_min_devis']; ?>" name="facture_data[<?php echo $i; ?>][prix_piece_rechange_min_facture]" class="form-control eFirePrice" /></td>
+                                                            <td><input required id="remise_<?php echo $i; ?>" type="text" value="<?php echo $devis['remise_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][remise_piece_rechange_facture]" class="form-control eFireRemise" /></td>
+                                                            <td><input id="totalht_<?php echo $i; ?>" type="text" value="<?php echo $devis['total_prix_piece_rechange_devis_ht']; ?>" name="facture_data[<?php echo $i; ?>][total_prix_piece_rechange_facture_ht]" class="form-control allownumberonly" /></td>
+                                                            <td><input id="totalttc_<?php echo $i; ?>" type="text" value="<?php echo $devis['total_prix_piece_rechange_devis_ttc']; ?>" name="facture_data[<?php echo $i; ?>][total_prix_piece_rechange_facture_ttc]" class="form-control allownumberonly etotal" /></td>
                                                             <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $i; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                                         </tr>
                                                         <!-- Récupération des données de la facture -->
@@ -145,7 +145,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                     </tr>
                                                     <tr>
                                                         <td colspan="7" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
-                                                        <td><input id="labour" type="text" value="<?php echo $row['main_oeuvre_piece_rechange_devis']; ?>" name="montant_main_oeuvre_facture" class="form-control allownumberonly" /></td>
+                                                        <td><input required id="labour" type="text" value="<?php echo $row['main_oeuvre_piece_rechange_devis']; ?>" name="montant_main_oeuvre_facture" class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="7" class="text-right">Total HT:</td>
@@ -208,6 +208,13 @@ if (isset($_POST) && !empty($_POST)) {
 
             $(".eFirePrice").keyup(function() {
                 // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
+                // console.log('flklfd');
+                totalHtCalculate(this.id);
+            });
+
+            $(".eFireQty").keyup(function() {
+                // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
+                // console.log('flklfd');
                 totalHtCalculate(this.id);
             });
 
@@ -228,9 +235,15 @@ if (isset($_POST) && !empty($_POST)) {
         // Au chargement du DOM, on appelle la fonction qui nous intéresse
         $(document).ready(function() {
 
+            $(".eFireQty").keyup(function() {
+                // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
+                // console.log('flklfd');
+                totalHtCalculate(this.id);
+            });
+
             $(".eFirePrice").keyup(function() {
                 // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
-                console.log('fgkldfgkl');
+                // console.log('fgkldfgkl');
                 totalHtCalculate(this.id);
             });
 

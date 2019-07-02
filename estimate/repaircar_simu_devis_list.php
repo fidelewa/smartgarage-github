@@ -28,7 +28,7 @@ $model_post_token = 0;
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1> Devis - Liste des devis attribués à des véhicules</h1>
+    <h1> <i class="fa fa-list"></i> Devis - Liste des devis attribués à des véhicules</h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Liste des devis de réparation attribués à des véhicules</li>
@@ -55,10 +55,10 @@ $model_post_token = 0;
                 <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/adddevis.php" data-original-title="Créer un nouveau devis"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a>
             </div>
             <div class="box box-success">
-                <div class="box-header">
+                <!-- <div class="box-header"> -->
                     <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
-                    <h3 class="box-title"><i class="fa fa-list"></i> Liste des devis de réparation attribués à des véhicules</h3>
-                </div>
+                    <!-- <h3 class="box-title"><i class="fa fa-list"></i> Liste des devis de réparation attribués à des véhicules</h3> -->
+                <!-- </div> -->
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table class="table sakotable table-bordered table-striped dt-responsive">

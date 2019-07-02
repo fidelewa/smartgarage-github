@@ -143,11 +143,13 @@ function arrayValueExist($array, $value) {
   </div> -->
   <div class="row">
         <div class="col-xs-12">
-            <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
+            <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> 
+            <!-- <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>recep_panel/recep_dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> -->
+          </div>
             <div class="box box-success">
                 <div class="box-header">
                     <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
-                    <h3 class="box-title"><i class="fa fa-list"></i> Liste des voitures réceptionnées</h3>
+                    <h3 class="box-title"><i class="fa fa-list"></i> Liste des dernières voitures réceptionnées par <?php echo '<b>'.$_SESSION['objRecep']['name'].'</b>'; ?></h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -203,9 +205,11 @@ function arrayValueExist($array, $value) {
                         mysql_close($link); ?>
                         </tbody>
                     </table>
+                    <div class="box-footer clearfix"><a href="<?php echo WEB_URL; ?>recep_panel/recep_repaircar_reception_list.php" class="btn btn-sm btn-success btn-flat pull-right"><b><i class="fa fa-list"></i> &nbsp;Voir toute la liste</b></a> </div>
                 </div>
                 <!-- /.box-body -->
             </div>
+            
             <!-- /.box -->
         </div>
         <!-- /.col -->

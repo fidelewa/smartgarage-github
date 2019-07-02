@@ -53,7 +53,7 @@ $result = $wms->getAllRecepCarListByCustomer($link, $_GET['cid']);
                 <div class="box-header">
                     <h3 class="box-title"><i class="fa fa-list"></i> Liste des voitures réceptionnés appartenant au client <?php
                                                                                                                             if (isset($result) && !empty($result)) {
-                                                                                                                                echo $result[0]['c_name'];
+                                                                                                                                echo '<b>'.$result[0]['c_name'].'</b>';
                                                                                                                             }
                                                                                                                             ?></h3>
                 </div>

@@ -117,9 +117,9 @@ if (isset($_POST) && !empty($_POST)) {
                                                             </td>
                                                             <td class="text-right"><input id="parts_desc_<?php echo $row; ?>" type="text" value="" name="estimate_data[<?php echo $row; ?>][designation]" class="form-control" /></td>
                                                             <!-- <td class="text-right"><input id="marque_<?php echo $row; ?>" type="text" value="" name="estimate_data[<?php echo $row; ?>][marque]" class="form-control" /></td> -->
-                                                            <td class="text-right"><input id="qty_<?php echo $row; ?>" type="text" name="estimate_data[<?php echo $row; ?>][quantity]" value="0" class="form-control eFire allownumberonly" /></td>
+                                                            <td class="text-right"><input id="qty_<?php echo $row; ?>" type="text" name="estimate_data[<?php echo $row; ?>][quantity]" value="0" class="form-control eFireQty allownumberonly" /></td>
                                                             <td class="text-right"><input id="price_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][prix_piece_rechange_min_devis]" type="text" value="0.00" class="form-control eFirePrice" /></td>
-                                                            <td class="text-right"><input id="remise_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][remise_piece_rechange_devis]" type="text" value="0.00" class="form-control eFireRemise" /></td>
+                                                            <td class="text-right"><input required id="remise_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][remise_piece_rechange_devis]" type="text" value="" class="form-control eFireRemise" /></td>
                                                             <td class="text-right"><input id="totalht_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][total_prix_piece_rechange_devis_ht]" type="text" value="0.00" readonly class="form-control allownumberonly" /></td>
                                                             <td class="text-right"><input id="totalttc_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][total_prix_piece_rechange_devis_ttc]" type="text" value="0.00" readonly class="form-control allownumberonly etotal" /></td>
                                                             <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $row; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
@@ -134,7 +134,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                     </tr>
                                                     <tr>
                                                         <td colspan="7" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
-                                                        <td><input id="labour" name="main_oeuvre_piece_rechange_devis" type="text" class="form-control allownumberonly" /></td>
+                                                        <td><input required id="labour" name="main_oeuvre_piece_rechange_devis" type="text" class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="7" class="text-right">Total HT:</td>
@@ -314,9 +314,9 @@ if (isset($_POST) && !empty($_POST)) {
             // html += '  <td class="text-right"><input id="parts_desc_' + row + '" type="text" name="estimate_data[' + row + '][discription]" class="form-control parts_list" /></td>';
             html += '  <td class="text-right"><input id="parts_desc_' + row + '" type="text" name="estimate_data[' + row + '][designation]" class="form-control parts_list"></td>';
             // html += '  <td class="text-right"><input type="text" id="marque_' + row + '" name="estimate_data[' + row + '][marque]" value="" class="form-control" /></td>';
-            html += '  <td class="text-right"><input id="qty_' + row + '" type="text" name="estimate_data[' + row + '][quantity]" value="0" class="form-control eFire allownumberonly" /></td>';
+            html += '  <td class="text-right"><input id="qty_' + row + '" type="text" name="estimate_data[' + row + '][quantity]" value="0" class="form-control eFireQty allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="price_' + row + '" name="estimate_data[' + row + '][price]" value="0.00" class="form-control eFirePrice allownumberonly" /></td>';
-            html += '  <td class="text-right"><input type="text" id="remise_' + row + '" name="estimate_data[' + row + '][remise_piece_rechange_devis]" value="0.00" class="form-control eFireRemise allownumberonly" /></td>';
+            html += '  <td class="text-right"><input required type="text" id="remise_' + row + '" name="estimate_data[' + row + '][remise_piece_rechange_devis]" value="" class="form-control eFireRemise allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="totalht_' + row + '" name="estimate_data[' + row + '][total_prix_piece_rechange_devis_ht]" value="0.00" class="form-control allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="totalttc_' + row + '" name="estimate_data[' + row + '][total_prix_piece_rechange_devis_ttc]" value="0.00" class="form-control allownumberonly etotal" /></td>';
             html += '  <td class="text-left"><button type="button" onclick="$(\'#estimate-row' + row + '\').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
@@ -325,6 +325,11 @@ if (isset($_POST) && !empty($_POST)) {
             row++;
             // reloadQtyRow();
             // numberAllow();
+
+            $(".eFireQty").keyup(function() {
+                // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
+                totalHtCalculate(this.id);
+            });
 
             $(".eFirePrice").keyup(function() {
                 // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice

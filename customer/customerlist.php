@@ -33,7 +33,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
       <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
         <h4><i class="icon fa fa-ban"></i> Supprimé!</h4>
-        Supprimer les informations client réussies.
+        Client supprimé avec succès.
       </div>
       <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>

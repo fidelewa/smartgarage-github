@@ -70,7 +70,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'exiting_piece') {
                 <th>Type</th>
                 <th>Famille</th>
                 <th>Prix base TTC</th>
-                <th>Stock</th>
+                <th>Coefficient</th>
                 <th>Action</th>
               </tr>
             </thead>

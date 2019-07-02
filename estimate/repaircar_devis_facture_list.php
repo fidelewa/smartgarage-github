@@ -20,10 +20,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1> Liste des factures relatives aux devis de réparation</h1>
+    <h1> Liste des factures relatives aux devis après diagnostic</h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Liste des factures relatives aux devis de réparation</li>
+        <li class="active">Liste des factures relatives aux devis après diagnostic</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -47,17 +47,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
             <div class="box box-success">
                 <div class="box-header">
                     <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
-                    <h3 class="box-title"><i class="fa fa-list"></i> Liste des factures relatives aux devis de réparation</h3>
+                    <h3 class="box-title"><i class="fa fa-list"></i> Liste des factures relatives aux devis après diagnostic</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table class="table sakotable table-bordered table-striped dt-responsive">
                         <thead>
                             <tr>
-                                <th>ID Reparation</th>
+                                <th>Identifiant facture</th>
                                 <th>Immatriculation</th>
                                 <th>Client</th>
-                                <th>Date reception</th>
+                                <th>Date facture</th>
                                 <th>Date exp. assur</th>
                                 <th>Date exp. vis. tech.</th>
                                 <!-- <th>Attribué à</th> -->
@@ -84,10 +84,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 
                                 ?>
                                 <tr>
-                                    <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td>
-                                    <td><?php echo $row['num_matricule']; ?></td>
+                                    <td><span class="label label-success"><?php echo $row['facture_id']; ?></span></td>
+                                    <td><?php echo $row['VIN']; ?></td>
                                     <td><?php echo $row['c_name']; ?></td>
-                                    <td><?php echo $row['add_date_recep_vehi']; ?></td>
+                                    <td><?php echo date_format(date_create($row['date_facture']), 'd/m/Y'); ?></td>
                                     <td><?php echo $row['add_date_assurance']; ?></td>
                                     <td><?php echo $row['add_date_visitetech']; ?></td>
                                     <td>

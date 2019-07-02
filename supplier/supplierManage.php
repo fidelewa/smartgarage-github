@@ -1,5 +1,5 @@
 <?php
-include('../header.php'); 
+include('../header.php');
 
 if (isset($_GET['m']) && $_GET['m'] == 'add') {
     $addinfo = 'block';
@@ -22,25 +22,40 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 
 <body>
     <section class="content">
+    <h3> <i class="fa fa-list"></i> Liste des fournisseurs gérés</h3>
         <!-- Full Width boxes (Stat box) -->
         <div class="row">
             <div class="col-md-12">
-            <!-- <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
-                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
-                </button>
-                <h4><i class="icon fa fa-check"></i> Success!</h4>
-                <?php echo $msg; ?>
-            </div> -->
                 <div class="box box-success">
-                    <ul class="list-group list-group-flush">
 
-                        <?php
-                        $result = $wms->getAllSuppliers($link);
-                        foreach ($result as $row) { ?>
-                            <a href="<?php echo WEB_URL ?>supplier/supplierManageData.php?supplier_id=<?php echo $row['supplier_id'] ?>"><li class="list-group-item"><?php echo $row['s_name'] ?></li></a>
-                        <?php } ?>
-                        <ul>
-                            <!-- /.box-body -->
+                    <div class="box-body">
+                        <table class="table sakotable table-bordered table-striped dt-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Nom des fournisseurs</th>
+                                    <!-- <th>Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php
+
+                                $result = $wms->getAllSuppliers($link);
+                                foreach ($result as $row) { ?>
+
+                                    <tr>
+                                        <td>
+                                            <a href="<?php echo WEB_URL ?>supplier/supplierManageData.php?supplier_id=<?php echo $row['supplier_id'] ?>">
+                                                <?php echo $row['s_name'] ?>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php }
+                                mysql_close($link); ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
             </div>

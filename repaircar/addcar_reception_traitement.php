@@ -362,11 +362,53 @@ if (isset($_POST['car_names'])) {
 	// var_dump($_SESSION);
 	// die();
 
+	// TRAITEMENT DE LA VISITE TECHNIQUE
+	if (isset($_POST['add_date_visitetech'])) { // Si la date de la visite technique existe
+
+		// On crée un objet Datetime à partir du format chaine de caractère de la date de la visite technique
+		$dateprochvistech = DateTime::createFromFormat('d/m/Y', $_POST['add_date_visitetech']);
+
+		if ($dateprochvistech instanceof DateTime) {
+
+			// Définition du statut de la visite technique
+			$diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
+
+			$diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
+
+			// conversion en entier
+			$diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
+		}
+
+		if ($diffTodayDateprochvistech < -14) {
+			$_POST['statut_vistech'] = "valide";
+		  }
+	}
+
+	// TRAITEMENT DE L'ASSURANCE
+	if (isset($_POST['add_date_assurance']) && isset($_POST['add_date_assurance_fin'])) {
+
+		$dateFinAssur = DateTime::createFromFormat('d/m/Y', $_POST['add_date_assurance_fin']);
+
+		if ($dateFinAssur instanceof DateTime) {
+
+			$diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+			$diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
+
+			// conversion en entier
+			$diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
+		}
+
+		if ($diffDateDebutFinAssur < -14) {
+			$_POST['statut_assurance'] = "valide";
+		  }
+	}
+
+	// var_dump($_POST['statut_assurance']);
+	// var_dump($_POST['statut_vistech']);
+	// die();
+
 	// On insère la nouvelle valeur de la colonne car_name en BDD
 	$wms->saveUpdateRepairCarInformation($link, $_POST, $image_url);
-
-	// var_dump($_POST);
-	// die();
 
 }
 
@@ -917,7 +959,6 @@ if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {
 
 		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=add';
 		header("Location: $url");
-	
 	}
 } else {
 

@@ -90,9 +90,9 @@ if (isset($_POST) && !empty($_POST)) {
 
                         <div align="right" style="margin-bottom:1%;">
                             <!-- <a class="btn btn-success" style="background-color:#0029CE;color:#ffffff;" data-toggle="modal" data-target="#devis_vehicule_modal" title="Attribuer le devis à un véhicule"><i class="fa fa-plus"></i></a> -->
-                            <button type="button" onclick="javascript:window.print();" class="btn btn-danger btnsp"><i class="fa fa-print" data-original-title="imprimer"></i></button>
-                            <button class="btn btn-success" type="submit" data-toggle="tooltip" href="javascript:;" data-original-title="<?php echo $button_text; ?>"><i class="fa fa-save"></i></button> &nbsp;
-                            <!-- <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Back"><i class="fa fa-reply"></i></a> </div> -->
+                            <!-- <button type="button" onclick="javascript:window.print();" class="btn btn-danger btnsp"><i class="fa fa-print" data-original-title="imprimer"></i></button> -->
+                            <button class="btn btn-success" type="submit" data-toggle="tooltip" href="javascript:;" data-original-title="<?php echo $button_text; ?>"><i class="fa fa-save"></i></button>
+                            <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>supplier/supplierManage.php" data-original-title="Retour"><i class="fa fa-reply"></i></a>
 
                             <div class="box box-success">
 

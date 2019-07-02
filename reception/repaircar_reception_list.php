@@ -26,7 +26,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
 
         $addinfo = 'block';
         // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
-        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à été attribuée au mécanicien " . $_GET['mech_name'];
+        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à été attribuée à " . $_GET['mech_name'];
     }
 }
 ?>
@@ -67,7 +67,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                     <table class="table sakotable table-bordered table-striped dt-responsive">
                         <thead>
                             <tr>
-                                <th>ID Reparation</th>
+                                <th>ID Reception</th>
                                 <th>Immatriculation</th>
                                 <th>Client</th>
                                 <th>Date reception</th>
@@ -99,7 +99,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
 
                                 ?>
                                 <tr>
-                                    <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td>
+                                    <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
                                     <td><?php echo $row['num_matricule']; ?></td>
                                     <td><?php echo $row['c_name']; ?></td>
                                     <td><?php echo $row['add_date_recep_vehi']; ?></td>
@@ -108,6 +108,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                                     <!-- <td><?php echo $row['m_name']; ?></td> -->
                                     <td>
 
+                                        <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/pj_car_recep_list.php?car_recep_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la réception du véhicule"><i class="fa fa-paperclip"></i></a>
                                         <!-- <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a> -->
                                         <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
                                         <?php
@@ -124,7 +125,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                                         // Si le client et le receptionniste ont signé au dépot la fiche de reception du véhicule
                                         if (isset($row['sign_cli_depot']) && isset($row['sign_recep_depot'])) { ?>
 
-                                            <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien ou un électricien"><i class="fa fa-user"></i></a>
+                                            <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attribuer le véhicule réceptionné à un mécanicien ou un électricien pour diagnostic"><i class="fa fa-user"></i></a>
 
                                         <?php }
 
@@ -157,7 +158,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <select required class='form-control' id="mecanicienList" name="mecanicienList">
-                                                                    <option selected value="">--Veuillez saisir ou sélectionner le responsable approprié--</option>
+                                                                    <option selected value="">--Veuillez saisir ou sélectionner un mécanicien ou un électricien--</option>
                                                                     <?php
                                                                     $mecanicien_list = $wms->getAllMechanicsListByTitle($link);
                                                                     foreach ($mecanicien_list as $mrow) {

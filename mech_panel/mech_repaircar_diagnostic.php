@@ -1,5 +1,5 @@
 <?php
-include('header.php');
+include('../header.php');
 
 $row = 0;
 $estimate_data = array();
@@ -453,4 +453,4 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
 
 </html>
 
-<?php include('footer.php'); ?>
+<?php include('../footer.php'); ?>

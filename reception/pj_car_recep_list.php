@@ -9,7 +9,7 @@ $msg = "";
 //     $msg = "La pièce jointe a été supprimée avec succès";
 // }
 
-$row = $wms->getAllPjByCustomer($link, $_GET['cid']);
+$row = $wms->getAllPjByCarRecep($link, $_GET['car_recep_id']);
 
 // var_dump($row);
 // die();
@@ -18,15 +18,15 @@ $row = $wms->getAllPjByCustomer($link, $_GET['cid']);
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1> <i class="fa fa-list"></i> Liste des pièces jointes appartenant au client
+    <h1> <i class="fa fa-list"></i> Liste des pièces jointes à la réception du véhicule
         <?php
         if (isset($row) && !empty($row)) {
-            echo $row['c_name'];
+            echo nl2br("\r\n".$row['car_name']. ' '. $row['model_name']. ' '. $row['VIN']);
         }
         ?></h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Liste des pièces jointes appartenant à un client</li>
+        <li class="active">Liste des pièces jointes à la réception du véhicule</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -130,11 +130,16 @@ $row = $wms->getAllPjByCustomer($link, $_GET['cid']);
                                 foreach ($pj_list as $pj_name) {
 
                                     // Adresse de la pièce jointe sur le serveur
-                                    // $pj_url = './img/upload/docs/' . $pj_name;
-                                    if (file_exists(ROOT_PATH . '/img/upload/docs/' . $pj_name) && $pj_name != '') { ?>
+
+                                    // $pj_path = WEB_URL . 'img/upload/car/' . $pj_name;
+                                    $pj_path = ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $pj_name;
+
+                                    // Si la pièce jointe existe à l'emplacement spécifié et que son nom est défini
+                                    // On affiche la liste des pièces jointes en faisant un lien pour les consulter
+                                    if (file_exists($pj_path) && $pj_name != '') { ?>
                                         <tr>
                                             <td>
-                                                <a href="<?php echo WEB_URL ?>img/upload/docs/<?php echo $pj_name ?>"><?php echo $pj_name ?></a>
+                                                <a href="<?php echo WEB_URL ?>img/upload/docs/reception_vehicule/<?php echo $pj_name ?>"><?php echo $pj_name ?></a>
                                             </td>
                                             <!-- <td>
                                                 <a class="btn btn-danger" data-toggle="tooltip" onClick="deletePj(<?php echo $row['customer_id'] ?>, <?php echo $pj_name ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
@@ -143,7 +148,7 @@ $row = $wms->getAllPjByCustomer($link, $_GET['cid']);
                                     <?php }
                                 }
                             } else {
-                                echo "<p>Ce client n'a aucune pièces jointes</p>";
+                                echo "<p>Cet réception de véhicule n'a aucune pièces jointes</p>";
                             }
                             ?>
 

@@ -28,7 +28,7 @@ if (!empty($sold_car)) {
       'highlight'    => $ccode,
       'label'      => ' Car Sold' . ' ' . $scar['month_name']
     );
-    $total_car_year_sold += (int)$scar['total_sell'];
+    $total_car_year_sold += (int) $scar['total_sell'];
   }
   if (!empty($car_sell_report)) {
     $car_sell_report = json_encode($car_sell_report, JSON_NUMERIC_CHECK);
@@ -49,7 +49,7 @@ if (!empty($sold_parts)) {
       'highlight'    => $ccode,
       'label'      => ' Parts Sold' . ' ' . $sparts['month_name']
     );
-    $total_parts_year_sold += (int)$sparts['total_parts'];
+    $total_parts_year_sold += (int) $sparts['total_parts'];
   }
   if (!empty($parts_sell_report)) {
     $parts_sell_report = json_encode($parts_sell_report, JSON_NUMERIC_CHECK);
@@ -84,7 +84,7 @@ if (!empty($car_repair)) {
   $car_repair_data = trim($car_repair_data, ',');
   $car_repair_data_default = $car_repair_data;
   foreach ($car_repair as $arr) {
-    $total_car_repair_year += (int)$arr['total_repair'];
+    $total_car_repair_year += (int) $arr['total_repair'];
   }
 }
 
@@ -197,150 +197,24 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
         <tbody>
           <?php
           $result = $wms->getAllRepairCarList($link);
-
+          // $result = $wms->getCarListExpAssurVistech($link);
           // var_dump($result);
 
           // die();
 
           foreach ($result as $row) {
 
-            // Envoi automatique d'alerte
+            // ENVOI D'ALERTE AUTOMATIQUE
             // VISITE TECHNIQUE
             if (isset($row['add_date_visitetech'])) {
 
-              $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
-
-              if ($dateprochvistech instanceof DateTime) {
-
-                // Définition du statut de la visite technique
-                $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
-                $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
-                $diffTodayDateprochvistechStr_2 = $dateprochvistech->diff(new \DateTime())->format('%a');
-
-                // Conversion en entier
-                $diffTodayDateprochvistech = (int)$diffTodayDateprochvistech;
-
-                if (($diffTodayDateprochvistech == -14) || ($diffTodayDateprochvistech == -3)) {
-
-                  $remainingDays = $diffTodayDateprochvistechStr_2;
-                  $marque = $row['make_name'];
-                  $modele = $row['model_name'];
-                  $imma = $row['VIN'];
-                  $nom_client = $row['c_name'];
-                  $mobile_customer = $row['princ_tel'];
-
-                  // Message de confirmation du devis
-                  $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc a la repasser merci !';
-
-                  // importation du fichier
-                  require_once(ROOT_PATH . '/SmsApi.php');
-
-                  // instanciation de la classe
-                  $smsApi = new SmsApi();
-
-                  // Exécution de la méthode d'envoi 
-                  $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
-
-                  if ($resultSmsSent) {
-                    echo "<p><span class='label label-success'>SMS automatique de rappel de la visite technique envoyé avec succès !</p><span>";
-                    // $url = WEB_URL.'dashboard.php';
-                    // header("Location: $url");
-                  }
-                } elseif ($diffTodayDateprochvistech == 0) {
-
-                  $marque = $row['make_name'];
-                  $modele = $row['model_name'];
-                  $imma = $row['VIN'];
-                  $nom_client = $row['c_name'];
-                  $mobile_customer = $row['princ_tel'];
-
-                  // Message de confirmation du devis
-                  $content_msg = 'Cher  client  ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture' . $marque . ' ' . $modele . ' ' . $imma . ' est depassee ! Pensez donc a la repasser !';
-
-                  // importation du fichier
-                  require_once(ROOT_PATH . '/SmsApi.php');
-
-                  // instanciation de la classe
-                  $smsApi = new SmsApi();
-
-                  // Exécution de la méthode d'envoi 
-                  $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
-
-                  if ($resultSmsSent) {
-                    echo "<p><span class='label label-success'>SMS automatique de rappel de la visite technique envoyé avec succès !</p><span>";
-                    // $url = WEB_URL.'dashboard.php';
-                    // header("Location: $url");
-                  }
-                }
-              }
+              include('sendAlerteAutoVistech.php');
             }
 
             // ASSURANCE
             if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
-              $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
 
-              if ($dateFinAssur instanceof DateTime) {
-
-                $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
-                $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
-                $diffDateDebutFinAssurStr_2 = $dateFinAssur->diff(new \DateTime())->format('%a');
-
-                // conversion en entier
-                $diffDateDebutFinAssur = (int)$diffDateDebutFinAssur;
-
-                if (($diffDateDebutFinAssur == -14) || ($diffDateDebutFinAssur == -3)) {
-
-                  $remainingDays = $diffDateDebutFinAssurStr_2;
-                  $marque = $row['make_name'];
-                  $modele = $row['model_name'];
-                  $imma = $row['VIN'];
-                  $nom_client = $row['c_name'];
-                  $mobile_customer = $row['princ_tel'];
-
-                  // Message de confirmation du devis
-                  $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc a la renouveler merci !';
-
-                  // importation du fichier
-                  require_once(ROOT_PATH . '/SmsApi.php');
-
-                  // instanciation de la classe
-                  $smsApi = new SmsApi();
-
-                  // Exécution de la méthode d'envoi 
-                  $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
-
-                  if ($resultSmsSent) {
-                    echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
-                    // $url = WEB_URL.'dashboard.php';
-                    // header("Location: $url");
-                  }
-                } elseif ($diffDateDebutFinAssur == 0) {
-
-                  $marque = $row['make_name'];
-                  $modele = $row['model_name'];
-                  $imma = $row['VIN'];
-                  $nom_client = $row['c_name'];
-                  $mobile_customer = $row['princ_tel'];
-
-                  // Message de confirmation du devis
-                  $content_msg = 'Cher client ' . $nom_client . ' nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' a expire ! Pensez donc a la renouveler merci !';
-
-                  // importation du fichier
-                  require_once(ROOT_PATH . '/SmsApi.php');
-
-                  // instanciation de la classe
-                  $smsApi = new SmsApi();
-
-                  // Exécution de la méthode d'envoi 
-                  $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
-
-                  if ($resultSmsSent) {
-                    echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
-                    // $url = WEB_URL.'dashboard.php';
-                    // header("Location: $url");
-                  }
-                }
-              }
+              include('sendAlerteAutoAssurance.php');
             }
 
             $image = WEB_URL . 'img/no_image.jpg';
@@ -349,122 +223,141 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
             if (file_exists(ROOT_PATH . '/img/upload/' . $row['car_image']) && $row['car_image'] != '') {
               $image = WEB_URL . 'img/upload/' . $row['car_image']; //car image
             }
-            if (file_exists(ROOT_PATH . '/img/upload/' . $row['customer_image']) && $row['customer_image'] != '') {
-              $image_customer = WEB_URL . 'img/upload/' . $row['customer_image']; //customer iamge
+
+            // On récupère les dates de fin de l'assurance et de la visite technique
+            if (isset($row['add_date_visitetech'])) {
+              $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
             }
 
-            ?>
-            <tr>
-              <td><span><?php echo $row['VIN']; ?></span></td>
-              <td><img class="photo_img_round" style="width:50px;height:50px;" src="<?php echo $image;  ?>" /></td>
-              <td><?php echo $row['c_name']; ?></td>
-              <td><?php echo $row['add_date_visitetech'] ?></td>
-              <td>
-                <?php
+            if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
+              $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
+            }
 
-                // Traitement de la visiste technique
-                if (isset($row['add_date_visitetech'])) { // Si la date de la visite technique existe
+            // on calcul la période d'échéance en nombre de jour entre les dates de fin de la visite technique 
+            // et de l'assurance en fonction de la date d'aujourd'hui
+            $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
+            $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
 
-                  // On crée un objet Datetime à partir du format chaine de caractère de la date de la visite technique
-                  $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
+            $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+            $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
 
-                  if ($dateprochvistech instanceof DateTime) {
+            // Si la période d'échéance en nombre de jours de la fin de la visite technique et/ou de l'assurance
+            // est dans 14 jours ou moins
+            if (($diffDateDebutFinAssur >= -14) || ($diffTodayDateprochvistech >= -14)) {
 
-                    // Définition du statut de la visite technique
-                    $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
+              ?>
+              <tr>
+                <td><span><?php echo $row['VIN']; ?></span></td>
+                <td><img class="photo_img_round" style="width:50px;height:50px;" src="<?php echo $image;  ?>" /></td>
+                <td><?php echo $row['c_name']; ?></td>
+                <td><?php echo $row['add_date_visitetech'] ?></td>
+                <td>
+                  <?php
 
-                    $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
+                  // Traitement de la visiste technique
+                  if (isset($row['add_date_visitetech'])) { // Si la date de la visite technique existe
 
-                    // conversion en entier
-                    $diffTodayDateprochvistech = (int)$diffTodayDateprochvistech;
+                    // On crée un objet Datetime à partir du format chaine de caractère de la date de la visite technique
+                    $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
 
-                    if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) {
-                      echo "<span class='label label-warning'>Expire dans " . $diffTodayDateprochvistechStr . "</span>";
-                    } elseif ($diffTodayDateprochvistech >= 0) {
-                      echo "<span class='label label-danger'>Expiré</span>";
-                    } else {
-                      echo "<span class='label label-success'>Valide</span>";
-                    }
-                  }
-                } ?>
+                    if ($dateprochvistech instanceof DateTime) {
 
-              </td>
-              <td><?php echo $row['add_date_assurance_fin'] ?></td>
-              <td><?php
+                      // Définition du statut de la visite technique
+                      $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
 
-                  // Traitement de l'assurance
-                  if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
-                    $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
-
-                    if ($dateFinAssur instanceof DateTime) {
-
-                      $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
-                      $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
+                      $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
 
                       // conversion en entier
-                      $diffDateDebutFinAssur = (int)$diffDateDebutFinAssur;
+                      $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
 
-                      if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) {
-                        echo "<span class='label label-warning'>Expire dans " . $diffDateDebutFinAssurStr . "</span>";
-                      } elseif ($diffDateDebutFinAssur >= 0) {
+                      if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) {
+                        echo "<span class='label label-warning'>Expire dans " . $diffTodayDateprochvistechStr . "</span>";
+                      } elseif ($diffTodayDateprochvistech >= 0) {
                         echo "<span class='label label-danger'>Expiré</span>";
                       } else {
                         echo "<span class='label label-success'>Valide</span>";
                       }
                     }
-                  } ?></td>
-              <td>
-                <?php
+                  } ?>
 
-                // VISITE TECHNIQUE
-                if (isset($row['add_date_visitetech'])) { // Si la date de la visite technique existe
+                </td>
+                <td><?php echo $row['add_date_assurance_fin'] ?></td>
+                <td><?php
 
-                  // On crée un objet Datetime à partir du format chaine de caractère de la date de la visite technique
-                  $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
+                    // Traitement de l'assurance
+                    if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
+                      $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
 
-                  if ($dateprochvistech instanceof DateTime) {
+                      if ($dateFinAssur instanceof DateTime) {
 
-                    // Définition du statut de la visite technique
-                    $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
-                    $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
-                    $diffTodayDateprochvistechStr_2 = $dateprochvistech->diff(new \DateTime())->format('%a');
+                        $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+                        $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
 
-                    // conversion en entier
-                    $diffTodayDateprochvistech = (int)$diffTodayDateprochvistech;
+                        // conversion en entier
+                        $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
 
-                    if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) { ?>
-                      <a class="btn btn-primary" style="background-color:#FFD700;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelAvExpVistechSms.php?remainingDays=<?php echo $diffTodayDateprochvistechStr_2 ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un rappel au client par SMS concernant le statut de la visite technique du véhicule"><i class="fa fa-bell"></i>
-                      <?php } elseif ($diffTodayDateprochvistech >= 0) { ?>
-                        <a class="btn btn-primary" style="background-color:#FF4500;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelExpVistechSms.php?mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un rappel au client par SMS concernant le statut de la visite technique du véhicule"><i class="fa fa-bell"></i>
-                        <?php }
-                    }
-                  }
-
-                  // ASSURANCE
-                  if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
-                    $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
-
-                    if ($dateFinAssur instanceof DateTime) {
-
-                      $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
-                      $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
-                      $diffDateDebutFinAssurStr_2 = $dateFinAssur->diff(new \DateTime())->format('%a');
-
-                      // conversion en entier
-                      $diffDateDebutFinAssur = (int)$diffDateDebutFinAssur;
-
-                      if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) { ?>
-                          <a class="btn btn-primary" style="background-color:#FFD700;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelAvExpAssurSms.php?remainingDays=<?php echo $diffDateDebutFinAssurStr_2; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un rappel au client par SMS concernant le statut de l'assurance du véhicule"><i class="fa fa-bell"></i>
-                          <?php } elseif ($diffDateDebutFinAssur >= 0) { ?>
-                            <a class="btn btn-primary" style="background-color:#FF4500;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelExpAssurSms.php?mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un rappel au client par SMS concernant le statut de l'assurance du véhicule"><i class="fa fa-bell"></i>
-                            <?php }
+                        if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) {
+                          echo "<span class='label label-warning'>Expire dans " . $diffDateDebutFinAssurStr . "</span>";
+                        } elseif ($diffDateDebutFinAssur >= 0) {
+                          echo "<span class='label label-danger'>Expiré</span>";
+                        } else {
+                          echo "<span class='label label-success'>Valide</span>";
                         }
                       }
-                      ?>
-              </td>
-            </tr>
-          <?php }
-        mysql_close($link); ?>
+                    } ?></td>
+                <td>
+                  <?php
+
+                  // VISITE TECHNIQUE
+                  if (isset($row['add_date_visitetech'])) { // Si la date de la visite technique existe
+
+                    // On crée un objet Datetime à partir du format chaine de caractère de la date de la visite technique
+                    $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
+
+                    if ($dateprochvistech instanceof DateTime) {
+
+                      // Définition du statut de la visite technique
+                      $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
+                      $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
+                      $diffTodayDateprochvistechStr_2 = $dateprochvistech->diff(new \DateTime())->format('%a');
+
+                      // conversion en entier
+                      $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
+
+                      if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) { ?>
+                        <a class="btn btn-primary" style="background-color:#FFD700;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelAvExpVistechSms.php?remainingDays=<?php echo $diffTodayDateprochvistechStr_2 ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de la visite technique du véhicule"><i class="fa fa-bell"></i>
+                        <?php } elseif ($diffTodayDateprochvistech >= 0) { ?>
+                          <a class="btn btn-primary" style="background-color:#FF4500;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelExpVistechSms.php?mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de la visite technique du véhicule"><i class="fa fa-bell"></i>
+                          <?php }
+                        }
+                      }
+
+                      // ASSURANCE
+                      if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
+                        $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
+
+                        if ($dateFinAssur instanceof DateTime) {
+
+                          $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+                          $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
+                          $diffDateDebutFinAssurStr_2 = $dateFinAssur->diff(new \DateTime())->format('%a');
+
+                          // conversion en entier
+                          $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
+
+                          if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) { ?>
+                            <a class="btn btn-primary" style="background-color:#FFD700;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelAvExpAssurSms.php?remainingDays=<?php echo $diffDateDebutFinAssurStr_2; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de l'assurance du véhicule"><i class="fa fa-bell"></i>
+                            <?php } elseif ($diffDateDebutFinAssur >= 0) { ?>
+                              <a class="btn btn-primary" style="background-color:#FF4500;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelExpAssurSms.php?mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de l'assurance du véhicule"><i class="fa fa-bell"></i>
+                              <?php }
+                            }
+                          }
+                          ?>
+                </td>
+              </tr>
+            <?php }
+          }
+          mysql_close($link); ?>
         </tbody>
       </table>
     </div>
@@ -490,7 +383,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
       pointStrokeColor: 'rgba(0, 166, 90, 1)',
       pointHighlightFill: '#fff',
       pointHighlightStroke: 'rgba(0, 166, 90, 1)',
-      data: [<?php echo $car_repair_data_default; ?>]
+      data: [ <?php echo $car_repair_data_default; ?> ]
     }]
   };
 
@@ -528,9 +421,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
     // String - A legend template
     legendTemplate: '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<datasets.length; i++){%><li><span style=\'background-color:<%=datasets[i].lineColor%>\'></span><%=datasets[i].label%></li><%}%></ul>',
     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-    maintainAspectRatio     : true,
+    maintainAspectRatio: true,
     // Boolean - whether to make the chart responsive to window resizing
-    responsive              : true
+    responsive: true
   };
 
   // Create the line chart
@@ -539,35 +432,35 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
   // ---------------------------
   // - END MONTHLY SALES CHART -
   // ---------------------------
-  
-  
+
+
   // -------------
   // - PIE CHART -
-//By E-MITIC
+  //By E-MITIC
   // -------------
   // Get context with jQuery - using jQuery's .get() method.
   var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
-  var pieChart       = new Chart(pieChartCanvas);
-  var PieData        = <?php $parts_sell_report; ?>;
-  var pieOptions     = {
+  var pieChart = new Chart(pieChartCanvas);
+  var PieData = <?php $parts_sell_report; ?> ;
+  var pieOptions = {
     // Boolean - Whether we should show a stroke on each segment
-    segmentShowStroke    : true,
+    segmentShowStroke: true,
     // String - The colour of each segment stroke
-    segmentStrokeColor   : '#fff',
+    segmentStrokeColor: '#fff',
     // Number - The width of each segment stroke
-    segmentStrokeWidth   : 1,
+    segmentStrokeWidth: 1,
     // Number - The percentage of the chart that we cut out of the middle
     percentageInnerCutout: 50, // This is 0 for Pie charts
     // Number - Amount of animation steps
-    animationSteps       : 100,
+    animationSteps: 100,
     // String - Animation easing effect
-    animationEasing      : 'easeOutBounce',
+    animationEasing: 'easeOutBounce',
     // Boolean - Whether we animate the rotation of the Doughnut
-    animateRotate        : true,
+    animateRotate: true,
     // Boolean - Whether we animate scaling the Doughnut from the centre
-    animateScale         : false,
+    animateScale: false,
     // Boolean - whether to make the chart responsive to window resizing
-    responsive           : true,
+    responsive: true,
     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
     //maintainAspectRatio  : false,
     // String - A legend template
@@ -589,7 +482,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
   // Get context with jQuery - using jQuery's .get() method.
   var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d');
   var pieChart2 = new Chart(pieChartCanvas2);
-  var PieData2 = <?php echo $car_sell_report; ?>;
+  var PieData2 = <?php echo $car_sell_report; ?> ;
 
   var pieOptions2 = {
     // Boolean - Whether we should show a stroke on each segment

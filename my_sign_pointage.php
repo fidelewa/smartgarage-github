@@ -64,7 +64,7 @@ include('config.php');
 					<br>
 					<div id="his">
 					</div>
-					<!-- <form id="pointageForm"> -->
+					<form id="pointageForm">
 					<div class="form-group row" style="display:flex;align-items:center;flex-direction: column;">
 						<label for="phone_number"><span style="color:red;">*</span> N°téléphone :</label>
 						<div class="col-sm-6">
@@ -95,7 +95,7 @@ include('config.php');
 					}
 					?>
 					</div> -->
-					<!-- </form> -->
+					</form>
 				</div>
 
 			</div>
