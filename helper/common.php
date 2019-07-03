@@ -2,6 +2,166 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getAllPersoSalaire($con, $numeroMoisDateJour)
+	{
+		$data = array();
+
+		$query = "SELECT 
+    pp.per_id,
+    per_name,
+    salaire_base,
+    nb_heure_sup_periode,
+    nb_jour_conge_paye,
+    SUM(montant_avance) AS montant_avance_periode,
+    nb_jour_abs_justifie,
+	per_telephone
+FROM
+    (SELECT 
+        per.per_id,
+            per_name,
+            per_sal AS salaire_base,
+            SUM(nb_heure_sup) AS nb_heure_sup_periode,
+            eca.nb_jour_conge_paye,
+            eca.nb_jour_abs_justifie,
+			per_telephone
+    FROM
+        tbl_add_pointage po
+    LEFT JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel
+    LEFT JOIN tbl_emplo_conge_abs eca ON eca.emplo_tel = per.per_telephone
+    GROUP BY per.per_id, mois_date_arrivee, mois_date_depart
+	HAVING mois_date_arrivee = '" . $numeroMoisDateJour . "' OR
+		mois_date_depart = '" . $numeroMoisDateJour . "'
+	) AS pointage_personnel
+       LEFT JOIN
+    tbl_avance_personnel pp ON pp.per_id = pointage_personnel.per_id
+	WHERE mois_date_avance = '" . $numeroMoisDateJour . "'
+GROUP BY pp.per_id";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get supplier info by id
+	*/
+	public function getInfoComptaByRef($con, $ref)
+	{
+		$data = array();
+
+		$query = "SELECT *
+		FROM tbl_ges_four_compta
+		WHERE tbl_ges_four_compta_ref = '" . (int) $ref . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+
+		return $row;
+	}
+
+	/*
+	* @save/update buy parts list information
+	*/
+	public function saveUpdateBuyPiecesInformation($con, $data, $image_url)
+	{
+		if (!empty($data)) {
+			// $piece_id = $data['piece_id']; 
+			// if (!empty($data['ddl_e_parts']) && (int)$data['ddl_e_parts'] > 0) {
+			// 	//buy exisiting
+			// 	//insert into putchase invoice table
+			// 	$parts_id = $data['ddl_e_parts'];
+			// 	mysql_query("INSERT INTO tbl_parts_stock(invoice_id,parts_id,parts_name,supplier_id,manufacturer_id,parts_condition,parts_buy_price,parts_quantity,parts_sku,parts_warranty,total_amount,given_amount,pending_amount,parts_image,parts_added_date) values('$data[invoice_id]','$parts_id','$data[parts_names]','$data[ddl_supplier]','$data[ddl_load_manufracturer]','$data[txtCondition]','$data[buy_prie]','$data[parts_quantity]','$data[parts_sku]','$data[parts_warranty]','$data[total_amount]','$data[given_amount]','$data[pending_amount]','$image_url','" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "')", $con);
+			// 	$stock_table = $this->getPartsStockStatusFromStockTable($con, $parts_id);
+			// 	if (!empty($stock_table)) {
+			// 		$qty = (int)$stock_table['quantity'] + (int)$data['parts_quantity'];
+			// 		mysql_query("UPDATE `tbl_parts_stock_manage` SET `parts_name` = '" . $data['parts_names'] . "', `parts_image`='" . $image_url . "', `part_no`='" . $data['parts_sku'] . "',`price`='" . $data['parts_sell_price'] . "', `condition`='" . $data['txtCondition'] . "', `parts_warranty`='" . $data['parts_warranty'] . "', `supplier_id`='" . $data['ddl_supplier'] . "', `manufacturer_id`='" . $data['ddl_load_manufracturer'] . "',`quantity`='" . (int)$qty . "' WHERE parts_id = '" . (int)$parts_id . "'", $con);
+			// 	}
+			// } else {
+			$piece_id = $data['piece_id']; // On récupère l'id de la pièce
+
+			if ($piece_id == '0') {
+				// Si la pièce n'existe pas en BDD, on l'enregistre
+				$query = "INSERT INTO tbl_add_piece(code_piece, code_barre_piece, lib_piece, type_piece, 
+				famille_piece, dernier_prix_achat, montant_frais, prix_revient, coefficient, prix_base_ht,
+				prix_base_ttc, image_url)
+
+				values('$data[code_piece]','$data[code_barre_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]',
+				'$data[last_pa]','$data[mont_frais]','$data[prix_revient]','$data[coeff]','$data[prix_base_ht]','$data[prix_base_ttc]',
+				'$image_url'
+				)";
+
+				$result = mysql_query($query, $con);
+
+				if (!$result) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $query;
+					die($message);
+				}
+
+				// On récupère l'identifiant de la dernière pièce ajoutée
+				$piece_id = mysql_insert_id();
+
+				//insert into putchase invoice table
+				// mysql_query("INSERT INTO tbl_parts_stock(invoice_id,parts_id,parts_name,supplier_id,manufacturer_id,parts_condition,parts_buy_price,parts_quantity,parts_sku,parts_warranty,total_amount,given_amount,pending_amount,parts_image,parts_added_date) values('$data[invoice_id]','$parts_id','$data[parts_names]','$data[ddl_supplier]','$data[ddl_load_manufracturer]','$data[txtCondition]','$data[buy_prie]','$data[parts_quantity]','$data[parts_sku]','$data[parts_warranty]','$data[total_amount]','$data[given_amount]','$data[pending_amount]','$image_url','" . $this->datepickerDateToMySqlDate($data['parts_add_date']) . "')", $con);
+
+				// On enregistre cette pièce dans le stock des pièces
+				// Lorsqu'on enregistre une nouvelle pièce en stock, son stock de départ est null
+				$queryInsertPieceStock = "INSERT INTO tbl_piece_stock(piece_stock_id, code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc, stock_piece, image_url)
+                values('$piece_id','$data[code_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]','$data[prix_base_ttc]',0,
+				'$image_url'
+				)";
+
+				// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+				$resultInsertPieceStock = mysql_query($queryInsertPieceStock, $con);
+
+				if (!$resultInsertPieceStock) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $queryInsertPieceStock;
+					die($message);
+				}
+			} else {
+
+				// var_dump($data);
+				// die();
+
+				$query = "UPDATE `tbl_add_piece` 
+				SET `code_piece`='" . $data['code_piece'] . "',`code_barre_piece`='" . $data['code_barre_piece'] . "',
+				`lib_piece`='" . $data['lib_piece'] . "', `type_piece`='" . $data['type_piece'] . "',
+				`famille_piece`='" . $data['famille_piece'] . "',
+				`dernier_prix_achat`='" . $data['last_pa'] . "',`montant_frais`='" . $data['mont_frais'] . "',
+				`prix_revient`='" . $data['prix_revient'] . "',`coefficient`='" . $data['coeff'] . "',
+				`prix_base_ht`='" . $data['prix_base_ht'] . "',`prix_base_ttc`='" . $data['prix_base_ttc'] . "',
+				`image_url`='" . $image_url . "'
+				WHERE add_piece_id='" . (int) $data['piece_id'] . "'";
+
+				$result = mysql_query($query, $con);
+
+				if (!$result) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $query;
+					die($message);
+				}
+			}
+		}
+	}
 
 	/*
 	* @get all Voiture de réparation list
@@ -70,7 +230,7 @@ class wms_core
 		$query = "SELECT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, usr_type, 
 		rvr.car_id, rvr.add_car_id, diag.id as vehi_diag_id
 		FROM tbl_recep_vehi_repar rvr
-		JOIN tbl_attribution att ON att.car_id = rvr.car_id
+		JOIN tbl_attribution att ON att.car_id = rvr.add_car_id
 		JOIN tbl_add_user us on att.mechanics_id = us.usr_id
 		JOIN tbl_add_customer cus on rvr.customer_name = cus.customer_id 
 		-- ici le diagnostic est lié à le reception à travers l'identifiant du véhicule
@@ -345,10 +505,10 @@ class wms_core
 		// Déclaration et initialisation d'un array vide
 		$data = array();
 
-		$query = "SELECT num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, m_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
+		$query = "SELECT num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, rvr.car_id, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
 		add_car_id, diag.id as vehi_diag_id
 			from tbl_recep_vehi_repar rvr
-			left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
+			-- left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
 			left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
 			join tbl_add_user usr on usr.usr_id = rvr.attrib_recep
@@ -368,7 +528,7 @@ class wms_core
 		return $data;
 	}
 
-	public function getAllPersoSalaire($con, $numeroMoisDateJour)
+	public function getAllPersoSalaire_4($con, $numeroMoisDateJour)
 	{
 		$data = array();
 
@@ -379,7 +539,8 @@ class wms_core
     nb_heure_sup_periode,
     nb_jour_conge_paye,
     SUM(montant_avance) AS montant_avance_periode,
-    nb_jour_abs_justifie
+    nb_jour_abs_justifie,
+	per_telephone
 FROM
     (SELECT 
         per.per_id,
@@ -387,15 +548,16 @@ FROM
             per_sal AS salaire_base,
             SUM(nb_heure_sup) AS nb_heure_sup_periode,
             eca.nb_jour_conge_paye,
-            eca.nb_jour_abs_justifie
+            eca.nb_jour_abs_justifie,
+			per_telephone
     FROM
         tbl_add_pointage po
     LEFT JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel
-    LEFT JOIN tbl_emplo_conge_abs eca ON eca.per_id = per.per_id
+    LEFT JOIN tbl_emplo_conge_abs eca ON eca.emplo_tel = per.per_telephone
     WHERE (mois_date_arrivee = '" . $numeroMoisDateJour . "' OR
-		mois_date_depart = '" . $numeroMoisDateJour . "') AND eca.mois = '" . $numeroMoisDateJour . "'
+		mois_date_depart = '" . $numeroMoisDateJour . "') OR eca.mois = '" . $numeroMoisDateJour . "'
     GROUP BY per.per_id) AS pointage_personnel
-        JOIN
+       LEFT JOIN
     tbl_avance_personnel pp ON pp.per_id = pointage_personnel.per_id
 GROUP BY pp.per_id";
 
@@ -530,7 +692,7 @@ GROUP BY pp.per_id";
 
 		// Recherche dans la table 
 		$queryGetSalInfoByPer = "SELECT * FROM tbl_emplo_conge_abs 
-		WHERE per_id='" . $data['per_id'] . "' AND mois='" . $numeroMoisDateJour . "'";
+		WHERE emplo_tel='" . $data['per_tel'] . "' AND mois='" . $numeroMoisDateJour . "'";
 
 		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
@@ -546,15 +708,15 @@ GROUP BY pp.per_id";
 		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
 		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false) {
 
-			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id) 
-			VALUES (null, '$data[nb_jour_abs_employ]', '$numeroMoisDateJour', '$data[per_id]')";
+			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id, emplo_tel) 
+			VALUES (null, '$data[nb_jour_abs_employ]', '$numeroMoisDateJour', '$data[per_id]','$data[per_tel]')";
 			$result = mysql_query($query, $con);
 		} else { // Sinon on fait une mise à jour
 
 			$query = "UPDATE tbl_emplo_conge_abs
 				SET `nb_jour_abs_justifie`='" . $data['nb_jour_abs_employ'] . "',
 				`mois`='" . $numeroMoisDateJour . "'
-				WHERE per_id='" . $data['per_id'] . "' AND mois='" . $numeroMoisDateJour . "'";
+				WHERE emplo_tel='" . $data['per_tel'] . "' AND mois='" . $numeroMoisDateJour . "'";
 			$result = mysql_query($query, $con);
 		}
 
@@ -575,7 +737,7 @@ GROUP BY pp.per_id";
 
 		// Recherche dans la table 
 		$queryGetSalInfoByPer = "SELECT * FROM tbl_emplo_conge_abs 
-		WHERE per_id='" . $data['per_id'] . "' AND mois='" . $numeroMoisDateJour . "'";
+		WHERE emplo_tel='" . $data['per_tel'] . "' AND mois='" . $numeroMoisDateJour . "'";
 
 		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
@@ -591,15 +753,15 @@ GROUP BY pp.per_id";
 		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
 		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false) {
 
-			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id) 
-			VALUES ('$data[nb_jour_conge_paye]', null, '$numeroMoisDateJour', '$data[per_id]')";
+			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id, emplo_tel) 
+			VALUES ('$data[nb_jour_conge_paye]', null, '$numeroMoisDateJour', '$data[per_id]','$data[per_tel]')";
 			$result = mysql_query($query, $con);
 		} else { // Sinon on fait une mise à jour
 
 			$query = "UPDATE tbl_emplo_conge_abs
 				SET `nb_jour_conge_paye`='" . $data['nb_jour_conge_paye'] . "',
 				`mois`='" . $numeroMoisDateJour . "'
-				WHERE per_id='" . $data['per_id'] . "' AND mois='" . $numeroMoisDateJour . "'";
+				WHERE emplo_tel='" . $data['per_tel'] . "' AND mois='" . $numeroMoisDateJour . "'";
 			$result = mysql_query($query, $con);
 		}
 
@@ -1178,7 +1340,7 @@ GROUP BY pp.per_id";
 		// Déclaration et initialisation d'un array vide
 		$data = array();
 
-		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
+		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, facture_id, repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
 			rd.car_id, dev.confirm_devis, confirm_facture
 			from tbl_recep_vehi_repar rvr
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id
@@ -6696,12 +6858,12 @@ GROUP BY pp.per_id";
 		return $data;
 	}
 
-	public function getAllMechanicsList($con)
+	public function getAllPersonnelList($con)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_add_user
+		$result = mysql_query("SELECT * FROM tbl_add_personnel
 		-- WHERE usr_type = 'mecanicien' OR usr_type = 'electricien'
-		ORDER BY usr_id DESC", $con);
+		ORDER BY per_id DESC", $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}

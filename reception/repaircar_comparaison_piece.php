@@ -75,7 +75,7 @@ if (isset($_POST) && !empty($_POST)) {
 
                         <div align="right" style="margin-bottom:1%;">
                             <button class="btn btn-success" type="submit" data-toggle="tooltip" href="javascript:;" data-original-title="<?php echo $button_text; ?>"><i class="fa fa-save"></i></button> &nbsp;
-                            <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Back"><i class="fa fa-reply"></i></a> </div>
+                            <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php" data-original-title="Retour"><i class="fa fa-reply"></i></a> </div>
 
                         <div class="box box-success">
                             <!-- <div class="box-header">

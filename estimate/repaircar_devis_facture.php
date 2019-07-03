@@ -61,7 +61,7 @@ if (isset($_POST) && !empty($_POST)) {
 <body>
 
     <section class="content-header">
-        <h1>Formulaire de création de la facture de réparation d'un véhicule
+        <h1>Formulaire de création de la facture du devis
         </h1>
         <!-- <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>

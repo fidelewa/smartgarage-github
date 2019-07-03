@@ -316,11 +316,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         <legend>Ajouter des fichiers joints</legend>
                         <div class="row">
                             <div class="col-md-1">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1" />
                                 </span>
                             </div>
                             <div class="col-md-1 col-md-onset-10">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2" />
                                 </span>
                             </div>
                         </div>
@@ -464,11 +464,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         <legend>Ajouter des fichiers joints</legend>
                         <div class="row">
                             <div class="col-md-1">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5" />
                                 </span>
                             </div>
                             <div class="col-md-1 col-md-onset-10">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6" />
                                 </span>
                             </div>
                         </div>
@@ -651,11 +651,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         <legend>Ajouter des fichiers joints</legend>
                         <div class="row">
                             <div class="col-md-1">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7" />
                                 </span>
                             </div>
                             <div class="col-md-1 col-md-onset-10">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8" />
                                 </span>
                             </div>
                         </div>
@@ -1197,11 +1197,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         <legend>Ajouter des fichiers joints</legend>
                         <div class="row">
                             <div class="col-md-1">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11" />
                                 </span>
                             </div>
                             <div class="col-md-1 col-md-onset-10">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12" />
                                 </span>
                             </div>
                         </div>
@@ -1438,11 +1438,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         <legend>Ajouter des fichiers joints</legend>
                         <div class="row">
                             <div class="col-md-1">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_13" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_13" />
                                 </span>
                             </div>
                             <div class="col-md-1 col-md-onset-10">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_14" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_14" />
                                 </span>
                             </div>
                         </div>
@@ -1455,11 +1455,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         <legend>Ajouter des fichiers joints</legend>
                         <div class="row">
                             <div class="col-md-1">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15" />
                                 </span>
                             </div>
                             <div class="col-md-1 col-md-onset-10">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15" />
                                 </span>
                             </div>
                         </div>
@@ -1472,11 +1472,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         <legend>Ajouter des fichiers joints</legend>
                         <div class="row">
                             <div class="col-md-1">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9" />
                                 </span>
                             </div>
                             <div class="col-md-1 col-md-onset-10">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10" onchange="loadFile(event)" />
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10" />
                                 </span>
                             </div>
                         </div>

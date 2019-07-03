@@ -137,7 +137,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                     <table border="1" class="table dt-responsive">
                                         <thead>
                                             <tr>
-                                                <th style="text-align:center">N° bon de commande</th>
+                                                <!-- <th style="text-align:center">N° bon de commande</th> -->
                                                 <th style="text-align:center">Code/désignation</th>
                                                 <th style="text-align:center">Quantité</th>
                                                 <!-- <th style="text-align:center">Prix unitaire HT</th>
@@ -147,7 +147,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                         <tbody>
                                             <tr>
                                                 <!-- <td><?php echo $row['boncmde_id']; ?></td> -->
-                                                <td><?php echo $row['boncmde_num']; ?></td>
+                                                <!-- <td><?php echo $row['boncmde_num']; ?></td> -->
                                                 <td><?php echo $row['boncmde_designation']; ?></td>
                                                 <td><?php echo $row['boncmde_qte']; ?></td>
                                                 <!-- <td><?php echo $row['boncmde_pu_ht']; ?></td>

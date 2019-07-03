@@ -156,7 +156,7 @@ function arrayValueExist($array, $value) {
                     <table class="table sakotable table-bordered table-striped dt-responsive">
                         <thead>
                             <tr>
-                                <th>ID Reparation</th>
+                                <th>ID Reception</th>
                                 <th>Immatriculation</th>
                                 <th>Client</th>
                                 <th>Date reception</th>
@@ -188,7 +188,7 @@ function arrayValueExist($array, $value) {
 
                                 ?>
                                 <tr>
-                                    <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td>
+                                    <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
                                     <td><?php echo $row['num_matricule']; ?></td>
                                     <td><?php echo $row['c_name']; ?></td>
                                     <td><?php echo $row['add_date_recep_vehi']; ?></td>

@@ -74,7 +74,7 @@ function arrayValueExist($array, $value)
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Liste de mes 10 derniers devis de réparation à valider</h3>
+          <h3 class="box-title">Liste des derniers devis à valider</h3>
         </div>
         <!-- <div><a href="<?php echo WEB_URL; ?>mech_panel/workstatus.php" class="btn btn-sm btn-success btn-flat pull-right"><b><i class="fa fa-list"></i> &nbsp;View All List</b></a> </div> -->
         <!-- /.box-header -->
@@ -83,7 +83,7 @@ function arrayValueExist($array, $value)
             <table class="table no-margin">
               <thead>
                 <tr>
-                  <th>ID Reparation</th>
+                  <th>ID Devis</th>
                   <th>Immatriculation</th>
                   <th>Client</th>
                   <th>Date reception</th>
@@ -102,7 +102,7 @@ function arrayValueExist($array, $value)
                   ?>
 
                   <tr>
-                    <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td>
+                    <td><span class="label label-success"><?php echo $row['devis_id']; ?></span></td>
                     <td><?php echo $row['num_matricule']; ?></td>
                     <td><?php echo $row['c_name']; ?></td>
                     <td><?php echo $row['add_date_recep_vehi']; ?></td>
@@ -180,7 +180,7 @@ function arrayValueExist($array, $value)
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Liste de mes 10 dernières factures à payer</h3>
+          <h3 class="box-title">Liste des dernières factures à payer</h3>
         </div>
         <!-- <div><a href="<?php echo WEB_URL; ?>mech_panel/workstatus.php" class="btn btn-sm btn-success btn-flat pull-right"><b><i class="fa fa-list"></i> &nbsp;View All List</b></a> </div> -->
         <!-- /.box-header -->
@@ -189,7 +189,7 @@ function arrayValueExist($array, $value)
             <table class="table no-margin">
               <thead>
                 <tr>
-                  <th>ID Reparation</th>
+                  <th>ID Facture</th>
                   <th>Immatriculation</th>
                   <th>Client</th>
                   <th>Date reception</th>
@@ -208,7 +208,7 @@ function arrayValueExist($array, $value)
                   ?>
 
                   <tr>
-                    <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td>
+                    <td><span class="label label-success"><?php echo $row['facture_id']; ?></span></td>
                     <td><?php echo $row['num_matricule']; ?></td>
                     <td><?php echo $row['c_name']; ?></td>
                     <td><?php echo $row['add_date_recep_vehi']; ?></td>

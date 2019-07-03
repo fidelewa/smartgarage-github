@@ -462,57 +462,57 @@ function uploadPJ_12()
 							<input type="hidden" name="img_exist" value="<?php echo $img_track; ?>" />
 						</div>
 						<div class="form-group"> <span class="btn btn-file btn btn-primary">Upload Image
-								<input type="file" name="uploaded_file" onchange="loadFile(event)" />
+								<input type="file" name="uploaded_file" onchange="loadFile(event)"/>
 							</span> </div> -->
 						<fieldset>
 							<legend>Ajouter des fichiers joints</legend>
 							<div class="row">
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_3" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_3" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_4" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_4" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11" />
 									</span>
 								</div>
 								<div class="col-md-1">
-									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12" onchange="loadFile(event)" />
+									<span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12" />
 									</span>
 								</div>
 							</div>

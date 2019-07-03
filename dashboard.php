@@ -11,7 +11,7 @@ if ($_SESSION['login_type'] != 'admin') {
 $customer = $wms->getAllCustomerList($link);
 $parts_stock = $wms->partsStockTotalQty($link);
 $car_stock = $wms->getAllActiveCarList($link);
-$mechanic = $wms->getAllMechanicsList($link);
+$personnel = $wms->getAllPersonnelList($link);
 $settings = $wms->getWebsiteSettingsInformation($link);
 
 //get all car info by current year
@@ -133,7 +133,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
           <p>PIÈCES EN STOCK</p>
         </div>
         <div class="icon"> <img height="80" width="80" src="img/car_parts.png"></a> </div>
-        <a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col end -->
@@ -154,7 +154,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
       <div class="small-box bg-green">
         <div class="inner">
           <h3><?php echo count($car_stock); ?></h3>
-          <p><?php echo count($car_stock) > 1 ? 'VOITURES EN STOCK' : 'VOITURE EN STOCK'; ?></p>
+          <p><?php echo count($car_stock) > 1 ? 'VOITURES DES CLIENTS' : 'VOITURE DU CLIENT'; ?></p>
         </div>
         <div class="icon"> <img height="80" width="80" src="img/car.png"></a> </div>
         <a href="<?php echo WEB_URL; ?>carstock/buycarlist.php" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
@@ -165,8 +165,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
     <div class="col-lg-3 col-xs-6">
       <div class="small-box bg-red">
         <div class="inner">
-          <h3><?php echo count($mechanic); ?></h3>
-          <p><?php echo count($mechanic) > 1 ? 'MECANICIENS' : 'MECANICIEN'; ?></p>
+          <h3><?php echo count($personnel); ?></h3>
+          <p><?php echo count($personnel) > 1 ? 'EMPLOYES' : 'EMPLOYE'; ?></p>
         </div>
         <div class="icon"> <img height="80" width="80" src="img/mechanic.png"></a> </div>
         <a href="<?php echo WEB_URL; ?>mechanics/mechanicslist.php" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>

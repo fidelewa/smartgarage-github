@@ -17,7 +17,7 @@ if (!empty($total_amount_paid['total'])) {
 }
 $total_hour = $wms->getMechaniceTotalHourList($link, $_SESSION['objMech']['user_id']);
 $car_stock = $wms->getAllActiveCarList($link);
-$mechanic = $wms->getAllMechanicsList($link);
+// $mechanic = $wms->getAllMechanicsList($link);
 $settings = $wms->getWebsiteSettingsInformation($link);
 
 //get all parts info by current year

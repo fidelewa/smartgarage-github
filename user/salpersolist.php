@@ -170,6 +170,7 @@ $i = 1;
                                                         </div>
                                                     </div>
 
+                                                    <input type="hidden" name="per_tel" value="<?php echo $row['per_telephone']; ?>">
                                                     <input type="hidden" name="per_id" value="<?php echo $row['per_id']; ?>">
 
                                                 </div>
@@ -205,6 +206,7 @@ $i = 1;
                                                     </div>
 
                                                     <input type="hidden" name="per_id" value="<?php echo $row['per_id']; ?>">
+                                                    <input type="hidden" name="per_tel" value="<?php echo $row['per_telephone']; ?>">
 
                                                 </div>
                                                 <div class="modal-footer">

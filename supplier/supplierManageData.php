@@ -26,35 +26,49 @@ if (isset($_POST) && !empty($_POST)) {
         $supplier_compta_data['credit'] = (float)$supplier_compta_data['credit'];
         $supplier_compta_data['balance'] = (float)$supplier_compta_data['balance'];
 
-        // var_dump($supplier_compta_data);
+        $supplier_compta_data['supplier_id'] = (int)$supplier_compta_data['supplier_id'];
+
+        // var_dump($supplier_compta_data['supplier_id']);
         // die();
+        
+        $rslt = $wms->getInfoComptaByRef($link, $supplier_compta_data['reference']);
 
-        // Formulation de la requête
-        $query = "INSERT INTO tbl_ges_four_compta (ges_four_compta_date, tbl_ges_four_compta_ref, ges_four_compta_lib, debit, credit, solde, supplier_id) 
-    VALUES (
-    '$supplier_compta_data[date]',
-    '$supplier_compta_data[reference]',
-    '$supplier_compta_data[libelle]', 
-    '$supplier_compta_data[debit]',
-    '$supplier_compta_data[credit]',
-    '$supplier_compta_data[balance]',
-    '$supplier_compta_data[supplier_id]')";
+        if(empty($rslt)){
 
-        // Exécution de la requête
-        $result = mysql_query($query, $link);
+            // Formulation de la requête
+        $query = "INSERT INTO tbl_ges_four_compta (ges_four_compta_date, tbl_ges_four_compta_ref, ges_four_compta_lib, debit, credit, solde, supplier_id, hdid) 
+        VALUES (
+        '$supplier_compta_data[date]',
+        '$supplier_compta_data[reference]',
+        '$supplier_compta_data[libelle]', 
+        '$supplier_compta_data[debit]',
+        '$supplier_compta_data[credit]',
+        '$supplier_compta_data[balance]',
+        '$supplier_compta_data[supplier_id]',
+        '$supplier_compta_data[hdid]')";
+    
+            // Exécution de la requête
+            $result = mysql_query($query, $link);
+    
+            // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
+            if (!$result) {
+                $message  = 'Invalid query: ' . mysql_error() . "\n";
+                $message .= 'Whole query: ' . $query;
+                die($message);
+            }
 
-        // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-        if (!$result) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $query;
-            die($message);
         }
+
+        
     }
 
     // Redirection vers la liste des devis
     $url = WEB_URL . 'supplier/supplierManage.php?m=add';
     header("Location: $url");
 }
+
+// Création du numéro du bon de commande généré automatiquement
+$hdid = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
 
 ?>
 <!DOCTYPE html>
@@ -103,6 +117,9 @@ if (isset($_POST) && !empty($_POST)) {
                                     // On récupère les données comptables correspondant à un fournisseur spécifique 
                                     $supplier_compta_data = $wms->getInfoComptaBySupplierId($link, $_GET['supplier_id']);
 
+                                    // var_dump($supplier_compta_data);
+                                
+
                                     // S'il n'y a aucune donnée comptable correspondant à ce fournisseur spécifique
                                     if (empty($supplier_compta_data)) {
 
@@ -145,6 +162,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                                 </tr>
                                                                 <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][supplier_id]" value="<?php echo $_GET['supplier_id']; ?>" />
                                                                 <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][bon_cmde_type]" value="<?php echo $supplier_data['bon_cmde_type']; ?>" />
+                                                                <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][hdid]" value="<?php echo $hdid; ?>" />
                                                                 <?php $row++;
                                                             } ?>
                                                         </tbody>
@@ -198,6 +216,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                             </tr>
                                                             <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][supplier_id]" value="<?php echo $_GET['supplier_id']; ?>" />
                                                             <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][bon_cmde_type]" value="<?php echo $supplier_data['bon_cmde_type']; ?>" />
+                                                            <input type="hidden" name="supplier_manage_data[<?php echo $row; ?>][hdid]" value="<?php echo $hdid; ?>" />
                                                             <?php $row++;
                                                         } ?>
                                                     </tbody>
@@ -228,6 +247,9 @@ if (isset($_POST) && !empty($_POST)) {
 
     <script>
         var row = <?php echo $row; ?>;
+        var sid = <?php echo $_GET['supplier_id']; ?>;
+        var hdid = <?php echo $hdid; ?>;
+
         // Somme des soldes
         var somBalance = 0;
 
@@ -236,11 +258,13 @@ if (isset($_POST) && !empty($_POST)) {
             html += '  <td class="text-right"><input id="date_' + row + '" type="text" name="supplier_manage_data[' + row + '][date]" value="" class="form-control datepicker"></td>';
             html += '  <td class="text-right"><input id="reference_' + row + '" type="text" name="supplier_manage_data[' + row + '][reference]" value="" class="form-control"></td>';
             html += '  <td class="text-right"><input id="libelle_' + row + '" type="text" name="supplier_manage_data[' + row + '][libelle]" value="" class="form-control" /></td>';
-            html += '  <td class="text-right"><input type="text" id="debit_' + row + '" name="supplier_manage_data[' + row + '][price]" value="0.00" class="form-control eFireDebit" /></td>';
+            html += '  <td class="text-right"><input type="text" id="debit_' + row + '" name="supplier_manage_data[' + row + '][debit]" value="0.00" class="form-control eFireDebit" /></td>';
             html += '  <td class="text-right"><input type="text" id="credit_' + row + '" name="supplier_manage_data[' + row + '][credit]" value="0.00" class="form-control eFireCredit" /></td>';
             html += '  <td class="text-right"><input readonly type="text" id="balance_' + row + '" name="supplier_manage_data[' + row + '][balance]" value="0.00" class="form-control" /></td>';
             html += '  <td class="text-left"><button type="button" onclick="$(\'#supplier-data-row' + row + '\').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
             html += '</tr>';
+            html += ' <input type="hidden" name="supplier_manage_data[' + row + '][supplier_id]" value="'+sid+'" />';
+            html += ' <input type="hidden" name="supplier_manage_data[' + row + '][hdid]" value="'+hdid+'" />';
             $('#labour_table tbody').append(html);
             row++;
 

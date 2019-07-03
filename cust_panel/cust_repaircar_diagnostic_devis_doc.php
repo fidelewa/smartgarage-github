@@ -135,7 +135,7 @@ if (!empty($row) && count($row) > 0) { ?>
                         <div class="col-md-3" id="info_gene">
                             <p><?php echo $row['c_name']; ?></p>
                             <p><?php echo $row['c_address']; ?></p>
-                            <p>Tel: <?php echo $row['c_mobile']; ?></p>
+                            <p>Tel: <?php echo $row['princ_tel']; ?></p>
                         </div>
                     </div>
                     <div class="row" style="margin-bottom:20px;">

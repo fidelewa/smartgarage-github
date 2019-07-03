@@ -80,7 +80,7 @@ if (isset($_GET['supplier_id'])) {
 								<div class="form-group row">
 									<label class="control-label col-sm-2" for="lname">Fichier joint:</label>
 									<div class="col-sm-10">
-										<span class="btn btn-file btn btn-primary">Ajouter le bon de commande en fichier joint<input required type="file" id="attachFile" name="attachFile" onchange="loadFile(event)" />
+										<span class="btn btn-file btn btn-primary">Ajouter le bon de commande en fichier joint<input required type="file" id="attachFile" name="attachFile" />
 										</span>
 									</div>
 								</div>
