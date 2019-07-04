@@ -40,14 +40,13 @@ $model_post_token = 0;
 
 /*added my*/
 $cus_id = 0;
-if (isset($_GET['cid']) && (int)$_GET['cid'] > 0) {
+if (isset($_GET['cid']) && (int) $_GET['cid'] > 0) {
   $cus_id = $_GET['cid'];
 }
 
-if(isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
+if (isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
 
   $recep_id = $_SESSION['objRecep']['user_id'];
-
 } else {
   $recep_id = 0;
 }
@@ -334,7 +333,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <label for="assurance_vehi_recep"><span style="color:red;">*</span> Client :<span style="color:red;"> (si le client n'existe pas encore, veuillez cliquer sur le bouton "+" pour l'enregistrer)</span></label>
                 <div class="row">
                   <div class="col-md-11">
-                    <input type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus="">
+                    <input onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span>
                     <!-- <select class='form-control' id="ddlCustomerList" name="ddlCustomerList">
                       <option value="">--Saisissez ou sélectionnez un client--</option>
                       <?php
@@ -518,7 +517,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               <div class="form-group">
                 <label for="Prsnttxtarea">Visualiser l'image du véhicule :</label>
                 <img class="form-control" src="<?php echo $image_cus; ?>" style="height:100px;width:100px;" id="output" />
-              <input type="hidden" name="img_exist" value="<?php echo $img_track; ?>" />
+                <input type="hidden" name="img_exist" value="<?php echo $img_track; ?>" />
               </div>
               <div class="form-group"> <span class="btn btn-file btn btn-primary">Uploader l'image de la voiture
                   <input type="file" name="uploaded_file" onchange="loadFile(event)" />
@@ -543,11 +542,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     </span>
                   </div>
                   <div class="col-sm-2">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5"  />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5" />
                     </span>
                   </div>
                   <div class="col-sm-2">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6"  />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6" />
                     </span>
                   </div>
                 </div>
@@ -614,7 +613,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
             <div class="form-group row">
               <div class="col-md-3">
-                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" checked/>
+                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" checked />
                 <label for="clé du véhicule"><span style="color:red;">*</span> Clé du véhicule</label>
               </div>
               <div class="col-md-9" style="padding-left:0px;">
@@ -708,11 +707,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6" />
                 </span>
               </div>
             </div>
@@ -895,11 +894,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8" />
                 </span>
               </div>
             </div>
@@ -1441,11 +1440,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12" />
                 </span>
               </div>
             </div>
@@ -1682,11 +1681,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_13"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_13" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_14"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_14" />
                 </span>
               </div>
             </div>
@@ -1699,11 +1698,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15" />
                 </span>
               </div>
             </div>
@@ -1716,11 +1715,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10"  />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10" />
                 </span>
               </div>
             </div>
@@ -1796,23 +1795,23 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   </span>
                 </div>
                 <div class="col-sm-2">
-                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2_client" id="pj_2_client"  />
+                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2_client" id="pj_2_client" />
                   </span>
                 </div>
                 <div class="col-sm-2">
-                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_3_client" id="pj_3_client"  />
+                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_3_client" id="pj_3_client" />
                   </span>
                 </div>
                 <div class="col-sm-2">
-                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_4_client" id="pj_4_client"  />
+                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_4_client" id="pj_4_client" />
                   </span>
                 </div>
                 <div class="col-sm-2">
-                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5_client" id="pj_5_client"  />
+                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5_client" id="pj_5_client" />
                   </span>
                 </div>
                 <div class="col-sm-2">
-                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6_client" id="pj_6_client"  />
+                  <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6_client" id="pj_6_client" />
                   </span>
                 </div>
               </div>
@@ -1901,7 +1900,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
       // This function will figure out which tab to display
       var x = document.getElementsByClassName("tab");
       // Exit the function if any field in the current tab is invalid:
-      if (n == 1 && !validateForm()) return false;
+      if (n == 1 && !validateForm() && !validateMe()) return false;
       // Hide the current tab:
       x[currentTab].style.display = "none";
       // Increase or decrease the current tab by 1:
@@ -2748,6 +2747,107 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         $("#you").hide(300);
       }, 3000);
     });
+
+    function validateMe() {
+      if ($("#vin").val() == '') {
+        alert("L'immatriculation du véhicule est obligatoire, saisissez la !!!");
+        $("#vin").focus();
+        return false;
+      } else if ($("#ddlMake").val() == '') {
+        alert("La marque du véhicule est obligatoire, saisissez la !!!");
+        $("#ddlMake").focus();
+        return false;
+      } else if ($("#ddl_model").val() == '') {
+        alert("Le modèle du véhicule est obligatoire, saisissez le !!!");
+        $("#ddl_model").focus();
+        return false;
+      } else if ($("#assurance_vehi_recep").val() == '') {
+        alert("L'assurance du véhicule est obligatoire, saisissez la !!!");
+        $("#assurance_vehi_recep").focus();
+        return false;
+      } else if ($("#ddlCustomerList").val() == '') {
+        alert("Le nom du client est obligatoire, saisissez le !!!");
+        $("#ddlCustomerList").focus();
+        return false;
+
+      } else if ($("#ddlYear").val() == '') {
+        alert("L'année du véhicule est obligatoire, saisissez la !!!");
+        $("#ddlYear").focus();
+        return false;
+      } else if ($("#car_chasis_no").val() == '') {
+        alert("Le numéro de chasis du véhicule est obligatoire, saisissez le !!!");
+        $("#car_chasis_no").focus();
+        return false;
+      } else if ($("#add_date_mise_circu").val() == '') {
+        alert("La date de mise en circulation du véhicule est obligatoire, saisissez la !!!");
+        $("#add_date_mise_circu").focus();
+        return false;
+      } else if ($("#add_date_imma").val() == '') {
+        alert("La date d'immatriculation du véhicule est obligatoire, saisissez la !!!");
+        $("#add_date_imma").focus();
+        return false;
+      } else if ($("#add_date_assurance").val() == '') {
+        alert("La date de début de l'assurance du véhicule est obligatoire, saisissez la !!!");
+        $("#add_date_assurance").focus();
+        return false;
+      } else if ($("#add_date_assurance_fin").val() == '') {
+        alert("La date de fin de l'assurance du véhicule est obligatoire, saisissez la !!!");
+        $("#add_date_assurance_fin").focus();
+        return false;
+
+      } else if ($("#add_date_derniere_vidange").val() == '') {
+        alert("La date de dernière vidange du véhicule est obligatoire, saisissez la !!!");
+        $("#add_date_derniere_vidange").focus();
+        return false;
+      } else if ($("#add_date_changement_filtre_air").val() == '') {
+        alert("La date de changement du filtre à air du véhicule est obligatoire, saisissez la !!!");
+        $("#add_date_changement_filtre_air").focus();
+        return false;
+      } else if ($("#add_date_changement_filtre_huile").val() == '') {
+        alert("La date de changement du filtre à huile du véhicule est obligatoire, saisissez la !!!");
+        $("#add_date_changement_filtre_huile").focus();
+        return false;
+      } else if ($("#add_date_changement_filtre_pollen").val() == '') {
+        alert("La date de changement du filtre à pollen du véhicule est obligatoire, saisissez la !!!");
+        $("#add_date_changement_filtre_pollen").focus();
+        return false;
+      } else if ($("#add_date_visitetech").val() == '') {
+        alert("La date de la prochaine visite technique du véhicule est obligatoire, saisissez la !!!");
+        $("#add_date_visitetech").focus();
+        return false;
+
+      } else if ($("#genre_vehi_recep").val() == '') {
+        alert("Le genre du véhicule est obligatoire !!!");
+        $("#genre_vehi_recep").focus();
+        return false;
+      } else if ($("#energie_vehi_recep").val() == '') {
+        alert("L'énergie du véhicule est obligatoire !!!");
+        $("#energie_vehi_recep").focus();
+        return false;
+      } else if ($("#boite_vitesse_vehi_recep").val() == '') {
+        alert("La boite de vitesse du véhicule est obligatoire !!!");
+        $("#boite_vitesse_vehi_recep").focus();
+        return false;
+      } else if ($("#nb_cylindre").val() == '') {
+        alert("Le nombre de cylindre du véhicule est obligatoire !!!");
+        $("#nb_cylindre").focus();
+        return false;
+      } else if ($("#couleur_vehi").val() == '') {
+        alert("La couleur du véhicule est obligatoire !!!");
+        $("#couleur_vehi").focus();
+        return false; 
+      } else if ($("#fisc_vehi").val() == '') {
+        alert("La puissance fiscale du véhicule est obligatoire !!!");
+        $("#fisc_vehi").focus();
+        return false;
+      } else if ($("#cle_recep_vehi_text").val() == '') {
+        alert("Le nombre de clé du véhicule est obligatoire !!!");
+        $("#cle_recep_vehi_text").focus();
+        return false;
+      } else {
+        return true;
+      }
+    }
   </script>
 
 </body>

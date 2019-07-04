@@ -36,7 +36,7 @@ $invoice_id = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
 
 /*added my*/
 $cus_id = 0;
-if (isset($_GET['cid']) && (int)$_GET['cid'] > 0) {
+if (isset($_GET['cid']) && (int) $_GET['cid'] > 0) {
     $cus_id = $_GET['cid'];
 }
 
@@ -276,9 +276,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     <h1 style="text-align:center;">Enregistrement du véhicule</h1>
 
                     <div class="form-group row">
+                    <span style="color:red;"> (si le véhicule n'existe pas encore, veuillez cliquer sur le bouton "+" pour l'enregistrer)</span>
                         <div class="col-md-11">
                             <!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
-                            <input required onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
+                            <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule existant en saisissant son immatriculation"><span id="immabox"></span>
                         </div>
                         <div class=" col-md-1">
                             <a class="btn btn-success" data-toggle="tooltip" data-original-title="Ajouter une nouvelle voiture" target="_blank" onclick="getImmaValue();"><i class="fa fa-plus"></i></a>
@@ -296,7 +297,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     </p>
 
                     <!-- <p>
-                        <select class='form-control' id="ddlCustomerList" name="ddlCustomerList" onchange="loadMarqueModeleVoiture(this.value);">
+                        <select class='form-control' id="immat" name="immat" onchange="loadMarqueModeleVoiture(this.value);">
                             <option value="">--Veuillez saisir ou sélectionner le nom du client--</option>
                             <?php
                             $customer_list = $wms->getAllCustomerList($link);
@@ -376,7 +377,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" checked/>
+                                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" checked />
                                 <label for="clé du véhicule"><span style="color:red;">*</span> Clé du véhicule</label>
                             </div>
                             <div class="col-md-9" style="padding-left:0px;">
@@ -1609,7 +1610,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             // This function will figure out which tab to display
             var x = document.getElementsByClassName("tab");
             // Exit the function if any field in the current tab is invalid:
-            if (n == 1 && !validateForm()) return false;
+            if (n == 1 && !validateMe()) return false;
             // Hide the current tab:
             x[currentTab].style.display = "none";
             // Increase or decrease the current tab by 1:
@@ -2464,6 +2465,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 $("#you").hide(300);
             }, 3000);
         });
+
+        function validateMe() {
+            if ($("#immat").val() == '') {
+                alert("L'immatriculation du véhicule est obligatoire, saisissez là !!!");
+                $("#immat").focus();
+                return false;
+            } else {
+                return true;
+            }
+        }
     </script>
 
 </body>

@@ -1101,6 +1101,25 @@ function verifImma(immatriculation) {
 	}
 }
 
+function verifClient(nom_client) {
+
+	var client = nom_client;
+
+	if (client != '') {
+
+		$.ajax({
+			url: '../ajax/verif_nom_client.php',
+			type: 'POST',
+			data: 'client=' + escape(client),
+			dataType: 'html',
+			success: function (data) {
+				// On défini le contenu html de l'élément avec des données
+				$("#clientbox").html(data);
+			}
+		});
+	}
+}
+
 function verifTelClient(telCli) {
 
 	var telcli = telCli;
