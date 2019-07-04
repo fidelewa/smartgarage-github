@@ -29,11 +29,21 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
         $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à été attribuée à " . $_GET['mech_name'];
     }
 }
+
+if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
+
+    if (isset($_GET['car_id']) && isset($_GET['mecanicien_id'])) {
+
+        $addinfo = 'block';
+        // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
+        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à déja été attribuée à " . $_GET['mech_name'] ." à la date du ". $_GET['date_attrib'];
+    }
+}
 ?>
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-    <h1> Réception de véhicule - Liste des véhicules réceptionnés</h1>
+    <h1><i class="fa fa-list"></i> Réception de véhicule - Liste des véhicules réceptionnés</h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Liste des voitures réceptionnées</li>
@@ -58,21 +68,22 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
             </div>
             <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
             <div class="box box-success">
-                <div class="box-header">
-                    <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
+                <!-- <div class="box-header">
                     <h3 class="box-title"><i class="fa fa-list"></i> Liste des voitures réceptionnées</h3>
-                </div>
+                </div> -->
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table class="table sakotable table-bordered table-striped dt-responsive">
                         <thead>
                             <tr>
                                 <th>ID Reception</th>
-                                <th>Immatriculation</th>
-                                <th>Client</th>
-                                <th>Date reception</th>
+                                <th>Immatriculation du véhicule</th>
+                                <th>Statut attribution</th>
+                                <th>Attribué à</th>
+                                <th>Statut diagnostic</th>
+                                <!-- <th>Date reception</th>
                                 <th>Date exp. assur</th>
-                                <th>Date exp. vis. tech.</th>
+                                <th>Date exp. vis. tech.</th> -->
                                 <!-- <th>Attribué à</th> -->
                                 <th>Action</th>
                             </tr>
@@ -101,11 +112,21 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                                 <tr>
                                     <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
                                     <td><?php echo $row['num_matricule']; ?></td>
-                                    <td><?php echo $row['c_name']; ?></td>
-                                    <td><?php echo $row['add_date_recep_vehi']; ?></td>
-                                    <td><?php echo $row['add_date_assurance']; ?></td>
-                                    <td><?php echo $row['add_date_visitetech']; ?></td>
-                                    <!-- <td><?php echo $row['m_name']; ?></td> -->
+                                    <td><?php
+                                        if ($row['status_attribution_vehicule'] == null) {
+                                            echo "<span class='label label-default'>En attente d'attribution</span> <br/>";
+                                        } else if ($row['status_attribution_vehicule'] == 1) {
+                                            echo "<span class='label label-success'>Attribué</span> <br/>";
+                                        }
+                                        ?></td>
+                                    <td><?php echo $row['usr_name']; ?></td>
+                                    <td><?php
+                                        if ($row['status_diagnostic_vehicule'] == null) {
+                                            echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
+                                        } else if ($row['status_attribution_vehicule'] == 1) {
+                                            echo "<span class='label label-success'>Diagnostiqué</span> <br/>";
+                                        }
+                                        ?></td>
                                     <td>
 
                                         <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/pj_car_recep_list.php?car_recep_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la réception du véhicule"><i class="fa fa-paperclip"></i></a>

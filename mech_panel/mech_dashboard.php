@@ -141,7 +141,7 @@ function NewGuid()
             <table class="table no-margin">
               <thead>
                 <tr>
-                  <th>ID Reparation</th>
+                  <th>ID Réception</th>
                   <th>Immatriculation</th>
                   <th>Client</th>
                   <th>Date reception</th>
@@ -158,8 +158,9 @@ function NewGuid()
                 ?>
 
                 <?php foreach ($result as $row) { ?>
-                  <tr>
-                    <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td>
+                  <tr> 
+                    <!-- <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td> -->
+                    <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
                     <td><?php echo $row['num_matricule']; ?></td>
                     <td><?php echo $row['c_name']; ?></td>
                     <td><?php echo $row['add_date_recep_vehi']; ?></td>

@@ -32,10 +32,10 @@ if(isset($_POST['mech_fonction']) && $_POST['mech_fonction'] == 'Chef electronic
 $mech_id = $_SESSION['objMech']['user_id'];
 
 $query = "INSERT INTO tbl_repaircar_diagnostic (nom_client, tel_wa_client, type_voiture, imma_vehicule, num_chasis_vehicule, rapport_diagnostic,
-estimate_data, duree_commande, duree_travaux, travaux_prevoir, date_creation_fiche_diag, car_id, type_diagnostic, mech_id) 
+estimate_data, duree_commande, duree_travaux, travaux_prevoir, date_creation_fiche_diag, car_id, type_diagnostic, mech_id, status_diagnostic_vehicule, recep_car_id) 
 VALUES ('$_POST[nom_client]','$_POST[tel_wa_client]','$_POST[type_vehicule]','$_POST[imma_vehicule]','$_POST[num_chasis_vehicule]',
 '$rapport_diagnostic','$estimate_data','$_POST[duree_commande]','$_POST[duree_travaux]','$_POST[travaux_prevoir]',
-'$_POST[date_creation_fiche_diag]','$_POST[add_car_id]','$type_diagnostic','$mech_id')";
+'$_POST[date_creation_fiche_diag]','$_POST[add_car_id]','$type_diagnostic','$mech_id', 1, '$_POST[recep_car_id]')";
 
 // Exécution et stockage du résultat de la requête sous forme de ressource
 $result = mysql_query($query, $link);

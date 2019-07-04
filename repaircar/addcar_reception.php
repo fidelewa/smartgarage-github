@@ -437,7 +437,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
               <div class="form-group">
                 <label for="km_last_vidange"> Kilométrage de dernière vidange :</label>
-                <input type="text" id="km_last_vidange" maxlength="5" name="km_last_vidange" class='form-control' value="<?php echo $km_last_vidange; ?>" placeholder="Veuillez saisir le kilométrage de la dernière vidange" />
+                <input type="text" id="km_last_vidange" maxlength="6" name="km_last_vidange" class='form-control' value="<?php echo $km_last_vidange; ?>" placeholder="Veuillez saisir le kilométrage de la dernière vidange" />
               </div>
               <!-- <div class="form-group">
                 <label for="add_date_ctr_tech"><span style="color:red;">*</span> Date du contrôle technique:</label>
@@ -614,7 +614,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
             <div class="form-group row">
               <div class="col-md-3">
-                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" />
+                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" checked/>
                 <label for="clé du véhicule"><span style="color:red;">*</span> Clé du véhicule</label>
               </div>
               <div class="col-md-9" style="padding-left:0px;">

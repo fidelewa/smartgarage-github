@@ -332,6 +332,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                 <input type="hidden" name="ddlModel" value="" />
                 <input type="hidden" name="ddlImma" value="" /> -->
                 <input type="hidden" name="add_car_id" value="<?php echo $_GET['add_car_id']; ?>" />
+                <input type="hidden" name="recep_car_id" value="<?php echo $_GET['car_id']; ?>" />
                 <input type="hidden" name="mech_fonction" value="<?php echo $_GET['mech_fonction']; ?>" />
             </section>
         </form>

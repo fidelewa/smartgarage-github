@@ -177,6 +177,156 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
   <!-- /.row end -->
   <div class="box box-success">
     <div class="box-header">
+      <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers véhicules attribués et diagnostiqués</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table sakotable table-bordered table-striped dt-responsive">
+        <thead>
+          <tr>
+            <th>ID Reception</th>
+            <th>Immatriculation du véhicule</th>
+            <th>Statut attribution</th>
+            <th>Attribué à</th>
+            <th>Statut diagnostic</th>
+            <!-- <th>Date reception</th>
+                                <th>Date exp. assur</th>
+                                <th>Date exp. vis. tech.</th> -->
+            <!-- <th>Attribué à</th> -->
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+
+          $result = $wms->getAllRecepRepairCarListTen($link);
+
+          // var_dump($result);
+
+          // die();
+
+          foreach ($result as $row) {
+            // $image = WEB_URL . 'img/no_image.jpg';
+            // $image_customer = WEB_URL . 'img/no_image.jpg';
+
+            // if (file_exists(ROOT_PATH . '/img/upload/' . $row['image_vehi']) && $row['image_vehi'] != '') {
+            //     $image = WEB_URL . 'img/upload/' . $row['image_vehi']; //car image
+            // }
+            // if (file_exists(ROOT_PATH . '/img/upload/' . $row['customer_image']) && $row['customer_image'] != '') {
+            //     $image_customer = WEB_URL . 'img/upload/' . $row['customer_image']; //customer iamge
+            // }
+
+            ?>
+            <tr>
+              <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
+              <td><?php echo $row['num_matricule']; ?></td>
+              <td><?php
+                  if ($row['status_attribution_vehicule'] == null) {
+                    echo "<span class='label label-default'>En attente d'attribution</span> <br/>";
+                  } else if ($row['status_attribution_vehicule'] == 1) {
+                    echo "<span class='label label-success'>Attribué</span> <br/>";
+                  }
+                  ?></td>
+              <td><?php echo $row['usr_name']; ?></td>
+              <td><?php
+                  if ($row['status_diagnostic_vehicule'] == null) {
+                    echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
+                  } else if ($row['status_attribution_vehicule'] == 1) {
+                    echo "<span class='label label-success'>Diagnostiqué</span> <br/>";
+                  }
+                  ?></td>
+              <td>
+
+                <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/pj_car_recep_list.php?car_recep_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la réception du véhicule"><i class="fa fa-paperclip"></i></a>
+                <!-- <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a> -->
+                <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
+                <?php
+
+                // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
+                $rows = $wms->getComparPrixPieceRechangeInfoByDiagId($link, $row['vehi_diag_id']);
+
+                // S'il y a des enregistrements correspondant à cet id existant déja en BDD
+                // On affiche l'icone de la fiche
+                if (!empty($rows)) { ?>
+                  <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule"><i class="fa fa-file-text-o"></i></a>
+                <?php }
+
+                // Si le client et le receptionniste ont signé au dépot la fiche de reception du véhicule
+                if (isset($row['sign_cli_depot']) && isset($row['sign_recep_depot'])) { ?>
+
+                  <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attribuer le véhicule réceptionné à un mécanicien ou un électricien pour diagnostic"><i class="fa fa-user"></i></a>
+
+                <?php }
+
+                // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
+                $rowsGetStatutEtatVehiSortie = $wms->getStatutEtatVehiSortie($link, $row['car_id']);
+
+                if (!empty($rowsGetStatutEtatVehiSortie)) { ?>
+                  <a class="btn btn-primary" style="background-color:#021254;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/etat_vehicule_sortie.php?cid=<?php echo $row['car_id']; ?>" data-original-title="Définir l'état du véhicule à la sortie"><i class="fa fa-car"></i></a>
+                <?php } ?>
+
+                <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien"><i class="fa fa-eye"></i></a> -->
+                <!-- <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> -->
+                <!-- <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a> -->
+              </td>
+            </tr>
+            <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <a class="close" data-dismiss="modal">×</a>
+                    <h3>Formulaire d'attribution du véhicule réceptionné</h3>
+                  </div>
+
+                  <form id="avanceSalForm" name="avance_sal" role="form" enctype="multipart/form-data" method="POST" action="../diagnostic/attribution_mecanicien_traitement.php">
+
+                    <div class="modal-body">
+
+                      <div class="form-group">
+                        <label for="txtCName"> Sélectionner un mécanicien ou un électricien :</label>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <select required class='form-control' id="mecanicienList" name="mecanicienList">
+                              <option selected value="">--Veuillez saisir ou sélectionner un mécanicien ou un électricien--</option>
+                              <?php
+                              $mecanicien_list = $wms->getAllMechanicsListByTitle($link);
+                              foreach ($mecanicien_list as $mrow) {
+                                // if ($cus_id > 0 && $cus_id == $mrow['customer_id']) {
+                                echo '<option value="' . $mrow['usr_id'] . '">' . $mrow['usr_name'] . ' - ' . $mrow['usr_type'] . '</option>';
+                                // } else {
+                                // echo '<option value="' . $mrow['customer_id'] . '">' . $mrow['c_name'] . '</option>';
+                                // }
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <input type="hidden" value="<?php echo $row['add_car_id'] ?>" name="car_id" />
+                      <input type="hidden" value="<?php echo $row['car_id'] ?>" name="reception_id" />
+                      <input type="hidden" value="<?php echo $row['num_matricule'] ?>" name="imma_vehi" />
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                      <button type="submit" class="btn btn-success" id="submit">Valider</button>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          <?php }
+          ?>
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer clearfix"><a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php" class="btn btn-sm btn-success btn-flat pull-right"><b><i class="fa fa-list"></i> &nbsp;Voir toute la liste</b></a> </div>
+    <!-- /.box-body -->
+  </div>
+
+  <div class="box box-success">
+    <div class="box-header">
       <h3 class="box-title"><i class="fa fa-list"></i> Liste de rappel des vehicules bientôt en échéance technique et assurances</h3>
     </div>
     <!-- /.box-header -->
@@ -383,7 +533,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
       pointStrokeColor: 'rgba(0, 166, 90, 1)',
       pointHighlightFill: '#fff',
       pointHighlightStroke: 'rgba(0, 166, 90, 1)',
-      data: [ <?php echo $car_repair_data_default; ?> ]
+      data: [ < ? php echo $car_repair_data_default; ? > ]
     }]
   };
 
@@ -441,7 +591,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
   // Get context with jQuery - using jQuery's .get() method.
   var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
   var pieChart = new Chart(pieChartCanvas);
-  var PieData = <?php $parts_sell_report; ?> ;
+  var PieData = < ? php $parts_sell_report; ? > ;
   var pieOptions = {
     // Boolean - Whether we should show a stroke on each segment
     segmentShowStroke: true,
@@ -482,7 +632,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
   // Get context with jQuery - using jQuery's .get() method.
   var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d');
   var pieChart2 = new Chart(pieChartCanvas2);
-  var PieData2 = <?php echo $car_sell_report; ?> ;
+  var PieData2 = < ? php echo $car_sell_report; ? > ;
 
   var pieOptions2 = {
     // Boolean - Whether we should show a stroke on each segment

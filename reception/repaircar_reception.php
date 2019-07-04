@@ -376,7 +376,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" />
+                                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" checked/>
                                 <label for="clé du véhicule"><span style="color:red;">*</span> Clé du véhicule</label>
                             </div>
                             <div class="col-md-9" style="padding-left:0px;">
