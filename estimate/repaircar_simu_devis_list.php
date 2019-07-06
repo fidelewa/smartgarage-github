@@ -24,6 +24,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 $hdnid = "0";
 $model_post_token = 0;
 
+// var_dump($_SESSION);
+
 ?>
 <!-- Content Header (Page header) -->
 
@@ -56,8 +58,8 @@ $model_post_token = 0;
             </div>
             <div class="box box-success">
                 <!-- <div class="box-header"> -->
-                    <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
-                    <!-- <h3 class="box-title"><i class="fa fa-list"></i> Liste des devis de réparation attribués à des véhicules</h3> -->
+                <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
+                <!-- <h3 class="box-title"><i class="fa fa-list"></i> Liste des devis de réparation attribués à des véhicules</h3> -->
                 <!-- </div> -->
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -90,7 +92,7 @@ $model_post_token = 0;
                                     <td><?php if (isset($row['imma_vehi_client'])) {
                                             echo $row['imma_vehi_client'];
                                         } else {
-                                            echo "<p><span class='label label-warning'>Veuillez attribuer le devis à un véhicule</span>";
+                                            echo "<p><span class='label label-warning'>Veuillez attribuer ce devis à un véhicule</span>";
                                         } ?></td>
                                     <td><?php echo $row['marque_vehi_client']; ?></td>
                                     <td><?php echo $row['model_vehi_client']; ?></td>
@@ -109,11 +111,16 @@ $model_post_token = 0;
                                             <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_doc.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
 
                                             <!-- Si le devis n'est lié à aucune facture, on fait apparaitre le bouton
-                                                d'association d'un devis à une facture
-                                                -->
-                                            <?php if (empty($ligneFac)) { ?>
-                                                <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_simu.php?devis_simu_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture à partir de ce devis"><i class="fa fa-plus"></i></a>
-                                            <?php } ?>
+                                                        d'association d'un devis à une facture
+                                                        -->
+                                            <?php if (empty($ligneFac)) {
+                                            
+                                                if ($_SESSION['login_type'] != "service client") { 
+                                                    // Le service client n'est pas sensé créer les factures
+                                                    ?>
+                                                    <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_simu.php?devis_simu_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture à partir de ce devis"><i class="fa fa-plus"></i></a>
+                                                <?php }
+                                            } ?>
 
                                         <?php } else {
                                             // Si aucun véhicule n'est lié à ce devis on affiche le bouton d'attribution du devis à un véhicule

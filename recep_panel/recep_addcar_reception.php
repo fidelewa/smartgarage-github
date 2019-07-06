@@ -388,19 +388,19 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <input type="text" name="add_date_visitetech_car" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <div class="form-group">
-                <label for="add_date"><span style="color:red;">*</span> Date de dernière vidange:</label>
+                <label for="add_date"> Date de dernière vidange:</label>
                 <input type="text" name="add_date_derniere_vidange" value="" id="add_date_derniere_vidange" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <div class="form-group">
-                <label for="add_date"><span style="color:red;">*</span> Date de changement de filtre à air:</label>
+                <label for="add_date"> Date de changement de filtre à air:</label>
                 <input type="text" name="add_date_changement_filtre_air" value="" id="add_date_changement_filtre_air" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <div class="form-group">
-                <label for="add_date"><span style="color:red;">*</span> Date de changement de filtre à huile:</label>
+                <label for="add_date"> Date de changement de filtre à huile:</label>
                 <input type="text" name="add_date_changement_filtre_huile" value="" id="add_date_changement_filtre_huile" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <div class="form-group">
-                <label for="add_date"><span style="color:red;">*</span> Date de changement de filtre à pollen:</label>
+                <label for="add_date"> Date de changement de filtre à pollen:</label>
                 <input type="text" name="add_date_changement_filtre_pollen" value="" id="add_date_changement_filtre_pollen" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <!-- <div class="form-group">
@@ -463,6 +463,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <select class='form-control' id="boite_vitesse_vehi_recep" name="boite_vitesse_vehi_recep">
                   <option value="">--Sélectionner le type de boite de vitesse--</option>
                   <option value="automatique">Automatique</option>
+                  <option value="semi-automatique">Semi-Automatique</option>
                   <option value="manuel">Manuel</option>
                 </select>
               </div>
@@ -555,7 +556,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <div class="form-group row">
               <label for="heure_reception" class="col-md-3 col-form-label">Heure</label>
               <div class="col-md-9" style="padding-left:0px;">
-                <input readonly type="text" id="heure_reception" name="heure_reception" value="<?php echo date_format(date_create('now'), 'H:i:s'); ?>" class="bootstrap-timepicker form-control">
+                <input type="text" id="heure_reception" name="heure_reception" value="<?php echo date_format(date_create('now'), 'H:i:s'); ?>" class="bootstrap-timepicker form-control">
               </div>
             </div>
 
@@ -579,16 +580,20 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <label class="form-check-label" for="nivo_carbu_recep_vehi">0/4</label>
               </div>
               <div class="col-md-2 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_4" value="1/4" cheched>
+                <label class="form-check-label" for="nivo_carbu_recep_vehi">1/4</label>
+              </div>
+              <div class="col-md-2 form-check" style="padding-left:0px;">
                 <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_2" value="1/2">
                 <label class="form-check-label" for="nivo_carbu_recep_vehi">1/2</label>
               </div>
-              <div class="col-md-2 form-check" style="padding-left:0px;">
-                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_2_4" value="2/4">
-                <label class="form-check-label" for="nivo_carbu_recep_vehi">2/4</label>
+              <div class="col-md-3 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_3_4" value="3/4">
+                <label class="form-check-label" for="nivo_carbu_recep_vehi">3/4</label>
               </div>
               <div class="col-md-3 form-check" style="padding-left:0px;">
-                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_3_4" value="3/4" checked>
-                <label class="form-check-label" for="nivo_carbu_recep_vehi">3/4</label>
+                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_4_4" value="4/4">
+                <label class="form-check-label" for="nivo_carbu_recep_vehi">4/4</label>
               </div>
             </div>
 
@@ -655,8 +660,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
           <div class="form-group row">
             <div class="col-md-3">
-              <input type="checkbox" id="panneau_remorquage_recep_vehi" name="panneau_remorquage_recep_vehi" value="Panneau de remorquage">
-              <label for="panneau_remorquage_recep_vehi">Panneau de remorquage</label>
+              <input type="checkbox" id="anneau_remorquage_recep_vehi" name="anneau_remorquage_recep_vehi" value="Anneau de remorquage">
+              <label for="anneau_remorquage_recep_vehi">Anneau de remorquage</label>
             </div>
             <div class="col-md-3">
               <input type="checkbox" id="triangle" name="triangle" value="Triangle">
@@ -736,6 +741,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <div class="col-md-4">
               <input type="checkbox" id="sup_fil_parti_recep_vehi" name="sup_fil_parti_recep_vehi" value="Suppression filtre à particule">
               <label for="suppression filtre à particule">Suppression filtre à particule</label>
+            </div>
+            <div class="col-md-4">
+              <input type="checkbox" id="dupli_cle_recep_vehi" name="dupli_cle_recep_vehi" value="Duplication de clé">
+              <label for="duplication de clé">Duplication de clé</label>
             </div>
           </div>
           <div class="form-group row">
@@ -1415,6 +1424,13 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           </div> <!-- fin row -->
 
           <div class="form-group row">
+            <label for="remarque_aspect_ext" class="col-md-2 col-form-label">Dimension du pneu :</label>
+            <div class="col-md-10" style="padding-left:0px;">
+              <input type="text" name="dim_pneu" id="dim_pneu"/>
+            </div>
+          </div>
+
+          <div class="form-group row">
             <label for="remarque_aspect_ext" class="col-md-2 col-form-label">Remarque :</label>
             <div class="col-md-10" style="padding-left:0px;">
               <textarea class="form-control" id="remarque_aspect_ext" rows="4" name="remarque_aspect_ext"></textarea>
@@ -1825,7 +1841,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     const elt_etat_vehi_arrive_remorq = document.getElementById('etat_vehi_arrive_remorq');
     const elt_nivo_carbu_recep_vehi_0_4 = document.getElementById('nivo_carbu_recep_vehi_0_4');
     const elt_nivo_carbu_recep_vehi_1_2 = document.getElementById('nivo_carbu_recep_vehi_1_2');
-    const elt_nivo_carbu_recep_vehi_2_4 = document.getElementById('nivo_carbu_recep_vehi_2_4');
+    const elt_nivo_carbu_recep_vehi_1_4 = document.getElementById('nivo_carbu_recep_vehi_1_4');
     const elt_nivo_carbu_recep_vehi_3_4 = document.getElementById('nivo_carbu_recep_vehi_3_4');
 
     const elt_elec_recep_vehi = document.getElementById('elec_recep_vehi');
@@ -2092,7 +2108,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
           // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
           elt_nivo_carbu_recep_vehi_1_2.checked = false;
-          elt_nivo_carbu_recep_vehi_2_4.checked = false;
+          elt_nivo_carbu_recep_vehi_1_4.checked = false;
           elt_nivo_carbu_recep_vehi_3_4.checked = false;
 
           // on vérifie que l'id de l'élément récupéré correspond à celui recherché
@@ -2240,7 +2256,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
           // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
           elt_nivo_carbu_recep_vehi_0_4.checked = false;
-          elt_nivo_carbu_recep_vehi_2_4.checked = false;
+          elt_nivo_carbu_recep_vehi_1_4.checked = false;
           elt_nivo_carbu_recep_vehi_3_4.checked = false;
 
           // on vérifie que l'id de l'élément récupéré correspond à celui recherché
@@ -2378,12 +2394,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         }
       });
 
-      elt_nivo_carbu_recep_vehi_2_4.addEventListener('click', function() { // On écoute l'événement click sur cet élément
+      elt_nivo_carbu_recep_vehi_1_4.addEventListener('click', function() { // On écoute l'événement click sur cet élément
 
         // console.log(elt_nivo_carbu_recep_vehi_0_4.checked);
 
         // On vérifie que l'élément ayant cet id est checked
-        if (elt_nivo_carbu_recep_vehi_2_4.checked == true) {
+        if (elt_nivo_carbu_recep_vehi_1_4.checked == true) {
 
           // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
           elt_nivo_carbu_recep_vehi_0_4.checked = false;
@@ -2534,7 +2550,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
           // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
           elt_nivo_carbu_recep_vehi_0_4.checked = false;
-          elt_nivo_carbu_recep_vehi_2_4.checked = false;
+          elt_nivo_carbu_recep_vehi_1_4.checked = false;
           elt_nivo_carbu_recep_vehi_1_2.checked = false;
 
           // on vérifie que l'id de l'élément récupéré correspond à celui recherché

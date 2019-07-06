@@ -162,8 +162,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Formulaire de réception d'un véhicule</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <script type="text/javascript" src="<?php echo WEB_URL; ?>reception/repaircar_reception_validation.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+    <!-- <script type="text/javascript" src="<?php echo WEB_URL; ?>reception/repaircar_reception_validation.js"></script> -->
+    <!-- <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script> -->
 
     <style>
         * {
@@ -183,6 +183,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             height: auto;
             min-width: 300px;
         }
+
+        /* [class*="col-"] {
+            border: 1px dotted rgb(0, 0, 0);
+            border-radius: 1px;
+        } */
 
         /* h1 {
       text-align: center;
@@ -276,7 +281,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     <h1 style="text-align:center;">Enregistrement du véhicule</h1>
 
                     <div class="form-group row">
-                    <span style="color:red;"> (si le véhicule n'existe pas encore, veuillez cliquer sur le bouton "+" pour l'enregistrer)</span>
+                        <span style="color:red;"> (si le véhicule n'existe pas encore, veuillez cliquer sur le bouton "+" pour l'enregistrer)</span>
                         <div class="col-md-11">
                             <!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
                             <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule existant en saisissant son immatriculation"><span id="immabox"></span>
@@ -291,10 +296,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         <input readonly onfocus="loadVehiData();" type="text" name="modeleMarqueVehi" id="marque_modele_vehi" class="form-control" value="">
                     </div>
 
-                    <p>
-                        <!-- Date de réception du véhicule -->
+                    <div class="form-group row">
+                        <label for="heure_reception" class="col-md-3 col-form-label">Date de réception du véhicule</label>
+                        <div class="col-md-9" style="padding-left:0px;">
                         <input type="text" name="add_date" value="<?php echo $c_add_date; ?>" id="add_date" class="form-control datepicker" placeholder="Saisissez la date de reception du véhicule" />
-                    </p>
+                        </div>
+                    </div>
 
                     <!-- <p>
                         <select class='form-control' id="immat" name="immat" onchange="loadMarqueModeleVoiture(this.value);">
@@ -336,7 +343,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         <div class="form-group row">
                             <label for="heure_reception" class="col-md-3 col-form-label">Heure</label>
                             <div class="col-md-9" style="padding-left:0px;">
-                                <input readonly type="text" id="heure_reception" name="heure_reception" value="<?php echo date_format(date_create('now'), 'H:i:s'); ?>" class="bootstrap-timepicker form-control">
+                                <input type="text" id="heure_reception" name="heure_reception" value="<?php echo date_format(date_create('now'), 'H:i:s'); ?>" class="bootstrap-timepicker form-control">
                             </div>
                         </div>
 
@@ -355,21 +362,25 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                         <div class="form-group row">
                             <label for="nivo_carbu_recep_vehi" class="col-md-3 col-form-label"><span style="color:red;">*</span> Niveau de carburant</label>
-                            <div class="col-md-2 form-check" style="padding-left:0px;">
+                            <div class="col-md-1 form-check" style="padding-left:0px;">
                                 <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_0_4" value="0/4">
                                 <label class="form-check-label" for="nivo_carbu_recep_vehi">0/4</label>
                             </div>
-                            <div class="col-md-2 form-check" style="padding-left:0px;">
-                                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_2" value="1/2" checked>
+                            <div class="col-md-1 form-check" style="padding-left:0px;">
+                                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_4" value="1/4" checked>
+                                <label class="form-check-label" for="nivo_carbu_recep_vehi">1/4</label>
+                            </div>
+                            <div class="col-md-1 form-check" style="padding-left:0px;">
+                                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_2" value="1/2">
                                 <label class="form-check-label" for="nivo_carbu_recep_vehi">1/2</label>
                             </div>
-                            <div class="col-md-2 form-check" style="padding-left:0px;">
-                                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_2_4" value="2/4">
-                                <label class="form-check-label" for="nivo_carbu_recep_vehi">2/4</label>
-                            </div>
-                            <div class="col-md-3 form-check" style="padding-left:0px;">
+                            <div class="col-md-1 form-check" style="padding-left:0px;">
                                 <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_3_4" value="3/4">
                                 <label class="form-check-label" for="nivo_carbu_recep_vehi">3/4</label>
+                            </div>
+                            <div class="col-md-1 form-check" style="padding-left:0px;">
+                                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_4_4" value="4/4">
+                                <label class="form-check-label" for="nivo_carbu_recep_vehi">4/4</label>
                             </div>
                         </div>
 
@@ -509,6 +520,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                             <label for="problèmes mécaniques">Problèmes mécaniques</label>
                         </div>
                     </div>
+                    
                     <div class="form-group row">
                         <div class="col-md-4">
                             <input type="checkbox" id="conf_cle_recep_vehi" name="conf_cle_recep_vehi" value="Confection de clé">
@@ -525,9 +537,15 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
+                            <input type="checkbox" id="dupli_cle_recep_vehi" name="dupli_cle_recep_vehi" value="Duplication de clé">
+                            <label for="duplication de clé">Duplication de clé</label>
+                        </div>
+                        <div class="col-md-4">
                             <input type="checkbox" id="sup_vanne_egr_recep_vehi" name="sup_vanne_egr_recep_vehi" value="Suppression de vanne EGR">
                             <label for="Suppression de vanne EGR">Suppression de vanne EGR</label>
                         </div>
+                    </div>
+                    <div class="form-group row">
                         <div class="col-md-8">
                             <div class="row">
                                 <label for="voyants allumés">Voyants allumés</label>
@@ -1216,6 +1234,13 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     </div> <!-- fin row -->
 
                     <div class="form-group row">
+                        <label for="remarque_aspect_ext" class="col-md-2 col-form-label">Dimensions du pneu :</label>
+                        <div class="col-md-10" style="padding-left:0px;">
+                            <input type="text" name="dim_pneu" id="dim_pneu" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="remarque_aspect_ext" class="col-md-2 col-form-label">Remarque :</label>
                         <div class="col-md-10" style="padding-left:0px;">
                             <textarea class="form-control" id="remarque_aspect_ext" rows="4" name="remarque_aspect_ext"></textarea>
@@ -1550,8 +1575,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         const elt_etat_vehi_arrive_remorq = document.getElementById('etat_vehi_arrive_remorq');
         const elt_nivo_carbu_recep_vehi_0_4 = document.getElementById('nivo_carbu_recep_vehi_0_4');
         const elt_nivo_carbu_recep_vehi_1_2 = document.getElementById('nivo_carbu_recep_vehi_1_2');
-        const elt_nivo_carbu_recep_vehi_2_4 = document.getElementById('nivo_carbu_recep_vehi_2_4');
+        const elt_nivo_carbu_recep_vehi_1_4 = document.getElementById('nivo_carbu_recep_vehi_1_4');
         const elt_nivo_carbu_recep_vehi_3_4 = document.getElementById('nivo_carbu_recep_vehi_3_4');
+        const elt_nivo_carbu_recep_vehi_4_4 = document.getElementById('nivo_carbu_recep_vehi_4_4');
 
         const elt_elec_recep_vehi = document.getElementById('elec_recep_vehi');
         const elt_meca_recep_vehi = document.getElementById('meca_recep_vehi');
@@ -1561,6 +1587,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         const elt_sup_adblue_recep_vehi = document.getElementById('sup_adblue_recep_vehi');
         const elt_sup_fil_parti_recep_vehi = document.getElementById('sup_fil_parti_recep_vehi');
         const elt_sup_vanne_egr_recep_vehi = document.getElementById('sup_vanne_egr_recep_vehi');
+        const elt_dupli_cle_recep_vehi = document.getElementById('dupli_cle_recep_vehi');
 
         const elt_voyant_1 = document.getElementById('voyant_1');
         const elt_voyant_2 = document.getElementById('voyant_2');
@@ -1615,6 +1642,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             x[currentTab].style.display = "none";
             // Increase or decrease the current tab by 1:
             currentTab = currentTab + n;
+
+            if (currentTab == 2 && !validateMe()) return false;
+
             // if you have reached the end of the form...
             if (currentTab >= x.length) {
                 // ... the form gets submitted:
@@ -1827,8 +1857,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                     // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
                     elt_nivo_carbu_recep_vehi_1_2.checked = false;
-                    elt_nivo_carbu_recep_vehi_2_4.checked = false;
                     elt_nivo_carbu_recep_vehi_3_4.checked = false;
+                    elt_nivo_carbu_recep_vehi_1_4.checked = false;
+                    elt_nivo_carbu_recep_vehi_4_4.checked = false;
 
                     // on vérifie que l'id de l'élément récupéré correspond à celui recherché
                     if (elt_elec_recep_vehi.id == "elec_recep_vehi") {
@@ -1863,6 +1894,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     if (elt_sup_vanne_egr_recep_vehi.id == "sup_vanne_egr_recep_vehi") {
                         // Si c'est le cas, on le désactive
                         elt_sup_vanne_egr_recep_vehi.disabled = true;
+                    }
+                    if (elt_dupli_cle_recep_vehi.id == "dupli_cle_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_dupli_cle_recep_vehi.disabled = true;
                     }
 
 
@@ -1975,8 +2010,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                     // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
                     elt_nivo_carbu_recep_vehi_0_4.checked = false;
-                    elt_nivo_carbu_recep_vehi_2_4.checked = false;
+                    elt_nivo_carbu_recep_vehi_1_4.checked = false;
                     elt_nivo_carbu_recep_vehi_3_4.checked = false;
+                    elt_nivo_carbu_recep_vehi_4_4.checked = false;
+
 
                     // on vérifie que l'id de l'élément récupéré correspond à celui recherché
                     if (elt_elec_recep_vehi.id == "elec_recep_vehi") {
@@ -2011,6 +2048,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     if (elt_sup_vanne_egr_recep_vehi.id == "sup_vanne_egr_recep_vehi") {
                         // Si c'est le cas, on le désactive
                         elt_sup_vanne_egr_recep_vehi.disabled = false;
+                    }
+                    if (elt_dupli_cle_recep_vehi.id == "dupli_cle_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_dupli_cle_recep_vehi.disabled = false;
                     }
 
                     if (elt_voyant_1.id == "voyant_1") {
@@ -2113,17 +2154,18 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 }
             });
 
-            elt_nivo_carbu_recep_vehi_2_4.addEventListener('click', function() { // On écoute l'événement click sur cet élément
+            elt_nivo_carbu_recep_vehi_1_4.addEventListener('click', function() { // On écoute l'événement click sur cet élément
 
                 // console.log(elt_nivo_carbu_recep_vehi_0_4.checked);
 
                 // On vérifie que l'élément ayant cet id est checked
-                if (elt_nivo_carbu_recep_vehi_2_4.checked == true) {
+                if (elt_nivo_carbu_recep_vehi_1_4.checked == true) {
 
                     // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
                     elt_nivo_carbu_recep_vehi_0_4.checked = false;
                     elt_nivo_carbu_recep_vehi_1_2.checked = false;
                     elt_nivo_carbu_recep_vehi_3_4.checked = false;
+                    elt_nivo_carbu_recep_vehi_4_4.checked = false;
 
                     // on vérifie que l'id de l'élément récupéré correspond à celui recherché
                     if (elt_elec_recep_vehi.id == "elec_recep_vehi") {
@@ -2158,6 +2200,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     if (elt_sup_vanne_egr_recep_vehi.id == "sup_vanne_egr_recep_vehi") {
                         // Si c'est le cas, on le désactive
                         elt_sup_vanne_egr_recep_vehi.disabled = false;
+                    }
+                    if (elt_dupli_cle_recep_vehi.id == "dupli_cle_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_dupli_cle_recep_vehi.disabled = false;
                     }
 
                     if (elt_voyant_1.id == "voyant_1") {
@@ -2269,8 +2315,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                     // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
                     elt_nivo_carbu_recep_vehi_0_4.checked = false;
-                    elt_nivo_carbu_recep_vehi_2_4.checked = false;
+                    elt_nivo_carbu_recep_vehi_1_4.checked = false;
                     elt_nivo_carbu_recep_vehi_1_2.checked = false;
+                    elt_nivo_carbu_recep_vehi_4_4.checked = false;
 
                     // on vérifie que l'id de l'élément récupéré correspond à celui recherché
                     if (elt_elec_recep_vehi.id == "elec_recep_vehi") {
@@ -2305,6 +2352,162 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     if (elt_sup_vanne_egr_recep_vehi.id == "sup_vanne_egr_recep_vehi") {
                         // Si c'est le cas, on le désactive
                         elt_sup_vanne_egr_recep_vehi.disabled = false;
+                    }
+                    if (elt_dupli_cle_recep_vehi.id == "dupli_cle_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_dupli_cle_recep_vehi.disabled = false;
+                    }
+
+                    if (elt_voyant_1.id == "voyant_1") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_1.disabled = false;
+                    }
+                    if (elt_voyant_2.id == "voyant_2") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_2.disabled = false;
+                    }
+                    if (elt_voyant_3.id == "voyant_3") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_3.disabled = false;
+                    }
+                    if (elt_voyant_4.id == "voyant_4") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_4.disabled = false;
+                    }
+                    if (elt_voyant_5.id == "voyant_5") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_5.disabled = false;
+                    }
+                    if (elt_voyant_6.id == "voyant_6") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_6.disabled = false;
+                    }
+                    if (elt_voyant_7.id == "voyant_7") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_7.disabled = false;
+                    }
+                    if (elt_voyant_8.id == "voyant_8") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_8.disabled = false;
+                    }
+                    if (elt_voyant_9.id == "voyant_9") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_9.disabled = false;
+                    }
+                    if (elt_voyant_10.id == "voyant_10") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_10.disabled = false;
+                    }
+                    if (elt_voyant_11.id == "voyant_11") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_11.disabled = false;
+                    }
+                    if (elt_voyant_12.id == "voyant_12") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_12.disabled = false;
+                    }
+                    if (elt_voyant_13.id == "voyant_13") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_13.disabled = false;
+                    }
+                    if (elt_voyant_14.id == "voyant_14") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_14.disabled = false;
+                    }
+                    if (elt_voyant_15.id == "voyant_15") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_15.disabled = false;
+                    }
+                    if (elt_voyant_16.id == "voyant_16") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_16.disabled = false;
+                    }
+                    if (elt_voyant_17.id == "voyant_17") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_17.disabled = false;
+                    }
+                    if (elt_voyant_18.id == "voyant_18") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_18.disabled = false;
+                    }
+                    if (elt_voyant_19.id == "voyant_19") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_19.disabled = false;
+                    }
+                    if (elt_voyant_20.id == "voyant_20") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_20.disabled = false;
+                    }
+                    if (elt_voyant_21.id == "voyant_21") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_21.disabled = false;
+                    }
+                    if (elt_voyant_22.id == "voyant_22") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_22.disabled = false;
+                    }
+                    if (elt_voyant_23.id == "voyant_23") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_23.disabled = false;
+                    }
+                    if (elt_voyant_24.id == "voyant_24") {
+                        // Si c'est le cas, on le désactive
+                        elt_voyant_24.disabled = false;
+                    }
+
+                }
+            });
+
+            elt_nivo_carbu_recep_vehi_4_4.addEventListener('click', function() { // On écoute l'événement click sur cet élément
+
+                // console.log(elt_nivo_carbu_recep_vehi_0_4.checked);
+
+                // On vérifie que l'élément ayant cet id est checked
+                if (elt_nivo_carbu_recep_vehi_4_4.checked == true) {
+
+                    // Si l'élément en question est checked, c'est que les autres éléments ne sont pas checké
+                    elt_nivo_carbu_recep_vehi_0_4.checked = false;
+                    elt_nivo_carbu_recep_vehi_1_4.checked = false;
+                    elt_nivo_carbu_recep_vehi_1_2.checked = false;
+                    elt_nivo_carbu_recep_vehi_3_4.checked = false;
+
+                    // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+                    if (elt_elec_recep_vehi.id == "elec_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_elec_recep_vehi.disabled = false;
+                    }
+                    // on vérifie que l'id de l'élément récupéré correspond à celui recherché
+                    if (elt_meca_recep_vehi.id == "meca_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_meca_recep_vehi.disabled = false;
+                    }
+                    if (elt_pb_electro_recep_vehi.id == "pb_electro_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_pb_electro_recep_vehi.disabled = false;
+                    }
+                    if (elt_pb_demar_recep_vehi.id == "pb_demar_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_pb_demar_recep_vehi.disabled = false;
+                    }
+                    if (elt_pb_meca_recep_vehi.id == "pb_meca_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_pb_meca_recep_vehi.disabled = false;
+                    }
+                    if (elt_sup_adblue_recep_vehi.id == "sup_adblue_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_sup_adblue_recep_vehi.disabled = false;
+                    }
+                    if (elt_sup_fil_parti_recep_vehi.id == "sup_fil_parti_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_sup_fil_parti_recep_vehi.disabled = false;
+                    }
+                    if (elt_sup_vanne_egr_recep_vehi.id == "sup_vanne_egr_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_sup_vanne_egr_recep_vehi.disabled = false;
+                    }
+                    if (elt_dupli_cle_recep_vehi.id == "dupli_cle_recep_vehi") {
+                        // Si c'est le cas, on le désactive
+                        elt_dupli_cle_recep_vehi.disabled = false;
                     }
 
                     if (elt_voyant_1.id == "voyant_1") {
@@ -2409,27 +2612,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
         });
 
-        // function writediv(texte) {
-        //     document.getElementById('immabox').innerHTML = texte;
-        // }
-
-        // function verifImma(immatriculation) {
-        //     if (immatriculation != '') {
-
-        //         if (texte = file('verif_imma.php?imma=' + escape(immatriculation))) {
-
-        //             if (texte == 1)
-        //                 writediv('<span style="color:#cc0000"><b>' + immatriculation + ' :</b> ce immatriculation est deja pris</span>');
-
-        //             else if (texte == 2)
-        //                 writediv('<span style="color:#1A7917"><b>' + immatriculation + ' :</b> ce immatriculation est libre</span>');
-
-        //             else
-        //                 writediv(texte);
-        //         }
-        //     }
-        // }
-
         function getImmaValue() {
 
             // On récupère l'élément immatriculation 
@@ -2442,23 +2624,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
         }
 
-        // function file(fichier) {
-        //     if (window.XMLHttpRequest) // FIREFOX
-        //         xhr_object = new XMLHttpRequest();
-
-        //     else if (window.ActiveXObject) // IE
-        //         xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-
-        //     else
-
-        //         return (false);
-
-        //     xhr_object.open("GET", fichier, false);
-        //     xhr_object.send(null);
-        //     if (xhr_object.readyState == 4) return (xhr_object.responseText);
-        //     else return (false);
-        // }
-
         $(document).ready(function() {
             setTimeout(function() {
                 $("#me").hide(300);
@@ -2468,8 +2633,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
         function validateMe() {
             if ($("#immat").val() == '') {
-                alert("L'immatriculation du véhicule est obligatoire, saisissez là !!!");
+                alert("L'immatriculation du véhicule est obligatoire, saisissez la !!!");
                 $("#immat").focus();
+                return false;
+            } else if ($("#cle_recep_vehi_text").val() == '') {
+                alert("Le nombre de clé du véhicule est obligatoire, saisissez le !!!");
+                $("#cle_recep_vehi_text").focus();
                 return false;
             } else {
                 return true;

@@ -35,18 +35,6 @@ $(document).ready(function() {
                         message: 'The selected file is not valid'
                     }
                 }
-            },
-            message: {
-                validators: {
-                      stringLength: {
-                        min: 10,
-                        max: 200,
-                        message:'Please enter at least 10 characters and no more than 200'
-                    },
-                    notEmpty: {
-                        message: 'Please enter a message'
-                    }
-                }
             }
         }
     });

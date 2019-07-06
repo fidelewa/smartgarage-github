@@ -87,19 +87,19 @@ if (isset($_POST) && !empty($_POST)) {
 	}
 
 	// Conversion d'ajustement des valeurs ou cast
-	$_POST['last_pa'] = (float)$_POST['last_pa'];
-	$_POST['mont_frais'] = (float)$_POST['mont_frais'];
-	$_POST['prix_revient'] = (float)$_POST['prix_revient'];
-	$_POST['coeff'] = (int)$_POST['coeff'];
-	$_POST['prix_base_ht'] = (float)$_POST['prix_base_ht'];
-	$_POST['prix_base_ttc'] = (float)$_POST['prix_base_ttc'];
+	$_POST['last_pa'] = (float) $_POST['last_pa'];
+	$_POST['mont_frais'] = (float) $_POST['mont_frais'];
+	$_POST['prix_revient'] = (float) $_POST['prix_revient'];
+	$_POST['coeff'] = (int) $_POST['coeff'];
+	$_POST['prix_base_ht'] = (float) $_POST['prix_base_ht'];
+	$_POST['prix_base_ttc'] = (float) $_POST['prix_base_ttc'];
 
 	// var_dump($_POST);
 	// die();
 
 	// $wms->saveUpdatePieceInfo($link, $_POST, $image_url);
 
-	if ((int)$_POST['piece_id'] > 0) { // Mise à jour ou modification
+	if ((int) $_POST['piece_id'] > 0) { // Mise à jour ou modification
 
 		// var_dump($_POST);
 		// die();
@@ -184,20 +184,20 @@ if (isset($_GET['pid']) && $_GET['pid'] != '') {
 					<div class="box-body">
 						<div class="row">
 							<div class="form-group col-md-6">
-								<label for="code_piece"> Code:</label>
-								<input type="text" name="code_piece" value="<?php echo $code_piece; ?>" id="code_piece" class="form-control" />
+								<label for="code_piece"><span style="color:red;">*</span> Code:</label>
+								<input required ="text" name="code_piece" value="<?php echo $code_piece; ?>" id="code_piece" class="form-control" />
 							</div>
 							<div class="form-group col-md-6">
-								<label for="txtCName"> Code barre:</label>
+								<label for="txtCName"><span style="color:red;">*</span> Code barre:</label>
 								<input type="text" name="code_barre_piece" value="<?php echo $code_barre_piece; ?>" id="code_barre_piece" class="form-control" />
 							</div>
 							<div class="form-group col-md-12">
-								<label for="lib_piece"> Libellé:</label>
-								<input type="text" name="lib_piece" value="<?php echo $lib_piece; ?>" id="lib_piece" class="form-control" />
+								<label for="lib_piece"><span style="color:red;">*</span> Libellé:</label>
+								<input required type="text" name="lib_piece" value="<?php echo $lib_piece; ?>" id="lib_piece" class="form-control" />
 							</div>
 							<div class="form-group col-md-12">
-								<label for="type_piece"> Type:</label>
-								<select class='form-control' id="type_piece" name="type_piece">
+								<label for="type_piece"><span style="color:red;">*</span> Type:</label>
+								<select required class='form-control' id="type_piece" name="type_piece">
 									<option value="">--Sélectionner le type de l'article--</option>
 									<?php
 									if (isset($type_piece) && ($type_piece == "unité")) {
@@ -213,8 +213,8 @@ if (isset($_GET['pid']) && $_GET['pid'] != '') {
 								</select>
 							</div>
 							<div class="form-group col-md-12">
-								<label for="famille_piece"> Famille:</label>
-								<select class='form-control' id="famille_piece" name="famille_piece">
+								<label for="famille_piece"><span style="color:red;">*</span> Famille:</label>
+								<select required class='form-control' id="famille_piece" name="famille_piece">
 									<option value="">--Sélectionner la famille de l'article--</option>
 									<?php
 									if (isset($famille_piece) && ($famille_piece == "huile")) {
@@ -274,6 +274,18 @@ if (isset($_GET['pid']) && $_GET['pid'] != '') {
 								<div class="form-group col-md-12">
 									<label for="prix_base_ttc"> Prix de base TTC:</label>
 									<input type="number" name="prix_base_ttc" value="<?php echo $prix_base_ttc ?>" id="prix_base_ttc" class="form-control" />
+								</div>
+								<div class="form-group col-md-12">
+									<label for="fname">Fournisseur:</label>
+									<select class="form-control" name="four" id="four">
+										<option value=''>--Sélectionnez un fournisseur--</option>
+										<?php
+										$result = $wms->getAllSuppliers($link);
+										foreach ($result as $row) {
+											echo "<option value='" . $row['supplier_id'] . "'>" . $row['s_name'] . "</option>";
+										}
+										?>
+									</select>
 								</div>
 								<!-- </div> -->
 							</fieldset>
