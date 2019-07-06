@@ -88,97 +88,116 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 
                 ?>
                 <tr>
-                  <!-- <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td> -->
-                  <!-- <td><img class="photo_img_round" style="width:50px;height:50px;" src="<?php echo $image;  ?>" /></td> -->
+
                   <td><?php echo $row['VIN']; ?></td>
                   <td><span class="label label-danger"><?php echo $row['chasis_no']; ?></span></td>
                   <td><span class="label label-success"><?php echo $row['stat_empla_vehi']; ?></span></td>
                   <td><?php echo $row['date_emplacement']; ?></td>
-                  <!-- <td><?php echo $row['c_name']; ?></td> -->
-                  <!-- <td><?php echo $row['make_name']; ?></td>
-                                  <td><?php echo $row['model_name']; ?></td>
-                                  <td><?php echo $row['year_name']; ?></td> -->
 
                   <td>
-                    <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Voir l'historique des emplacements du véhicule"><i class="fa fa-eye"></i></a>
-                    <!-- <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                          <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a> -->
+                    <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_garage_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des emplacements du véhicule"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Afficher les détails du véhicule"><i class="fa fa-eye"></i></a>
+
                     <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header orange_header">
                             <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                            <h3 class="modal-title">Historique des emplacements du véhicule</h3>
+                            <h3 class="modal-title">Détails des informations de la voiture</h3>
                           </div>
-                          <!-- <div class="modal-body model_view" align="center">&nbsp;
-                                      <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>
-                                      <div class="model_title"><?php echo $row['car_name']; ?></div>
-                                      <div style="color:#fff;font-size:15px;font-weight:bold;">Facture No: <?php echo $row['repair_car_id']; ?></div>
-                                    </div> -->
+                          <div class="modal-body model_view" align="center">&nbsp;
+                            <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>
+                            <div class="model_title"><?php echo $row['car_name']; ?></div>
+                            <div style="color:#fff;font-size:15px;font-weight:bold;">Facture No: <?php echo $row['repair_car_id']; ?></div>
+                          </div>
                           <div class="modal-body">
-                            <!-- <h3 style="text-decoration:underline;">Détails de la voiture Information</h3> -->
+                            <h3 style="text-decoration:underline;"></h3>
                             <div class="row">
                               <div class="col-xs-12">
+                                <b>Nom de la voiture :</b> <?php echo $row['car_name']; ?><br />
+                                <b>Réparation automobile ID :</b> <?php echo $row['repair_car_id']; ?><br />
+                                <b>Marque voiture :</b> <?php echo $row['make_name']; ?><br />
+                                <b>Modèle de voiture:</b> <?php echo $row['model_name']; ?><br />
+                                <b>Année :</b> <?php echo $row['year']; ?><br />
+                                <b>Chasis No :</b> <?php echo $row['chasis_no']; ?><br />
+                                <!-- <b>Enregistrement No :</b> <?php echo $row['car_reg_no']; ?><br /> -->
+                                <b>VIN No :</b> <?php echo $row['VIN']; ?><br />
+                                <?php
 
-                                <div class="box-body">
-                                  <table class="table sakotable table-bordered table-striped dt-responsive">
-                                    <thead>
-                                      <tr>
-                                        <th>#</th>
-                                        <th>Emplacement du véhicule</th>
-                                        <th>Date</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
+                                // Visite technique (par ans)
 
-                                      <?php
-                                      $result = $wms->getHistoEmplaListByCarId($link, $row['car_id']);
+                                if (isset($row['add_date_visitetech'])) {
 
-                                      foreach ($result as $row) {
-                                        ?>
+                                  $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
+                                  if ($dateprochvistech instanceof DateTime) {
+                                    echo '<b> Date de la prochaine visite technique </b> : ' . ($dateprochvistech->format('d/m/Y')) . '<br/>';
+                                    // $dateprochvistech = $datetech->add(new \DateInterval("P1Y")); // La visite technique se fait chaque année
+                                    // echo '<b> Date de la prochaine visite technique </b> : ' . ($dateprochvistech->format('d/m/Y')) . '<br/>';
+                                    // $remainingDaysVistech = $dateprochvistech->diff(new \DateTime())->format('j %R%a jours');
+                                    // echo '<b> Nombre de jours restants avant la prochaine visite technique </b> : ' . $remainingDaysVistech . '<br/>';
 
-                                        <tr>
-                                          <td><?php echo $row['id']; ?></td>
-                                          <td><?php echo $row['emplacement_vehi']; ?></td>
-                                          <td><?php echo $row['date_emplacement']; ?></td>
-                                        </tr>
+                                    // Définition du statut de la visite technique
+                                    $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
 
-                                      <?php } ?>
-                                    </tbody>
-                                  </table>
-                                </div>
+                                    $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
+
+                                    // conversion en entier
+                                    $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
+
+                                    if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) {
+                                      echo "<b> Statut de la visite technique </b> : <span class='label label-warning'>
+                                      Votre visite technique expire dans" . $diffTodayDateprochvistechStr . " !</span><br/>";
+                                    } elseif ($diffTodayDateprochvistech >= 0) {
+                                      echo "<b> Statut de la visite technique </b> : <span class='label label-danger'>Expirée ! Veuillez repasser la visite technique !</span><br/>";
+                                    } else {
+                                      echo "<b> Statut de la visite technique </b> : <span class='label label-success'>En cours de validité </span><br/>";
+                                    }
+                                  }
+                                }
+
+                                // Assurance (par délai prédéfini)
+
+                                // Traitement de l'assurance
+                                if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
+
+                                  $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
+
+                                  if ($dateFinAssur instanceof DateTime) {
+                                    echo '<b> Date de la prochaine assurance </b> : ' . ($dateFinAssur->format('d/m/Y')) . '<br/>';
+                                    $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+                                    $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
+
+                                    // $remainingDaysFinAssur = $dateFinAssur->diff(new \DateTime())->format('j %R%a jours');
+                                    // echo '<b> Nombre de jours restants avant la prochaine assurance </b> : ' . $remainingDaysFinAssur . '<br/>';
+
+                                    // conversion en entier
+                                    $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
+
+                                    if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) {
+                                      echo "<b> Statut de l'assurance </b> : <span class='label label-warning'>
+                                      Votre assurance expire dans" . $diffDateDebutFinAssurStr . " !</span> <br/>";
+                                    } elseif ($diffDateDebutFinAssur >= 0) {
+
+                                      echo "<b> Statut de l'assurance </b> : <span class='label label-danger'>Expirée ! Veuillez renouveler votre assurance !</span>";
+                                    } else {
+                                      echo "<b> Statut de l'assurance </b> : <span class='label label-success'>En cours de validité</span> <br/>";
+                                    }
+                                  }
+                                }
+
+                                ?>
                               </div>
                             </div>
                           </div>
-                          <!-- /.modal-content -->
-                          <!-- <div class="modal-content">
-                                      <div class="modal-header orange_header">
-                                        <h3 class="modal-title">Détails du client</h3>
-                                      </div>
-                                      <div class="modal-body model_view" align="center">&nbsp;
-                                        <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image_customer;  ?>" /></div>
-                                        <div class="model_title"><?php echo $row['c_name']; ?></div>
-                                      </div>
-                                      <div class="modal-body">
-                                        <h3 style="text-decoration:underline;">Détails du client Information</h3>
-                                        <div class="row">
-                                          <div class="col-xs-12">
-                                            <b>Nom du client :</b> <?php echo $row['c_name']; ?><br />
-                                            <b> Email Client :</b> <?php echo $row['c_email']; ?><br />
-                                            <b> Telephone Client :</b> <?php echo $row['c_mobile']; ?><br />
-
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div> -->
-                          <!-- /.modal-content -->
                         </div>
+                        <!-- /.modal-content -->
+                        <!-- /.modal-content -->
                       </div>
                     </div>
                   </td>
                 </tr>
               <?php }
-            mysql_close($link); ?>
+              mysql_close($link); ?>
             </tbody>
           </table>
         </div>

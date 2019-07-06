@@ -2844,6 +2844,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         alert("Le nombre de clé du véhicule est obligatoire !!!");
         $("#cle_recep_vehi_text").focus();
         return false;
+      } else if ($("#km_reception_vehi").val() == '') {
+        alert("Le kilométrage du véhicule est obligatoire !!!");
+        $("#km_reception_vehi").focus();
+        return false;
       } else {
         return true;
       }

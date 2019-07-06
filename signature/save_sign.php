@@ -26,39 +26,39 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 			$rslt_file_put_contents = file_put_contents($file_name, $imagedata);
 
 			// Si l'insertion des images des signatures dans le fichier à réussi
-			// if ($rslt_file_put_contents != false) {
+			if ($rslt_file_put_contents != false) {
 
-			$result['status'] = 1;
-			$result['file_name'] = $file_name;
-			echo json_encode($result);
+				$result['status'] = 1;
+				$result['file_name'] = $file_name;
+				echo json_encode($result);
 
-			// On récupère la date de la signature du client au dépot
-			$dateSignClientDepot = date('d/m/Y');
+				// On récupère la date de la signature du client au dépot
+				$dateSignClientDepot = date('d/m/Y');
 
-			$wms->updateDateSignCliDepot($link, $dateSignClientDepot, (int)$_POST['car_id']);
+				$wms->updateDateSignCliDepot($link, $dateSignClientDepot, (int) $_POST['car_id']);
 
-			// Déclaration et initialisation de la variable d'emplacement du véhicule
-			$emplacement_vehi = "au garage";
+				// Déclaration et initialisation de la variable d'emplacement du véhicule
+				$emplacement_vehi = "au garage";
 
-			$rows = $wms->getHistoEmplVehi($link, $dateSignClientDepot, $emplacement_vehi, $_POST['immavehi'], (int)$_POST['add_car_id']);
+				$rows = $wms->getHistoEmplVehi($link, $dateSignClientDepot, $emplacement_vehi, $_POST['immavehi'], (int) $_POST['add_car_id']);
 
-			// if (empty($rows)) {
-			$wms->saveHistoEmplVehi($link, $dateSignClientDepot, $emplacement_vehi, $_POST['immavehi'], (int)$_POST['add_car_id']);
+				if (empty($rows)) {
+					$wms->saveHistoEmplVehi($link, $dateSignClientDepot, $emplacement_vehi, $_POST['immavehi'], (int) $_POST['add_car_id']);
 
-			// Mise à jour du dernier statu de l'emplacement du véhicule
-			$query = "UPDATE tbl_recep_vehi_repar SET stat_empla_vehi='" . $emplacement_vehi . "' WHERE add_car_id='" . (int)$_POST['add_car_id'] . "' AND car_id='" . (int)$_POST['car_id'] . "'";
+					// Mise à jour du dernier statu de l'emplacement du véhicule
+					$query = "UPDATE tbl_recep_vehi_repar SET stat_empla_vehi='" . $emplacement_vehi . "' WHERE add_car_id='" . (int) $_POST['add_car_id'] . "' AND car_id='" . (int) $_POST['car_id'] . "'";
 
-			// Exécution de la requête
-			$result_stat_empla_vehi = mysql_query($query, $link);
+					// Exécution de la requête
+					$result_stat_empla_vehi = mysql_query($query, $link);
 
-			// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-			if (!$result_stat_empla_vehi) {
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
+					// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
+					if (!$result_stat_empla_vehi) {
+						$message  = 'Invalid query: ' . mysql_error() . "\n";
+						$message .= 'Whole query: ' . $query;
+						die($message);
+					}
+				}
 			}
-			// }
-			// }
 		}
 
 		if ($_POST['etat'] == 'sortie') {
@@ -75,40 +75,40 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 			$rslt_file_put_contents = file_put_contents($file_name, $imagedata);
 
 			// Si l'insertion des images des signatures dans le fichier à réussi
-			// if ($rslt_file_put_contents != false) {
+			if ($rslt_file_put_contents != false) {
 
-			$result['status'] = 1;
-			$result['file_name'] = $file_name;
-			echo json_encode($result);
+				$result['status'] = 1;
+				$result['file_name'] = $file_name;
+				echo json_encode($result);
 
-			// On récupère la date de la signature du client à la sortie
-			$dateSignClientSortie = date('d/m/Y');
+				// On récupère la date de la signature du client à la sortie
+				$dateSignClientSortie = date('d/m/Y');
 
-			// On insère la date de la signature du client à la sortie en BDD
-			$wms->updateDateSignCliSortie($link, $dateSignClientSortie, (int)$_POST['car_id']);
+				// On insère la date de la signature du client à la sortie en BDD
+				$wms->updateDateSignCliSortie($link, $dateSignClientSortie, (int) $_POST['car_id']);
 
-			// Déclaration et initialisation de la variable d'emplacement du véhicule
-			$emplacement_vehi = "hors du garage";
+				// Déclaration et initialisation de la variable d'emplacement du véhicule
+				$emplacement_vehi = "hors du garage";
 
-			$rows = $wms->getHistoEmplVehi($link, $dateSignClientSortie, $emplacement_vehi, $_POST['immavehi'], (int)$_POST['add_car_id']);
+				$rows = $wms->getHistoEmplVehi($link, $dateSignClientSortie, $emplacement_vehi, $_POST['immavehi'], (int) $_POST['add_car_id']);
 
-			// if (empty($rows)) {
-			$wms->saveHistoEmplVehi($link, $dateSignClientSortie, $emplacement_vehi, $_POST['immavehi'], (int)$_POST['add_car_id']);
+				if (empty($rows)) {
+					$wms->saveHistoEmplVehi($link, $dateSignClientSortie, $emplacement_vehi, $_POST['immavehi'], (int) $_POST['add_car_id']);
 
-			// Mise à jour du dernier statu de l'emplacement du véhicule
-			$query = "UPDATE tbl_recep_vehi_repar SET stat_empla_vehi='" . $emplacement_vehi . "' WHERE add_car_id='" . (int)$_POST['add_car_id'] . "' AND car_id='" . (int)$_POST['car_id'] . "'";
+					// Mise à jour du dernier statu de l'emplacement du véhicule
+					$query = "UPDATE tbl_recep_vehi_repar SET stat_empla_vehi='" . $emplacement_vehi . "' WHERE add_car_id='" . (int) $_POST['add_car_id'] . "' AND car_id='" . (int) $_POST['car_id'] . "'";
 
-			// Exécution de la requête
-			$result_stat_empla_vehi = mysql_query($query, $link);
+					// Exécution de la requête
+					$result_stat_empla_vehi = mysql_query($query, $link);
 
-			// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-			if (!$result_stat_empla_vehi) {
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
+					// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
+					if (!$result_stat_empla_vehi) {
+						$message  = 'Invalid query: ' . mysql_error() . "\n";
+						$message .= 'Whole query: ' . $query;
+						die($message);
+					}
+				}
 			}
-			// }
-			// }
 		}
 	}
 
@@ -128,17 +128,17 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 			$rslt_file_put_contents = file_put_contents($file_name, $imagedata);
 
 			// Si l'insertion des images des signatures dans le fichier à réussi
-			// if ($rslt_file_put_contents != false) {
+			if ($rslt_file_put_contents != false) {
 
-			$result['status'] = 1;
-			$result['file_name'] = $file_name;
-			echo json_encode($result);
+				$result['status'] = 1;
+				$result['file_name'] = $file_name;
+				echo json_encode($result);
 
-			// On récupère la date de la signature du réceptionniste au dépot
-			$dateSignRecepDepot = date('d/m/Y');
+				// On récupère la date de la signature du réceptionniste au dépot
+				$dateSignRecepDepot = date('d/m/Y');
 
-			$wms->updateDateSignRecepDepot($link, $dateSignRecepDepot, (int)$_POST['car_id']);
-			// }
+				$wms->updateDateSignRecepDepot($link, $dateSignRecepDepot, (int) $_POST['car_id']);
+			}
 		}
 
 		if ($_POST['etat'] == 'sortie') {
@@ -155,18 +155,17 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 			$rslt_file_put_contents = file_put_contents($file_name, $imagedata);
 
 			// Si l'insertion des images des signatures dans le fichier à réussi
-			// if ($rslt_file_put_contents != false) {
+			if ($rslt_file_put_contents != false) {
 
-			// On récupère la date de la signature du réceptionniste à la sortie
-			$dateSignRecepSortie = date('d/m/Y');
+				// On récupère la date de la signature du réceptionniste à la sortie
+				$dateSignRecepSortie = date('d/m/Y');
 
-			$wms->updateDateSignRecepSortie($link, $dateSignRecepSortie, (int)$_POST['car_id']);
+				$wms->updateDateSignRecepSortie($link, $dateSignRecepSortie, (int) $_POST['car_id']);
 
-			$result['status'] = 1;
-			$result['file_name'] = $file_name;
-			echo json_encode($result);
-
-			// }
+				$result['status'] = 1;
+				$result['file_name'] = $file_name;
+				echo json_encode($result);
+			}
 		}
 	}
 }

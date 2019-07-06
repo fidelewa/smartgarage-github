@@ -2,6 +2,60 @@
 //include_once('../config.php');v
 class wms_core
 {
+
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRepairCarListAtGarage($con)
+	{
+		$data = array();
+		$result = mysql_query("SELECT ac.car_id, car_name, chasis_no, stat_empla_vehi, date_emplacement, VIN, m.*, mo.*, ac.repair_car_id, ac.year,
+		ac.add_date_visitetech, ac.add_date_assurance, ac.add_date_assurance_fin
+		FROM tbl_add_car ac 
+		inner join tbl_histo_emplacement_vehicule hev on hev.car_id = ac.car_id 
+		inner join tbl_recep_vehi_repar rvr on rvr.add_car_id = ac.car_id 
+		inner join tbl_add_customer c on c.customer_id = ac.customer_id 
+		inner join tbl_make m on m.make_id = ac.car_make 
+		inner join tbl_model mo on mo.model_id = ac.car_model 
+		group by ac.car_id, car_name, chasis_no, stat_empla_vehi, date_emplacement
+        having rvr.stat_empla_vehi = 'au garage'
+		order by ac.car_id DESC", $con);
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRepairCarList($con)
+	{
+		$data = array();
+
+		$query = "SELECT ac.added_date, VIN, note, car_id, chasis_no, car_name, ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,ac.repair_car_id, ac.year
+		,add_date_visitetech, add_date_assurance, add_date_assurance_fin, princ_tel, m.*, mo.*, VIN, c_name
+		FROM tbl_add_car ac 
+		inner join tbl_add_customer c on c.customer_id = ac.customer_id 
+		inner join tbl_make m on m.make_id = ac.car_make 
+		inner join tbl_model mo on mo.model_id = ac.car_model 
+		order by ac.car_id DESC";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
 	/*
 	* @get all Voiture de réparation list
 	*/
@@ -1377,35 +1431,6 @@ GROUP BY pp.per_id";
 			while ($row = mysql_fetch_assoc($result)) {
 				$data[] = $row;
 			}
-		}
-		return $data;
-	}
-
-	/*
-	* @get all Voiture de réparation list
-	*/
-	public function getAllRepairCarList($con)
-	{
-		$data = array();
-
-		$query = "SELECT ac.added_date, VIN, note, car_id, chasis_no, car_name, ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,ac.repair_car_id, ac.year
-		,add_date_visitetech, add_date_assurance, add_date_assurance_fin, princ_tel, m.*, mo.*, VIN, c_name
-		FROM tbl_add_car ac inner join tbl_add_customer c on c.customer_id = ac.customer_id 
-		inner join tbl_make m on m.make_id = ac.car_make 
-		inner join tbl_model mo on mo.model_id = ac.car_model 
-		order by ac.car_id DESC";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			// var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
 		}
 		return $data;
 	}
@@ -4169,25 +4194,6 @@ GROUP BY pp.per_id";
 		return $data;
 	}
 
-
-
-	/*
-	* @get all Voiture de réparation list
-	*/
-	public function getAllRepairCarListAtGarage($con)
-	{
-		$data = array();
-		$result = mysql_query("SELECT ac.car_id, car_name, chasis_no, stat_empla_vehi, date_emplacement, VIN
-		FROM tbl_add_car ac inner join tbl_histo_emplacement_vehicule hev on hev.car_id = ac.car_id 
-		inner join tbl_recep_vehi_repar rvr on rvr.add_car_id = ac.car_id 
-		group by ac.car_id, car_name, chasis_no, stat_empla_vehi, date_emplacement
-        having rvr.stat_empla_vehi = 'au garage'
-		order by ac.car_id DESC", $con);
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
 
 	/*
 	* @get all Voiture de réparation list

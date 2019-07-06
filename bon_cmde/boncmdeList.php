@@ -54,7 +54,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
         <h4><i class="icon fa fa-check"></i> Success!</h4>
         <?php echo $msg; ?>
       </div>
-      <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/addpersonnel.php" data-original-title="Ajouter un bon de commande"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
+      <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php" data-original-title="Ajouter un bon de commande"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
       <div class="box box-success">
         <div class="box-header">
           <h3 class="box-title">Liste des bons de commande crées</h3>

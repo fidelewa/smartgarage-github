@@ -157,7 +157,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
           <p><?php echo count($car_stock) > 1 ? 'VOITURES DES CLIENTS' : 'VOITURE DU CLIENT'; ?></p>
         </div>
         <div class="icon"> <img height="80" width="80" src="img/car.png"></a> </div>
-        <a href="<?php echo WEB_URL; ?>carstock/buycarlist.php" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="<?php echo WEB_URL; ?>repaircar/carlist.php" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col end -->
@@ -169,7 +169,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
           <p><?php echo count($personnel) > 1 ? 'EMPLOYES' : 'EMPLOYE'; ?></p>
         </div>
         <div class="icon"> <img height="80" width="80" src="img/mechanic.png"></a> </div>
-        <a href="<?php echo WEB_URL; ?>mechanics/mechanicslist.php" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="<?php echo WEB_URL; ?>user/listepersonnel.php" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col end -->
@@ -218,7 +218,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
 
             ?>
             <tr>
-              <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
+              <td><?php echo $row['car_id']; ?></td>
               <td><?php echo $row['num_matricule']; ?></td>
               <td><?php
                   if ($row['status_attribution_vehicule'] == null) {

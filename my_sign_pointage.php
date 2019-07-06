@@ -37,7 +37,7 @@ include('config.php');
 <body>
 
 	<!-- Navigation -->
-	<nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-sm bg-white">
+	<nav class="navbar navbar-light navbar-expand-sm fixed-top shadow-sm bg-white">
 		<!-- <a href="index.html" class="navbar-brand">Bootstrap 101</a> -->
 		<button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
 		<div id="navbarSupportedContent" class="collapse navbar-collapse">

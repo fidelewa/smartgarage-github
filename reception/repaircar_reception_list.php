@@ -110,7 +110,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
 
                                 ?>
                                 <tr>
-                                    <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
+                                    <td><?php echo $row['car_id']; ?></td>
                                     <td><?php echo $row['num_matricule']; ?></td>
                                     <td><?php
                                         if ($row['status_attribution_vehicule'] == null) {
