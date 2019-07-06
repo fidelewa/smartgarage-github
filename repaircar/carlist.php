@@ -102,7 +102,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                 <th>Nom du client</th>
                 <th>Marque</th>
                 <th>Modèle</th>
-                <th>Année</th>
+                <!-- <th>Année</th> -->
                 <th>Action</th>
               </tr>
             </thead>
@@ -134,7 +134,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                   <td><?php echo $row['c_name']; ?></td>
                   <td><?php echo $row['make_name']; ?></td>
                   <td><?php echo $row['model_name']; ?></td>
-                  <td><?php echo $row['year']; ?></td>
+                  <!-- <td><?php echo $row['year']; ?></td> -->
                   <td>
 
                     <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/pj_car_list.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la voiture"><i class="fa fa-paperclip"></i></a>

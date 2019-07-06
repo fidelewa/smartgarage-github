@@ -2,6 +2,57 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getAllPersoSalaire($con, $numeroMoisDateJour)
+	{
+		$data = array();
+
+		$query = "SELECT 
+		per_name,
+		salaire_base,
+		nb_heure_sup_periode,
+		nb_jour_conge_paye,
+		nb_jour_abs_justifie,
+		per_telephone,
+		-- montant_avance_periode, 
+		SUM(montant_prime) AS montant_prime_periode,
+		montant_avance_periode,
+		perso_id
+	FROM
+		(SELECT 
+		per.per_id as perso_id,
+				per_name,
+				per_sal AS salaire_base,
+				SUM(nb_heure_sup) AS nb_heure_sup_periode,
+				SUM(montant_avance) AS montant_avance_periode,
+				eca.nb_jour_conge_paye,
+				eca.nb_jour_abs_justifie,
+				per_telephone
+		FROM
+			tbl_add_pointage po
+		LEFT JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel
+		LEFT JOIN tbl_emplo_conge_abs eca ON eca.emplo_tel = per.per_telephone
+		LEFT JOIN tbl_avance_personnel ap ON ap.emplo_tel = per.per_telephone
+		WHERE mois_date_arrivee = '" . $numeroMoisDateJour . "'
+		GROUP BY per.per_telephone
+		) AS pointage_personnel
+		   LEFT JOIN
+		tbl_prime_personnel pp ON pp.emplo_tel = pointage_personnel.per_telephone
+	GROUP BY pointage_personnel.per_telephone";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
 
 	/*
 	* @get all Voiture de réparation list
@@ -217,11 +268,11 @@ class wms_core
 				// Si la pièce n'existe pas en BDD, on l'enregistre
 				$query = "INSERT INTO tbl_add_piece(code_piece, code_barre_piece, lib_piece, type_piece, 
 				famille_piece, dernier_prix_achat, montant_frais, prix_revient, coefficient, prix_base_ht,
-				prix_base_ttc, image_url)
+				prix_base_ttc, image_url, four_id)
 
 				values('$data[code_piece]','$data[code_barre_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]',
 				'$data[last_pa]','$data[mont_frais]','$data[prix_revient]','$data[coeff]','$data[prix_base_ht]','$data[prix_base_ttc]',
-				'$image_url'
+				'$image_url', '$data[four]'
 				)";
 
 				$result = mysql_query($query, $con);
@@ -680,7 +731,7 @@ class wms_core
 		return $data;
 	}
 
-	public function getAllPersoSalaire($con, $numeroMoisDateJour)
+	public function getAllPersoSalaire_4($con, $numeroMoisDateJour)
 	{
 		$data = array();
 
@@ -1294,7 +1345,7 @@ GROUP BY pp.per_id";
 		}
 	}
 
-	public function saveAvancePerso($con, $montant_avance, $per_id)
+	public function saveAvancePerso($con, $montant_avance, $per_id, $per_telephone)
 	{
 
 		// Instanciation de la date de l'avance à partir de la date du jour
@@ -1306,8 +1357,8 @@ GROUP BY pp.per_id";
 		// Récupération de la date de l'avance en chaine de caractères 
 		$dateAvanceStr = $dateAvance->format('Y-m-d');
 
-		$query = "INSERT INTO tbl_avance_personnel(montant_avance, date_avance, mois_date_avance, per_id)
-		values('$montant_avance','$dateAvanceStr','$numeroMoisDateAvance','$per_id')";
+		$query = "INSERT INTO tbl_avance_personnel(montant_avance, date_avance, mois_date_avance, per_id, emplo_tel)
+		values('$montant_avance','$dateAvanceStr','$numeroMoisDateAvance','$per_id','$per_telephone')";
 
 		$result = mysql_query($query, $con);
 
@@ -1319,7 +1370,7 @@ GROUP BY pp.per_id";
 		}
 	}
 
-	public function savePrimePerso($con, $montant_prime, $per_id)
+	public function savePrimePerso($con, $montant_prime, $per_id, $per_telephone)
 	{
 
 		// Instanciation de la date de la prime à partir de la date du jour
@@ -1331,8 +1382,8 @@ GROUP BY pp.per_id";
 		// Récupération de la date de la prime en chaine de caractères 
 		$datePrimeStr = $datePrime->format('Y-m-d');
 
-		$query = "INSERT INTO tbl_prime_personnel(montant_prime, date_prime, mois_date_prime, per_id)
-		values('$montant_prime','$datePrimeStr','$numeroMoisDatePrime','$per_id')";
+		$query = "INSERT INTO tbl_prime_personnel(montant_prime, date_prime, mois_date_prime, per_id, emplo_tel)
+		values('$montant_prime','$datePrimeStr','$numeroMoisDatePrime','$per_id','$per_telephone')";
 
 		$result = mysql_query($query, $con);
 
@@ -3983,7 +4034,7 @@ GROUP BY pp.per_id";
 			voyant_21, voyant_22, voyant_23, voyant_24, type_km, remarque_prise_charge, remarque_access_vehi,
 			remarque_motif_depot, remarque_etat_vehi_arrive, remarque_aspect_ext, remarque_aspect_int, remarque_etat_vehi_sortie, 
 			etat_vehi_arrive, add_car_id, pj1_url, pj2_url, pj3_url, pj4_url, pj5_url, pj6_url, pj7_url, pj8_url, pj9_url, pj10_url, pj11_url, 
-			pj12_url, attrib_recep
+			pj12_url, attrib_recep, dimension_pneu, dupli_cle
 				
 			) 
 			values('$data[hfInvoiceId]','$data[ddlCustomerList]','$data[ddlMake]','$data[ddlModel]','$data[ddlImma]','$data[heure_reception]',
@@ -4015,7 +4066,7 @@ GROUP BY pp.per_id";
 			'$data[remarque_etat_vehi_sortie]','$data[etat_vehi_arrive]','$data[add_car_id]',
 			'$data[pj1_url]','$data[pj2_url]','$data[pj3_url]','$data[pj4_url]','$data[pj5_url]',
 			'$data[pj6_url]','$data[pj7_url]','$data[pj8_url]','$data[pj9_url]','$data[pj10_url]','$data[pj11_url]','$data[pj12_url]'
-			,'$data[recep_id]'
+			,'$data[recep_id]','$data[dim_pneu]','$data[dupli_cle_recep_vehi]'
 			)";
 
 		$result = mysql_query($query, $con);

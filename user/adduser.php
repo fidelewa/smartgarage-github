@@ -24,7 +24,7 @@ if (isset($_POST) && !empty($_POST)) {
     $wms->saveUpdateUserInformation($link, $_POST, $image_url);
 
     // On fait une redirection
-    if ((int)$_POST['user_id'] > 0) {
+    if ((int) $_POST['user_id'] > 0) {
         $url = WEB_URL . 'user/userlist.php?m=up';
         header("Location: $url");
     } else {
@@ -173,9 +173,9 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                             <input type="hidden" name="img_exist" value="" />
                         </div>
 
-                        <div class="form-group"> <span class="btn btn-file btn btn-success">Uploader une image
+                        <!-- <div class="form-group"> <span class="btn btn-file btn btn-success">Uploader une image
                                 <input type="file" name="uploaded_file" onchange="loadFile(event)" />
-                            </span> </div>
+                            </span> </div> -->
                     </div>
                     <div class="pull-right">
                         <button type="submit" class="btn btn-success btnsp"><i class="fa fa-save fa-2x"></i><br />

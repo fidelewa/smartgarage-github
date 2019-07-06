@@ -193,6 +193,7 @@ $i = 0;
                             </div>
 
                             <input type="hidden" name="prime_pers_id" value="<?php echo $row['per_id']; ?>">
+                            <input type="hidden" name="prime_pers_telephone" value="<?php echo $row['per_telephone']; ?>">
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
@@ -226,6 +227,7 @@ $i = 0;
                             </div>
 
                             <input type="hidden" name="avance_pers_id" value="<?php echo $row['per_id']; ?>">
+                            <input type="hidden" name="avance_pers_telephone" value="<?php echo $row['per_telephone']; ?>">
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>

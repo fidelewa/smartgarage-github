@@ -9,7 +9,7 @@ $wms = new wms_core();
 // die();
 
 if (isset($_POST) && !empty($_POST)) {
-    $wms->savePrimePerso($link, $_POST['prime_sal'], $_POST['prime_pers_id']);
+    $wms->savePrimePerso($link, $_POST['prime_sal'], $_POST['prime_pers_id'], $_POST['prime_pers_telephone']);
 
     // Faire une rédirection vers la liste des véhicules réceptionnés avec un paramètre d'attribution
     $url = WEB_URL . "user/listepersonnel.php?m=prime_perso";

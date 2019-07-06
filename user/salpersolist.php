@@ -144,12 +144,12 @@ $i = 1;
                                     <td><?php echo $row['nb_jour_conge_paye']; ?></td>
                                     <td><?php echo $row['nb_jour_abs_justifie']; ?></td>
                                     <td>
-                                        <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#conge_paye_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="Définir le nombre de jours de congés payés de l'employé"><i class="fa fa-pencil"></i></a>
-                                        <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#abs_employ_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="Définir le nombre de jours d'absence justifiée de l'employé"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#conge_paye_<?php echo $row['perso_id']; ?>').modal('show');" data-original-title="Définir le nombre de jours de congés payés de l'employé"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#abs_employ_<?php echo $row['perso_id']; ?>').modal('show');" data-original-title="Définir le nombre de jours d'absence justifiée de l'employé"><i class="fa fa-pencil"></i></a>
                                     </td>
                                 </tr>
 
-                                <div id="abs_employ_<?php echo $row['per_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div id="abs_employ_<?php echo $row['perso_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -171,7 +171,7 @@ $i = 1;
                                                     </div>
 
                                                     <input type="hidden" name="per_tel" value="<?php echo $row['per_telephone']; ?>">
-                                                    <input type="hidden" name="per_id" value="<?php echo $row['per_id']; ?>">
+                                                    <input type="hidden" name="per_id" value="<?php echo $row['perso_id']; ?>">
 
                                                 </div>
                                                 <div class="modal-footer">
@@ -184,7 +184,7 @@ $i = 1;
                                     </div>
                                 </div>
 
-                                <div id="conge_paye_<?php echo $row['per_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div id="conge_paye_<?php echo $row['perso_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -205,7 +205,7 @@ $i = 1;
                                                         </div>
                                                     </div>
 
-                                                    <input type="hidden" name="per_id" value="<?php echo $row['per_id']; ?>">
+                                                    <input type="hidden" name="per_id" value="<?php echo $row['perso_id']; ?>">
                                                     <input type="hidden" name="per_tel" value="<?php echo $row['per_telephone']; ?>">
 
                                                 </div>

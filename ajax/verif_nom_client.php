@@ -7,7 +7,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $html = '';
 
     $keyword = strval($_POST["client"]);
-    $query = "SELECT * FROM tbl_add_customer where c_name LIKE '" . $keyword . "%'";
+    $query = "SELECT * FROM tbl_add_customer where c_name LIKE BINARY'" . $keyword . "%'";
     $result = mysql_query($query, $link);
 
     if (!mysql_num_rows($result) >= 1)
