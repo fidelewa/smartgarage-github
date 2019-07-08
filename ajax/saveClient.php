@@ -9,6 +9,15 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		$_POST['txtCPassword'] = $_POST['princ_tel'];
 		$_POST['tel_wa'] = $_POST['princ_tel'];
 
+		// Salage du mot de passe du client
+		$salt = "53fYcjF!Vq&bDw".$_POST['txtCPassword']."&MuURm@86BsUtD";
+
+		// Hachage du mot de passe du client
+		$hashed = hash('sha512',$salt);
+
+		// Affectation de mot de passe hashé
+		$_POST['txtCPassword'] = $hashed;
+
 		function NewGuid()
 		{
 			$s = strtoupper(md5(uniqid(rand(), true)));
@@ -170,6 +179,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		// var_dump($_FILES);
 		// var_dump($_POST);
 		// die();
+		
 		$wms->saveUpdateCustomerInformation($link, $_POST, null);
 	}
 } else {

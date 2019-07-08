@@ -581,7 +581,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
                     </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
+                    <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
                                   echo 'active';
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
@@ -589,7 +589,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
-                    </li>
+                    </li> -->
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
@@ -842,7 +842,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
                     </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
+                    <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
                                   echo 'active';
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
@@ -850,7 +850,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
-                    </li>
+                    </li> -->
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
@@ -1104,7 +1104,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
                     </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
+                    <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
                                   echo 'active';
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
@@ -1112,7 +1112,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
-                    </li>
+                    </li> -->
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
@@ -1365,7 +1365,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
                     </li>
-                    <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
+                    <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
                                   echo 'active';
                                 } ?>">
                       <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
@@ -1373,7 +1373,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
-                    </li>
+                    </li> -->
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
                                           echo 'active';
                                         } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
@@ -1574,7 +1574,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                             } ?>">
                   <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
                 </li>
-                <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
+                <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
                               echo 'active';
                             } ?>">
                   <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
@@ -1582,7 +1582,7 @@ if (!empty($_SESSION['objServiceClient']['image'])) {
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
                                       echo 'active';
                                     } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
-                </li>
+                </li> -->
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
                                       echo 'active';
                                     } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>

@@ -38,7 +38,8 @@ if (isset($_POST) && !empty($_POST)) {
     }
 
     // Linéarisation de l'array des estimations pour le stocker en base de données
-    $facture_data = serialize($_POST['facture_data']);
+    // $facture_data = serialize($_POST['facture_data']);
+    $facture_data = json_encode($_POST['facture_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
     // Initialisation de la date de la fature
     // $date_facture = date('d/m/Y');
@@ -126,15 +127,17 @@ if (isset($_POST) && !empty($_POST)) {
                                                     $facture_data = array();
 
                                                     // On délinéarise l'array
-                                                    $devis_data = unserialize($row['devis_data']);
+                                                    // $devis_data = unserialize($row['devis_data']);
+                                                    $devis_data = json_decode($row['devis_data'], true);
 
                                                     // var_dump($devis_data);
                                                     // die();
 
+                                                    
                                                     foreach ($devis_data as $devis) { ?>
                                                         <tr id="estimate-row<?php echo $i; ?>">
                                                             <td><input type="text" id="codepiece_<?php echo $i; ?>" value="<?php echo $devis['code_piece']; ?>" name="facture_data[<?php echo $i; ?>][code_piece_rechange_facture]" class="form-control" /></td>
-                                                            <td><input type="text" id="designation_<?php echo $i; ?>" value="<?php echo $devis['designation']; ?>" name="facture_data[<?php echo $i; ?>][designation_piece_rechange_facture]" class="form-control" /></td>
+                                                            <td><input type="text" id="designation_<?php echo $i; ?>" value="<?php echo str_replace('u0027', "'", $devis['designation']); ?>" name="facture_data[<?php echo $i; ?>][designation_piece_rechange_facture]" class="form-control" /></td>
                                                             <!-- <td><input type="text" value="<?php echo $devis['marque']; ?>" name="facture_data[<?php echo $i; ?>][marque_piece_rechange_facture]" class="form-control" /></td> -->
                                                             <td><input type="text" id="qty_<?php echo $i; ?>" value="<?php echo $devis['quantity']; ?>" name="facture_data[<?php echo $i; ?>][qte_piece_rechange_facture]" class="form-control eFireQty allownumberonly" /></td>
                                                             <td><input type="text" id="price_<?php echo $i; ?>" value="<?php echo $devis['price']; ?>" name="facture_data[<?php echo $i; ?>][prix_piece_rechange_min_facture]" class="form-control eFirePrice" /></td>

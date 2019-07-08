@@ -33,7 +33,8 @@ if (isset($_POST) && !empty($_POST)) {
     // Persister les données de la facture en BDD
 
     // Linéarisation de l'array des estimations pour le stocker en base de données
-    $facture_data = serialize($_POST['facture_data']);
+    // $facture_data = serialize($_POST['facture_data']);
+    $facture_data = json_encode($_POST['facture_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
     // Initialisation de la date de la fature
     $date_facture = date('d/M/Y');
@@ -119,19 +120,21 @@ if (isset($_POST) && !empty($_POST)) {
                                                         $facture_data = array();
 
                                                         // On délinéarise l'array
-                                                        $devis_data = unserialize($row['devis_data']);
+                                                        // $devis_data = unserialize($row['devis_data']);
+                                                        $devis_data = json_decode($row['devis_data'], true);
 
+                                                        
                                                         foreach ($devis_data as $devis) { ?>
                                                             <tr>
                                                                 <!-- <td><?php echo $i; ?></td> -->
-                                                                <td><?php echo $devis['designation_piece_rechange_devis']; ?></td>
+                                                                <td><?php echo str_replace('u0027', "'", $devis['designation_piece_rechange_devis']); ?></td>
                                                                 <td><?php echo $devis['marque_piece_rechange_devis']; ?></td>
                                                                 <td><?php echo $devis['qte_piece_rechange_devis']; ?></td>
                                                                 <td><?php echo $devis['prix_piece_rechange_min_devis']; ?></td>
                                                                 <td><?php echo $devis['total_prix_piece_rechange_devis']; ?></td>
                                                             </tr>
                                                             <!-- Récupération des données de la facture -->
-                                                            <input type="hidden" value="<?php echo $devis['designation_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][designation_piece_rechange_facture]" />
+                                                            <input type="hidden" value="<?php echo str_replace('u0027', "'", $devis['designation_piece_rechange_devis']); ?>" name="facture_data[<?php echo $i; ?>][designation_piece_rechange_facture]" />
                                                             <input type="hidden" value="<?php echo $devis['marque_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][marque_piece_rechange_facture]" />
                                                             <input type="hidden" value="<?php echo $devis['qte_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][qte_piece_rechange_facture]" />
                                                             <input type="hidden" value="<?php echo $devis['prix_piece_rechange_min_devis']; ?>" name="facture_data[<?php echo $i; ?>][prix_piece_rechange_min_facture]" />

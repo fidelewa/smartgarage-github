@@ -24,7 +24,7 @@ if (isset($_GET['supplier_id'])) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Formulaire d'envoi du bon de commande au fournisseur</title>
+	<title>Formulaire d'envoi d'un bon de commande à un fournisseur</title>
 	<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -46,15 +46,17 @@ if (isset($_GET['supplier_id'])) {
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-
+					<div align="right" style="margin-bottom:1%;">
+						<a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/carlist.php" data-original-title="Aller à la liste des véhicules"><i class="fa fa-reply"></i><br />Liste des véhicules</a>
+					</div>
 					<div class="box box-success">
 						<div class="box-header">
-							<h1 class="box-title"> Fournisseur - Formulaire d'envoi du bon de commande aux fournisseurs</h1>
+							<h1 class="box-title"> Fournisseur - Formulaire d'envoi d'un bon de commande à un fournisseur</h1>
 						</div>
 						<div class="box-body">
 							<div class="contact-form">
 								<!-- <?php if (!empty($_GET['success']) && $_GET['success'] == 1) { ?>
-															<div id="message" class="alert alert-danger alert-dismissible fade show">The message has been sent.</div>
+																			<div id="message" class="alert alert-danger alert-dismissible fade show">The message has been sent.</div>
 								<?php } ?> -->
 								<div class="form-group row">
 									<label class="control-label col-sm-2" for="fname">Fournisseur:</label>
@@ -78,9 +80,9 @@ if (isset($_GET['supplier_id'])) {
 									</div>
 								</div>
 								<div class="form-group row">
-									<label class="control-label col-sm-2" for="lname">Fichier joint:</label>
+									<label class="control-label col-sm-2" for="lname">Pièce jointe:</label>
 									<div class="col-sm-10">
-										<span class="btn btn-file btn btn-primary">Ajouter le bon de commande en fichier joint<input required type="file" id="attachFile" name="attachFile" />
+										<span class="btn btn-file btn btn-primary">Joindre un bon de commande<input required type="file" id="attachFile" name="attachFile" />
 										</span>
 									</div>
 								</div>

@@ -8,7 +8,8 @@ include_once('../header.php');
 $rapport_diagnostic = nl2br($_POST['rapport_diagnostic']);
 
 // Linéarisation de l'array des estimations pour le stocker en base de données
-$estimate_data = serialize($_POST['estimate_data']);
+// $estimate_data = serialize($_POST['estimate_data']);
+$estimate_data = json_encode($_POST['estimate_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
 $query = "INSERT INTO tbl_repaircar_diagnostic (nom_client, tel_wa_client, type_voiture, imma_vehicule, num_chasis_vehicule, rapport_diagnostic,
 estimate_data, duree_commande, duree_travaux, travaux_prevoir, date_creation_fiche_diag, car_id) VALUES ('$_POST[nom_client]','$_POST[tel_wa_client]','$_POST[type_vehicule]','$_POST[imma_vehicule]','$_POST[num_chasis_vehicule]',

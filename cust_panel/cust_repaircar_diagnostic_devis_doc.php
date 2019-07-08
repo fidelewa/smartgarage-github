@@ -233,16 +233,16 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <?php
 
                                             // On délinéarise l'array
-                                            $devis_data = unserialize($row['devis_data']);
+                                            // $devis_data = unserialize($row['devis_data']);
+                                            $devis_data = json_decode($row['devis_data'], true);
 
                                             // var_dump($devis_data);
                                             // die();
-
+                                            
                                             foreach ($devis_data as $devis) { ?>
                                                 <tr>
                                                     <td><?php echo $devis['code_piece_rechange_devis']; ?></td>
-                                                    <td><?php echo $devis['designation_piece_rechange_devis']; ?></td>
-                                                    <!-- <td><?php echo $devis['marque_piece_rechange_devis']; ?></td> -->
+                                                    <td><?php echo str_replace('u0027', "'", $devis['designation_piece_rechange_devis']); ?></td>
                                                     <td><?php echo $devis['qte_piece_rechange_devis']; ?></td>
                                                     <td><?php echo $devis['prix_piece_rechange_min_devis']; ?></td>
                                                     <td><?php echo $devis['remise_piece_rechange_devis']; ?></td>

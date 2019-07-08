@@ -97,7 +97,8 @@ if (isset($_POST) && !empty($_POST)) { //Si les données ont été soumis à par
     $_POST['salPers'] = (int)$_POST['salPers'];
 
     // Linéarisation de l'array des données du personnel pour le stocker en base de données
-    $_POST['perso_data'] = serialize($_POST['perso_data']);
+    // $_POST['perso_data'] = serialize($_POST['perso_data']);
+    $_POST['perso_data'] = json_encode($_POST['perso_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
     // On persiste les données en BDD
     $wms->saveUpdatePersonnelInformation($link, $_POST);

@@ -8,6 +8,9 @@ $usr_password = "";
 $usr_type = "";
 $usr_image = "";
 
+// Importation de l'autoload de composer
+// require ROOT_PATH.'/vendor/autoload.php';
+
 if (isset($_POST) && !empty($_POST)) {
     $image_url = uploadImage();
     if (empty($image_url)) {
@@ -19,6 +22,27 @@ if (isset($_POST) && !empty($_POST)) {
 
     // échappement des espaces blancs et des caractères spéciaux lors de la définition du mot de passe de l'utilisateur
     $_POST['txtUserPassword'] = mysql_real_escape_string(trim($_POST['txtUserPassword']));
+
+    // Récupération de la valeur brute du mot de passe
+    $plainPassword = $_POST['txtUserPassword'];
+
+    // Génération d'une valeur de sel aléatoire
+    // $salt = substr(md5(time()), 0, 23);
+
+    // Génération d'une valeur du sel basée sur le mot de passe brute de l'utilisateur
+    $salt = "53fYcjF!Vq&bDw".$plainPassword."&MuURm@86BsUtD";
+
+    // Hashage du mot de passe de l'utilisateur
+	$hashed = hash('sha512',$salt);
+
+    // Instanciaton de l'encoder
+    // $encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder();
+
+    // Traitement du mot de passe encodé
+    // $password = $encoder->encodePassword($plainPassword, $salt);
+
+    // Récupération et enregistrement du mot de passe encodé en base de données
+    $_POST['txtUserPassword'] = $hashed;
 
     // Si l'insertion à réussi
     $wms->saveUpdateUserInformation($link, $_POST, $image_url);
@@ -167,11 +191,11 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                 ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <!-- <label for="Prsnttxtarea">Preview :</label> -->
+                        <!-- <div class="form-group">
+                            <label for="Prsnttxtarea">Preview :</label>
                             <img class="form-control" src="<?php echo $image; ?>" style="height:100px;width:100px;" id="output" />
                             <input type="hidden" name="img_exist" value="" />
-                        </div>
+                        </div> -->
 
                         <!-- <div class="form-group"> <span class="btn btn-file btn btn-success">Uploader une image
                                 <input type="file" name="uploaded_file" onchange="loadFile(event)" />

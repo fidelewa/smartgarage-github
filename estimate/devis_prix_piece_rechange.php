@@ -23,7 +23,8 @@ if (isset($_POST) && !empty($_POST)) {
     // Persister les données du devis en BDD
 
     // Linéarisation de l'array des données des devis pour le stocker en base de données
-    $devis_data = serialize($_POST['devis_data']);
+    // $devis_data = serialize($_POST['devis_data']);
+    $devis_data = json_encode($_POST['devis_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
     $date_devis = $wms->datepickerDateToMySqlDate(date('d/m/Y'));
 

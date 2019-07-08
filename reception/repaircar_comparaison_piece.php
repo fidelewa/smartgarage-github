@@ -112,7 +112,8 @@ if (isset($_POST) && !empty($_POST)) {
                                                     <?php
 
                                                     // On délinéarise l'array
-                                                    $estimate_data = unserialize($row['estimate_data']);
+                                                    // $estimate_data = unserialize($row['estimate_data']);
+                                                    $estimate_data = json_decode($row['estimate_data'], true);
 
                                                     // On récupère la liste de tous les fournisseurs
                                                     $supplierList = $wms->getAllSuppliers($link);
@@ -125,7 +126,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                         foreach ($estimate_data as $estimate) { ?>
 
                                                             <tr>
-                                                                <td><?php echo $estimate['designation']; ?></td>
+                                                                <td><?php echo str_replace('u0027', "'", $estimate['designation']); ?></td>
                                                                 <td><input type="text" name="estimate_data[<?php echo $i; ?>][marque_piece_rechange]" class="form-control" placeholder="Renseigner la marque de la pièce proposé par ce fournisseur" /></td>
                                                                 <td><?php echo $estimate['quantity']; ?></td>
                                                                 <td><input type="text" name="estimate_data[<?php echo $i; ?>][prix_piece_rechange]" class="form-control" placeholder="Renseigner le prix proposé par ce fournisseur" /></td>

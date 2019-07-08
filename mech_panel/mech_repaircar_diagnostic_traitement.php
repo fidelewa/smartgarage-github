@@ -16,7 +16,8 @@ $_POST['nom_client'] = mysql_real_escape_string($_POST['nom_client']);
 $rapport_diagnostic = nl2br($_POST['rapport_diagnostic']);
 
 // Linéarisation de l'array des estimations pour le stocker en base de données
-$estimate_data = serialize($_POST['estimate_data']);
+// $estimate_data = serialize($_POST['estimate_data']);
+$estimate_data = json_encode($_POST['estimate_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
 // Si celui qui fait le diagnostic est le chef mécanicien, alors le diagnostic est de type mécanique
 if(isset($_POST['mech_fonction']) && $_POST['mech_fonction'] == 'Chef mecanicien') {

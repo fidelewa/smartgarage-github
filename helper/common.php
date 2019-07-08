@@ -2,6 +2,83 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getBonCmdeById($con, $bcmdeId)
+	{
+		$query = "SELECT bcmd.*, s_name
+			FROM tbl_add_boncmde bcmd 
+		JOIN tbl_add_supplier su ON su.supplier_id=bcmd.supplier_id
+			WHERE boncmde_id ='" . (int) $bcmdeId . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
+	public function getAllBonCmdeDataByCarId($con, $car_id)
+	{
+		$data = array();
+
+		$query = "SELECT bcmd.*, s_name, car_name, model_name, VIN  
+		FROM tbl_add_boncmde bcmd 
+		JOIN tbl_add_supplier su ON su.supplier_id=bcmd.supplier_id
+		JOIN tbl_add_car cr ON cr.car_id = bcmd.car_id 
+		JOIN tbl_model mo on mo.model_id = cr.car_model
+		WHERE bcmd.car_id = '" . $car_id . "'
+		ORDER BY boncmde_date_creation DESC";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function saveUpdateBonCmdeInfo($con, $data, $boncmde_data)
+	{
+		if (!empty($data)) {
+
+			$bcmde_date = $this->datepickerDateToMySqlDate($data['date_bcmd']);
+			$bcmde_date_livraison = $this->datepickerDateToMySqlDate($data['date_livraison_bcmd']);
+
+			if ($data['boncmde_id'] == 0) {
+
+				$query = "INSERT INTO tbl_add_boncmde(boncmde_num, supplier_id, boncmde_date_creation, car_id, boncmde_data, boncmde_date_livraison)
+
+				values('$data[num_bcmd]','$data[four]','$bcmde_date','$data[car_id]','$boncmde_data','$bcmde_date_livraison')";
+				$result = mysql_query($query, $con);
+			} else {
+				$query = "UPDATE `tbl_add_boncmde` 
+				SET `boncmde_num`='" . $data['num_bcmd'] . "',`supplier_id`='" . $data['four'] . "',
+				`boncmde_date_creation`='" . $bcmde_date . "',`boncmde_date_livraison`='" . $bcmde_date_livraison . "',
+				`boncmde_data`='" . $boncmde_data . "'
+				WHERE boncmde_id='" . (int) $data['boncmde_id'] . "'";
+				$result = mysql_query($query, $con);
+			}
+
+			if (!$result) {
+				// var_dump($data);
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		}
+	}
+
 	public function getAllPersoSalaire($con, $numeroMoisDateJour)
 	{
 		$data = array();
@@ -154,7 +231,7 @@ class wms_core
 		FROM tbl_histo_attribution
 		WHERE meca_elec_id = '" . (int) $mecanicien_id . "' AND car_id = '" . (int) $car_id . "' AND date_attr = '" . $date_attr . "'
 		";
-		
+
 		$result = mysql_query($query, $con);
 
 		if (!$result) {
@@ -170,55 +247,55 @@ class wms_core
 	}
 
 
-// 	public function getAllPersoSalaire($con, $numeroMoisDateJour)
-// 	{
-// 		$data = array();
+	// 	public function getAllPersoSalaire($con, $numeroMoisDateJour)
+	// 	{
+	// 		$data = array();
 
-// 		$query = "SELECT 
-//     pp.per_id,
-//     per_name,
-//     salaire_base,
-//     nb_heure_sup_periode,
-//     nb_jour_conge_paye,
-//     SUM(montant_avance) AS montant_avance_periode,
-//     nb_jour_abs_justifie,
-// 	per_telephone
-// FROM
-//     (SELECT 
-//         per.per_id,
-//             per_name,
-//             per_sal AS salaire_base,
-//             SUM(nb_heure_sup) AS nb_heure_sup_periode,
-//             eca.nb_jour_conge_paye,
-//             eca.nb_jour_abs_justifie,
-// 			per_telephone
-//     FROM
-//         tbl_add_pointage po
-//     LEFT JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel
-//     LEFT JOIN tbl_emplo_conge_abs eca ON eca.emplo_tel = per.per_telephone
-//     GROUP BY per.per_id, mois_date_arrivee, mois_date_depart
-// 	HAVING mois_date_arrivee = '" . $numeroMoisDateJour . "' OR
-// 		mois_date_depart = '" . $numeroMoisDateJour . "'
-// 	) AS pointage_personnel
-//        LEFT JOIN
-//     tbl_avance_personnel pp ON pp.per_id = pointage_personnel.per_id
-// 	WHERE mois_date_avance = '" . $numeroMoisDateJour . "'
-// GROUP BY pp.per_id";
+	// 		$query = "SELECT 
+	//     pp.per_id,
+	//     per_name,
+	//     salaire_base,
+	//     nb_heure_sup_periode,
+	//     nb_jour_conge_paye,
+	//     SUM(montant_avance) AS montant_avance_periode,
+	//     nb_jour_abs_justifie,
+	// 	per_telephone
+	// FROM
+	//     (SELECT 
+	//         per.per_id,
+	//             per_name,
+	//             per_sal AS salaire_base,
+	//             SUM(nb_heure_sup) AS nb_heure_sup_periode,
+	//             eca.nb_jour_conge_paye,
+	//             eca.nb_jour_abs_justifie,
+	// 			per_telephone
+	//     FROM
+	//         tbl_add_pointage po
+	//     LEFT JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel
+	//     LEFT JOIN tbl_emplo_conge_abs eca ON eca.emplo_tel = per.per_telephone
+	//     GROUP BY per.per_id, mois_date_arrivee, mois_date_depart
+	// 	HAVING mois_date_arrivee = '" . $numeroMoisDateJour . "' OR
+	// 		mois_date_depart = '" . $numeroMoisDateJour . "'
+	// 	) AS pointage_personnel
+	//        LEFT JOIN
+	//     tbl_avance_personnel pp ON pp.per_id = pointage_personnel.per_id
+	// 	WHERE mois_date_avance = '" . $numeroMoisDateJour . "'
+	// GROUP BY pp.per_id";
 
-// 		$result = mysql_query($query, $con);
+	// 		$result = mysql_query($query, $con);
 
-// 		if (!$result) {
-// 			// var_dump($data);
-// 			$message  = 'Invalid query: ' . mysql_error() . "\n";
-// 			$message .= 'Whole query: ' . $query;
-// 			die($message);
-// 		}
+	// 		if (!$result) {
+	// 			// var_dump($data);
+	// 			$message  = 'Invalid query: ' . mysql_error() . "\n";
+	// 			$message .= 'Whole query: ' . $query;
+	// 			die($message);
+	// 		}
 
-// 		while ($row = mysql_fetch_assoc($result)) {
-// 			$data[] = $row;
-// 		}
-// 		return $data;
-// 	}
+	// 		while ($row = mysql_fetch_assoc($result)) {
+	// 			$data[] = $row;
+	// 		}
+	// 		return $data;
+	// 	}
 
 	/*
 	* @get supplier info by id
@@ -1689,8 +1766,10 @@ GROUP BY pp.per_id";
 	*/
 	public function login_operation($con, $data)
 	{
+
 		$obj_login = array();
 		if ($data['ddlLoginType'] == 'admin') {
+
 			$sql = mysql_query("SELECT * FROM tbl_admin WHERE email = '" . $this->make_safe($data['username']) . "' and password = '" . $this->make_safe($data['password']) . "'", $con);
 			if ($row = mysql_fetch_assoc($sql)) {
 				$obj_login = array(
@@ -1702,7 +1781,14 @@ GROUP BY pp.per_id";
 				);
 			}
 		} else if ($data['ddlLoginType'] == 'customer') {
-			$sql = mysql_query("SELECT * FROM tbl_add_customer WHERE c_email = '" . $this->make_safe($data['username']) . "' and c_password = '" . $this->make_safe($data['password']) . "'", $con);
+
+			// Salage du mot de passe
+			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
+
+			// Hachage du mot de passe
+			$hashed = hash('sha512', $salt);
+
+			$sql = mysql_query("SELECT * FROM tbl_add_customer WHERE c_email = '" . $this->make_safe($data['username']) . "' and c_password = '" . $hashed . "'", $con);
 			if ($row = mysql_fetch_assoc($sql)) {
 				$obj_login = array(
 					'user_id'		=> $row['customer_id'],
@@ -1713,7 +1799,14 @@ GROUP BY pp.per_id";
 				);
 			}
 		} else if ($data['ddlLoginType'] == 'mechanics') {
-			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type IN ('mecanicien','electricien')", $con);
+
+			// Salage du mot de passe
+			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
+
+			// Hachage du mot de passe
+			$hashed = hash('sha512', $salt);
+
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $hashed . "' and usr_type IN ('mecanicien','electricien')", $con);
 			if ($row = mysql_fetch_assoc($sql)) {
 				$obj_login = array(
 					'user_id'		=> $row['usr_id'],
@@ -1724,7 +1817,14 @@ GROUP BY pp.per_id";
 				);
 			}
 		} else if ($data['ddlLoginType'] == 'reception') {
-			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'receptionniste'", $con);
+
+			// Salage
+			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
+
+			// Hachage
+			$hashed = hash('sha512', $salt);
+
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $hashed . "' and usr_type = 'receptionniste'", $con);
 			if ($row = mysql_fetch_assoc($sql)) {
 				$obj_login = array(
 					'user_id'		=> $row['usr_id'],
@@ -1735,7 +1835,14 @@ GROUP BY pp.per_id";
 				);
 			}
 		} else if ($data['ddlLoginType'] == 'comptable') {
-			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'comptable'", $con);
+
+			// Salage
+			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
+
+			// Hachage
+			$hashed = hash('sha512', $salt);
+
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $hashed . "' and usr_type = 'comptable'", $con);
 			if ($row = mysql_fetch_assoc($sql)) {
 				$obj_login = array(
 					'user_id'		=> $row['usr_id'],
@@ -1746,6 +1853,13 @@ GROUP BY pp.per_id";
 				);
 			}
 		} else if ($data['ddlLoginType'] == 'service client') {
+
+			// Salage du mot de passe
+			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
+
+			// Hachage du mot de passe
+			$hashed = hash('sha512', $salt);
+
 			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'service client'", $con);
 			if ($row = mysql_fetch_assoc($sql)) {
 				$obj_login = array(
@@ -2590,17 +2704,17 @@ GROUP BY pp.per_id";
 		}
 	}
 
-	public function saveUpdateBonCmdeInfo($con, $data)
+	public function saveUpdateBonCmdeInfo_2($con, $data, $boncmde_data)
 	{
 		if (!empty($data)) {
 			if ($data['boncmde_id'] == '0') {
 
 				$boncmde_date_creation = date('d/m/Y');
 
-				$query = "INSERT INTO tbl_add_boncmde(boncmde_num, boncmde_designation, boncmde_qte, boncmde_pu_ht, boncmde_total_ht, supplier_id, boncmde_date_creation, bon_cmde_type)
+				$query = "INSERT INTO tbl_add_boncmde(boncmde_num, boncmde_designation, boncmde_qte, boncmde_pu_ht, boncmde_total_ht, supplier_id, boncmde_date_creation, bon_cmde_type, car_id, boncmde_data)
 
 				values('$data[numboncmde]','$data[codedesiboncmde]','$data[qteboncmde]',null,null,
-				'$data[four]','$boncmde_date_creation','$data[bon_cmde_type]')";
+				'$data[four]','$boncmde_date_creation','$data[bon_cmde_type]','$data[car_id]','$boncmde_data')";
 				$result = mysql_query($query, $con);
 			} else {
 

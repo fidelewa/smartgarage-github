@@ -1821,8 +1821,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               <!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
             </div>
             <div class="form-group">
-              <label for="txtCEmail"> <span style="color:red;">*</span>Email (ou numéro de téléphone si vous n'avez pas d'email):</label>
-              <input onkeyup="verifEmailClient(this.value);" type="text" name="txtCEmail" value="" id="txtCEmail" class="form-control" /><span id="emailclibox"></span>
+              <label for="txtCEmail"> <span style="color:red;">*</span>Email :<span style="color:red;">(cet e-mail ou ce numéro de téléphone est l'identifiant)</span></label>
+              <input onkeyup="verifEmailClient(this.value);" type="text" name="txtCEmail" value="" id="txtCEmail" class="form-control" placeholder="Saisissez votre e-mail ou votre numéro de téléphone" /><span id="emailclibox"></span>
             </div>
 
             <div class="form-group">

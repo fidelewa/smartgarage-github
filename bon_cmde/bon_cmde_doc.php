@@ -4,6 +4,8 @@ include_once('../config.php');
 
 $wms = new wms_core();
 
+$i = 1;
+
 $row = $wms->getBoncmdeInfo($link, $_GET['boncmde_id']);
 
 // var_dump($row);
@@ -73,6 +75,15 @@ if (!empty($row) && count($row) > 0) { ?>
                     font-size: 13pt;
                 }
 
+                #content_3 label {
+                    font-size: 11pt;
+                }
+
+                th {
+                    font-size: 11pt;
+                }
+
+
                 h3 {
                     text-align: center
                 }
@@ -97,88 +108,102 @@ if (!empty($row) && count($row) > 0) { ?>
             <div class="invoice-wrap">
                 <div class="invoice-inner">
                     <div class="row" id="header">
-                        <div class="col-sm-2" style="height:100px;">
+                        <div class="col-sm-4" style="height:100px;">
                             <!-- <img class="editable-area" id="logo" src="../img/logo.png"> -->
-                            <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
+                            <div class="row">
+                                <div class="col-sm-12" align="center">
+                                    <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12" style="font-size:7pt">
+                                    <p style="line-height: normal"><?php
+                                        $slogan = "Mécanique générale - Climatisation - Clé d'origine - Scanner - Programmation - Electricité";
+                                        echo mb_strtoupper(nl2br($slogan."\n")); ?>
+                                    Abidjan, Marcory Zone 4 Rue Flash intervention près du collège Descartes<br/>
+                                    18 BP 2917 Abidjan 18<br/>
+                                    Cel: +225 06 66 06 66 / Tel: +225 21 35 55 60<br/>
+                                    info@luxurygarage.net / www.luxurygarage.net</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-10" style="font-size:15pt;">
-                            <p>Mécanique générale - Climatisation - Clé d'origine - Scanner - Programmation - Electricité</p>
-                            <p>Tel. 21 35 55 60 / 06 66 06 66</p>
-                        </div>
-                    </div>
-                    <div class="row" id="content_1">
-                        <div class="col-sm-12" style="text-align:center;">
-                            <h4 style="text-decoration:underline;font-weight:bold">
-                                BON DE COMMANDE N° <?php echo $row['boncmde_id']; ?>
-                            </h4>
-                        </div>
-                    </div>
-                    <div class="row" id="content_1">
-                        <div class="col-sm-6" style="text-align:center;">
-                            <p style="font-size:10pt;">
-                                Date : <?php echo date_format(date_create($row['boncmde_date_creation']), 'd/m/Y'); ?>
-                            </p>
-                        </div>
-                        <div class="col-sm-6" style="text-align:center;">
-                            <p style="font-size:10pt;">
-                                Fournisseur : <?php echo $row['s_name']; ?>
-                            </p>
-                        </div>
-                    </div>
 
-                    <!-- <div class="row" id="content_2"> -->
-                    <!-- <div class="col-md-12"> -->
+                        <div class="col-sm-7 col-sm-offset-1" style="font-size:14pt">
+
+                            <div class="row" id="content_1" style="margin-bottom:25px;">
+                                <div class="col-sm-12" style="text-align:center;">
+                                    <h4 style="text-decoration:underline;font-weight:bold">
+                                        BON DE COMMANDE N° <?php echo $row['boncmde_num']; ?>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="row" id="content_3" style="margin-bottom:50px;">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <label for="date_bcmd" class="col-md-5 col-form-label">Date :</label>
+                                            <div class="col-md-7">
+                                                <input type="text" id="date_bcmd" name="date_bcmd" value="<?php echo date_format(date_create($row['boncmde_date_creation']), 'd/m/Y'); ?>" class="datepicker form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="date_bcmd" class="col-md-5 col-form-label">Fournisseur :</label>
+                                            <div class="col-md-7">
+                                                <input type="text" id="date_bcmd" name="date_bcmd" value="<?php echo $row['s_name'] ?>" class="datepicker form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="date_livraison_bcmd" class="col-md-5 col-form-label">Date de livraison :</label>
+                                            <div class="col-md-7">
+                                                <input type="text" id="date_livraison_bcmd" name="date_livraison_bcmd" value="<?php echo date_format(date_create($row['boncmde_date_livraison']), 'd/m/Y'); ?>" class="datepicker form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div id="content_2">
-
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <table border="1" class="table dt-responsive">
+                            <div class="form-group col-md-12">
+                                <div class="table-responsive">
+                                    <table id="labour_table" class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <!-- <th style="text-align:center">N° bon de commande</th> -->
-                                                <th style="text-align:center">Code/désignation</th>
+                                                <th style="text-align:center">Code / Désignation</th>
                                                 <th style="text-align:center">Quantité</th>
-                                                <!-- <th style="text-align:center">Prix unitaire HT</th>
-                                                <th style="text-align:center">Total HT</th> -->
+                                                <th style="text-align:center">Observation</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <!-- <td><?php echo $row['boncmde_id']; ?></td> -->
-                                                <!-- <td><?php echo $row['boncmde_num']; ?></td> -->
-                                                <td><?php echo $row['boncmde_designation']; ?></td>
-                                                <td><?php echo $row['boncmde_qte']; ?></td>
-                                                <!-- <td><?php echo $row['boncmde_pu_ht']; ?></td>
-                                                <td><?php echo $row['boncmde_total_ht']; ?></td> -->
-                                            </tr>
+                                            <?php
+
+                                            // On délinéarise l'array
+                                            // $devis_data = unserialize($row['devis_data']);
+                                            $boncmde_data = json_decode($row['boncmde_data'], true);
+
+                                            // var_dump($devis_data);
+                                            // die();
+
+                                            foreach ($boncmde_data as $boncmde_data_row) { ?>
+                                                <tr>
+                                                    <td><?php echo str_replace('u0027', "'", $boncmde_data_row['designation']); ?></td>
+                                                    <td><?php echo $boncmde_data_row['qte']; ?></td>
+                                                    <td><?php echo str_replace('u0027', "'", $boncmde_data_row['obs']); ?></td>
+                                                </tr>
+                                                <?php $i++;
+                                            }
+
+                                            ?>
                                         </tbody>
+                                        <tfoot>
+                                        </tfoot>
                                     </table>
-                                    <!-- <div class="form-group row">
-                                                        <label class="control-label col-sm-2" for="email">Code/désignation:</label>
-                                                        <div class="col-sm-10" id="email_supplier">
-                                                            <input type="text" class="form-control" id="email" name="email" value="<?php echo $row['boncmde_designation']; ?>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="control-label col-sm-2" for="lname">Quantité:</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_qte']; ?>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="control-label col-sm-2" for="lname">Prix unitaire HT :</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_pu_ht']; ?>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="control-label col-sm-2" for="lname">Total HT:</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="attachFile" name="attachFile" value="<?php echo $row['boncmde_total_ht']; ?>">
-                                                        </div>
-                                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -272,8 +297,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
 
             @media print {
 

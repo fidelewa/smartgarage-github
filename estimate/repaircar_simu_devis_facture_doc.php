@@ -259,16 +259,16 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <?php
 
                                             // On délinéarise l'array
-                                            $facture_data = unserialize($row['facture_data']);
+                                            // $facture_data = unserialize($row['facture_data']);
+                                            $facture_data = json_decode($row['facture_data'], true);
 
                                             // var_dump($facture_data);
                                             // die();
-
+                                            
                                             foreach ($facture_data as $facture) { ?>
                                                 <tr>
                                                     <td><?php echo $facture['code_piece_rechange_facture']; ?></td>
-                                                    <td><?php echo $facture['designation_piece_rechange_facture']; ?></td>
-                                                    <!-- <td><?php echo $facture['marque_piece_rechange_facture']; ?></td> -->
+                                                    <td><?php echo str_replace('u0027', "'", $facture['designation_piece_rechange_facture']); ?></td>
                                                     <td><?php echo $facture['qte_piece_rechange_facture']; ?></td>
                                                     <td id="facture_simu_article_price_<?php echo $i; ?>"><?php echo $facture['prix_piece_rechange_min_facture']; ?></td>
                                                     <td><?php echo $facture['remise_piece_rechange_facture']; ?></td>

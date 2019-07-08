@@ -169,7 +169,7 @@ $model_post_token = 0;
                         <div class="form-group">
                             <label> Immatriculation du véhicule :</label>
                             <!-- <input required type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule"> -->
-                            <input required onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
+                            <input onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
                         </div>
 
                         <!-- <div class="form-group" id="marque_modele_vehi_box">

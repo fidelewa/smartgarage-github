@@ -257,7 +257,8 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <?php
 
                                             // On délinéarise l'array
-                                            $devis_data = unserialize($row['devis_data']);
+                                            // $devis_data = unserialize($row['devis_data']);
+                                            $devis_data = json_decode($row['devis_data'], true);
 
                                             // var_dump($devis_data);
                                             // die();
@@ -265,7 +266,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             foreach ($devis_data as $devis) { ?>
                                                 <tr>
                                                     <td><?php echo $devis['code_piece']; ?></td>
-                                                    <td><?php echo $devis['designation']; ?></td>
+                                                    <td><?php echo str_replace('u0027', "'", $devis['designation']); ?></td>
                                                     <!-- <td><?php echo $devis['marque']; ?></td> -->
                                                     <td><?php echo $devis['quantity']; ?></td>
                                                     <td id="article_price_<?php echo $i; ?>"><?php echo $devis['price']; ?></td>

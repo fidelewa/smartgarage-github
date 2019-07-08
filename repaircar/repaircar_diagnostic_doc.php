@@ -238,14 +238,15 @@ if (!empty($row) && count($row) > 0) { ?>
                                         <?php
 
                                         // On délinéarise l'array
-                                        $estimate_data = unserialize($row['estimate_data']);
+                                        // $estimate_data = unserialize($row['estimate_data']);
+                                        $estimate_data = json_decode($row['estimate_data'], true);
 
                                         // var_dump($estimate_data);
 
                                         foreach ($estimate_data as $estimate) { ?>
                                             <tr>
                                                 <td><?php echo $i; ?></td>
-                                                <td><?php echo $estimate['designation']; ?></td>
+                                                <td><?php echo str_replace('u0027', "'", $estimate['designation']); ?></td>
                                                 <td><?php echo $estimate['quantity']; ?></td>
                                                 <!-- <td><?php echo $estimate['total']; ?></td> -->
                                             </tr>
