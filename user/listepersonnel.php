@@ -30,15 +30,25 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
   header("Location: $url");
 }
 
-if (isset($_GET['m']) && $_GET['m'] == 'prime_perso') {
+if (isset($_GET['m']) && $_GET['m'] == 'up_worktool') {
   $addinfo = 'block';
-  $msg = "Prime attribuée avec succès";
+  $msg = "Outil de travail modifié avec succès";
 }
 
-if (isset($_GET['m']) && $_GET['m'] == 'avance_perso') {
+if (isset($_GET['m']) && $_GET['m'] == 'add_worktool') {
   $addinfo = 'block';
-  $msg = "Avance attribuée avec succès";
+  $msg = "Outil de travail ajouté avec succès";
 }
+
+// if (isset($_GET['m']) && $_GET['m'] == 'prime_perso') {
+//   $addinfo = 'block';
+//   $msg = "Prime attribuée avec succès";
+// }
+
+// if (isset($_GET['m']) && $_GET['m'] == 'avance_perso') {
+//   $addinfo = 'block';
+//   $msg = "Avance attribuée avec succès";
+// }
 
 $i = 0;
 ?>
@@ -122,13 +132,15 @@ $i = 0;
                     <td>
                       <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#employe_info_modal_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="Voir la description de l'employé"><i class="fa fa-eye"></i></a>
 
-                      <a class="btn btn-success" style="background-color:blue;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#prime_modal_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="Donner une prime à l'employé"><i class="fa fa-pencil"></i></a>
-                      <a class="btn btn-success" style="background-color:yellow;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#avance_modal_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="Donner une avance à l'employé"><i class="fa fa-pencil"></i></a>
+                      <!-- <a class="btn btn-success" style="background-color:blue;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#prime_modal_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="Donner une prime à l'employé"><i class="fa fa-pencil"></i></a>
+                      <a class="btn btn-success" style="background-color:yellow;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#avance_modal_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="Donner une avance à l'employé"><i class="fa fa-pencil"></i></a> -->
 
                       <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/addpersonnel.php?id=<?php echo $row['per_id']; ?>" data-original-title="Modifier"><i class="fa fa-pencil"></i></a>
                       <a class="btn btn-danger" data-toggle="tooltip" onClick="deletePersonnel(<?php echo $row['per_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
                       <!-- <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="Voir l'historique des avances sur salaire de l'employé"><i class="fa fa-eye"></i></a> -->
                       <a class="btn btn-success" style="background-color:gray;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/histo_avance_prime_emp.php?per_id=<?php echo $row['per_id']; ?>" data-original-title="Voir l'historique des avances et des primes du salarié"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-info" style="background-color:#9bd500;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/workToolspersonnel.php?per_id=<?php echo $row['per_id']; ?>" data-original-title="Enregister un outil de travail pour l'employé"><i class="fa fa-plus"></i></a>
+                      <a class="btn btn-success" style="background-color:#CF7B00;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/workToolspersonnel_list.php?per_id=<?php echo $row['per_id']; ?>" data-original-title="Afficher la liste des outils de travail de l'employé"><i class="fa fa-list"></i></a>
                     </td>
                   </tr>
                   <div id="employe_info_modal_<?php echo $row['per_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -170,7 +182,7 @@ $i = 0;
                       </div>
                     </div>
                   </div>
-                  <div id="prime_modal_<?php echo $row['per_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <!-- <div id="prime_modal_<?php echo $row['per_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -181,7 +193,6 @@ $i = 0;
                         <form id="primeSalForm" name="prime_sal" role="form" enctype="multipart/form-data" method="POST" action="prime_process.php">
 
                           <div class="modal-body">
-                            <!-- <?php var_dump($row['per_id']); ?> -->
 
                             <div class="form-group">
                               <label for="txtCName"> Prime :</label>
@@ -215,7 +226,6 @@ $i = 0;
                         <form id="avanceSalForm" name="avance_sal" role="form" enctype="multipart/form-data" method="POST" action="avance_process.php">
 
                           <div class="modal-body">
-                            <!-- <?php var_dump($row['per_id']); ?> -->
 
                             <div class="form-group">
                               <label for="txtCName"> Avance sur salaire :</label>
@@ -237,7 +247,7 @@ $i = 0;
 
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <?php
                   $i++;
                 }

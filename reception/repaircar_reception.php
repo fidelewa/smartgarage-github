@@ -1643,8 +1643,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             // Increase or decrease the current tab by 1:
             currentTab = currentTab + n;
 
-            if (currentTab == 2 && !validateMe()) return false;
-
             // if you have reached the end of the form...
             if (currentTab >= x.length) {
                 // ... the form gets submitted:
@@ -1687,18 +1685,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                     }
 
-                    // On vérifie si l'id de l'élément courant correspond à l'id recherché
-                    if (y[i].id == "cle_recep_vehi") {
-
-                        // On vérifie que l'élément ayant cet id est checked
-                        if (!y[i].checked) {
-                            // Si l'élément en question n'est pas checked, alors il est invalide
-                            y[i].className += " invalid";
-                            valid = false;
-                            alert("Veuillez cochez la clé du véhicule SVP !!!");
-                        }
-
-                    }
+            
 
                     // On vérifie si l'id de l'élément courant correspond à l'id recherché
                     if (y[i].id == "visitetech_recep_vehi") {
@@ -2635,10 +2622,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             if ($("#immat").val() == '') {
                 alert("L'immatriculation du véhicule est obligatoire, saisissez la !!!");
                 $("#immat").focus();
-                return false;
-            } else if ($("#cle_recep_vehi_text").val() == '') {
-                alert("Le nombre de clé du véhicule est obligatoire, saisissez le !!!");
-                $("#cle_recep_vehi_text").focus();
                 return false;
             } else {
                 return true;

@@ -145,7 +145,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                     <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
                     <a class="btn btn-info" style="background-color:orange;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/bon_cmde_car.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer un bon de commande pour ce véhicule"><i class="fa fa-plus"></i></a>
                     <a class="btn btn-success" style="background-color:#CF7B00;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/liste_bcmde_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des bons de commande du véhicule"><i class="fa fa-list"></i></a>
-                    <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    
+                    <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header orange_header">

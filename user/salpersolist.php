@@ -6,6 +6,7 @@ $msg = "";
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
     $wms->deletePersoInfo($link, $_GET['id']);
     $delinfo = 'block';
+    $msg = "Suppression des informations du personnel réussi";
 }
 
 //	add success
@@ -41,6 +42,26 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
     $url = WEB_URL . 'user/listepersonnel.php';
     header("Location: $url");
 }
+
+if (isset($_GET['m']) && $_GET['m'] == 'prime_perso') {
+    $addinfo = 'block';
+    $msg = "Prime attribuée avec succès";
+  }
+  
+  if (isset($_GET['m']) && $_GET['m'] == 'avance_perso') {
+    $addinfo = 'block';
+    $msg = "Avance attribuée avec succès";
+  }
+
+  if (isset($_GET['m']) && $_GET['m'] == 'salnet_perso') {
+    $addinfo = 'block';
+    $msg = "Salaire net défini avec succès";
+  }
+
+  if (isset($_GET['m']) && $_GET['m'] == 'erreur_avance_perso') {
+    $delinfo = 'block';
+    $msg = "Impossible de donner l'avance car elle est supérieure au salaire de base";
+  }
 
 // Récupération du numéro du mois de la date courante
 
@@ -93,7 +114,7 @@ $i = 1;
             <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
                 <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
-                Suppression des informations du personnel réussi.
+                <?php echo $msg; ?>
             </div>
             <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
@@ -114,10 +135,11 @@ $i = 1;
                                 <th>Nom et prénoms</th>
                                 <th>Salaire de base</th>
                                 <th>Avance sur salaire</th>
-                                <!-- <th>Prime</th> -->
+                                <th>Prime</th>
                                 <th>Nombre d'heures suplémentaires</th>
                                 <th>Nombre de jours de congés payés</th>
                                 <th>Nombre de jours d'absence justifiée</th>
+                                <th>Salaire net à payer</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -139,13 +161,17 @@ $i = 1;
                                     <td><?php echo $row['per_name'] ?></td>
                                     <td id="salaire_base_perso_<?php echo $i; ?>"><?php echo $row['salaire_base']; ?></td>
                                     <td id="avance_perso_<?php echo $i; ?>"><?php echo $row['montant_avance_periode']; ?></td>
-                                    <!-- <td id="prime_perso_<?php echo $i; ?>"><?php echo $row['montant_prime_periode']; ?></td> -->
+                                    <td id="prime_perso_<?php echo $i; ?>"><?php echo $row['montant_prime_periode']; ?></td>
                                     <td><?php echo $row['nb_heure_sup_periode']; ?></td>
                                     <td><?php echo $row['nb_jour_conge_paye']; ?></td>
                                     <td><?php echo $row['nb_jour_abs_justifie']; ?></td>
+                                    <td><?php echo $row['salnet_montant']; ?></td>
                                     <td>
-                                        <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#conge_paye_<?php echo $row['perso_id']; ?>').modal('show');" data-original-title="Définir le nombre de jours de congés payés de l'employé"><i class="fa fa-pencil"></i></a>
-                                        <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#abs_employ_<?php echo $row['perso_id']; ?>').modal('show');" data-original-title="Définir le nombre de jours d'absence justifiée de l'employé"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success" style="background-color:#ff5733;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#avance_modal_<?php echo $row['perso_id']; ?>').modal('show');" data-original-title="Donner une avance à l'employé"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success" style="background-color:#ff9933;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#prime_modal_<?php echo $row['perso_id']; ?>').modal('show');" data-original-title="Donner une prime à l'employé"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success" style="background-color:#ffca33;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#conge_paye_<?php echo $row['perso_id']; ?>').modal('show');" data-original-title="Définir le nombre de jours de congés payés de l'employé"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success" style="background-color:#f9ff33;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#abs_employ_<?php echo $row['perso_id']; ?>').modal('show');" data-original-title="Définir le nombre de jours d'absence justifiée de l'employé"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success" style="background-color:#b9bf00;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#sal_net_modal_<?php echo $row['perso_id']; ?>').modal('show');" data-original-title="Définir le salaire net de l'employé"><i class="fa fa-pencil"></i></a>
                                     </td>
                                 </tr>
 
@@ -171,7 +197,7 @@ $i = 1;
                                                     </div>
 
                                                     <input type="hidden" name="per_tel" value="<?php echo $row['per_telephone']; ?>">
-                                                    <input type="hidden" name="per_id" value="<?php echo $row['perso_id']; ?>">
+                                                    <input type="hidden" name="perso_id" value="<?php echo $row['perso_id']; ?>">
 
                                                 </div>
                                                 <div class="modal-footer">
@@ -205,9 +231,114 @@ $i = 1;
                                                         </div>
                                                     </div>
 
-                                                    <input type="hidden" name="per_id" value="<?php echo $row['perso_id']; ?>">
+                                                    <input type="hidden" name="perso_id" value="<?php echo $row['perso_id']; ?>">
                                                     <input type="hidden" name="per_tel" value="<?php echo $row['per_telephone']; ?>">
 
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                    <button type="submit" class="btn btn-success" id="submit">Valider</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="prime_modal_<?php echo $row['perso_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <a class="close" data-dismiss="modal">×</a>
+                                                <h3>Formulaire de l'attribution de la prime</h3>
+                                            </div>
+
+                                            <form id="primeSalForm" name="prime_sal" role="form" enctype="multipart/form-data" method="POST" action="prime_process.php">
+
+                                                <div class="modal-body">
+                                                    <!-- <?php var_dump($row['perso_id']); ?> -->
+
+                                                    <div class="form-group">
+                                                        <label for="txtCName"> Prime :</label>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <input type="number" class='form-control' name="prime_sal" id="prime_sal" placeholder="Saisissez le montant de la prime" onfocus="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="hidden" name="prime_pers_id" value="<?php echo $row['perso_id']; ?>">
+                                                    <input type="hidden" name="prime_pers_telephone" value="<?php echo $row['per_telephone']; ?>">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                    <button type="submit" class="btn btn-success" id="submit">Valider</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="avance_modal_<?php echo $row['perso_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <a class="close" data-dismiss="modal">×</a>
+                                                <h3>Formulaire de l'attribution de l'avance sur salaire</h3>
+                                            </div>
+
+                                            <form id="avanceSalForm" name="avance_sal" role="form" enctype="multipart/form-data" method="POST" action="avance_process.php">
+
+                                                <div class="modal-body">
+                                                    <!-- <?php var_dump($row['perso_id']); ?> -->
+
+                                                    <div class="form-group">
+                                                        <label for="txtCName"> Avance sur salaire :</label>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <input type="number" class='form-control' name="avance_sal" id="avance_sal" placeholder="Saisissez le montant de l'avance" onfocus="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="hidden" name="avance_pers_id" value="<?php echo $row['perso_id']; ?>">
+                                                    <input type="hidden" name="avance_pers_telephone" value="<?php echo $row['per_telephone']; ?>">
+                                                    <input type="hidden" name="salaire_base_pers" value="<?php echo $row['salaire_base']; ?>">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                    <button type="submit" class="btn btn-success" id="submit">Valider</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="sal_net_modal_<?php echo $row['perso_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <a class="close" data-dismiss="modal">×</a>
+                                                <h3>Formulaire de saisie du salaire net</h3>
+                                            </div>
+
+                                            <form id="salNetForm" name="sal_net_form" role="form" enctype="multipart/form-data" method="POST" action="salnet_process.php">
+
+                                                <div class="modal-body">
+
+                                                    <div class="form-group">
+                                                        <label for="txtCName"> Salaire net :</label>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <input type="number" class='form-control' name="montant_salnet" id="montant_salnet" placeholder="Saisissez le montant du salaire net" onfocus="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="hidden" name="salnet_pers_id" value="<?php echo $row['perso_id']; ?>">
+                                                    <input type="hidden" name="salnet_pers_telephone" value="<?php echo $row['per_telephone']; ?>">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>

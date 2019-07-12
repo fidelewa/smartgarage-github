@@ -1248,6 +1248,21 @@ function verifEmailClient(emailCli) {
 			});
 		}
 	});
+	$('#piece_sous_famille').typeahead({
+		source: function (query, result) {
+			$.ajax({
+				url: '../ajax/verif_sous_famille.php',
+				data: 'sfamily=' + query,            
+				dataType: "json",
+				type: "POST",
+				success: function (data) {
+					result($.map(data, function (item) {
+						return item;
+					}));
+				}
+			});
+		}
+	});
 	
 
 function loadYearData(moid) {

@@ -21,9 +21,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                    border: 1px dotted rgb(0, 0, 0);
-                    border-radius: 1px;
-                } */
+                        border: 1px dotted rgb(0, 0, 0);
+                        border-radius: 1px;
+                    } */
         </style>
     </head>
 
@@ -108,7 +108,7 @@ if (!empty($row) && count($row) > 0) { ?>
                     </div>
                     <div class="row" id="content_1">
                         <div class="col-sm-12" style="text-align:center;">
-                            <h4 style="text-decoration:underline;font-weight:bold"> 
+                            <h4 style="text-decoration:underline;font-weight:bold">
                                 FICHE DE DIAGNOSTIC
                                 N° <?php echo $row['vehi_diag_id']; ?> du <?php echo $row['date_creation_fiche_diag']; ?>
                             </h4>
@@ -128,11 +128,23 @@ if (!empty($row) && count($row) > 0) { ?>
 
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-8" style="border:1px black solid;">
-                                    <?php echo $row['c_name']; ?>
+                                <div class="col-md-8" style="border:1px black solid;height:25px;">
+                                    <?php
+
+                                    if ($_GET['login_type'] != 'mechanics') {
+                                        echo $row['c_name'];
+                                    }
+
+                                    ?>
                                 </div>
-                                <div class="col-md-4" style="border:1px black solid;">
-                                    <?php echo $row['tel_wa_client']; ?>
+                                <div class="col-md-4" style="border:1px black solid;height:25px;">
+                                    <?php
+
+                                    if ($_GET['login_type'] != 'mechanics') {
+                                        echo $row['tel_wa_client'];
+                                    }
+
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -167,16 +179,16 @@ if (!empty($row) && count($row) > 0) { ?>
                             <div class="row">
                                 <div class="col-md-4">
                                     <!-- <div class="row">
-                                            <div class="col-md-12" style="height:20px;"></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12" style="height:20px;"></div>
-                                        </div> -->
+                                                <div class="col-md-12" style="height:20px;"></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12" style="height:20px;"></div>
+                                            </div> -->
                                     <div class="row">
                                         <div class="col-md-12" style="border:1px black solid;height:110px;display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: space-around;">
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-around;">
                                             <div style="text-align:center;font-weight:bolder;font-size:10pt">
                                                 DISFONCTIONNEMENTS ET PANNES ENREGISTREES
                                             </div>
@@ -254,12 +266,12 @@ if (!empty($row) && count($row) > 0) { ?>
                                         } ?>
                                     </tbody>
                                     <!-- <tfoot>
-                                        <tr>
-                                            <td colspan="2"></td>
-                                            <td>TOTAL HT</td>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot> -->
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td>TOTAL HT</td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot> -->
                                 </table>
                             </div>
                         </div>
@@ -273,13 +285,13 @@ if (!empty($row) && count($row) > 0) { ?>
                                 </div>
                             </div>
                             <!-- <div class="row" style="border:1px black solid;">
-                                <div class="col-md-3" >
-                                    Durée de la commande
-                                </div>
-                                <div class="col-md-9">
-                                    <?php echo $row['duree_commande']; ?>
-                                </div>
-                            </div> -->
+                                    <div class="col-md-3" >
+                                        Durée de la commande
+                                    </div>
+                                    <div class="col-md-9">
+                                        <?php echo $row['duree_commande']; ?>
+                                    </div>
+                                </div> -->
                             <div class="row" style="border:1px black solid;">
                                 <div class="col-md-3">
                                     Durée des travaux
@@ -297,10 +309,10 @@ if (!empty($row) && count($row) > 0) { ?>
                                 </div>
                             </div>
                             <!-- <div class="row">
-                                                                                                    <div class="col-md-12">
-                                                                                                        <?php echo $row['rapport_diagnostic']; ?>
-                                                                                                    </div>
-                                                                                                </div> -->
+                                                                                                        <div class="col-md-12">
+                                                                                                            <?php echo $row['rapport_diagnostic']; ?>
+                                                                                                        </div>
+                                                                                                    </div> -->
                         </div>
                     </div>
 
@@ -422,8 +434,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                                                                    margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                } */
 
             @media print {
                 #mobile-preview-close a {

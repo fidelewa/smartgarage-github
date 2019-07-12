@@ -5,11 +5,39 @@ include('../header.php');
 $row = 0;
 $bcmd_manage_data = array();
 $button_text = "Enregistrer les informations";
-$boncmde_num = "";
+// $boncmde_num = "";
 $boncmde_date_creation = "";
 $boncmde_date_livraison = "";
 
-// $rows = $wms->getComparPrixPieceRechangeMinByDiagId($link, $_GET['vehi_diag_id']);
+
+// On récupère la liste de tous les bons de commande
+$listBcmde = $wms->getAllBonCmde($link);
+
+// var_dump($listBcmde);
+
+// S'il y a au moin un enregistrement dans la table des bons de commande
+if(!empty($listBcmde) && count($listBcmde) > 0){
+
+    // On parcours la liste des bons de commande
+    foreach($listBcmde as $bcmde){
+        // var_dump($bcmde);
+
+        // On récupère l'identifiant du dernier bon de commande enregistré
+        // Puis on sort de la boucle
+        $bcmde_num = $bcmde['boncmde_num'];
+    }
+    
+    // On ajoute 1 à ce numéro de bon de commande pour avoir le numéro du bon de commande suivant
+    $nextNumBcmde = (int) $bcmde_num;
+    $boncmde_num = $nextNumBcmde+1;
+    // var_dump($boncmde_num);
+
+} else {
+
+    $boncmde_num = "000100";
+
+}
+
 
 if (isset($_POST) && !empty($_POST)) {
 
@@ -23,13 +51,16 @@ if (isset($_POST) && !empty($_POST)) {
 
     // On persiste les données en BDD
     $wms->saveUpdateBonCmdeInfo($link, $_POST, $bcmd_manage_data_json);
-    if ((int) $_POST['boncmde_id'] > 0) {
-        $url = WEB_URL . 'bon_cmde/boncmdeList.php?m=up';
+    
+    if ((int)$_POST['boncmde_id'] > 0) {
+    
+        $url = WEB_URL . 'repaircar/liste_bcmde_vehicule.php?car_id=' . $_POST['car_id'] . '&m=up';
         header("Location: $url");
+        
     } else {
-        // $url = WEB_URL . 'bon_cmde/boncmdeList.php?m=add';
+    
         // Redirection vers la liste des bons de commandes du véhicule concerné
-        $url = WEB_URL . 'repaircar/liste_bcmde_vehicule.php?car_id=' . $_POST['car_id'];
+        $url = WEB_URL . 'repaircar/liste_bcmde_vehicule.php?car_id=' . $_POST['car_id'] . '&m=add';
         header("Location: $url");
     }
     exit();
@@ -38,12 +69,14 @@ if (isset($_POST) && !empty($_POST)) {
 if (isset($_GET['boncmde_id']) && $_GET['boncmde_id'] != '') {
     $rec = $wms->getBonCmdeById($link, $_GET['boncmde_id']);
 
+    // var_dump($rec);
+
     if (!empty($rec)) {
         $sup_id = $rec['supplier_id'];
         $boncmde_num = $rec['boncmde_num'];
         $boncmde_date_creation = date_format(date_create($rec['boncmde_date_creation']), 'd/m/Y');
         $boncmde_date_livraison = date_format(date_create($rec['boncmde_date_livraison']), 'd/m/Y');
-        var_dump($rec);
+        // var_dump($rec);
     }
 }
 
@@ -101,7 +134,7 @@ if (isset($_GET['boncmde_id']) && $_GET['boncmde_id'] != '') {
                                                 <div class="col-md-12">
                                                     <label for="num_bcmd" class="col-md-6 col-form-label">N° bon de commande :</label>
                                                     <div class="col-md-6">
-                                                        <input type="text" id="num_bcmd" name="num_bcmd" value="<?php echo $boncmde_num; ?>" class="form-control">
+                                                        <input type="text" id="num_bcmd" name="num_bcmd" value="<?php echo str_pad($boncmde_num, 6, "000", STR_PAD_LEFT); ?>" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,11 +209,12 @@ if (isset($_GET['boncmde_id']) && $_GET['boncmde_id'] != '') {
                                                                     <td class="text-left"><button type="button" onclick="$('#supplier-data-row<?php echo $row; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                                                 </tr>
                                                                 <?php $row++;
-                                                            }?>
+                                                            } ?>
 
                                                             <input type="hidden" name="boncmde_id" value="<?php echo $rec['boncmde_id']; ?>" />
-                                                    <?php } ?>
-                                                        
+                                                            <input type="hidden" name="car_id" value="<?php echo $rec['car_id']; ?>" />
+                                                        <?php } ?>
+
 
                                                     </tbody>
                                                     <tfoot>
@@ -214,7 +248,7 @@ if (isset($_GET['boncmde_id']) && $_GET['boncmde_id'] != '') {
 
         function addEstimate() {
             html = '<tr id="supplier-data-row' + row + '">';
-            html += '  <td class="text-right"><input id="code_desi' + row + '" type="text" name="bcmd_manage_data[' + row + '][designation]" value="" class="form-control"></td>';
+            html += '  <td class="text-right"><input id="code_desi_' + row + '" type="text" name="bcmd_manage_data[' + row + '][designation]" value="" class="form-control"></td>';
             html += '  <td class="text-right"><input id="qte_' + row + '" type="number" name="bcmd_manage_data[' + row + '][qte]" value="" class="form-control"></td>';
             html += '  <td class="text-right"><input id="obs_' + row + '" type="text" name="bcmd_manage_data[' + row + '][obs]" value="" class="form-control" /></td>';
             html += '  <td class="text-left"><button type="button" onclick="$(\'#supplier-data-row' + row + '\').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';

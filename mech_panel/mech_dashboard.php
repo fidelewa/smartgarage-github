@@ -34,7 +34,7 @@ if (!empty($sold_parts)) {
       'highlight'    => $ccode,
       'label'      => ' Hour Worked' . ' ' . $sparts['month_name']
     );
-    $total_parts_year_sold += (int)$sparts['total_hour'];
+    $total_parts_year_sold += (int) $sparts['total_hour'];
   }
   if (!empty($parts_sell_report)) {
     $parts_sell_segments = $parts_sell_report;
@@ -70,7 +70,7 @@ if (!empty($s_data)) {
   $salary_report_data = trim($salary_report_data, ',');
   $salary_default_data = $salary_report_data;
   foreach ($s_data as $arr) {
-    $total_salary += (int)$arr['paid_amount'];
+    $total_salary += (int) $arr['paid_amount'];
   }
 }
 
@@ -133,7 +133,7 @@ function NewGuid()
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Liste des derniers véhicules réceptionnés pour diagnostic par <?php echo '<b>'.$_SESSION['objMech']['name'].'</b>'; ?></h3>
+          <h3 class="box-title">Liste des derniers véhicules réceptionnés pour diagnostic par <?php echo '<b>' . $_SESSION['objMech']['name'] . '</b>'; ?></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -143,7 +143,10 @@ function NewGuid()
                 <tr>
                   <th>ID Réception</th>
                   <th>Immatriculation</th>
-                  <th>Client</th>
+                  <?php
+                  if ($_SESSION['login_type'] != "mechanics") { ?>
+                    <th>Client</th>
+                  <?php } ?>
                   <th>Date reception</th>
                   <th>Date exp. assur</th>
                   <th>Date exp. vis. tech.</th>
@@ -158,29 +161,32 @@ function NewGuid()
                 ?>
 
                 <?php foreach ($result as $row) { ?>
-                  <tr> 
+                  <tr>
                     <!-- <td><span class="label label-success"><?php echo $row['repair_car_id']; ?></span></td> -->
                     <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
                     <td><?php echo $row['num_matricule']; ?></td>
-                    <td><?php echo $row['c_name']; ?></td>
+                    <?php
+                    if ($_SESSION['login_type'] != "mechanics") { ?>
+                      <td><?php echo $row['c_name']; ?></td>
+                    <?php } ?>
                     <td><?php echo $row['add_date_recep_vehi']; ?></td>
                     <td><?php echo $row['add_date_assurance']; ?></td>
                     <td><?php echo $row['add_date_visitetech']; ?></td>
                     <td>
-                      <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la fiche de reception"><i class="fa fa-file-text-o"></i></a>
+                      <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Afficher la fiche de reception"><i class="fa fa-file-text-o"></i></a>
                       <?php
                       // Si le véhicule réceptionné n'a pas encore été diagnostiqué
                       if ($row['vehi_diag_id'] != null) { ?>
                         <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_piecechange_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Consulter la fiche des pièces de rechange requis"><i class="fa fa-file-text-o"></i></a>
-                  
-                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule"><i class="fa fa-file-text-o"></i></a>
+
+                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule"><i class="fa fa-file-text-o"></i></a>
                       <?php } else { ?>
                         <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a>
                       <?php } ?>
                     </td>
                   </tr>
                 <?php }
-              mysql_close($link); ?>
+                mysql_close($link); ?>
 
               </tbody>
             </table>

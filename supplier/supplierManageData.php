@@ -33,7 +33,7 @@ if (isset($_POST) && !empty($_POST)) {
         
         $rslt = $wms->getInfoComptaByRef($link, $supplier_compta_data['reference']);
 
-        if(empty($rslt)){
+        if(empty($rslt) && $supplier_compta_data['date'] != '0000-00-00'){
 
             // Formulation de la requête
         $query = "INSERT INTO tbl_ges_four_compta (ges_four_compta_date, tbl_ges_four_compta_ref, ges_four_compta_lib, debit, credit, solde, supplier_id, hdid) 

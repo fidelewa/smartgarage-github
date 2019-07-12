@@ -157,6 +157,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
                                             <a class="btn btn-primary" style="background-color:#021254;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/etat_vehicule_sortie.php?cid=<?php echo $row['car_id']; ?>" data-original-title="Définir l'état du véhicule à la sortie"><i class="fa fa-car"></i></a>
                                         <?php } ?>
 
+                                        <a class="btn btn-success" style="background-color:#16a085;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/photo_car_avant_work.php?car_recep_id=<?php echo $row['car_id']; ?>&car_id=<?php echo $row['add_car_id']; ?>" data-original-title="Voir les photos du véhicule avant réparation"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-success" style="background-color:#2e86c1;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/photo_car_apres_work.php?car_recep_id=<?php echo $row['car_id']; ?>&car_id=<?php echo $row['add_car_id']; ?>" data-original-title="Voir les photos du véhicule après réparation"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-success" style="background-color:#48c9b0;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/photo_car_piece_change.php?car_recep_id=<?php echo $row['car_id']; ?>&car_id=<?php echo $row['add_car_id']; ?>" data-original-title="Voir les photos des pièces changées"><i class="fa fa-eye"></i></a>
+                                        <!-- <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a> -->
+
                                         <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien"><i class="fa fa-eye"></i></a> -->
                                         <!-- <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> -->
                                         <!-- <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a> -->
@@ -170,7 +175,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
                                                 <h3>Formulaire d'attribution du véhicule réceptionné</h3>
                                             </div>
 
-                                            <form id="avanceSalForm" name="avance_sal" role="form" enctype="multipart/form-data" method="POST" action="../diagnostic/attribution_mecanicien_traitement.php">
+                                            <form id="avanceSalForm" name="avance_sal" role="form" enctype="multipart/form-data" method="POST" action="<?php echo WEB_URL; ?>diagnostic/attribution_mecanicien_traitement.php">
 
                                                 <div class="modal-body">
 

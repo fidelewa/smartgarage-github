@@ -16,7 +16,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		$hashed = hash('sha512',$salt);
 
 		// Affectation de mot de passe hashé
-		$_POST['txtCPassword'] = $hashed;
+		// $_POST['txtCPassword'] = $hashed;
 
 		function NewGuid()
 		{

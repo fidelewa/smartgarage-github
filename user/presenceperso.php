@@ -101,7 +101,7 @@ if ($numeroMoisDateJour == "1") {
                                 <th>Heure départ</th>
                                 <th>Nombre d'heures travaillés</th>
                                 <!-- <th>Nombre d'heures de retard</th> -->
-                                <th>Nombre d'heures supplémentaires</th>
+                                <!-- <th>Nombre d'heures supplémentaires</th> -->
                                 <!-- <th>Action</th> -->
                             </tr>
                         </thead>
@@ -140,7 +140,7 @@ if ($numeroMoisDateJour == "1") {
                                     <td><?php echo $date_depart; ?></td>
                                     <td><?php echo $row['heure_depart']; ?></td>
                                     <td><?php echo $row['nb_heure_work']; ?></td>
-                                    <td><?php echo $row['nb_heure_sup']; ?></td>
+                                    <!-- <td><?php echo $row['nb_heure_sup']; ?></td> -->
                                     <!-- <td><?php echo $row['nb_heure_retard']; ?></td> -->
                                     <!-- <td> -->
                                     <!-- <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#employe_info_modal').modal('show');" data-original-title="Voir la description de l'employé"><i class="fa fa-eye"></i></a> -->

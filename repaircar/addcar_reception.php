@@ -593,6 +593,13 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         <div class="tab">
           <h1 style="text-align:center;">Prise en charge</h1>
 
+          <div class="form-group row">
+            <label for="heure_reception" class="col-md-3 col-form-label">Date de réception du véhicule</label>
+            <div class="col-md-9" style="padding-left:0px;">
+              <input type="text" name="add_date" value="<?php echo $c_add_date; ?>" id="add_date" class="form-control datepicker" placeholder="Saisissez la date de reception du véhicule" />
+            </div>
+          </div>
+
           <div class="col-md-12">
             <div class="form-group row">
               <label for="heure_reception" class="col-md-3 col-form-label">Heure</label>
@@ -642,8 +649,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
             <div class="form-group row">
               <div class="col-md-3">
-                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" checked />
-                <label for="clé du véhicule"><span style="color:red;">*</span> Clé du véhicule</label>
+                <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" />
+                <label for="clé du véhicule"> Clé du véhicule</label>
               </div>
               <div class="col-md-9" style="padding-left:0px;">
                 <input type="number" min="0" max="100" name="cle_recep_vehi_text" id="cle_recep_vehi_text" class="form-control" placeholder="Veuillez renseigner le nombre de clé du véhicule" />
@@ -1945,13 +1952,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
       // This function will figure out which tab to display
       var x = document.getElementsByClassName("tab");
       // Exit the function if any field in the current tab is invalid:
-      if (currentTab == 1 && !validateForm() && !validateMe()) return false;
+      if (n == 1 && !validateForm() && !validateMe()) return false;
       // Hide the current tab:
       x[currentTab].style.display = "none";
       // Increase or decrease the current tab by 1:
       currentTab = currentTab + n;
-      console.log(currentTab)
-      if (currentTab == 2 && !validateForm() && !validateMe()) return false;
+
       // if you have reached the end of the form...
       if (currentTab >= x.length) {
         // ... the form gets submitted:
@@ -1978,62 +1984,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           // On valide quaund même son statut
           if (y[i].value == "") {
             valid = true;
-          }
-        } else if (y[i].type == "checkbox") { // Traitement des champs de type checkbox
-
-          // On vérifie si l'id de l'élément courant correspond à l'id recherché
-          if (y[i].id == "assur_recep_vehi") {
-
-            // On vérifie que l'élément ayant cet id est checked
-            if (!y[i].checked) {
-              // Si l'élément en question n'est pas checked, alors il est invalide
-              y[i].className += " invalid";
-              // valid = true;
-              valid = false;
-              alert("Veuillez cochez l'assurance SVP !!!");
-            }
-
-          }
-
-          // On vérifie si l'id de l'élément courant correspond à l'id recherché
-          if (y[i].id == "cle_recep_vehi") {
-
-            // On vérifie que l'élément ayant cet id est checked
-            if (!y[i].checked) {
-              // Si l'élément en question n'est pas checked, alors il est invalide
-              y[i].className += " invalid";
-              // valid = true;
-              valid = false;
-              alert("Veuillez cochez la clé du véhicule SVP !!!");
-            }
-
-          }
-
-          // On vérifie si l'id de l'élément courant correspond à l'id recherché
-          if (y[i].id == "visitetech_recep_vehi") {
-
-            // On vérifie que l'élément ayant cet id est checked
-            if (!y[i].checked) {
-              // Si l'élément en question n'est pas checked, alors il est invalide
-              y[i].className += " invalid";
-              valid = false;
-              // valid = true;
-              alert("Veuillez cochez la visite technique SVP !!!");
-            }
-
-          }
-
-          if (y[i].id == "sortie_remarq_recep_vehi") {
-
-            // On vérifie que l'élément ayant cet id est checked
-            if (!y[i].checked) {
-              // Si l'élément en question n'est pas checked, alors il est invalide
-              y[i].className += " invalid";
-              valid = false;
-              // valid = true;
-              // alert("Veuillez cochez le statut remorqué SVP !!!");
-            }
-
           }
         } else if (y[i].type == "text") { // Traitement des champs de type text
 

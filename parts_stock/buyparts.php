@@ -38,6 +38,7 @@ $code_barre_piece = '';
 $lib_piece = '';
 $type_piece = '';
 $famille_piece = '';
+$piece_sous_famille = '';
 $dernier_prix_achat = 0.00;
 $montant_frais = 0.00;
 $prix_revient = 0.00;
@@ -188,7 +189,7 @@ if (isset($_GET['pid']) && $_GET['pid'] != '') {
 								<input required ="text" name="code_piece" value="<?php echo $code_piece; ?>" id="code_piece" class="form-control" />
 							</div>
 							<div class="form-group col-md-6">
-								<label for="txtCName"><span style="color:red;">*</span> Code barre:</label>
+								<label for="txtCName"> Code barre:</label>
 								<input type="text" name="code_barre_piece" value="<?php echo $code_barre_piece; ?>" id="code_barre_piece" class="form-control" />
 							</div>
 							<div class="form-group col-md-12">
@@ -222,28 +223,71 @@ if (isset($_GET['pid']) && $_GET['pid'] != '') {
 										echo "<option value='mecanique'>Mécanique</option>";
 										echo "<option value='electrique'>Electrique</option>";
 										echo "<option value='accessoire'>Accessoire</option>";
+										echo "<option value='cle'>Clé</option>";
+										echo "<option value='piece'>Pièce</option>";
+										echo "<option value='pneu'>Pneu</option>";
 									} elseif (isset($famille_piece) && ($famille_piece == "mecanique")) {
 										echo "<option value='huile'>Huile</option>";
 										echo "<option selected value='" . $famille_piece . "'>Mécanique</option>";
 										echo "<option value='electrique'>Electrique</option>";
 										echo "<option value='accessoire'>Accessoire</option>";
+										echo "<option value='cle'>Clé</option>";
+										echo "<option value='piece'>Pièce</option>";
+										echo "<option value='pneu'>Pneu</option>";
 									} elseif (isset($famille_piece) && ($famille_piece == "electrique")) {
 										echo "<option value='huile'>Huile</option>";
 										echo "<option value='mecanique'>Mécanique</option>";
 										echo "<option selected value='" . $famille_piece . "'>Electrique</option>";
 										echo "<option value='accessoire'>Accessoire</option>";
+										echo "<option value='cle'>Clé</option>";
+										echo "<option value='piece'>Pièce</option>";
+										echo "<option value='pneu'>Pneu</option>";
 									} elseif (isset($famille_piece) && ($famille_piece == "accessoire")) {
 										echo "<option value='huile'>Huile</option>";
 										echo "<option value='mecanique'>Mécanique</option>";
 										echo "<option value='electrique'>Electrique</option>";
 										echo "<option selected value='" . $famille_piece . "'>Accessoire</option>";
+										echo "<option value='cle'>Clé</option>";
+										echo "<option value='piece'>Pièce</option>";
+										echo "<option value='pneu'>Pneu</option>";
+									} elseif (isset($famille_piece) && ($famille_piece == "cle")) {
+										echo "<option value='huile'>Huile</option>";
+										echo "<option value='mecanique'>Mécanique</option>";
+										echo "<option value='electrique'>Electrique</option>";
+										echo "<option value='accessoire'>Accessoire</option>";
+										echo "<option selected value='" . $famille_piece . "'>Clé</option>";
+										echo "<option value='piece'>Pièce</option>";
+										echo "<option value='pneu'>Pneu</option>";
+									} elseif (isset($famille_piece) && ($famille_piece == "piece")) {
+										echo "<option value='huile'>Huile</option>";
+										echo "<option value='mecanique'>Mécanique</option>";
+										echo "<option value='electrique'>Electrique</option>";
+										echo "<option value='accessoire'>Accessoire</option>";
+										echo "<option value='cle'>Clé</option>";
+										echo "<option selected value='" . $famille_piece . "'>Pièce</option>";
+										echo "<option value='pneu'>Pneu</option>";
+									} elseif (isset($famille_piece) && ($famille_piece == "pneu")) {
+										echo "<option value='huile'>Huile</option>";
+										echo "<option value='mecanique'>Mécanique</option>";
+										echo "<option value='electrique'>Electrique</option>";
+										echo "<option value='accessoire'>Accessoire</option>";
+										echo "<option value='cle'>Clé</option>";
+										echo "<option value='piece'>Pièce</option>";
+										echo "<option selected value='" . $famille_piece . "'>Pneu</option>";
 									} else {
 										echo "<option value='huile'>Huile</option>";
 										echo "<option value='mecanique'>Mécanique</option>";
 										echo "<option value='electrique'>Electrique</option>";
 										echo "<option value='accessoire'>Accessoire</option>";
+										echo "<option value='cle'>Clé</option>";
+										echo "<option value='piece'>Pièce</option>";
+										echo "<option value='pneu'>Pneu</option>";
 									} ?>
 								</select>
+							</div>
+							<div class="form-group col-md-12">
+								<label for="lib_piece"> Sous-famille:</label>
+								<input type="text" name="piece_sous_famille" value="<?php echo $piece_sous_famille; ?>" id="piece_sous_famille" class="form-control" />
 							</div>
 						</div>
 						<div class="row">

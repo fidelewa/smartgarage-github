@@ -22,9 +22,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                                                                                border: 1px dotted rgb(0, 0, 0);
-                                                                                border-radius: 1px;
-                                                                            } */
+                                                                                    border: 1px dotted rgb(0, 0, 0);
+                                                                                    border-radius: 1px;
+                                                                                } */
         </style>
         <script src="<?php echo WEB_URL; ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
     </head>
@@ -110,14 +110,26 @@ if (!empty($row) && count($row) > 0) { ?>
                     </div>
                     <div class="row" id="content_1">
                         <div class="col-sm-5" id="info_gene">
-                            <p>Nom : <?php echo $row['c_name']; ?></p>
+                            <?php
+                            if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
+                            <?php } else { ?>
+                                <p>Nom : <?php echo $row['c_name']; ?></p>
+                            <?php } ?>
                             <!-- <p>Contact : <?php echo $row['contact_client']; ?></p> -->
-                            <p>Contact : <?php echo $row['princ_tel']; ?></p>
+                            <?php
+                            if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
+                            <?php } else { ?>
+                                <p>Contact : <?php echo $row['princ_tel']; ?></p>
+                            <?php } ?>
                             <p>Marque du véhicule : <?php echo $row['make_name']; ?></p>
                             <!-- <p>Marque du véhicule : <?php echo $row['car_make']; ?></p> -->
-                            <p>Matricule : <?php echo $row['num_matricule']; ?></p>
+                            <p>Immatriculation : <?php echo $row['num_matricule']; ?></p>
                             <!-- <p>E-mail : <?php echo $row['email_client']; ?></p> -->
-                            <p>E-mail : <?php echo $row['c_email']; ?></p>
+                            <?php
+                            if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
+                            <?php } else { ?>
+                                <p>E-mail : <?php echo $row['c_email']; ?></p>
+                            <?php } ?>
                         </div>
                         <div class="col-sm-5" style="text-align:center;">
                             <h4 style="text-decoration:underline;font-weight:bold">FICHE DE RECEPTION DU VEHICULE</h4>
@@ -710,7 +722,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             ?>
 
                                             <!-- On place l'image de la signature du client à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        de la signature du client -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                de la signature du client -->
                                             <!-- <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_client_depot) ?>" alt="" height="40" width="80"> -->
                                             <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_client_depot) ?>" alt="" height="40" width="80">
                                         <?php } else {
@@ -754,7 +766,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             ?>
 
                                             <!-- On place l'image de la signature du réceptionniste à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        de la signature du réceptionniste -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                de la signature du réceptionniste -->
                                             <!-- <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_recep_depot) ?>" alt="" height="40" width="80"> -->
                                             <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_recep_depot) ?>" alt="" height="40" width="80">
                                         <?php } else {
@@ -812,7 +824,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             ?>
 
                                             <!-- On place l'image de la signature du client à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        de la signature du client -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                de la signature du client -->
                                             <!-- <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_client_sortie) ?>" alt="" height="40" width="80"> -->
                                             <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_client_sortie) ?>" alt="" height="40" width="80">
                                         <?php } else {
@@ -854,7 +866,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                             ?>
 
                                             <!-- On place l'image de la signature du réceptionniste à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    de la signature du réceptionniste -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            de la signature du réceptionniste -->
                                             <!-- <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_recep_sortie) ?>" alt="" height="40" width="80"> -->
                                             <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_recep_sortie) ?>" alt="" height="40" width="80">
                                         <?php } else {
@@ -976,8 +988,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
 
             @media print {
 

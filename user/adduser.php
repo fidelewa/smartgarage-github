@@ -30,10 +30,10 @@ if (isset($_POST) && !empty($_POST)) {
     // $salt = substr(md5(time()), 0, 23);
 
     // Génération d'une valeur du sel basée sur le mot de passe brute de l'utilisateur
-    $salt = "53fYcjF!Vq&bDw".$plainPassword."&MuURm@86BsUtD";
+    $salt = "53fYcjF!Vq&bDw" . $plainPassword . "&MuURm@86BsUtD";
 
     // Hashage du mot de passe de l'utilisateur
-	$hashed = hash('sha512',$salt);
+    $hashed = hash('sha512', $salt);
 
     // Instanciaton de l'encoder
     // $encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder();
@@ -42,10 +42,18 @@ if (isset($_POST) && !empty($_POST)) {
     // $password = $encoder->encodePassword($plainPassword, $salt);
 
     // Récupération et enregistrement du mot de passe encodé en base de données
-    $_POST['txtUserPassword'] = $hashed;
+    // $_POST['txtUserPassword'] = $hashed;
 
-    // Si l'insertion à réussi
-    $wms->saveUpdateUserInformation($link, $_POST, $image_url);
+    if ($_POST['user_type'] == "administrateur") {
+        // var_dump($_POST);
+        // die();
+
+        $wms->createAdminUser($link, $_POST, $image_url);
+    } else {
+
+        // Si l'insertion à réussi
+        $wms->saveUpdateUserInformation($link, $_POST, $image_url);
+    }
 
     // On fait une redirection
     if ((int) $_POST['user_id'] > 0) {
@@ -157,36 +165,49 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
                                     echo "<option value='service client'>Service client</option>";
+                                    echo "<option value='administrateur'>Administrateur</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "comptable")) {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option selected value='" . $usr_type . "'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
                                     echo "<option value='service client'>Service client</option>";
+                                    echo "<option value='administrateur'>Administrateur</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "mecanicien")) {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option selected value='" . $usr_type . "'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
                                     echo "<option value='service client'>Service client</option>";
+                                    echo "<option value='administrateur'>Administrateur</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "electricien")) {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option selected value='" . $usr_type . "'>Electricien</option>";
                                     echo "<option value='service client'>Service client</option>";
+                                    echo "<option value='administrateur'>Administrateur</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "service client")) {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
                                     echo "<option selected value='" . $usr_type . "'>Service client</option>";
+                                    echo "<option value='administrateur'>Administrateur</option>";
+                                } elseif (isset($usr_type) && ($usr_type == "administrateur")) {
+                                    echo "<option value='receptionniste'>Réceptioniste</option>";
+                                    echo "<option value='comptable'>Comptable</option>";
+                                    echo "<option value='mecanicien'>Mécanicien</option>";
+                                    echo "<option value='electricien'>Electricien</option>";
+                                    echo "<option value='service client'>Service client</option>";
+                                    echo "<option selected value='" . $usr_type . "'>Administrateur</option>";
                                 } else {
                                     echo "<option value='receptionniste'>Réceptioniste</option>";
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
                                     echo "<option value='service client'>Service client</option>";
+                                    echo "<option value='administrateur'>Administrateur</option>";
                                 }
                                 ?>
                             </select>

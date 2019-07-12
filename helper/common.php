@@ -2,11 +2,549 @@
 //include_once('../config.php');v
 class wms_core
 {
+	public function getPhotoCarPieceChangeByCar($con, $car_id)
+	{
+
+		$query = "SELECT * 
+		FROM tbl_add_car cr 
+		JOIN tbl_model mo ON cr.car_model = mo.model_id
+		LEFT JOIN tbl_photo_car_piece_change pcpc ON pcpc.car_id = cr.car_id
+		WHERE cr.car_id = '" . (int) $car_id . "'";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
+	/*
+	* @login process
+	*/
+	public function login_operation($con, $data)
+	{
+
+		$obj_login = array();
+		if ($data['ddlLoginType'] == 'admin') {
+
+			$sql = mysql_query("SELECT * FROM tbl_admin WHERE email = '" . $this->make_safe($data['username']) . "' and password = '" . $this->make_safe($data['password']) . "'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['user_id'],
+					'name'			=> $row['name'],
+					'email'			=> $row['email'],
+					'password'		=> $row['password'],
+					'image'			=> $row['image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'customer') {
+
+			$sql = mysql_query("SELECT * FROM tbl_add_customer WHERE c_email = '" . $this->make_safe($data['username']) . "' and c_password = '" . $this->make_safe($data['password']) . "'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['customer_id'],
+					'name'			=> $row['c_name'],
+					'email'			=> $row['c_email'],
+					'password'		=> $row['c_password'],
+					'image'			=> $row['image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'mechanics') {
+
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type IN ('mecanicien','electricien')", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['usr_id'],
+					'name'			=> $row['usr_name'],
+					'email'			=> $row['usr_email'],
+					'password'		=> $row['usr_password'],
+					'image'			=> $row['usr_image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'reception') {
+
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'receptionniste'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['usr_id'],
+					'name'			=> $row['usr_name'],
+					'email'			=> $row['usr_email'],
+					'password'		=> $row['usr_password'],
+					'image'			=> $row['usr_image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'comptable') {
+
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'comptable'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['usr_id'],
+					'name'			=> $row['usr_name'],
+					'email'			=> $row['usr_email'],
+					'password'		=> $row['usr_password'],
+					'image'			=> $row['usr_image']
+				);
+			}
+		} else if ($data['ddlLoginType'] == 'service client') {
+
+			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'service client'", $con);
+			if ($row = mysql_fetch_assoc($sql)) {
+				$obj_login = array(
+					'user_id'		=> $row['usr_id'],
+					'name'			=> $row['usr_name'],
+					'email'			=> $row['usr_email'],
+					'password'		=> $row['usr_password'],
+					'image'			=> $row['usr_image']
+				);
+			}
+		}
+		return $obj_login;
+	}
+	
+	/*
+	* @Mettre à jour le profil de l'utilisateur
+	*/
+	public function createAdminUser($con, $data, $image_url)
+	{
+
+		if (!empty($data)) {
+
+			$query = "INSERT INTO `tbl_admin` (`name`, email, `password`, `image`) 
+		VALUES ('$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$image_url')";
+
+			$result = mysql_query($query, $con);
+
+			if (!$result) {
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+
+			// On récupère l'identifiant de la dernière pièce ajoutée
+			$user_id = mysql_insert_id();
+
+			$queryInsertUser = "INSERT INTO tbl_add_user(usr_id, usr_name, usr_email, usr_password, usr_type, usr_image) 
+				values($user_id, '$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]', '$image_url')";
+
+			// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+			$resultInsertUser = mysql_query($queryInsertUser, $con);
+
+			if (!$resultInsertUser) {
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $queryInsertUser;
+				die($message);
+			}
+		}
+	}
+
+	public function getPhotoCarApWorkByCar($con, $car_id)
+	{
+
+		$query = "SELECT * 
+		FROM tbl_add_car cr 
+		JOIN tbl_model mo ON cr.car_model = mo.model_id
+		LEFT JOIN tbl_photo_car_apres_work pcapw ON pcapw.car_id = cr.car_id
+		WHERE cr.car_id = '" . (int) $car_id . "'";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
+	public function getPhotoCarAvWorkByCar($con, $car_id)
+	{
+
+		$query = "SELECT * 
+		FROM tbl_add_car cr 
+		JOIN tbl_model mo ON cr.car_model = mo.model_id
+		LEFT JOIN tbl_photo_car_avant_work pcaw ON pcaw.car_id = cr.car_id
+		WHERE cr.car_id = '" . (int) $car_id . "'";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		$row = mysql_fetch_assoc($result);
+		return $row;
+	}
+
+	public function getWorktoolDataByEmploId($con, $per_id)
+	{
+		$data = array();
+
+		$query = "SELECT wt.*, per_name
+		FROM tbl_add_worktool wt
+		JOIN tbl_add_personnel per ON per.per_id = wt.per_id
+		WHERE per.per_id = '" . $per_id . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function saveUpdateWorkToolInformation($con, $data)
+	{
+		if (!empty($data)) {
+
+			// Instanciation de la date de l'avance à partir de la date du jour
+			$dateEnregistrement = new \Datetime("now");
+
+			// Récupération de la date de l'avance en chaine de caractères 
+			$dateEnregistremenStr = $dateEnregistrement->format('Y-m-d');
+
+			if ($data['worktool_id'] == '0') {
+
+				$query = "INSERT INTO tbl_add_worktool(numero_tool, libelle_tool, date_enregistrement, type_tool, per_id)
+
+				values('$data[numTool]','$data[libTool]','$dateEnregistremenStr','$data[typeTool]','$data[personnel_id]')";
+
+				$result = mysql_query($query, $con);
+			} else {
+
+				$query = "UPDATE `tbl_add_worktool` 
+				SET `numero_tool`='" . $data['numTool'] . "',
+				`libelle_tool`='" . $data['libTool'] . "',
+				`type_tool`='" . $data['typeTool'] . "',
+				WHERE per_id='" . $data['personnel_id'] . "'";
+				$result = mysql_query($query, $con);
+			}
+
+			if (!$result) {
+				// var_dump($data);
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		}
+	}
+
+	public function saveSalnetPerso($con, $montant_salnet, $per_id, $per_telephone)
+	{
+
+		// Instanciation de la date du salaire net à partir de la date du jour
+		$dateSalnet = new \Datetime("now");
+
+		// Récupération du numéro du mois de la date de définition du salaire net
+		$numeroMoisDateSalnet = $dateSalnet->format('n');
+
+		// Récupération de la date du salaire net en chaines de caractères 
+		$dateSalnetStr = $dateSalnet->format('Y-m-d');
+
+		// Recherche pour vérifier si le numéro de téléphone de l'employé courant existe déja dans la table
+		$queryGetSalnetInfoByPer = "SELECT * FROM tbl_salnet_personnel
+		WHERE emplo_tel='" . $per_telephone . "'";
+
+		$resultGetSalnetInfoByPer = mysql_query($queryGetSalnetInfoByPer, $con);
+
+		if (!$resultGetSalnetInfoByPer) {
+
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryGetSalnetInfoByPer;
+			die($message);
+		}
+
+		$rowSalnetInfoByPer = mysql_fetch_assoc($resultGetSalnetInfoByPer);
+
+		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
+		if (empty($rowSalnetInfoByPer) || $rowSalnetInfoByPer == false) {
+
+			$query = "INSERT INTO tbl_salnet_personnel(salnet_montant, salnet_date, mois_date_salnet, per_id, emplo_tel)
+		values('$montant_salnet','$dateSalnetStr','$numeroMoisDateSalnet','$per_id','$per_telephone')";
+			$result = mysql_query($query, $con);
+		} else { // Sinon on fait une mise à jour
+
+			$query = "UPDATE tbl_salnet_personnel
+				SET `salnet_montant`='" . $montant_salnet . "',
+				`salnet_date`='" . $dateSalnetStr . "',
+				`mois_date_salnet`='" . $numeroMoisDateSalnet . "'
+				WHERE emplo_tel='" . $per_telephone . "'";
+			$result = mysql_query($query, $con);
+		}
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function saveAvancePerso($con, $montant_avance, $per_id, $per_telephone)
+	{
+
+		// Instanciation de la date de l'avance à partir de la date du jour
+		$dateAvance = new \Datetime("now");
+
+		// Récupération du numéro du mois de la date de l'avance
+		$numeroMoisDateAvance = $dateAvance->format('n');
+
+		// Récupération de la date de l'avance en chaine de caractères 
+		$dateAvanceStr = $dateAvance->format('Y-m-d');
+
+		// Recherche pour vérifier si le numéro de téléphone de l'employé courant existe déja dans la table
+		$queryGetAvanceInfoByPer = "SELECT * FROM tbl_avance_personnel
+		WHERE emplo_tel='" . $per_telephone . "'";
+
+		$resultGetAvanceInfoByPer = mysql_query($queryGetAvanceInfoByPer, $con);
+
+		if (!$resultGetAvanceInfoByPer) {
+
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryGetAvanceInfoByPer;
+			die($message);
+		}
+
+		$rowAvanceInfoByPer = mysql_fetch_assoc($resultGetAvanceInfoByPer);
+
+		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
+		if (empty($rowAvanceInfoByPer) || $rowAvanceInfoByPer == false) {
+
+			$query = "INSERT INTO tbl_avance_personnel(montant_avance, date_avance, mois_date_avance, per_id, emplo_tel)
+		values('$montant_avance','$dateAvanceStr','$numeroMoisDateAvance','$per_id','$per_telephone')";
+
+			$result = mysql_query($query, $con);
+		} else { // Sinon on fait une mise à jour
+
+			$query = "UPDATE tbl_avance_personnel
+				SET `montant_avance`='" . $montant_avance . "',
+				`date_avance`='" . $dateAvanceStr . "',
+				`mois_date_avance`='" . $numeroMoisDateAvance . "'
+				WHERE emplo_tel='" . $per_telephone . "'";
+			$result = mysql_query($query, $con);
+		}
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function savePrimePerso($con, $montant_prime, $per_id, $per_telephone)
+	{
+
+		// Instanciation de la date de la prime à partir de la date du jour
+		$datePrime = new \Datetime("now");
+
+		// Récupération du numéro du mois de la date de la prime
+		$numeroMoisDatePrime = $datePrime->format('n');
+
+		// Récupération de la date de la prime en chaine de caractères 
+		$datePrimeStr = $datePrime->format('Y-m-d');
+
+		// Recherche pour vérifier si le numéro de téléphone de l'employé courant existe déja dans la table
+		$queryGetPrimeInfoByPer = "SELECT * FROM tbl_prime_personnel
+		WHERE emplo_tel='" . $per_telephone . "'";
+
+		$resultGetPrimeInfoByPer = mysql_query($queryGetPrimeInfoByPer, $con);
+
+		if (!$resultGetPrimeInfoByPer) {
+
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryGetPrimeInfoByPer;
+			die($message);
+		}
+
+		$rowPrimeInfoByPer = mysql_fetch_assoc($resultGetPrimeInfoByPer);
+
+		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
+		if (empty($rowPrimeInfoByPer) || $rowPrimeInfoByPer == false) {
+
+			$query = "INSERT INTO tbl_prime_personnel(montant_prime, date_prime, mois_date_prime, per_id, emplo_tel)
+		values('$montant_prime','$datePrimeStr','$numeroMoisDatePrime','$per_id','$per_telephone')";
+
+			$result = mysql_query($query, $con);
+		} else { // Sinon on fait une mise à jour
+
+			$query = "UPDATE tbl_prime_personnel
+				SET `montant_prime`='" . $montant_prime . "',
+				`date_prime`='" . $datePrimeStr . "',
+				`mois_date_prime`='" . $numeroMoisDatePrime . "'
+				WHERE emplo_tel='" . $per_telephone . "'";
+			$result = mysql_query($query, $con);
+		}
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function updateAbsenceEmplo($con, $data)
+	{
+		// Instanciation de la date du jour
+		$dateJour = new \Datetime("now");
+
+		// Récupération du numéro du mois de la date du jour
+		$numeroMoisDateJour = $dateJour->format('n');
+
+		// Recherche pour vérifier si le numéro de téléphone de l'employé courant existe déja dans la table
+		$queryGetSalInfoByPer = "SELECT * FROM tbl_emplo_conge_abs 
+		WHERE emplo_tel='" . $data['per_tel'] . "'";
+
+		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
+
+		if (!$resultSalInfoByPer) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
+			die($message);
+		}
+
+		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
+
+		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
+		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false) {
+
+			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois_jour_conge_paye, 
+			mois_jour_abs_justifie, per_id, emplo_tel) 
+			VALUES (null, '$data[nb_jour_abs_employ]', null,'$numeroMoisDateJour', '$data[per_id]','$data[per_tel]')";
+			$result = mysql_query($query, $con);
+		} else { // Sinon on fait une mise à jour
+
+			$query = "UPDATE tbl_emplo_conge_abs
+				SET `nb_jour_abs_justifie`='" . $data['nb_jour_abs_employ'] . "',
+				`mois_jour_abs_justifie`='" . $numeroMoisDateJour . "'
+				WHERE emplo_tel='" . $data['per_tel'] . "'";
+			$result = mysql_query($query, $con);
+		}
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function updateCongePayeEmplo($con, $data)
+	{
+		// Instanciation de la date du jour
+		$dateJour = new \Datetime("now");
+
+		// Récupération du numéro du mois de la date du jour
+		$numeroMoisDateJour = $dateJour->format('n');
+
+		// Recherche dans la table 
+		$queryGetSalInfoByPer = "SELECT * FROM tbl_emplo_conge_abs 
+		WHERE emplo_tel='" . $data['per_tel'] . "'";
+
+		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
+
+		if (!$resultSalInfoByPer) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
+			die($message);
+		}
+
+		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
+
+		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
+		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false) {
+
+			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois_jour_conge_paye, 
+			mois_jour_abs_justifie, per_id, emplo_tel)
+			VALUES ('$data[nb_jour_conge_paye]', null, '$numeroMoisDateJour', null, '$data[per_id]','$data[per_tel]')";
+			$result = mysql_query($query, $con);
+		} else { // Sinon on fait une mise à jour
+
+			$query = "UPDATE tbl_emplo_conge_abs
+				SET `nb_jour_conge_paye`='" . $data['nb_jour_conge_paye'] . "',
+				`mois_jour_conge_paye`='" . $numeroMoisDateJour . "'
+				WHERE emplo_tel='" . $data['per_tel'] . "'";
+			$result = mysql_query($query, $con);
+		}
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function deleteBcmde($con, $bcmdid)
+	{
+		mysql_query("DELETE FROM `tbl_add_boncmde` WHERE boncmde_id = " . (int) $bcmdid, $con);
+	}
+
+	/*
+	* @get supplier info by id
+	*/
+	public function getInfoComptaByRef($con, $ref)
+	{
+		$data = array();
+
+		$query = "SELECT *
+		FROM tbl_ges_four_compta
+		WHERE tbl_ges_four_compta_ref = '" . $ref . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// $row = mysql_fetch_assoc($result);
+		// return $row;
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+
+		var_dump($data);
+
+		return $data;
+	}
+
 	public function getBonCmdeById($con, $bcmdeId)
 	{
 		$query = "SELECT bcmd.*, s_name
 			FROM tbl_add_boncmde bcmd 
-		JOIN tbl_add_supplier su ON su.supplier_id=bcmd.supplier_id
+			JOIN tbl_add_supplier su ON su.supplier_id=bcmd.supplier_id
 			WHERE boncmde_id ='" . (int) $bcmdeId . "'";
 
 		$result = mysql_query($query, $con);
@@ -19,6 +557,27 @@ class wms_core
 
 		$row = mysql_fetch_assoc($result);
 		return $row;
+	}
+
+	public function getAllBonCmde($con)
+	{
+		$data = array();
+
+		$query = "SELECT *
+			FROM tbl_add_boncmde";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
 	}
 
 	public function getAllBonCmdeDataByCarId($con, $car_id)
@@ -90,10 +649,10 @@ class wms_core
 		nb_jour_conge_paye,
 		nb_jour_abs_justifie,
 		per_telephone,
-		-- montant_avance_periode, 
+		montant_avance_periode, 
 		SUM(montant_prime) AS montant_prime_periode,
-		montant_avance_periode,
-		perso_id
+		perso_id,
+		salnet_montant
 	FROM
 		(SELECT 
 		per.per_id as perso_id,
@@ -103,12 +662,14 @@ class wms_core
 				SUM(montant_avance) AS montant_avance_periode,
 				eca.nb_jour_conge_paye,
 				eca.nb_jour_abs_justifie,
-				per_telephone
+				per_telephone,
+				salnet_montant
 		FROM
 			tbl_add_pointage po
 		LEFT JOIN tbl_add_personnel per ON per.per_telephone = po.num_tel
 		LEFT JOIN tbl_emplo_conge_abs eca ON eca.emplo_tel = per.per_telephone
 		LEFT JOIN tbl_avance_personnel ap ON ap.emplo_tel = per.per_telephone
+		LEFT JOIN tbl_salnet_personnel sp ON sp.emplo_tel = per.per_telephone
 		WHERE mois_date_arrivee = '" . $numeroMoisDateJour . "'
 		GROUP BY per.per_telephone
 		) AS pointage_personnel
@@ -161,7 +722,7 @@ class wms_core
 	{
 		$data = array();
 
-		$query = "SELECT ac.added_date, VIN, note, car_id, chasis_no, car_name, ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,ac.repair_car_id, ac.year
+		$query = "SELECT ac.added_date, repair_car_id, VIN, note, car_id, chasis_no, car_name, ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,ac.repair_car_id, ac.year
 		,add_date_visitetech, add_date_assurance, add_date_assurance_fin, princ_tel, m.*, mo.*, VIN, c_name
 		FROM tbl_add_car ac 
 		inner join tbl_add_customer c on c.customer_id = ac.customer_id 
@@ -298,30 +859,6 @@ class wms_core
 	// 	}
 
 	/*
-	* @get supplier info by id
-	*/
-	public function getInfoComptaByRef($con, $ref)
-	{
-
-		$query = "SELECT *
-		FROM tbl_ges_four_compta
-		WHERE tbl_ges_four_compta_ref = '" . (int) $ref . "'";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			// var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		$row = mysql_fetch_assoc($result);
-
-		return $row;
-	}
-
-	/*
 	* @save/update buy parts list information
 	*/
 	public function saveUpdateBuyPiecesInformation($con, $data, $image_url)
@@ -342,12 +879,17 @@ class wms_core
 			$piece_id = $data['piece_id']; // On récupère l'id de la pièce
 
 			if ($piece_id == '0') {
+
+				// var_dump($data);
+				// die();
+
 				// Si la pièce n'existe pas en BDD, on l'enregistre
 				$query = "INSERT INTO tbl_add_piece(code_piece, code_barre_piece, lib_piece, type_piece, 
-				famille_piece, dernier_prix_achat, montant_frais, prix_revient, coefficient, prix_base_ht,
+				famille_piece, piece_sous_famille, dernier_prix_achat, montant_frais, prix_revient, coefficient, prix_base_ht,
 				prix_base_ttc, image_url, four_id)
 
-				values('$data[code_piece]','$data[code_barre_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]',
+				values('$data[code_piece]','$data[code_barre_piece]','$data[lib_piece]','$data[type_piece]',
+				'$data[famille_piece]','$data[piece_sous_famille]',
 				'$data[last_pa]','$data[mont_frais]','$data[prix_revient]','$data[coeff]','$data[prix_base_ht]','$data[prix_base_ttc]',
 				'$image_url', '$data[four]'
 				)";
@@ -368,8 +910,12 @@ class wms_core
 
 				// On enregistre cette pièce dans le stock des pièces
 				// Lorsqu'on enregistre une nouvelle pièce en stock, son stock de départ est null
-				$queryInsertPieceStock = "INSERT INTO tbl_piece_stock(piece_stock_id, code_piece, lib_piece, type_piece, famille_piece, prix_base_ttc, stock_piece, image_url)
-                values('$piece_id','$data[code_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]','$data[prix_base_ttc]',0,
+				$queryInsertPieceStock = "INSERT INTO tbl_piece_stock(piece_stock_id, code_piece, lib_piece, type_piece, 
+				famille_piece, piece_stock_sous_famille,
+				prix_base_ttc, stock_piece, image_url)
+                values('$piece_id','$data[code_piece]','$data[lib_piece]','$data[type_piece]','$data[famille_piece]',
+				'$data[piece_sous_famille]',
+				'$data[prix_base_ttc]',0,
 				'$image_url'
 				)";
 
@@ -941,7 +1487,7 @@ GROUP BY pp.per_id";
 	{
 		$data = array();
 
-		$query = "SELECT s_name, boncmde_num, boncmde_designation, boncmde_date_creation, bon_cmde_type
+		$query = "SELECT *
 		FROM tbl_add_supplier su
 		JOIN tbl_add_boncmde bcde ON su.supplier_id = bcde.supplier_id
 		WHERE su.supplier_id = '" . (int) $supplier_id . "'";
@@ -960,96 +1506,6 @@ GROUP BY pp.per_id";
 		}
 
 		return $data;
-	}
-
-	public function updateAbsenceEmplo($con, $data)
-	{
-		// Instanciation de la date du jour
-		$dateJour = new \Datetime("now");
-
-		// Récupération du numéro du mois de la date du jour
-		$numeroMoisDateJour = $dateJour->format('n');
-
-		// Recherche dans la table 
-		$queryGetSalInfoByPer = "SELECT * FROM tbl_emplo_conge_abs 
-		WHERE emplo_tel='" . $data['per_tel'] . "' AND mois='" . $numeroMoisDateJour . "'";
-
-		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
-
-		if (!$resultSalInfoByPer) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
-			die($message);
-		}
-
-		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
-
-		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
-		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false) {
-
-			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id, emplo_tel) 
-			VALUES (null, '$data[nb_jour_abs_employ]', '$numeroMoisDateJour', '$data[per_id]','$data[per_tel]')";
-			$result = mysql_query($query, $con);
-		} else { // Sinon on fait une mise à jour
-
-			$query = "UPDATE tbl_emplo_conge_abs
-				SET `nb_jour_abs_justifie`='" . $data['nb_jour_abs_employ'] . "',
-				`mois`='" . $numeroMoisDateJour . "'
-				WHERE emplo_tel='" . $data['per_tel'] . "' AND mois='" . $numeroMoisDateJour . "'";
-			$result = mysql_query($query, $con);
-		}
-
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-	}
-
-	public function updateCongePayeEmplo($con, $data)
-	{
-		// Instanciation de la date du jour
-		$dateJour = new \Datetime("now");
-
-		// Récupération du numéro du mois de la date du jour
-		$numeroMoisDateJour = $dateJour->format('n');
-
-		// Recherche dans la table 
-		$queryGetSalInfoByPer = "SELECT * FROM tbl_emplo_conge_abs 
-		WHERE emplo_tel='" . $data['per_tel'] . "' AND mois='" . $numeroMoisDateJour . "'";
-
-		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
-
-		if (!$resultSalInfoByPer) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
-			die($message);
-		}
-
-		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
-
-		// Si aucun enregistrement ne correspond à la recherche, on fait une insertion
-		if (empty($rowSalInfoByPer) || $rowSalInfoByPer == false) {
-
-			$query = "INSERT INTO tbl_emplo_conge_abs (nb_jour_conge_paye, nb_jour_abs_justifie, mois, per_id, emplo_tel) 
-			VALUES ('$data[nb_jour_conge_paye]', null, '$numeroMoisDateJour', '$data[per_id]','$data[per_tel]')";
-			$result = mysql_query($query, $con);
-		} else { // Sinon on fait une mise à jour
-
-			$query = "UPDATE tbl_emplo_conge_abs
-				SET `nb_jour_conge_paye`='" . $data['nb_jour_conge_paye'] . "',
-				`mois`='" . $numeroMoisDateJour . "'
-				WHERE emplo_tel='" . $data['per_tel'] . "' AND mois='" . $numeroMoisDateJour . "'";
-			$result = mysql_query($query, $con);
-		}
-
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
 	}
 
 	public function getAllPersoPointage($con, $numeroMoisDateJour)
@@ -1422,56 +1878,6 @@ GROUP BY pp.per_id";
 		}
 	}
 
-	public function saveAvancePerso($con, $montant_avance, $per_id, $per_telephone)
-	{
-
-		// Instanciation de la date de l'avance à partir de la date du jour
-		$dateAvance = new \Datetime("now");
-
-		// Récupération du numéro du mois de la date de l'avance
-		$numeroMoisDateAvance = $dateAvance->format('n');
-
-		// Récupération de la date de l'avance en chaine de caractères 
-		$dateAvanceStr = $dateAvance->format('Y-m-d');
-
-		$query = "INSERT INTO tbl_avance_personnel(montant_avance, date_avance, mois_date_avance, per_id, emplo_tel)
-		values('$montant_avance','$dateAvanceStr','$numeroMoisDateAvance','$per_id','$per_telephone')";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-	}
-
-	public function savePrimePerso($con, $montant_prime, $per_id, $per_telephone)
-	{
-
-		// Instanciation de la date de la prime à partir de la date du jour
-		$datePrime = new \Datetime("now");
-
-		// Récupération du numéro du mois de la date de la prime
-		$numeroMoisDatePrime = $datePrime->format('n');
-
-		// Récupération de la date de la prime en chaine de caractères 
-		$datePrimeStr = $datePrime->format('Y-m-d');
-
-		$query = "INSERT INTO tbl_prime_personnel(montant_prime, date_prime, mois_date_prime, per_id, emplo_tel)
-		values('$montant_prime','$datePrimeStr','$numeroMoisDatePrime','$per_id','$per_telephone')";
-
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-	}
-
 	public function getRecepVehiSignatureByRecepId($con, $recep_vehi_id)
 	{
 		$data = array();
@@ -1759,119 +2165,6 @@ GROUP BY pp.per_id";
 			$data[] = $row;
 		}
 		return $data;
-	}
-
-	/*
-	* @login process
-	*/
-	public function login_operation($con, $data)
-	{
-
-		$obj_login = array();
-		if ($data['ddlLoginType'] == 'admin') {
-
-			$sql = mysql_query("SELECT * FROM tbl_admin WHERE email = '" . $this->make_safe($data['username']) . "' and password = '" . $this->make_safe($data['password']) . "'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['user_id'],
-					'name'			=> $row['name'],
-					'email'			=> $row['email'],
-					'password'		=> $row['password'],
-					'image'			=> $row['image']
-				);
-			}
-		} else if ($data['ddlLoginType'] == 'customer') {
-
-			// Salage du mot de passe
-			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
-
-			// Hachage du mot de passe
-			$hashed = hash('sha512', $salt);
-
-			$sql = mysql_query("SELECT * FROM tbl_add_customer WHERE c_email = '" . $this->make_safe($data['username']) . "' and c_password = '" . $hashed . "'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['customer_id'],
-					'name'			=> $row['c_name'],
-					'email'			=> $row['c_email'],
-					'password'		=> $row['c_password'],
-					'image'			=> $row['image']
-				);
-			}
-		} else if ($data['ddlLoginType'] == 'mechanics') {
-
-			// Salage du mot de passe
-			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
-
-			// Hachage du mot de passe
-			$hashed = hash('sha512', $salt);
-
-			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $hashed . "' and usr_type IN ('mecanicien','electricien')", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['usr_id'],
-					'name'			=> $row['usr_name'],
-					'email'			=> $row['usr_email'],
-					'password'		=> $row['usr_password'],
-					'image'			=> $row['usr_image']
-				);
-			}
-		} else if ($data['ddlLoginType'] == 'reception') {
-
-			// Salage
-			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
-
-			// Hachage
-			$hashed = hash('sha512', $salt);
-
-			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $hashed . "' and usr_type = 'receptionniste'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['usr_id'],
-					'name'			=> $row['usr_name'],
-					'email'			=> $row['usr_email'],
-					'password'		=> $row['usr_password'],
-					'image'			=> $row['usr_image']
-				);
-			}
-		} else if ($data['ddlLoginType'] == 'comptable') {
-
-			// Salage
-			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
-
-			// Hachage
-			$hashed = hash('sha512', $salt);
-
-			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $hashed . "' and usr_type = 'comptable'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['usr_id'],
-					'name'			=> $row['usr_name'],
-					'email'			=> $row['usr_email'],
-					'password'		=> $row['usr_password'],
-					'image'			=> $row['usr_image']
-				);
-			}
-		} else if ($data['ddlLoginType'] == 'service client') {
-
-			// Salage du mot de passe
-			$salt = "53fYcjF!Vq&bDw" . $data['password'] . "&MuURm@86BsUtD";
-
-			// Hachage du mot de passe
-			$hashed = hash('sha512', $salt);
-
-			$sql = mysql_query("SELECT * FROM tbl_add_user WHERE usr_email = '" . $this->make_safe($data['username']) . "' and usr_password = '" . $this->make_safe($data['password']) . "' and usr_type = 'service client'", $con);
-			if ($row = mysql_fetch_assoc($sql)) {
-				$obj_login = array(
-					'user_id'		=> $row['usr_id'],
-					'name'			=> $row['usr_name'],
-					'email'			=> $row['usr_email'],
-					'password'		=> $row['usr_password'],
-					'image'			=> $row['usr_image']
-				);
-			}
-		}
-		return $obj_login;
 	}
 
 	public function getStatutEtatVehiSortie($con, $car_recep_id)
@@ -7096,6 +7389,16 @@ GROUP BY pp.per_id";
 		$result = mysql_query("SELECT * FROM tbl_add_personnel
 		-- WHERE usr_type = 'mecanicien' OR usr_type = 'electricien'
 		ORDER BY per_id DESC", $con);
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllStockPiece($con)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_add_piece", $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
