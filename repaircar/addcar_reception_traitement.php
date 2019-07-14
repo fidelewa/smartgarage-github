@@ -138,7 +138,7 @@ if (isset($_POST['car_names'])) {
 	}
 
 	// Client
-	$queryClient = "SELECT customer_id, c_name FROM tbl_add_customer WHERE c_name LIKE '" . $arr_client_name_form_str . "%'";
+	$queryClient = "SELECT customer_id, c_name, princ_tel FROM tbl_add_customer WHERE c_name LIKE '" . $arr_client_name_form_str . "%'";
 
 	// On exécute la requête
 	$resultListeClient = mysql_query($queryClient, $link);
@@ -212,6 +212,7 @@ if (isset($_POST['car_names'])) {
 	foreach ($listeMarques as $marque) {
 		if ($marque_name_form == $marque['make_name']) {
 			$make_id = $marque['make_id'];
+			$make_name = $marque['make_name'];
 		}
 	}
 
@@ -219,6 +220,7 @@ if (isset($_POST['car_names'])) {
 	foreach ($listeModeles as $modele) {
 		if ($modele_name_form == $modele['model_name']) {
 			$modele_id = $modele['model_id'];
+			$model_name = $modele['model_name'];
 		}
 	}
 
@@ -226,6 +228,9 @@ if (isset($_POST['car_names'])) {
 	foreach ($listeClient as $client) {
 		if ($client_name_form == $client['c_name']) {
 			$client_id = $client['customer_id'];
+			// récupération du numéro de téléphone du client
+			$client_telephone = $client['princ_tel'];
+			$client_nom = $client['c_name'];
 		}
 	}
 
@@ -241,6 +246,10 @@ if (isset($_POST['car_names'])) {
 	// on récupère l'id de cet client en BDD que l'on affecte à la variable $_POST['ddlCustomerList']
 	if ($client_id != null) {
 		(int) $_POST['ddlCustomerList'] = (int) $client_id;
+	}
+
+	if ($client_telephone != null) {
+		$_POST['client_telephone'] = $client_telephone;
 	}
 
 	// MARQUE
@@ -381,7 +390,7 @@ if (isset($_POST['car_names'])) {
 
 		if ($diffTodayDateprochvistech < -14) {
 			$_POST['statut_vistech'] = "valide";
-		  }
+		}
 	}
 
 	// TRAITEMENT DE L'ASSURANCE
@@ -400,7 +409,7 @@ if (isset($_POST['car_names'])) {
 
 		if ($diffDateDebutFinAssur < -14) {
 			$_POST['statut_assurance'] = "valide";
-		  }
+		}
 	}
 
 	// var_dump($_POST['statut_assurance']);
@@ -409,7 +418,6 @@ if (isset($_POST['car_names'])) {
 
 	// On insère la nouvelle valeur de la colonne car_name en BDD
 	$wms->saveUpdateRepairCarInformation($link, $_POST, $image_url);
-
 }
 
 $result_car_model = $wms->getMarkModelListByImmaVehi($link, $_POST['vin']);
@@ -943,31 +951,53 @@ if (isset($_POST['recep_id'])) {
 // Conversion d'ajustement en entier de l'identifiant de la voiture
 $_POST['add_car_id'] = (int) $_POST['add_car_id'];
 
-// var_dump($_POST);
-// die();
+var_dump($client_nom);
+var_dump($make_name);
+var_dump($model_name);
+var_dump($_POST['ddlImma']);
+die();
 
 // Exécution de la réquête et redirection vers la liste des voitures à faire réparer
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
 
-// Si c'est le récetionniste qui fait la reception, alors on fait une redirection vers son dashboard
-if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {
+// importation du fichier de l'API SMS
+require_once(ROOT_PATH . '/SmsApi.php');
 
-	if ((int) $_POST['repair_car'] > 0) {
-		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=up';
-		header("Location: $url");
+// instanciation de la classe de l'API SMS
+$smsApi = new SmsApi();
+
+// $mobile_mech  = "02280768";
+
+// Message d'alerte
+$content_msg = $client_nom . ', votre véhicule ' . $make_name . ' ' . $model_name . ' ' . $_POST['ddlImma'] . ' a bien été réceptionné';
+
+// Exécution de la méthode d'envoi 
+$resultSmsSent = $smsApi->isSmsapi($client_telephone, $content_msg);
+
+// On fait une redirection si le sms a été envoyé avec succès
+if ($resultSmsSent) {
+	// Si c'est le récetionniste qui fait la reception, alors on fait une redirection vers son dashboard
+	if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {
+
+		if ((int) $_POST['repair_car'] > 0) {
+			$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=up';
+			header("Location: $url");
+		} else {
+
+			$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=add';
+			header("Location: $url");
+		}
 	} else {
 
-		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=add';
-		header("Location: $url");
+		if ((int) $_POST['repair_car'] > 0) {
+			$url = WEB_URL . 'reception/repaircar_reception_list.php?m=up';
+			header("Location: $url");
+		} else {
+
+			$url = WEB_URL . 'reception/repaircar_reception_list.php?m=add';
+			header("Location: $url");
+		}
 	}
 } else {
-
-	if ((int) $_POST['repair_car'] > 0) {
-		$url = WEB_URL . 'reception/repaircar_reception_list.php?m=up';
-		header("Location: $url");
-	} else {
-
-		$url = WEB_URL . 'reception/repaircar_reception_list.php?m=add';
-		header("Location: $url");
-	}
+	echo "L'envoi du SMS a échoué !";
 }

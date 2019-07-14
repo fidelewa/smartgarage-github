@@ -2,6 +2,233 @@
 //include_once('../config.php');v
 class wms_core
 {
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepRepairCarListTen($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT repair_car_id, num_matricule, c_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
+		add_car_id, diag.id as vehi_diag_id, status_attribution_vehicule, usr.usr_name as recep_name, status_diagnostic_vehicule, mech.usr_name as mech_name
+			from tbl_recep_vehi_repar rvr
+			left join tbl_add_user usr on (rvr.attrib_recep = usr.usr_id) 
+			left join tbl_add_mech mech on (rvr.attribution_mecanicien = mech.usr_id) 
+			JOIN tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
+			WHERE status_attribution_vehicule = 1 OR status_diagnostic_vehicule = 1
+			LIMIT 10;
+			";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepRepairCarList($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT repair_car_id, num_matricule, c_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
+		add_car_id, diag.id as vehi_diag_id, status_attribution_vehicule, usr.usr_name as recep_name, status_diagnostic_vehicule, mech.usr_name as mech_name
+			from tbl_recep_vehi_repar rvr
+			left join tbl_add_user usr on (rvr.attrib_recep = usr.usr_id) 
+			left join tbl_add_mech mech on (rvr.attribution_mecanicien = mech.usr_id) 
+			JOIN tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function saveUpdateUserInformation($con, $data, $image_url)
+	{
+		if (!empty($data)) {
+			if ($data['user_id'] == '0') {
+
+				$query = "INSERT INTO tbl_add_user(usr_name, usr_email, usr_password, usr_type, usr_image) 
+				values('$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]', '$image_url')";
+				$result = mysql_query($query, $con);
+			} else {
+
+				$query = "UPDATE `tbl_add_user` 
+				SET `usr_name`='" . $data['txtUserName'] . "',`usr_email`='" . $data['txtUserEmail'] . "',
+				`usr_password`='" . $data['txtUserPassword'] . "', `usr_type`='" . $data['user_type'] . "',
+				`usr_image`='" . $image_url . "'
+				 WHERE usr_id='" . $data['usr_id'] . "'";
+				$result = mysql_query($query, $con);
+
+				if ($data['user_type'] == "mecanicien" || $data['user_type'] == "electricien") {
+
+					$query = "UPDATE `tbl_add_mech` 
+				SET `usr_name`='" . $data['txtUserName'] . "',`usr_email`='" . $data['txtUserEmail'] . "',
+				`usr_password`='" . $data['txtUserPassword'] . "', `usr_type`='" . $data['user_type'] . "',
+				`usr_image`='" . $image_url . "'
+				 WHERE usr_id='" . $data['usr_id'] . "'";
+					$result = mysql_query($query, $con);
+				}
+
+				if ($data['user_type'] == "administrateur") {
+					$query = "UPDATE `tbl_add_mech` 
+				SET `usr_name`='" . $data['txtUserName'] . "',`usr_email`='" . $data['txtUserEmail'] . "',
+				`usr_password`='" . $data['txtUserPassword'] . "',`usr_image`='" . $image_url . "'
+				 WHERE user_id ='" . $data['usr_id'] . "'";
+					$result = mysql_query($query, $con);
+				}
+			}
+
+			if (!$result) {
+				var_dump($data);
+				$message  = 'Invalid query: ' . mysql_error() . "\n";
+				$message .= 'Whole query: ' . $query;
+				die($message);
+			}
+		}
+	}
+
+	public function createMechUser($con, $data, $image_url)
+	{
+
+		if (!empty($data)) {
+
+			if ($data['usr_id'] == '0') {
+
+				$queryInsertUser = "INSERT INTO tbl_add_user(usr_name, usr_email, usr_password, usr_type, usr_image) 
+				values('$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]', '$image_url')";
+
+				// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+				$resultInsertUser = mysql_query($queryInsertUser, $con);
+
+				if (!$resultInsertUser) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $queryInsertUser;
+					die($message);
+				}
+
+				// On récupère l'identifiant de la dernière pièce ajoutée
+				$user_id = mysql_insert_id();
+
+				$query = "INSERT INTO `tbl_add_mech`(usr_id, usr_name, usr_email, usr_password, usr_type, usr_image) 
+				VALUES ('$user_id','$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]','$image_url')";
+
+				$result = mysql_query($query, $con);
+
+				if (!$result) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $query;
+					die($message);
+				}
+			} else {
+				// die('je suis dans mech');
+
+				$query = "UPDATE `tbl_add_mech` 
+			SET `usr_name`='" . $data['txtUserName'] . "',`usr_email`='" . $data['txtUserEmail'] . "',
+			`usr_password`='" . $data['txtUserPassword'] . "', `usr_type`='" . $data['user_type'] . "',
+			`usr_image`='" . $image_url . "'
+			 WHERE usr_id='" . $data['usr_id'] . "'";
+
+				mysql_query($query, $con);
+
+				$query_2 = "UPDATE `tbl_add_user` 
+				SET `usr_name`='" . $data['txtUserName'] . "',`usr_email`='" . $data['txtUserEmail'] . "',
+				`usr_password`='" . $data['txtUserPassword'] . "', `usr_type`='" . $data['user_type'] . "',
+				`usr_image`='" . $image_url . "'
+				 WHERE usr_id='" . $data['usr_id'] . "'";
+
+				mysql_query($query_2, $con);
+			}
+		}
+	}
+
+	/*
+	* @Mettre à jour le profil de l'utilisateur
+	*/
+	public function createAdminUser($con, $data, $image_url)
+	{
+
+		if (!empty($data)) {
+
+			if ($data['usr_id'] == '0') {
+
+				$query = "INSERT INTO `tbl_admin` (`name`, email, `password`, `image`) 
+				VALUES ('$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$image_url')";
+
+				$result = mysql_query($query, $con);
+
+				if (!$result) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $query;
+					die($message);
+				}
+
+				// On récupère l'identifiant de la dernière pièce ajoutée
+				$user_id = mysql_insert_id();
+
+				$queryInsertUser = "INSERT INTO tbl_add_user(usr_id, usr_name, usr_email, usr_password, usr_type, usr_image) 
+				values($user_id, '$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]', '$image_url')";
+
+				// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+				$resultInsertUser = mysql_query($queryInsertUser, $con);
+
+				if (!$resultInsertUser) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $queryInsertUser;
+					die($message);
+				}
+			} else {
+
+				$query = "UPDATE `tbl_admin` 
+				SET `name`='" . $data['txtUserName'] . "',`email`='" . $data['txtUserEmail'] . "',
+				`password`='" . $data['txtUserPassword'] . "',
+				`image`='" . $image_url . "'
+			 	WHERE user_id='" . $data['usr_id'] . "'";
+
+				mysql_query($query, $con);
+
+				$query_2 = "UPDATE `tbl_add_user` 
+				SET `usr_name`='" . $data['txtUserName'] . "',`usr_email`='" . $data['txtUserEmail'] . "',
+				`usr_password`='" . $data['txtUserPassword'] . "', `usr_type`='" . $data['user_type'] . "',
+				`usr_image`='" . $image_url . "'
+				 WHERE usr_id='" . $data['usr_id'] . "'";
+
+				mysql_query($query_2, $con);
+
+			}
+		}
+	}
+
 	public function getPhotoCarPieceChangeByCar($con, $car_id)
 	{
 
@@ -110,42 +337,8 @@ class wms_core
 		}
 		return $obj_login;
 	}
-	
-	/*
-	* @Mettre à jour le profil de l'utilisateur
-	*/
-	public function createAdminUser($con, $data, $image_url)
-	{
 
-		if (!empty($data)) {
 
-			$query = "INSERT INTO `tbl_admin` (`name`, email, `password`, `image`) 
-		VALUES ('$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$image_url')";
-
-			$result = mysql_query($query, $con);
-
-			if (!$result) {
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
-			}
-
-			// On récupère l'identifiant de la dernière pièce ajoutée
-			$user_id = mysql_insert_id();
-
-			$queryInsertUser = "INSERT INTO tbl_add_user(usr_id, usr_name, usr_email, usr_password, usr_type, usr_image) 
-				values($user_id, '$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]', '$image_url')";
-
-			// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-			$resultInsertUser = mysql_query($queryInsertUser, $con);
-
-			if (!$resultInsertUser) {
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $queryInsertUser;
-				die($message);
-			}
-		}
-	}
 
 	public function getPhotoCarApWorkByCar($con, $car_id)
 	{
@@ -739,42 +932,6 @@ class wms_core
 			die($message);
 		}
 
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
-	/*
-	* @get all Voiture de réparation list
-	*/
-	public function getAllRecepRepairCarListTen($con)
-	{
-		// Déclaration et initialisation d'un array vide
-		$data = array();
-
-		$query = "SELECT repair_car_id, num_matricule, c_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
-		add_car_id, diag.id as vehi_diag_id, status_attribution_vehicule, usr_name, status_diagnostic_vehicule
-			from tbl_recep_vehi_repar rvr
-			left join tbl_add_user usr on (rvr.attribution_mecanicien = usr.usr_id) 
-			JOIN tbl_add_customer cus on rvr.customer_name = cus.customer_id
-			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
-			WHERE status_attribution_vehicule = 1 OR status_diagnostic_vehicule = 1
-			LIMIT 10;
-			";
-
-		// Exécution et stockage du résultat de la requête
-		$result = mysql_query($query, $con);
-
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
-		// Pour chaque ligne, on l'affecte à une variable tampon
-		// Puis dans l'array
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
 		}
@@ -2100,7 +2257,7 @@ GROUP BY pp.per_id";
 	}
 
 
-	public function saveUpdateUserInformation($con, $data, $image_url)
+	public function saveUpdateUserInformation_2($con, $data, $image_url)
 	{
 		if (!empty($data)) {
 			if ($data['usr_id'] == '0') {
@@ -2309,7 +2466,7 @@ GROUP BY pp.per_id";
 	/*
 	* @get all Voiture de réparation list
 	*/
-	public function getAllRecepRepairCarList($con)
+	public function getAllRecepRepairCarList_2($con)
 	{
 		// Déclaration et initialisation d'un array vide
 		$data = array();
@@ -4173,7 +4330,8 @@ GROUP BY pp.per_id";
 		// if (isset($imma_vehi) && !empty($imma_vehi)) {
 
 		// formulation de la réquête
-		$query = "SELECT tbl_make.make_id, tbl_model.model_id, make_name, model_name, VIN , cus.customer_id, car_id, tbl_make.*,tbl_model.*
+		$query = "SELECT tbl_make.make_id, tbl_model.model_id, make_name, model_name, VIN , cus.customer_id, cus.princ_tel, cus.c_name,
+		car_id, tbl_make.*,tbl_model.*
 			FROM tbl_add_car JOIN tbl_make ON tbl_add_car.car_make = tbl_make.make_id 
 			JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model 
 			JOIN tbl_add_customer cus ON tbl_add_car.customer_id = cus.customer_id
@@ -4441,7 +4599,7 @@ GROUP BY pp.per_id";
 			voyant_21, voyant_22, voyant_23, voyant_24, type_km, remarque_prise_charge, remarque_access_vehi,
 			remarque_motif_depot, remarque_etat_vehi_arrive, remarque_aspect_ext, remarque_aspect_int, remarque_etat_vehi_sortie, 
 			etat_vehi_arrive, add_car_id, pj1_url, pj2_url, pj3_url, pj4_url, pj5_url, pj6_url, pj7_url, pj8_url, pj9_url, pj10_url, pj11_url, 
-			pj12_url, attrib_recep, dimension_pneu, dupli_cle
+			pj12_url, attrib_recep, dimension_pneu, dupli_cle, climatisation
 				
 			) 
 			values('$data[hfInvoiceId]','$data[ddlCustomerList]','$data[ddlMake]','$data[ddlModel]','$data[ddlImma]','$data[heure_reception]',
@@ -4473,7 +4631,7 @@ GROUP BY pp.per_id";
 			'$data[remarque_etat_vehi_sortie]','$data[etat_vehi_arrive]','$data[add_car_id]',
 			'$data[pj1_url]','$data[pj2_url]','$data[pj3_url]','$data[pj4_url]','$data[pj5_url]',
 			'$data[pj6_url]','$data[pj7_url]','$data[pj8_url]','$data[pj9_url]','$data[pj10_url]','$data[pj11_url]','$data[pj12_url]'
-			,'$data[recep_id]','$data[dim_pneu]','$data[dupli_cle_recep_vehi]'
+			,'$data[recep_id]','$data[dim_pneu]','$data[dupli_cle_recep_vehi]','$data[climatisation]'
 			)";
 
 		$result = mysql_query($query, $con);

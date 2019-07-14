@@ -70,6 +70,14 @@ if (isset($_POST['txtCName'])) {
 	// var_dump($_POST);
 	// die();
 
+	if (!empty($_POST['txtCName'])) {
+		$_POST['txtCName'] = mysql_real_escape_string($_POST['txtCName']);
+	}
+
+	if (!empty($_POST['txtCAddress'])) {
+		$_POST['txtCAddress'] = mysql_real_escape_string($_POST['txtCAddress']);
+	}
+
 	// A la soumission du formulaire
 	// Affectation de la valeur du numéro de téléphone à la valeur du mot de passe
 	$_POST['txtCPassword'] = $_POST['princ_tel'];

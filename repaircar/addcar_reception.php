@@ -1242,6 +1242,23 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 </div>
               </div>
 
+              <!-- Climatisation -->
+              <div class="form-group row">
+                <label for="climatisation" class="col-md-6 col-form-label">Climatisation</label>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Bon" checked>
+                  <label class="form-check-label" for="climatisation">B</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Mauvais">
+                  <label class="form-check-label" for="climatisation">M</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Absent">
+                  <label class="form-check-label" for="climatisation">A</label>
+                </div>
+              </div>
+
             </div> <!-- fin gauche -->
 
             <div class="col-md-6">

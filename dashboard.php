@@ -186,6 +186,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
           <tr>
             <th>ID Reception</th>
             <th>Immatriculation du véhicule</th>
+            <th>Receptionné par</th>
             <th>Statut attribution</th>
             <th>Attribué à</th>
             <th>Statut diagnostic</th>
@@ -220,6 +221,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
             <tr>
               <td><?php echo $row['car_id']; ?></td>
               <td><?php echo $row['num_matricule']; ?></td>
+              <td><?php echo $row['recep_name']; ?></td>
               <td><?php
                   if ($row['status_attribution_vehicule'] == null) {
                     echo "<span class='label label-default'>En attente d'attribution</span> <br/>";
@@ -227,7 +229,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
                     echo "<span class='label label-success'>Attribué</span> <br/>";
                   }
                   ?></td>
-              <td><?php echo $row['usr_name']; ?></td>
+              <td><?php echo $row['mech_name']; ?></td>
               <td><?php
                   if ($row['status_diagnostic_vehicule'] == null) {
                     echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";

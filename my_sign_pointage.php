@@ -72,11 +72,11 @@ include('config.php');
 						</div>
 					</div>
 					<!-- <br> -->
-					<div id="signArea">
+					<div id="signArea" style="display:flex;align-items:center;flex-direction:column;justify-content:space-around;">
 						<h2 class="tag-ingo">Signez ci-dessous,</h2>
-						<div class="sig sigWrapper" style="height:auto;">
+						<div class="sig sigWrapper" style="height:auto;width:610px">
 							<div class="typed"></div>
-							<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
+							<canvas id="sign-pad" width="600" height="300"></canvas>
 						</div>
 					</div>
 
@@ -111,7 +111,7 @@ include('config.php');
 			$('#signArea').signaturePad({
 				drawOnly: true,
 				drawBezierCurves: true,
-				lineTop: 90
+				lineTop: 0
 			});
 		});
 

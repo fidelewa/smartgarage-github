@@ -45,13 +45,18 @@ if (isset($_POST) && !empty($_POST)) {
     // $_POST['txtUserPassword'] = $hashed;
 
     if ($_POST['user_type'] == "administrateur") {
+// Méhode à exécuter lorsque l'on veut créer un administrateur
+
         // var_dump($_POST);
-        // die();
+        // die('je suis dans admin');
 
         $wms->createAdminUser($link, $_POST, $image_url);
-    } else {
+    } else if ($_POST['user_type'] == "mecanicien" OR $_POST['user_type'] == "electricien") {
 
-        // Si l'insertion à réussi
+        // Méhode à exécuter lorsque l'on veut créer un mécanicien ou un électricien
+        $wms->createMechUser($link, $_POST, $image_url);
+    } else {
+        
         $wms->saveUpdateUserInformation($link, $_POST, $image_url);
     }
 

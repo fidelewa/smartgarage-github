@@ -36,7 +36,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
 
         $addinfo = 'block';
         // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
-        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à déja été attribuée à " . $_GET['mech_name'] ." à la date du ". $_GET['date_attrib'];
+        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à déja été attribuée à " . $_GET['mech_name'] . " à la date du " . $_GET['date_attrib'];
     }
 }
 ?>
@@ -78,6 +78,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
                             <tr>
                                 <th>ID Reception</th>
                                 <th>Immatriculation du véhicule</th>
+                                <th>Receptionné par</th>
                                 <th>Statut attribution</th>
                                 <th>Attribué à</th>
                                 <th>Statut diagnostic</th>
@@ -112,6 +113,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
                                 <tr>
                                     <td><?php echo $row['car_id']; ?></td>
                                     <td><?php echo $row['num_matricule']; ?></td>
+                                    <td><?php echo $row['recep_name'];?></td>
                                     <td><?php
                                         if ($row['status_attribution_vehicule'] == null) {
                                             echo "<span class='label label-default'>En attente d'attribution</span> <br/>";
@@ -119,7 +121,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
                                             echo "<span class='label label-success'>Attribué</span> <br/>";
                                         }
                                         ?></td>
-                                    <td><?php echo $row['usr_name']; ?></td>
+                                    <td><?php echo $row['mech_name'];?></td>
                                     <td><?php
                                         if ($row['status_diagnostic_vehicule'] == null) {
                                             echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";

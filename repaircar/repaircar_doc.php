@@ -1018,7 +1018,8 @@ if (!empty($row) && count($row) > 0) { ?>
             <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
         <div id="mobile-preview-close_2">
-            <a onclick="reloadPage();" href=""> Rafraichir la page </a>
+            <!-- <a onclick="reloadPage();" href=""> Rafraichir la page </a> -->
+            <a style="" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_verso.php?car_id=<?php echo $_GET['car_id']; ?>"> Afficher le verso</a>
         </div>
         <script>
             $(document).ready(function() {

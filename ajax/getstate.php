@@ -127,6 +127,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 				<input type='hidden' name='customer_id' value='" . $result_car_model['customer_id'] . "' />
 				<input type='hidden' name='car_make_id' value='" . $result_car_model['make_id'] . "' />
 				<input type='hidden' name='car_model_id' value='" . $result_car_model['model_id'] . "' />
+				<input type='hidden' name='client_telephone' value='" . $result_car_model['princ_tel'] . "' />
+				<input type='hidden' name='client_nom' value='" . $result_car_model['c_name'] . "' />
 				";
 		}
 		echo $html;

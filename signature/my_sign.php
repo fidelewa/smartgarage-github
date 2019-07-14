@@ -65,13 +65,13 @@ include("../config.php");
 
 <body>
 
-	<h2>Formulaire de Signatures </h2>
+	<h2>Formulaire de Signature </h2>
 
-	<div id="signArea">
+	<div id="signArea" style="display:flex;align-items:center;flex-direction:column;justify-content:space-around;">
 		<h2 class="tag-ingo">Signez ci-dessous,</h2>
-		<div class="sig sigWrapper" style="height:auto;">
+		<div class="sig sigWrapper" style="height:auto;width:610px">
 			<div class="typed"></div>
-			<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
+			<canvas id="sign-pad" width="600" height="300"></canvas>
 		</div>
 	</div>
 
@@ -97,8 +97,8 @@ include("../config.php");
 			?>
 			<!-- <img src="<?php echo $image; ?>" class="sign-preview" /> -->
 		<?php
-	}
-	?>
+		}
+		?>
 	</div>
 
 	<!-- Si c'est le client qui signe au dépot -->
@@ -108,7 +108,7 @@ include("../config.php");
 
 		<button id="btnSaveSignClientDepot" class="btn btn-primary btn-lg active" role="button">
 			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_client_depot; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>"> -->
-				Enregistrer la signature
+			Enregistrer la signature
 			<!-- </a> -->
 		</button>
 
@@ -121,7 +121,7 @@ include("../config.php");
 
 		<button id="btnSaveSignClientSortie" class="btn btn-primary btn-lg active" role="button">
 			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_client_sortie; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>"> -->
-				Enregistrer la signature
+			Enregistrer la signature
 			<!-- </a> -->
 		</button>
 
@@ -135,7 +135,7 @@ include("../config.php");
 		<!-- A la soumission du bouton,  -->
 		<button id="btnSaveSignRecepDepot" class="btn btn-primary btn-lg active" role="button">
 			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_recep_depot; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat'] ?>"> -->
-				Enregistrer la signature
+			Enregistrer la signature
 			<!-- </a> -->
 		</button>
 
@@ -148,7 +148,7 @@ include("../config.php");
 
 		<button id="btnSaveSignRecepSortie" class="btn btn-primary btn-lg active" role="button">
 			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_recep_sortie; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>"> -->
-				Enregistrer la signature
+			Enregistrer la signature
 			<!-- </a> -->
 		</button>
 
@@ -159,7 +159,7 @@ include("../config.php");
 			$('#signArea').signaturePad({
 				drawOnly: true,
 				drawBezierCurves: true,
-				lineTop: 90
+				lineTop: 0
 			});
 		});
 
@@ -192,7 +192,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id="+car_id+"&etat="+etat+"&sign="+signataire+"&image="+image_url;
+							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url;
 						}
 					});
 				}
@@ -228,7 +228,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id="+car_id+"&etat="+etat+"&sign="+signataire+"&image="+image_url;
+							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url;
 						}
 					});
 				}
@@ -264,7 +264,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id="+car_id+"&etat="+etat+"&sign="+signataire+"&image="+image_url;
+							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url;
 						}
 					});
 				}
@@ -300,7 +300,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id="+car_id+"&etat="+etat+"&sign="+signataire+"&image="+image_url;
+							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url;
 						}
 					});
 				}
@@ -312,4 +312,3 @@ include("../config.php");
 </body>
 
 </html>
-

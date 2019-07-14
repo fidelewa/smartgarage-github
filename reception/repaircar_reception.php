@@ -13,7 +13,6 @@ $c_registration = '';
 $c_note = '';
 $c_add_date = date_format(date_create('now'), 'd/m/Y');
 
-
 $car_pneu_av = '';
 $car_gente_ar = '';
 $car_pneu_ar = '';
@@ -42,12 +41,28 @@ if (isset($_GET['cid']) && (int) $_GET['cid'] > 0) {
 
 // var_dump($_SESSION);
 
+// Si celui qui fait la réception est le réceptionniste
+// On récupère son identifiant
 if (isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
 
     $recep_id = $_SESSION['objRecep']['user_id'];
-} else {
-    $recep_id = 0;
 }
+
+// Si celui qui fait la réception est le service client
+// On récupère son identifiant
+if (isset($_SESSION['objServiceClient']) && !empty($_SESSION['objServiceClient'])) {
+
+    $recep_id = $_SESSION['objServiceClient']['user_id'];
+
+}
+
+// Si celui qui fait la réception est le gestionnaire (administrateur)
+// On récupère son identifiant
+if (isset($_SESSION['objLogin']) && !empty($_SESSION['objLogin'])) {
+
+    $recep_id = $_SESSION['objLogin']['user_id'];
+
+} 
 
 // if (isset($_SESSION['immat']) && !empty($_SESSION['immat'])) { // Quand le paramètre immat existe dans l'url
 
@@ -1369,6 +1384,23 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                                 <div class="col-md-2 form-check" style="padding-left:0px;">
                                     <input class="form-check-input" type="radio" name="bouton_vitre_arriere" id="bouton_vitre_arriere" value="Absent">
                                     <label class="form-check-label" for="bouton_vitre_arriere">A</label>
+                                </div>
+                            </div>
+
+                            <!-- Climatisation -->
+                            <div class="form-group row">
+                                <label for="climatisation" class="col-md-6 col-form-label">Climatisation</label>
+                                <div class="col-md-2 form-check" style="padding-left:0px;">
+                                    <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Bon" checked>
+                                    <label class="form-check-label" for="climatisation">B</label>
+                                </div>
+                                <div class="col-md-2 form-check" style="padding-left:0px;">
+                                    <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Mauvais">
+                                    <label class="form-check-label" for="climatisation">M</label>
+                                </div>
+                                <div class="col-md-2 form-check" style="padding-left:0px;">
+                                    <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Absent">
+                                    <label class="form-check-label" for="climatisation">A</label>
                                 </div>
                             </div>
 

@@ -21,7 +21,7 @@ $row = $wms->getAllPjByCar($link, $_GET['car_id']);
     <h1> <i class="fa fa-list"></i> Liste des pièces jointes au véhicule
         <?php
         if (isset($row) && !empty($row)) {
-            echo $row['car_name']. ' '. $row['model_name']. ' '. $row['VIN'];
+            echo "<b>".$row['car_name']. ' '. $row['model_name']. ' '. $row['VIN']."</b>";
         }
         ?></h1>
     <ol class="breadcrumb">

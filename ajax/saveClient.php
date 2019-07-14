@@ -18,6 +18,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		// Affectation de mot de passe hashé
 		// $_POST['txtCPassword'] = $hashed;
 
+		if (!empty($_POST['txtCName'])) {
+			$_POST['txtCName'] = mysql_real_escape_string($_POST['txtCName']);
+		}
+
 		function NewGuid()
 		{
 			$s = strtoupper(md5(uniqid(rand(), true)));
