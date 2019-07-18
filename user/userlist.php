@@ -67,7 +67,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                             <tr>
                                 <th>Avatar</th>
                                 <th>Nom</th>
-                                <th>Email</th>
+                                <th>Numéro de téléphone</th>
                                 <th>Type utilisateur</th>
                                 <th>Action</th>
                             </tr>

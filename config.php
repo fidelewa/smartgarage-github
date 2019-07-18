@@ -1,5 +1,5 @@
 <?php
-define('WEB_URL', 'http://127.0.0.1:8080/smartgarage-github/');
+define('WEB_URL', 'http://127.0.0.1:8181/smartgarage-github/');
 define('ROOT_PATH', 'C:\wamp64\www\smartgarage-github');
 
 define('DB_HOSTNAME', '127.0.0.1');

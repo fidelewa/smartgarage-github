@@ -5,9 +5,9 @@ $delinfo = 'none';
 $addinfo = 'none';
 $msg = "";
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
-    $wms->deleteRepairCar($link, $_GET['id']);
+    $wms->deleteDevis($link, $_GET['id']);
     $delinfo = 'block';
-    $msg = "Suppression du devis de réparation du véhicule réussi";
+    $msg = "Suppression du devis réussi";
 }
 if (isset($_GET['m']) && $_GET['m'] == 'add') {
     $addinfo = 'block';
@@ -111,11 +111,11 @@ $model_post_token = 0;
                                             <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_doc.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
 
                                             <!-- Si le devis n'est lié à aucune facture, on fait apparaitre le bouton
-                                                        d'association d'un devis à une facture
-                                                        -->
+                                                                d'association d'un devis à une facture
+                                                                -->
                                             <?php if (empty($ligneFac)) {
-                                            
-                                                if ($_SESSION['login_type'] != "service client") { 
+
+                                                if ($_SESSION['login_type'] != "service client") {
                                                     // Le service client n'est pas sensé créer les factures
                                                     ?>
                                                     <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_simu.php?devis_simu_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture à partir de ce devis"><i class="fa fa-plus"></i></a>
@@ -129,7 +129,8 @@ $model_post_token = 0;
                                         <?php
                                         }
                                         ?>
-
+                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_simu_update.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Editer le devis"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteDevis(<?php echo $row['devis_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                             <?php }
@@ -228,10 +229,10 @@ $model_post_token = 0;
 mysql_close($link); ?>
 <!-- /.row -->
 <script type="text/javascript">
-    function deleteCustomer(Id) {
-        var iAnswer = confirm("Êtes-vous sûr de vouloir supprimer cette voiture ?");
+    function deleteDevis(Id) {
+        var iAnswer = confirm("Êtes-vous sûr de vouloir supprimer ce devis ?");
         if (iAnswer) {
-            window.location = '<?php echo WEB_URL; ?>repaircar/carlist.php?id=' + Id;
+            window.location = '<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php?id=' + Id;
         }
     }
 

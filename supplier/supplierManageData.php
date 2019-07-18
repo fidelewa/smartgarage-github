@@ -10,7 +10,7 @@ $button_text = "Enregistrer les informations";
 
 if (isset($_POST) && !empty($_POST)) {
 
-    var_dump($_POST);
+    // var_dump($_POST);
     // die();
 
     // Persister les données du devis en BDD

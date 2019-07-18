@@ -46,7 +46,7 @@ if (isset($_POST) && !empty($_POST)) {
     // $date_facture = date('d/m/Y');
     $date_facture = $wms->datepickerDateToMySqlDate(date('d/m/Y'));
 
-    var_dump($_POST);
+    // var_dump($_POST);
 
     // Formulation de la requête
     $query = "UPDATE tbl_add_facture

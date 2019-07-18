@@ -127,7 +127,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'modif_article_stock') {
                                         <td>
                                             <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#stock_article_<?php echo $row['piece_stock_id']; ?>').modal('show');" data-original-title="Modifier le stock de l'article"><i class="fa fa-pencil"></i></a>
                                             <!-- <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>parts_stock/buyparts.php?pid=<?php echo $row['piece_stock_id']; ?>" data-original-title="Modifier l'article"><i class="fa fa-pencil"></i></a> -->
-                                            <a class="btn btn-danger" data-toggle="tooltip" onClick="deletePartStock(<?php echo $row['piece_stock_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                            <a class="btn btn-danger" data-toggle="tooltip" onClick="deletePartStock(<?php echo $row['piece_stock_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                     <div id="stock_article_<?php echo $row['piece_stock_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

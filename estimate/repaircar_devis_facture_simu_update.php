@@ -44,14 +44,14 @@ if (isset($_POST) && !empty($_POST)) {
 
     // Initialisation de la date de la fature
     // $date_facture = date('d/m/Y');
-    $date_facture = $wms->datepickerDateToMySqlDate(date('d/m/Y'));
+    // $date_facture = $wms->datepickerDateToMySqlDate($_POST['date_facture']);
 
     // var_dump($_POST);
     // die();
 
     // Formulation de la requête
     $query = "UPDATE tbl_add_facture_simulation 
-        SET date_facture='" . $date_facture . "', facture_data='" . $facture_data . "',
+        SET date_facture='" . $_POST['date_facture'] . "', facture_data='" . $facture_data . "',
         montant_main_oeuvre_facture='" . $_POST['montant_main_oeuvre_facture'] . "', total_ht_gene_piece_rechange_facture='" . $_POST['total_ht_gene_piece_rechange_facture'] . "',
         total_tva_facture='" . $_POST['total_tva_facture'] . "',total_ttc_gene_piece_rechange_facture='" . $_POST['total_ttc_gene_piece_rechange_facture'] . "',
         montant_du_piece_rechange_facture='" . $_POST['montant_du_piece_rechange_facture'] . "',
@@ -157,6 +157,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <input type="hidden" value="<?php echo $devis['stock_parts']; ?>" name="facture_data[<?php echo $i; ?>][piece_rechange_id]" />
                                                         <?php $i++;
                                                     } ?>
+                                                <input type="hidden" value="<?php echo $row['date_facture']; ?>" name="date_facture" />
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>

@@ -71,15 +71,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                             // die();
 
                             foreach ($result as $row) {
-                                // $image = WEB_URL . 'img/no_image.jpg';
-                                // $image_customer = WEB_URL . 'img/no_image.jpg';
-
-                                // if (file_exists(ROOT_PATH . '/img/upload/' . $row['image_vehi']) && $row['image_vehi'] != '') {
-                                //     $image = WEB_URL . 'img/upload/' . $row['image_vehi']; //car image
-                                // }
-                                // if (file_exists(ROOT_PATH . '/img/upload/' . $row['customer_image']) && $row['customer_image'] != '') {
-                                //     $image_customer = WEB_URL . 'img/upload/' . $row['customer_image']; //customer iamge
-                                // }
 
                                 ?>
                                 <tr>

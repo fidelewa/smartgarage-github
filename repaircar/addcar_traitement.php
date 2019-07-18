@@ -409,9 +409,9 @@ if (isset($_POST['car_names'])) {
 
     $result_car_model = $wms->getMarkModelListByImmaVehi($link, $_POST['vin']);
 
-    var_dump($result_car_model);
-    var_dump($_POST);
-	die();
+    // var_dump($result_car_model);
+    // var_dump($_POST);
+	// die();
 
 	// On insère la nouvelle valeur de la colonne car_name en BDD
 	$wms->saveUpdateRepairCarInformation($link, $_POST, $image_url);

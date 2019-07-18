@@ -1021,16 +1021,6 @@ if (!empty($row) && count($row) > 0) { ?>
             <!-- <a onclick="reloadPage();" href=""> Rafraichir la page </a> -->
             <a style="" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_verso.php?car_id=<?php echo $_GET['car_id']; ?>"> Afficher le verso</a>
         </div>
-        <script>
-            $(document).ready(function() {
-                window.onload = timedRefresh(500);
-            });
-
-            function reloadPage() {
-
-                window.location.reload();
-            }
-        </script>
     </body>
 
     </html>

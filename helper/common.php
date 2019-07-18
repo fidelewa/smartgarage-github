@@ -1,7 +1,82 @@
 <?php
 //include_once('../config.php');v
 class wms_core
-{
+{ 
+	public function updateDateSignTechverso($con, $dateSignTechVerso, $car_id)
+	{
+		// Enregistrement du nom du fichier image de la signature du client en base de données
+		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_tech_verso='" . $dateSignTechVerso . "' WHERE car_id='" . (int) $car_id . "'";
+
+		// On teste le résultat de la requête
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function updateDateSignCliverso($con, $dateSignClientVerso, $car_id)
+	{
+		// Enregistrement du nom du fichier image de la signature du client en base de données
+		$query = "UPDATE tbl_recep_vehi_repar SET date_sign_cli_verso='" . $dateSignClientVerso . "' WHERE car_id='" . (int) $car_id . "'";
+
+		// On teste le résultat de la requête
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+	}
+
+	public function checkAdminPwd($con, $devis_pwd)
+	{
+		$data = array();
+
+		$query = "SELECT *
+		FROM tbl_admin
+		WHERE password = '" . $devis_pwd . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getRecepVehiSignatureByRecepCarId($con, $recep_vehi_id)
+	{
+		$data = array();
+
+		$query = "SELECT sign_cli_verso, sign_tech_verso
+		FROM tbl_recep_vehi_repar
+		WHERE car_id = '" . $recep_vehi_id . "'";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		$row = mysql_fetch_assoc($result);
+
+		return $row;
+	}
+
 	/*
 	* @get all Voiture de réparation list
 	*/
@@ -76,7 +151,7 @@ class wms_core
 	public function saveUpdateUserInformation($con, $data, $image_url)
 	{
 		if (!empty($data)) {
-			if ($data['user_id'] == '0') {
+			if ($data['usr_id'] == '0') {
 
 				$query = "INSERT INTO tbl_add_user(usr_name, usr_email, usr_password, usr_type, usr_image) 
 				values('$data[txtUserName]','$data[txtUserEmail]','$data[txtUserPassword]','$data[user_type]', '$image_url')";
@@ -110,7 +185,7 @@ class wms_core
 			}
 
 			if (!$result) {
-				var_dump($data);
+				// var_dump($data);
 				$message  = 'Invalid query: ' . mysql_error() . "\n";
 				$message .= 'Whole query: ' . $query;
 				die($message);
@@ -728,7 +803,7 @@ class wms_core
 			$data[] = $row;
 		}
 
-		var_dump($data);
+		// var_dump($data);
 
 		return $data;
 	}
@@ -1003,7 +1078,7 @@ class wms_core
 	// 		$result = mysql_query($query, $con);
 
 	// 		if (!$result) {
-	// 			// var_dump($data);
+				// var_dump($data);
 	// 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 	// 			$message .= 'Whole query: ' . $query;
 	// 			die($message);
@@ -2791,6 +2866,11 @@ GROUP BY pp.per_id";
 				mysql_query("UPDATE tbl_parts_stock_manage SET quantity=" . (int) $qty . " WHERE parts_id=" . (int) $data['piece_rechange_id'], $con);
 			}
 		}
+	}
+
+	public function deleteDevis($con, $devis_id)
+	{
+		mysql_query("DELETE FROM `tbl_add_devis_simulation` WHERE devis_id = " . (int)$devis_id, $con);
 	}
 
 	public function getRepairCarSimuDevis($con, $devisSimuId)

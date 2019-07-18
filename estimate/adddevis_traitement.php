@@ -20,7 +20,7 @@ $result = mysql_query($query, $link);
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 if (!$result) {
-    var_dump($data);
+    // var_dump($data);
     $message  = 'Invalid query: ' . mysql_error() . "\n";
     $message .= 'Whole query: ' . $query;
     die($message);

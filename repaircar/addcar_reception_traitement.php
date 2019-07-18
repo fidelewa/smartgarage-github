@@ -951,11 +951,11 @@ if (isset($_POST['recep_id'])) {
 // Conversion d'ajustement en entier de l'identifiant de la voiture
 $_POST['add_car_id'] = (int) $_POST['add_car_id'];
 
-var_dump($client_nom);
-var_dump($make_name);
-var_dump($model_name);
-var_dump($_POST['ddlImma']);
-die();
+// var_dump($client_nom);
+// var_dump($make_name);
+// var_dump($model_name);
+// var_dump($_POST['ddlImma']);
+// die();
 
 // Exécution de la réquête et redirection vers la liste des voitures à faire réparer
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);

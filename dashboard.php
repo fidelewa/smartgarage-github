@@ -175,6 +175,22 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
     <!-- ./col end -->
   </div>
   <!-- /.row end -->
+
+  <div>
+    <?php
+
+    $url_reste_sms = "https://app.emisms.com/sms/api?action=check-balance&api_key=S2NnRmFuck5KZGJheEFBQUVoc2k=&response=json";
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url_reste_sms);
+    curl_exec($curl);
+    curl_close($curl);
+    $reste_sms = file_get_contents($url_reste_sms);
+    $reste_sms_list = json_decode($reste_sms,true);
+    echo "Il vous reste encore <span class='label label-success'>".$reste_sms_list['balance']."</span> SMS";
+    ?>
+
+  </div>
+
   <div class="box box-success">
     <div class="box-header">
       <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers véhicules attribués et diagnostiqués</h3>

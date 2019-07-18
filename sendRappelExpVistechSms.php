@@ -20,8 +20,8 @@ $smsApi = new SmsApi();
 // Exécution de la méthode d'envoi 
 $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
-var_dump($resultSmsSent);
-die();
+// var_dump($resultSmsSent);
+// die();
 
 try {
     // Exécution de la méthode d'envoi 

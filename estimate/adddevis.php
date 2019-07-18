@@ -18,7 +18,7 @@ $button_text = "Enregistrer le devis";
 // Lorsqu'on soumet ou valide le formulaire
 if (isset($_POST) && !empty($_POST)) {
 
-    // var_dump($_POST['estimate_data']);
+    // var_dump($_POST);
     // die();
 
     // Persister les données du devis en BDD
@@ -31,14 +31,15 @@ if (isset($_POST) && !empty($_POST)) {
 
     // Formulation de la requête
     $query = "INSERT INTO tbl_add_devis_simulation (date_devis, devis_data, main_oeuvre_piece_rechange_devis, total_ht_gene_piece_rechange_devis, 
-        total_tva, total_ttc_gene_piece_rechange_devis, montant_du_piece_rechange_devis,
-        montant_paye_piece_rechange_devis) 
+        total_tva, total_ttc_gene_piece_rechange_devis, montant_du_piece_rechange_devis, montant_paye_piece_rechange_devis,
+        devis_remise) 
         VALUES ('$date_devis','$devis_data','$_POST[main_oeuvre_piece_rechange_devis]',
         '$_POST[total_ht_gene_piece_rechange_devis]',
         '$_POST[total_tva]',
         '$_POST[total_ttc_gene_piece_rechange_devis]', 
         '$_POST[montant_du_piece_rechange_devis]',
-        '$_POST[montant_paye_piece_rechange_devis]'
+        '$_POST[montant_paye_piece_rechange_devis]',
+        '$_POST[devis_remise]'
         )";
 
     // Exécution de la requête
@@ -83,9 +84,11 @@ if (isset($_POST) && !empty($_POST)) {
                 <div class="row">
                     <div class="col-md-12">
 
+                        <div id="mdp_valid_msg"></div>
+
                         <div align="right" style="margin-bottom:1%;">
                             <!-- <a class="btn btn-success" style="background-color:#0029CE;color:#ffffff;" data-toggle="modal" data-target="#devis_vehicule_modal" title="Attribuer le devis à un véhicule"><i class="fa fa-plus"></i></a> -->
-                            <button class="btn btn-success" type="submit" data-toggle="tooltip" href="javascript:;" data-original-title="<?php echo $button_text; ?>"><i class="fa fa-save"></i></button> &nbsp;
+                            <button id="form_devis" class="btn btn-success" type="submit" data-toggle="tooltip" href="javascript:;" data-original-title="<?php echo $button_text; ?>"><i class="fa fa-save"></i></button> &nbsp;
                             <!-- <a class="btn btn-warning" title="" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Back"><i class="fa fa-reply"></i></a> </div> -->
 
                             <div class="box box-success">
@@ -99,10 +102,8 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <th>Code de la pièce</th>
                                                         <th class="text-center"><b>Pièce de rechange</b></th>
                                                         <th>Désignations</th>
-                                                        <!-- <th>Marque</th> -->
                                                         <th>Quantité</th>
                                                         <th>Tarif HT</th>
-                                                        <th>Taux Remise</th>
                                                         <th>Total HT</th>
                                                         <th>Total TTC</th>
                                                         <th></th>
@@ -120,7 +121,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                             <!-- <td class="text-right"><input id="marque_<?php echo $row; ?>" type="text" value="" name="estimate_data[<?php echo $row; ?>][marque]" class="form-control" /></td> -->
                                                             <td class="text-right"><input id="qty_<?php echo $row; ?>" type="text" name="estimate_data[<?php echo $row; ?>][quantity]" value="0" class="form-control eFireQty allownumberonly" /></td>
                                                             <td class="text-right"><input id="price_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][prix_piece_rechange_min_devis]" type="text" value="0.00" class="form-control eFirePrice" /></td>
-                                                            <td class="text-right"><input required id="remise_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][remise_piece_rechange_devis]" type="text" value="" class="form-control eFireRemise" /></td>
+                                                            <!-- <td class="text-right"><input required id="remise_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][remise_piece_rechange_devis]" type="text" value="" class="form-control eFireRemise" /></td> -->
                                                             <td class="text-right"><input id="totalht_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][total_prix_piece_rechange_devis_ht]" type="text" value="0.00" readonly class="form-control allownumberonly" /></td>
                                                             <td class="text-right"><input id="totalttc_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][total_prix_piece_rechange_devis_ttc]" type="text" value="0.00" readonly class="form-control allownumberonly etotal" /></td>
                                                             <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $row; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
@@ -130,24 +131,33 @@ if (isset($_POST) && !empty($_POST)) {
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td colspan="8"></td>
+                                                        <td colspan="7"></td>
                                                         <td class="text-left"><button type="button" onclick="addEstimate();" data-toggle="tooltip" title="Ajouter une estimation" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="7" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
+                                                        <td colspan="6" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
                                                         <td><input required id="labour" name="main_oeuvre_piece_rechange_devis" type="text" class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="7" class="text-right">Total HT:</td>
+                                                        <td colspan="6" class="text-right">Total HT:</td>
                                                         <td><input id="total_ht_gene" name="total_ht_gene_piece_rechange_devis" type="text" value="0.00" readonly class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="7" class="text-right">Total TVA (<?php echo $currency; ?>):</td>
+                                                        <td colspan="6" class="text-right">Remise (%):</td>
+                                                        <!-- <td><input id="total_ht_gene" name="total_ht_gene_piece_rechange_devis" type="text" value="0.00" readonly class="form-control allownumberonly" /></td> -->
+                                                        <td><input required id="devis_remise" name="devis_remise" type="text" value="" class="form-control allownumberonly eFireRemise" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="6" class="text-right">Total TVA (<?php echo $currency; ?>):</td>
                                                         <td><input id="total_tva" name="total_tva" type="text" value="0.00" readonly class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="7" class="text-right">Total TTC (<?php echo $currency; ?>):</td>
+                                                        <td colspan="6" class="text-right">Total TTC (<?php echo $currency; ?>):</td>
                                                         <td><input id="total_ttc_gene" name="total_ttc_gene_piece_rechange_devis" type="text" value="0.00" readonly class="form-control allownumberonly" /></td>
+                                                    </tr>
+                                                    <tr id="devis_pwd_box">
+                                                        <!-- <td colspan="6" class="text-right">Mot de passe:</td>
+                                                        <td><input id="devis_pwd" name="devis_pwd" type="text" value="" class="form-control" /></td> -->
                                                     </tr>
 
                                                     <input id="total_due" name="montant_du_piece_rechange_devis" type="hidden" value="0" readonly class="form-control allownumberonly" />
@@ -307,17 +317,15 @@ if (isset($_POST) && !empty($_POST)) {
     <input type="hidden" id="estimate_row" value="0" />
     <script>
         var row = <?php echo $row; ?>;
+        var web_url = "<?php echo WEB_URL; ?>";
 
         function addEstimate() {
             html = '<tr id="estimate-row' + row + '">';
             html += '  <td class="text-right"><input id="codepiece_' + row + '" type="text" name="estimate_data[' + row + '][code_piece]" class="form-control"></td>';
             html += '  <td class="text-right"><button data-toggle="tooltip" title="Ajouter une pièce de rechange à partir du stock" type="button" name="estimate_data[' + row + '][button]" onClick=loadModal(' + row + '); class="btn btn-info btnsp"><i class="fa fa-plus"></i></button><input type="hidden" id="parts_id_' + row + '" name="estimate_data[' + row + '][stock_parts]" value="0" /></td>';
-            // html += '  <td class="text-right"><input id="parts_desc_' + row + '" type="text" name="estimate_data[' + row + '][discription]" class="form-control parts_list" /></td>';
             html += '  <td class="text-right"><input id="parts_desc_' + row + '" type="text" name="estimate_data[' + row + '][designation]" class="form-control parts_list"></td>';
-            // html += '  <td class="text-right"><input type="text" id="marque_' + row + '" name="estimate_data[' + row + '][marque]" value="" class="form-control" /></td>';
             html += '  <td class="text-right"><input id="qty_' + row + '" type="text" name="estimate_data[' + row + '][quantity]" value="0" class="form-control eFireQty allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="price_' + row + '" name="estimate_data[' + row + '][price]" value="0.00" class="form-control eFirePrice allownumberonly" /></td>';
-            html += '  <td class="text-right"><input required type="text" id="remise_' + row + '" name="estimate_data[' + row + '][remise_piece_rechange_devis]" value="" class="form-control eFireRemise allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="totalht_' + row + '" name="estimate_data[' + row + '][total_prix_piece_rechange_devis_ht]" value="0.00" class="form-control allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="totalttc_' + row + '" name="estimate_data[' + row + '][total_prix_piece_rechange_devis_ttc]" value="0.00" class="form-control allownumberonly etotal" /></td>';
             html += '  <td class="text-left"><button type="button" onclick="$(\'#estimate-row' + row + '\').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
@@ -337,13 +345,62 @@ if (isset($_POST) && !empty($_POST)) {
                 totalHtCalculate(this.id);
             });
 
-            $(".eFireRemise").keyup(function() {
+            $(".eFireRemise").change(function() {
                 // Cette fonction récupère l'id de l'élément qui possède la classe eFireRemise
-                totalRemiseCalculate(this.id);
+                // console.log('remise')
+                totalRemiseCalculate();
+                // totalEstCost();
+
+                // On récupère la valeur du taux de la remise en (%)
+                if ($("#devis_remise").val() != '') {
+                    taux_remise_percent = $("#devis_remise").val();
+
+                    if (taux_remise_percent > 10) {
+
+                        html = "<td colspan='6' class='text-right'>Mot de passe:</td><td><input id='devis_pwd' name='devis_pwd' type='password' value='' class='form-control' /> <button class='btn btn-success' type='button' onclick='verif_pwd();' data-original-title='vérifier la validité du mot de passe'><i class='fa fa-check'></i></button></td>"
+
+                        $("#devis_pwd_box").html(html);
+
+                        if ($("#devis_pwd").val() == '') {
+                            alert("Le mot de passe est obligatoire !!!");
+                            $("#devis_pwd").prop('required', true);
+                            $("#devis_pwd").focus();
+                            $("#form_devis").prop('disabled', true);
+                        }
+
+                    }
+                }
             });
 
             $("#labour").keyup(function() {
-                totalEstCost();
+                // totalEstCost();
+                CalculTotalHTGene()
+            });
+        }
+
+        function verif_pwd() {
+            devis_pwd = $("#devis_pwd").val();
+
+            $.ajax({
+                url: '../ajax/getstate.php',
+                type: 'POST',
+                data: 'devis_pwd=' + devis_pwd + '&token=getdevis_pwd',
+                dataType: 'html',
+                success: function(data) {
+
+                    if(data != "") {
+                        console.log(data)
+                        $("#mdp_valid_msg").html(data);
+                        $("#form_devis").prop('disabled', false);
+                    } else {
+                        console.log(data)
+                        $("#form_devis").prop('disabled', true);
+                    }
+                    
+                },
+                error: function() {
+                    alert("Error");
+                }
             });
         }
 

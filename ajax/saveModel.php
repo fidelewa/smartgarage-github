@@ -12,7 +12,7 @@
 
 		header('Content-Type: text/html');
         echo $html;
-        var_dump($html);
+        // var_dump($html);
 		die();
 	} else {
 		$url = WEB_URL.'index.php';

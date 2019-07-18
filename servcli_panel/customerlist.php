@@ -16,7 +16,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
   $msg = "Informations client mises à jour avec succès";  
 }
 
-var_dump($_SESSION);
+// var_dump($_SESSION);
 ?>
 <!-- Content Header (Page header) -->
 

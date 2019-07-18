@@ -56,7 +56,6 @@ if (isset($_POST) && !empty($_POST)) {
         // Méhode à exécuter lorsque l'on veut créer un mécanicien ou un électricien
         $wms->createMechUser($link, $_POST, $image_url);
     } else {
-        
         $wms->saveUpdateUserInformation($link, $_POST, $image_url);
     }
 

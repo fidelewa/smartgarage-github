@@ -32,10 +32,8 @@ if ($dateFinAssur instanceof DateTime) {
         // Exécution de la méthode d'envoi 
         $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
-        if ($resultSmsSent) {
+        if ($resultSmsSent == "ok") {
             echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
-            // $url = WEB_URL.'dashboard.php';
-            // header("Location: $url");
         }
     } elseif ($diffDateDebutFinAssur == 0) {
 
@@ -57,7 +55,7 @@ if ($dateFinAssur instanceof DateTime) {
         // Exécution de la méthode d'envoi 
         $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
-        if ($resultSmsSent) {
+        if ($resultSmsSent == "ok") {
             echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
             // $url = WEB_URL.'dashboard.php';
             // header("Location: $url");

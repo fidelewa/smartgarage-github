@@ -58,7 +58,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
 	if (isset($_POST['token']) && $_POST['token'] == 'getstate') {
 		$html = '<option value="">--Selectionnez une ville--</option>';
-		if (isset($_POST['cid']) && (int)$_POST['cid'] > 0) {
+		if (isset($_POST['cid']) && (int) $_POST['cid'] > 0) {
 			$result = $wms->getAllStateData($link, $_POST['cid']);
 			foreach ($result as $rows) {
 				$html .= '<option value="' . $rows['id'] . '">' . $rows['name'] . '</option>';
@@ -70,7 +70,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
 	if (isset($_POST['token']) && $_POST['token'] == 'getmodel') {
 		$html = '<option value="">--Veuillez sélectionner le modèle du véhicule--</option>';
-		if (isset($_POST['mid']) && (int)$_POST['mid'] > 0) {
+		if (isset($_POST['mid']) && (int) $_POST['mid'] > 0) {
 			$result_model = $wms->getModelListByMakeId($link, $_POST['mid']);
 
 			foreach ($result_model as $rows) {
@@ -193,7 +193,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
 	if (isset($_POST['token']) && $_POST['token'] == 'getimmavoiture') {
 		$html = "<option value=''>--Veuillez sélectionner l'immatriculation du véhicule--</option>";
-		if (isset($_POST['clientid']) && (int)$_POST['clientid'] > 0) {
+		if (isset($_POST['clientid']) && (int) $_POST['clientid'] > 0) {
 			$result_car = $wms->getCarListByCustomerId($link, $_POST['clientid']);
 
 			foreach ($result_car as $rows) {
@@ -204,9 +204,31 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		die();
 	}
 
+	if (isset($_POST['token']) && $_POST['token'] == 'getdevis_pwd') {
+		// $html = "<option value=''>--Veuillez sélectionner l'immatriculation du véhicule--</option>";
+
+		$html = '';
+
+		if (isset($_POST['devis_pwd'])) {
+			$result = $wms->checkAdminPwd($link, $_POST['devis_pwd']);
+
+			$html = "";
+
+			if(count($result) > 0){
+				$html = '<div class="alert alert-success alert-dismissable" style="display:block">
+				<button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+				<h4> mot de passe valide </h4>
+				</div>';
+			}
+			
+		}
+		echo $html;
+		die();
+	}
+
 	if (isset($_POST['token']) && $_POST['token'] == 'getyear') {
 		$html = '<option value="">--Sélectionnez année--</option>';
-		if (isset($_POST['mid']) && (int)$_POST['mid'] > 0 && isset($_POST['moid']) && (int)$_POST['moid'] > 0) {
+		if (isset($_POST['mid']) && (int) $_POST['mid'] > 0 && isset($_POST['moid']) && (int) $_POST['moid'] > 0) {
 			$result_year = $wms->getYearlListByMakeIdAndModelId($link, $_POST['mid'], $_POST['moid']);
 			foreach ($result_year as $rows) {
 				$html .= '<option value="' . $rows['year_id'] . '">' . $rows['year_name'] . '</option>';
@@ -217,7 +239,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 	}
 
 	if (isset($_POST['token']) && $_POST['token'] == 'save_estimate_data') {
-		if (isset($_POST['car_id']) && (int)$_POST['car_id'] > 0) {
+		if (isset($_POST['car_id']) && (int) $_POST['car_id'] > 0) {
 			$wms->ajaxUpdateEstimateData($link, $_POST);
 			echo 'Updated estimate data successfully';
 			die();
