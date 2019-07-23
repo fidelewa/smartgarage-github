@@ -2,6 +2,7 @@
 <?php
 $delinfo = 'none';
 $addinfo = 'none';
+$failedinfo = 'none';
 $msg = "";
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
     $wms->deleteRepairCar($link, $_GET['id']);
@@ -39,6 +40,21 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
         $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à déja été attribuée à " . $_GET['mech_name'] . " à la date du " . $_GET['date_attrib'];
     }
 }
+
+if (isset($_GET['sms']) && $_GET['sms'] == 'send_client_sms_succes') {
+    $failedinfo = 'block';
+    $msg = "SMS envoyé au client avec succès";
+}
+
+if (isset($_GET['sms']) && $_GET['sms'] == 'send_client_sms_failed') {
+    $failedinfo = 'block';
+    $msg = "L'envoi du SMS au client à échoué";
+}
+
+if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_failed') {
+    $failedinfo = 'block';
+    $msg = "L'envoi du SMS au mécanicien à échoué";
+}
 ?>
 <!-- Content Header (Page header) -->
 
@@ -64,6 +80,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
                 </button>
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <?php echo $msg; ?>
+            </div>
+            <div id="his" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+                <!-- <h4><i class="icon fa fa-ban"></i></h4> -->
                 <?php echo $msg; ?>
             </div>
             <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
@@ -113,7 +134,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
                                 <tr>
                                     <td><?php echo $row['car_id']; ?></td>
                                     <td><?php echo $row['num_matricule']; ?></td>
-                                    <td><?php echo $row['recep_name'];?></td>
+                                    <td><?php echo $row['recep_name']; ?></td>
                                     <td><?php
                                         if ($row['status_attribution_vehicule'] == null) {
                                             echo "<span class='label label-default'>En attente d'attribution</span> <br/>";
@@ -121,7 +142,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
                                             echo "<span class='label label-success'>Attribué</span> <br/>";
                                         }
                                         ?></td>
-                                    <td><?php echo $row['mech_name'];?></td>
+                                    <td><?php echo $row['mech_name']; ?></td>
                                     <td><?php
                                         if ($row['status_diagnostic_vehicule'] == null) {
                                             echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
@@ -237,9 +258,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
 
         $(document).ready(function() {
             setTimeout(function() {
-                $("#me").hide(300);
-                $("#you").hide(200000);
-            }, 200000);
+                $("#me").hide(8000);
+                $("#you").hide(8000);
+                $("#his").hide(8000);
+            }, 8000);
         });
     </script>
     <?php include('../footer.php'); ?>

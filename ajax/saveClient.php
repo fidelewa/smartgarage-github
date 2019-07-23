@@ -44,10 +44,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_1_client"]["type"] == 'text/plain')
 					|| ($ext == "docx" || $ext == "DOCX")
 				) {
-					$temp = explode(".", $_FILES["pj_1_client"]["name"]);
-					$newfilename = NewGuid() . '.' . end($temp);
-					move_uploaded_file($_FILES["pj_1_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $newfilename);
-					return $newfilename;
+					// $temp = explode(".", $_FILES["pj_1_client"]["name"]);
+					// $filename = NewGuid() . '.' . end($temp);
+					move_uploaded_file($_FILES["pj_1_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $filename);
+					return $filename;
 				} else {
 					return '';
 				}
@@ -65,10 +65,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_2_client"]["type"] == 'text/plain')
 					|| ($ext == "docx" || $ext == "DOCX")
 				) {
-					$temp = explode(".", $_FILES["pj_2_client"]["name"]);
-					$newfilename = NewGuid() . '.' . end($temp);
-					move_uploaded_file($_FILES["pj_2_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $newfilename);
-					return $newfilename;
+					// $temp = explode(".", $_FILES["pj_2_client"]["name"]);
+					// $filename = NewGuid() . '.' . end($temp);
+					move_uploaded_file($_FILES["pj_2_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $filename);
+					return $filename;
 				} else {
 					return '';
 				}
@@ -86,10 +86,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_3_client"]["type"] == 'text/plain')
 					|| ($ext == "docx" || $ext == "DOCX")
 				) {
-					$temp = explode(".", $_FILES["pj_3_client"]["name"]);
-					$newfilename = NewGuid() . '.' . end($temp);
-					move_uploaded_file($_FILES["pj_3_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $newfilename);
-					return $newfilename;
+					// $temp = explode(".", $_FILES["pj_3_client"]["name"]);
+					// $filename = NewGuid() . '.' . end($temp);
+					move_uploaded_file($_FILES["pj_3_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $filename);
+					return $filename;
 				} else {
 					return '';
 				}
@@ -107,10 +107,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_4_client"]["type"] == 'text/plain')
 					|| ($ext == "docx" || $ext == "DOCX")
 				) {
-					$temp = explode(".", $_FILES["pj_4_client"]["name"]);
-					$newfilename = NewGuid() . '.' . end($temp);
-					move_uploaded_file($_FILES["pj_4_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $newfilename);
-					return $newfilename;
+					// $temp = explode(".", $_FILES["pj_4_client"]["name"]);
+					// $filename = NewGuid() . '.' . end($temp);
+					move_uploaded_file($_FILES["pj_4_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $filename);
+					return $filename;
 				} else {
 					return '';
 				}
@@ -128,10 +128,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_5_client"]["type"] == 'text/plain')
 					|| ($ext == "docx" || $ext == "DOCX")
 				) {
-					$temp = explode(".", $_FILES["pj_5_client"]["name"]);
-					$newfilename = NewGuid() . '.' . end($temp);
-					move_uploaded_file($_FILES["pj_5_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $newfilename);
-					return $newfilename;
+					// $temp = explode(".", $_FILES["pj_5_client"]["name"]);
+					// $filename = NewGuid() . '.' . end($temp);
+					move_uploaded_file($_FILES["pj_5_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $filename);
+					return $filename;
 				} else {
 					return '';
 				}
@@ -149,10 +149,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_6_client"]["type"] == 'text/plain')
 					|| ($ext == "docx" || $ext == "DOCX")
 				) {
-					$temp = explode(".", $_FILES["pj_6_client"]["name"]);
-					$newfilename = NewGuid() . '.' . end($temp);
-					move_uploaded_file($_FILES["pj_6_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $newfilename);
-					return $newfilename;
+					// $temp = explode(".", $_FILES["pj_6_client"]["name"]);
+					// $filename = NewGuid() . '.' . end($temp);
+					move_uploaded_file($_FILES["pj_6_client"]["tmp_name"], ROOT_PATH . '/img/upload/docs/' . $filename);
+					return $filename;
 				} else {
 					return '';
 				}

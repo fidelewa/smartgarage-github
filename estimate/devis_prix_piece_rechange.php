@@ -376,7 +376,7 @@ if (isset($_POST) && !empty($_POST)) {
                 totalEstCost();
                 $("#filter_popup").modal("hide")
             } else {
-                alert("Stock Empty so you cannot add parts");
+                alert("Le stock de la pièce est vide");
             }
         }
 

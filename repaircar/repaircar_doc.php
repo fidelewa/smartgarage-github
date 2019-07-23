@@ -1015,7 +1015,7 @@ if (!empty($row) && count($row) > 0) { ?>
         </style>
         <div id="mobile-preview-close">
             <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
-            <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
+            <a style="" href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
         <div id="mobile-preview-close_2">
             <!-- <a onclick="reloadPage();" href=""> Rafraichir la page </a> -->

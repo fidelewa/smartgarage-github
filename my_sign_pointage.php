@@ -106,6 +106,7 @@ include('config.php');
 	<!-- Bootstrap core JavaScript -->
 	<!-- <script src="vendor/jquery/jquery.slim.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 	<script>
 		$(document).ready(function() {
 			$('#signArea').signaturePad({

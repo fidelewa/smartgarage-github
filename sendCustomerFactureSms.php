@@ -21,7 +21,7 @@ $smsApi = new SmsApi();
 // Exécution de la méthode d'envoi 
 $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
-if($resultSmsSent){
+if($resultSmsSent == "ok"){
     // echo "SMS envoyé avec succès !";
     $url = WEB_URL.'confirmFactureSmsSent.php';
     header("Location: $url");

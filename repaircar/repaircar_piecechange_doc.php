@@ -308,17 +308,12 @@ if (!empty($row) && count($row) > 0) { ?>
         <?php if (isset($_GET['login_type']) && $_GET['login_type'] == 'admin') { ?>
             <div id="mobile-preview-close_2">
                 <!-- <a style="" href="#"> Envoyer aux fournisseurs par e-mail</a> -->
-                <a style="" href="<?php echo WEB_URL; ?>supplier/sendEmailToSuppliers.php"> Envoyer aux fournisseurs par e-mail</a>
-                <a style="" href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"> Créer un bon de commande</a>
+                <!-- <a style="" href="<?php echo WEB_URL; ?>supplier/sendEmailToSuppliers.php"> Envoyer aux fournisseurs par e-mail</a>
+                <a style="" href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"> Créer un bon de commande</a> -->
                 <!-- <a style="" href="<?php echo WEB_URL; ?>convertToPdf.php"> Convertir en PDF </a> -->
             </div>
         <?php } ?>
-        <script>
-            jQuery(document).ready(function() {
-                location.reload(true);
-                window.onload = timedRefresh(500);
-            });
-        </script>
+
     </body>
 
     </html>

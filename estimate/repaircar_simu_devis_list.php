@@ -109,7 +109,7 @@ $model_post_token = 0;
                                         // On fait apparaitre les autres boutons
                                         if (!empty($ligne)) { ?>
                                             <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_doc.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
-
+                                            <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_simu_update.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Editer le devis"><i class="fa fa-edit"></i></a>
                                             <!-- Si le devis n'est lié à aucune facture, on fait apparaitre le bouton
                                                                 d'association d'un devis à une facture
                                                                 -->
@@ -129,8 +129,8 @@ $model_post_token = 0;
                                         <?php
                                         }
                                         ?>
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_simu_update.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Editer le devis"><i class="fa fa-edit"></i></a>
-                                        <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteDevis(<?php echo $row['devis_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
+                                        
+                                        <!-- <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteDevis(<?php echo $row['devis_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a> -->
                                     </td>
                                 </tr>
                             <?php }

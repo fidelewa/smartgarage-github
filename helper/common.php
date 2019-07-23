@@ -2,6 +2,40 @@
 //include_once('../config.php');v
 class wms_core
 { 
+	// public function saveUpdateDepenseCarInfo($con, $data, $depense_car_data)
+	// {
+	// 	if (!empty($data)) {
+
+	// 		// Instanciation de la date de l'avance à partir de la date du jour
+	// 		$dateEnregistrement = new \Datetime("now");
+
+	// 		// Récupération de la date de l'avance en chaine de caractères 
+	// 		$dateEnregistremenStr = $dateEnregistrement->format('Y-m-d');
+
+	// 		if ($data['boncmde_id'] == 0) {
+
+	// 			$query = "INSERT INTO tbl_add_boncmde(boncmde_num, supplier_id, boncmde_date_creation, car_id, boncmde_data, boncmde_date_livraison)
+
+	// 			values('$data[num_bcmd]','$data[four]','$bcmde_date','$data[car_id]','$boncmde_data','$bcmde_date_livraison')";
+	// 			$result = mysql_query($query, $con);
+	// 		} else {
+	// 			$query = "UPDATE `tbl_add_boncmde` 
+	// 			SET `boncmde_num`='" . $data['num_bcmd'] . "',`supplier_id`='" . $data['four'] . "',
+	// 			`boncmde_date_creation`='" . $bcmde_date . "',`boncmde_date_livraison`='" . $bcmde_date_livraison . "',
+	// 			`boncmde_data`='" . $boncmde_data . "'
+	// 			WHERE boncmde_id='" . (int) $data['boncmde_id'] . "'";
+	// 			$result = mysql_query($query, $con);
+	// 		}
+
+	// 		if (!$result) {
+	// 			// var_dump($data);
+	// 			$message  = 'Invalid query: ' . mysql_error() . "\n";
+	// 			$message .= 'Whole query: ' . $query;
+	// 			die($message);
+	// 		}
+	// 	}
+	// }
+
 	public function updateDateSignTechverso($con, $dateSignTechVerso, $car_id)
 	{
 		// Enregistrement du nom du fichier image de la signature du client en base de données
@@ -10,11 +44,11 @@ class wms_core
 		// On teste le résultat de la requête
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 	}
 
 	public function updateDateSignCliverso($con, $dateSignClientVerso, $car_id)
@@ -25,11 +59,11 @@ class wms_core
 		// On teste le résultat de la requête
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 	}
 
 	public function checkAdminPwd($con, $devis_pwd)
@@ -42,12 +76,12 @@ class wms_core
 
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			// var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	// var_dump($data);
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
@@ -65,12 +99,12 @@ class wms_core
 
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			// var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	// var_dump($data);
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		$row = mysql_fetch_assoc($result);
 
@@ -81,6 +115,43 @@ class wms_core
 	* @get all Voiture de réparation list
 	*/
 	public function getAllRecepRepairCarListTen($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT DISTINCT diag.id as vehi_diag_id, add_car_id, num_matricule, c_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
+		status_attribution_vehicule, usr.usr_name as recep_name, status_diagnostic_vehicule, mech.usr_name as mech_name
+			from tbl_recep_vehi_repar rvr
+			left join tbl_add_user usr on (rvr.attrib_recep = usr.usr_id) 
+			join tbl_add_mech mech on (rvr.attribution_mecanicien = mech.usr_id) 
+			JOIN tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
+			WHERE status_attribution_vehicule = 1 OR status_diagnostic_vehicule = 1
+			LIMIT 10;
+			";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepRepairCarListTen_2($con)
 	{
 		// Déclaration et initialisation d'un array vide
 		$data = array();
@@ -99,11 +170,11 @@ class wms_core
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
 		// Pour chaque ligne, on l'affecte à une variable tampon
@@ -122,6 +193,40 @@ class wms_core
 		// Déclaration et initialisation d'un array vide
 		$data = array();
 
+		$query = "SELECT DISTINCT num_matricule, c_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
+		add_car_id, diag.id as vehi_diag_id, status_attribution_vehicule, usr.usr_name as recep_name, status_diagnostic_vehicule, mech.usr_name as mech_name
+			from tbl_recep_vehi_repar rvr
+			left join tbl_add_user usr on (rvr.attrib_recep = usr.usr_id) 
+			left join tbl_add_mech mech on (rvr.attribution_mecanicien = mech.usr_id) 
+			JOIN tbl_add_customer cus on rvr.customer_name = cus.customer_id
+			left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepRepairCarList_3($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
 		$query = "SELECT repair_car_id, num_matricule, c_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
 		add_car_id, diag.id as vehi_diag_id, status_attribution_vehicule, usr.usr_name as recep_name, status_diagnostic_vehicule, mech.usr_name as mech_name
 			from tbl_recep_vehi_repar rvr
@@ -133,11 +238,11 @@ class wms_core
 		// Exécution et stockage du résultat de la requête
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
 		// Pour chaque ligne, on l'affecte à une variable tampon
@@ -184,12 +289,12 @@ class wms_core
 				}
 			}
 
-			if (!$result) {
-				// var_dump($data);
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
-			}
+			// if (!$result) {
+			// 	// var_dump($data);
+			// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+			// 	$message .= 'Whole query: ' . $query;
+			// 	die($message);
+			// }
 		}
 	}
 
@@ -220,11 +325,11 @@ class wms_core
 
 				$result = mysql_query($query, $con);
 
-				if (!$result) {
-					$message  = 'Invalid query: ' . mysql_error() . "\n";
-					$message .= 'Whole query: ' . $query;
-					die($message);
-				}
+				// if (!$result) {
+				// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+				// 	$message .= 'Whole query: ' . $query;
+				// 	die($message);
+				// }
 			} else {
 				// die('je suis dans mech');
 
@@ -262,11 +367,11 @@ class wms_core
 
 				$result = mysql_query($query, $con);
 
-				if (!$result) {
-					$message  = 'Invalid query: ' . mysql_error() . "\n";
-					$message .= 'Whole query: ' . $query;
-					die($message);
-				}
+				// if (!$result) {
+				// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+				// 	$message .= 'Whole query: ' . $query;
+				// 	die($message);
+				// }
 
 				// On récupère l'identifiant de la dernière pièce ajoutée
 				$user_id = mysql_insert_id();
@@ -277,11 +382,11 @@ class wms_core
 				// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 				$resultInsertUser = mysql_query($queryInsertUser, $con);
 
-				if (!$resultInsertUser) {
-					$message  = 'Invalid query: ' . mysql_error() . "\n";
-					$message .= 'Whole query: ' . $queryInsertUser;
-					die($message);
-				}
+				// if (!$resultInsertUser) {
+				// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+				// 	$message .= 'Whole query: ' . $queryInsertUser;
+				// 	die($message);
+				// }
 			} else {
 
 				$query = "UPDATE `tbl_admin` 
@@ -317,11 +422,11 @@ class wms_core
 		$result = mysql_query($query, $con);
 
 		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
 		// Pour chaque ligne, on l'affecte à une variable tampon
@@ -428,11 +533,11 @@ class wms_core
 		$result = mysql_query($query, $con);
 
 		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
 		// Pour chaque ligne, on l'affecte à une variable tampon
@@ -454,11 +559,11 @@ class wms_core
 		$result = mysql_query($query, $con);
 
 		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
 		// Pour chaque ligne, on l'affecte à une variable tampon
@@ -478,12 +583,12 @@ class wms_core
 
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			// var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	// var_dump($data);
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
@@ -518,12 +623,12 @@ class wms_core
 				$result = mysql_query($query, $con);
 			}
 
-			if (!$result) {
-				// var_dump($data);
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' . $query;
-				die($message);
-			}
+			// if (!$result) {
+			// 	// var_dump($data);
+			// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+			// 	$message .= 'Whole query: ' . $query;
+			// 	die($message);
+			// }
 		}
 	}
 
@@ -545,12 +650,12 @@ class wms_core
 
 		$resultGetSalnetInfoByPer = mysql_query($queryGetSalnetInfoByPer, $con);
 
-		if (!$resultGetSalnetInfoByPer) {
+		// if (!$resultGetSalnetInfoByPer) {
 
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $queryGetSalnetInfoByPer;
-			die($message);
-		}
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $queryGetSalnetInfoByPer;
+		// 	die($message);
+		// }
 
 		$rowSalnetInfoByPer = mysql_fetch_assoc($resultGetSalnetInfoByPer);
 
@@ -570,11 +675,11 @@ class wms_core
 			$result = mysql_query($query, $con);
 		}
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 	}
 
 	public function saveAvancePerso($con, $montant_avance, $per_id, $per_telephone)
@@ -595,12 +700,12 @@ class wms_core
 
 		$resultGetAvanceInfoByPer = mysql_query($queryGetAvanceInfoByPer, $con);
 
-		if (!$resultGetAvanceInfoByPer) {
+		// if (!$resultGetAvanceInfoByPer) {
 
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $queryGetAvanceInfoByPer;
-			die($message);
-		}
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $queryGetAvanceInfoByPer;
+		// 	die($message);
+		// }
 
 		$rowAvanceInfoByPer = mysql_fetch_assoc($resultGetAvanceInfoByPer);
 
@@ -621,11 +726,11 @@ class wms_core
 			$result = mysql_query($query, $con);
 		}
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 	}
 
 	public function savePrimePerso($con, $montant_prime, $per_id, $per_telephone)
@@ -646,12 +751,12 @@ class wms_core
 
 		$resultGetPrimeInfoByPer = mysql_query($queryGetPrimeInfoByPer, $con);
 
-		if (!$resultGetPrimeInfoByPer) {
+		// if (!$resultGetPrimeInfoByPer) {
 
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $queryGetPrimeInfoByPer;
-			die($message);
-		}
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $queryGetPrimeInfoByPer;
+		// 	die($message);
+		// }
 
 		$rowPrimeInfoByPer = mysql_fetch_assoc($resultGetPrimeInfoByPer);
 
@@ -672,11 +777,11 @@ class wms_core
 			$result = mysql_query($query, $con);
 		}
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 	}
 
 	public function updateAbsenceEmplo($con, $data)
@@ -694,11 +799,11 @@ class wms_core
 		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
 
-		if (!$resultSalInfoByPer) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
-			die($message);
-		}
+		// if (!$resultSalInfoByPer) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $queryGetSalInfoByPer;
+		// 	die($message);
+		// }
 
 		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
 
@@ -718,11 +823,11 @@ class wms_core
 			$result = mysql_query($query, $con);
 		}
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 	}
 
 	public function updateCongePayeEmplo($con, $data)
@@ -740,11 +845,11 @@ class wms_core
 		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 		$resultSalInfoByPer = mysql_query($queryGetSalInfoByPer, $con);
 
-		if (!$resultSalInfoByPer) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $queryGetSalInfoByPer;
-			die($message);
-		}
+		// if (!$resultSalInfoByPer) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $queryGetSalInfoByPer;
+		// 	die($message);
+		// }
 
 		$rowSalInfoByPer = mysql_fetch_assoc($resultSalInfoByPer);
 
@@ -764,11 +869,11 @@ class wms_core
 			$result = mysql_query($query, $con);
 		}
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 	}
 
 	public function deleteBcmde($con, $bcmdid)
@@ -789,12 +894,12 @@ class wms_core
 
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			// var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	// var_dump($data);
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		// $row = mysql_fetch_assoc($result);
 		// return $row;
@@ -817,11 +922,11 @@ class wms_core
 
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		$row = mysql_fetch_assoc($result);
 		return $row;
@@ -836,11 +941,11 @@ class wms_core
 
 		$result = mysql_query($query, $con);
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
@@ -1321,7 +1426,8 @@ class wms_core
 	public function getAllPjByCarRecep($con, $car_recep_id)
 	{
 
-		$query = "SELECT * 
+		$query = "SELECT rvr.pj1_url, rvr.pj2_url, rvr.pj3_url, rvr.pj4_url, rvr.pj5_url, rvr.pj6_url, rvr.pj7_url, rvr.pj8_url,
+		rvr.pj9_url, rvr.pj10_url, rvr.pj11_url, rvr.pj12_url, car_name, model_name, VIN
 		FROM tbl_recep_vehi_repar rvr
 		JOIN tbl_add_car cr ON cr.car_id = rvr.add_car_id
 		JOIN tbl_model mo ON cr.car_model = mo.model_id
@@ -2802,9 +2908,9 @@ GROUP BY pp.per_id";
 
 		// On récupère les infos du devis de réparation d'un véhicule en les regroupant par 
 		// identifiants de diagnostic
-		$query = "SELECT devsim.devis_id, adv.*
+		$query = "SELECT DISTINCT devsim.devis_id, adv.*
 			from tbl_add_devis_simulation devsim
-			left join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
+			join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
 			";
 
 		// Exécution et stockage du résultat de la requête
@@ -4716,13 +4822,13 @@ GROUP BY pp.per_id";
 
 		$result = mysql_query($query, $con);
 
-		if ($result) {
-			printf("Nombre de ligne ajoutée : %d\n", mysql_affected_rows());
-		} else {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if ($result) {
+		// 	printf("Nombre de ligne ajoutée : %d\n", mysql_affected_rows());
+		// } else {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 
 		// var_dump($data);
 		// var_dump($image_url);
@@ -6014,7 +6120,7 @@ GROUP BY pp.per_id";
 	*/
 	public function deletePersoInfo($con, $p_id)
 	{
-		mysql_query("DELETE FROM `tbl_add_personnel` WHERE perso_id = " . (int) $p_id, $con);
+		mysql_query("DELETE FROM `tbl_add_personnel` WHERE per_id = " . (int) $p_id, $con);
 	}
 
 	public function deleteBonCmdeInfo($con, $bcde_id)
@@ -7525,8 +7631,8 @@ GROUP BY pp.per_id";
 				   '$data[add_date_visitetech_car]','$data[add_date_assurance_car]','$data[add_date_assurance_fin]', 
 				   '$data[genre_vehi_recep]','$data[energie_vehi_recep]','$data[assurance_vehi_recep]','$data[boite_vitesse_vehi_recep]',
 				   '$data[add_date_mise_circu]','$data[add_date_imma]','$data[nb_cylindre]','$data[couleur_vehi]','$data[fisc_vehi]',
-				   '$data[pj1_url]','$data[pj2_url]','$data[pj3_url]','$data[pj4_url]','$data[pj5_url]','$data[pj6_url]','$data[pj7_url]',
-				   '$data[pj8_url]','$data[pj9_url]','$data[pj10_url]','$data[pj11_url]','$data[pj12_url]','$data[duree_assurance]',
+				   '$data[pj1_url_car]','$data[pj2_url_car]','$data[pj3_url_car]','$data[pj4_url_car]','$data[pj5_url_car]','$data[pj6_url_car]','$data[pj7_url_car]',
+				   '$data[pj8_url_car]','$data[pj9_url_car]','$data[pj10_url_car]','$data[pj11_url_car]','$data[pj12_url_car]','$data[duree_assurance]',
 				   '$data[add_date_ctr_tech]','$data[delai_ctr_tech]','$data[add_date_derniere_vidange]',
 				   '$data[add_date_changement_filtre_air]','$data[add_date_changement_filtre_huile]',
 				   '$data[add_date_changement_filtre_pollen]','$data[km_last_vidange]','$data[statut_vistech]',
@@ -7552,21 +7658,21 @@ GROUP BY pp.per_id";
 				`add_date_changement_filtre_huile`='" . $data['add_date_changement_filtre_huile'] . "',
 				`add_date_changement_filtre_pollen`='" . $data['add_date_changement_filtre_pollen'] . "',
 				`km_last_vidange`='" . $data['km_last_vidange'] . "',
-				`pj1_url`='" . $data['pj1_url'] . "', `pj2_url`='" . $data['pj2_url'] . "', `pj3_url`='" . $data['pj3_url'] . "',
-				`pj4_url`='" . $data['pj4_url'] . "', `pj5_url`='" . $data['pj5_url'] . "', `pj6_url`='" . $data['pj6_url'] . "',
-				`pj7_url`='" . $data['pj7_url'] . "', `pj8_url`='" . $data['pj8_url'] . "', `pj9_url`='" . $data['pj9_url'] . "',
-				`pj10_url`='" . $data['pj10_url'] . "', `pj11_url`='" . $data['pj11_url'] . "', `pj12_url`='" . $data['pj12_url'] . "'
+				`pj1_url`='" . $data['pj1_url_car'] . "', `pj2_url`='" . $data['pj2_url_car'] . "', `pj3_url`='" . $data['pj3_url_car'] . "',
+				`pj4_url`='" . $data['pj4_url_car'] . "', `pj5_url`='" . $data['pj5_url_car'] . "', `pj6_url`='" . $data['pj6_url_car'] . "',
+				`pj7_url`='" . $data['pj7_url_car'] . "', `pj8_url`='" . $data['pj8_url_car'] . "', `pj9_url`='" . $data['pj9_url_car'] . "',
+				`pj10_url`='" . $data['pj10_url_car'] . "', `pj11_url`='" . $data['pj11_url_car'] . "', `pj12_url`='" . $data['pj12_url_car'] . "'
 				WHERE car_id='" . $data['repair_car'] . "'";
 				$result = mysql_query($query, $con);
 			}
 		}
 
-		if (!$result) {
-			// var_dump($data);
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	// var_dump($data);
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
 	}
 
 	/*

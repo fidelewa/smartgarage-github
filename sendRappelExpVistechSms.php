@@ -23,17 +23,17 @@ $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 // var_dump($resultSmsSent);
 // die();
 
-try {
-    // Exécution de la méthode d'envoi 
-    $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
-    $url = WEB_URL . 'repaircar/carlist.php?m=exp_vistech_sms_succes';
-    header("Location: $url");
-} catch (Exception $e) {
-    $url = WEB_URL . 'repaircar/carlist.php?m=exp_vistech_sms_failed';
-    header("Location: $url");
-}
+// try {
+//     // Exécution de la méthode d'envoi 
+//     $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
+//     $url = WEB_URL . 'repaircar/carlist.php?m=exp_vistech_sms_succes';
+//     header("Location: $url");
+// } catch (Exception $e) {
+//     $url = WEB_URL . 'repaircar/carlist.php?m=exp_vistech_sms_failed';
+//     header("Location: $url");
+// }
 
-// if($resultSmsSent){
+// if($resultSmsSent == "ok"){
 //     // echo "SMS envoyé avec succès !";
 //     $url = WEB_URL.'repaircar/carlist.php?m=exp_vistech_sms_succes';
 //     header("Location: $url");
@@ -41,3 +41,12 @@ try {
 //     $url = WEB_URL.'repaircar/carlist.php?m=exp_vistech_sms_failed';
 //     header("Location: $url");
 // }
+
+if($resultSmsSent == "ok"){
+    // echo "SMS envoyé avec succès !";
+    $url = WEB_URL.'dashboard.php?m=exp_vistech_sms_succes';
+    header("Location: $url");
+} else {
+    $url = WEB_URL.'dashboard.php?m=exp_vistech_sms_failed';
+    header("Location: $url");
+}

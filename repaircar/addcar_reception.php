@@ -47,7 +47,14 @@ if (isset($_GET['cid']) && (int) $_GET['cid'] > 0) {
 if (isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
 
   $recep_id = $_SESSION['objRecep']['user_id'];
-} else {
+
+  // Il n'y a pas que le réceptionniste qui peut réceptionner un véhicule
+  // le service client peut le faire également
+} else if (isset($_SESSION['objServiceClient']) && !empty($_SESSION['objServiceClient'])) {
+
+  $recep_id = $_SESSION['objServiceClient']['user_id'];
+} 
+else {
   $recep_id = 0;
 }
 
@@ -527,51 +534,51 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <legend>Ajouter des fichiers joints</legend>
                 <div class="row">
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_3" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_3_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_4" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_4_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11_car" />
                     </span>
                   </div>
                   <div class="col-sm-1">
-                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12" />
+                    <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12_car" />
                     </span>
                   </div>
                 </div>
@@ -743,11 +750,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1_recep" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2_recep" />
                 </span>
               </div>
             </div>
@@ -937,11 +944,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_3_recep" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_4_recep" />
                 </span>
               </div>
             </div>
@@ -1507,11 +1514,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_7_recep" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_8_recep" />
                 </span>
               </div>
             </div>
@@ -1748,11 +1755,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_13" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9_recep" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_14" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10_recep" />
                 </span>
               </div>
             </div>
@@ -1765,11 +1772,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_11_recep" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_15" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_12_recep" />
                 </span>
               </div>
             </div>
@@ -1782,11 +1789,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <legend>Ajouter des fichiers joints</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_9" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_5_recep" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_10" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6_recep" />
                 </span>
               </div>
             </div>

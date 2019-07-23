@@ -54,40 +54,40 @@ if (isset($_POST['car_names'])) {
 
 	// Récupération des URL des pièces jointes
 	if (isset($_FILES["pj_1"]) && !empty($_FILES["pj_1"])) {
-		$_POST['pj1_url'] = uploadPJ_1();
+		$_POST['pj1_url_car'] = uploadPJ_1();
 	}
 	if (isset($_FILES["pj_2"]) && !empty($_FILES["pj_2"])) {
-		$_POST['pj2_url'] = uploadPJ_2();
+		$_POST['pj2_url_car'] = uploadPJ_2();
 	}
 	if (isset($_FILES["pj_3"]) && !empty($_FILES["pj_3"])) {
-		$_POST['pj3_url'] = uploadPJ_3();
+		$_POST['pj3_url_car'] = uploadPJ_3();
 	}
 	if (isset($_FILES["pj_4"]) && !empty($_FILES["pj_4"])) {
-		$_POST['pj4_url'] = uploadPJ_4();
+		$_POST['pj4_url_car'] = uploadPJ_4();
 	}
 	if (isset($_FILES["pj_5"]) && !empty($_FILES["pj_5"])) {
-		$_POST['pj5_url'] = uploadPJ_5();
+		$_POST['pj5_url_car'] = uploadPJ_5();
 	}
 	if (isset($_FILES["pj_6"]) && !empty($_FILES["pj_6"])) {
-		$_POST['pj6_url'] = uploadPJ_6();
+		$_POST['pj6_url_car'] = uploadPJ_6();
 	}
 	if (isset($_FILES["pj_7"]) && !empty($_FILES["pj_7"])) {
-		$_POST['pj7_url'] = uploadPJ_7();
+		$_POST['pj7_url_car'] = uploadPJ_7();
 	}
 	if (isset($_FILES["pj_8"]) && !empty($_FILES["pj_8"])) {
-		$_POST['pj8_url'] = uploadPJ_8();
+		$_POST['pj8_url_car'] = uploadPJ_8();
 	}
 	if (isset($_FILES["pj_9"]) && !empty($_FILES["pj_9"])) {
-		$_POST['pj9_url'] = uploadPJ_9();
+		$_POST['pj9_url_car'] = uploadPJ_9();
 	}
 	if (isset($_FILES["pj_10"]) && !empty($_FILES["pj_10"])) {
-		$_POST['pj10_url'] = uploadPJ_10();
+		$_POST['pj10_url_car'] = uploadPJ_10();
 	}
 	if (isset($_FILES["pj_11"]) && !empty($_FILES["pj_11"])) {
-		$_POST['pj11_url'] = uploadPJ_11();
+		$_POST['pj11_url_car'] = uploadPJ_11();
 	}
 	if (isset($_FILES["pj_12"]) && !empty($_FILES["pj_12"])) {
-		$_POST['pj12_url'] = uploadPJ_12();
+		$_POST['pj12_url_car'] = uploadPJ_12();
 	}
 
 	$image_url = uploadImage();
@@ -977,84 +977,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
                 </div>
               </div>
               <input type="hidden" value="<?php echo $car_names; ?>" name="car_names" />
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="ddlYear"><span style="color:red;">*</span> Année :</label>
                 <input type="text" class='form-control' value="<?php echo $year; ?>" name="ddlYear" id="ddlYear" placeholder="Saisissez l'année de la voiture" required>
-                <!-- <div class="form-group col-md-3"> -->
-                <!-- <select required class='form-control' name="ddlYear" id="ddlYear">
-                      <?php
-                      if (isset($year)) {
-                        echo "<option selected value='" . $year . "'>" . $year . "</option>";
-                      } else { ?>
-
-                                                      <option value="">--Sélectionner l'année de votre voiture--</option>
-                                                      <option value="2020">2020</option>
-                                                      <option value="2019">2019</option>
-                                                      <option value="2018">2018</option>
-                                                      <option value="2017">2017</option>
-                                                      <option value="2016">2016</option>
-                                                      <option value="2015">2015</option>
-                                                      <option value="2014">2014</option>
-                                                      <option value="2013">2013</option>
-                                                      <option value="2012">2012</option>
-                                                      <option value="2011">2011</option>
-                                                      <option value="2010">2010</option>
-                                                      <option value="2009">2009</option>
-                                                      <option value="2008">2008</option>
-                                                      <option value="2007">2007</option>
-                                                      <option value="2006">2006</option>
-                                                      <option value="2005">2005</option>
-                                                      <option value="2004">2004</option>
-                                                      <option value="2003">2003</option>
-                                                      <option value="2002">2002</option>
-                                                      <option value="2001">2001</option>
-                                                      <option value="2000">2000</option>
-                                                      <option value="1999">1999</option>
-                                                      <option value="1998">1998</option>
-                                                      <option value="1997">1997</option>
-                                                      <option value="1996">1996</option>
-                                                      <option value="1995">1995</option>
-                                                      <option value="1994">1994</option>
-                                                      <option value="1993">1993</option>
-                                                      <option value="1992">1992</option>
-                                                      <option value="1991">1991</option>
-                                                      <option value="1990">1990</option>
-                                                      <option value="1999">1989</option>
-                                                      <option value="1998">1988</option>
-                                                      <option value="1997">1987</option>
-                                                      <option value="1996">1986</option>
-                                                      <option value="1995">1985</option>
-                                                      <option value="1994">1984</option>
-                                                      <option value="1993">1983</option>
-                                                      <option value="1992">1982</option>
-                                                      <option value="1991">1981</option>
-                                                      <option value="1990">1980</option>
-                                                      <option value="1999">1979</option>
-                                                      <option value="1998">1978</option>
-                                                      <option value="1997">1977</option>
-                                                      <option value="1996">1976</option>
-                                                      <option value="1995">1975</option>
-                                                      <option value="1994">1974</option>
-                                                      <option value="1993">1973</option>
-                                                      <option value="1992">1972</option>
-                                                      <option value="1991">1971</option>
-                                                      <option value="1990">1970</option>
-                                                      <option value="1999">1969</option>
-                                                      <option value="1998">1968</option>
-                                                      <option value="1997">1967</option>
-                                                      <option value="1996">1966</option>
-                                                      <option value="1995">1965</option>
-                                                      <option value="1994">1964</option>
-                                                      <option value="1993">1963</option>
-                                                      <option value="1992">1962</option>
-                                                      <option value="1991">1961</option>
-                                                      <option value="1990">1960</option>
-
-                      <?php } ?>
-                    </select> -->
-                <!-- <input type="text" placeholder="Year Name" value="<?php echo $year_name; ?>" name="txtYear" id="txtYear" class="form-control" required /> -->
-                <!-- </div> -->
-              </div>
+              </div> -->
               <div class="form-group">
                 <label for="car_chasis_no"><span style="color:red;">*</span> Chasis No :</label>
                 <input required type="text" name="car_chasis_no" value="<?php echo $c_chasis_no; ?>" id="car_chasis_no" class="form-control" placeholder="Saisissez le numéro de chasis de la voiture">
@@ -1103,21 +1029,21 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
                   </div> -->
 
               <div class="form-group">
-                <label for="add_date"><span style="color:red;">*</span> Date de changement de filtre à air:</label>
+                <label for="add_date"> Date de changement de filtre à air:</label>
                 <input type="text" name="add_date_changement_filtre_air" value="<?php echo $add_date_changement_filtre_air; ?>" id="add_date_changement_filtre_air" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <div class="form-group">
-                <label for="add_date"><span style="color:red;">*</span> Date de changement de filtre à huile:</label>
+                <label for="add_date"> Date de changement de filtre à huile:</label>
                 <input type="text" name="add_date_changement_filtre_huile" value="<?php echo $add_date_changement_filtre_huile; ?>" id="add_date_changement_filtre_huile" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <div class="form-group">
-                <label for="add_date"><span style="color:red;">*</span> Date de changement de filtre à pollen:</label>
+                <label for="add_date"> Date de changement de filtre à pollen:</label>
                 <input type="text" name="add_date_changement_filtre_pollen" value="<?php echo $add_date_changement_filtre_pollen; ?>" id="add_date_changement_filtre_pollen" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
 
               <div class="form-group">
                 <label for="add_date"><span style="color:red;">*</span> Date de la prochaine visite technique:</label>
-                <input required type="text" name="add_date_visitetech" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+                <input type="text" name="add_date_visitetech" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
 
               <div class="form-group">
@@ -1126,7 +1052,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
               </div>
 
               <div class="form-group">
-                <label for="add_date"><span style="color:red;">*</span> Date de dernière vidange:</label>
+                <label for="add_date"> Date de dernière vidange:</label>
                 <input type="text" name="add_date_derniere_vidange" value="<?php echo $add_date_derniere_vidange; ?>" id="add_date_derniere_vidange" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
 
@@ -1253,13 +1179,29 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_assurance') {
                   <option value="">--Sélectionner le type de boite de vitesse--</option>
                   <?php if (isset($type_boite_vitesse) && ($type_boite_vitesse == "automatique")) {
                     echo "<option selected value='" . $type_boite_vitesse . "'>Automatique</option>";
-                    echo "<option value='manuel'>Manuel</option>";
+                    echo "<option value='semi-automatique'>Semi-automatique</option>";
+                    echo "<option value='Manuel'>Manuel</option>";
+                    echo "<option value='hybride'>Hybride</option>";
+                  } elseif (isset($type_boite_vitesse) && ($type_boite_vitesse == "semi-automatique")) {
+                    echo "<option value='automatique'>Automatique</option>";
+                    echo "<option selected value='" . $type_boite_vitesse . "'>Semi-automatique</option>";
+                    echo "<option value='Manuel'>Manuel</option>";
+                    echo "<option value='hybride'>Hybride</option>";
                   } elseif (isset($type_boite_vitesse) && ($type_boite_vitesse == "manuel")) {
                     echo "<option value='automatique'>Automatique</option>";
+                    echo "<option value='semi-automatique'>Semi-automatique</option>";
                     echo "<option selected value='" . $type_boite_vitesse . "'>Manuel</option>";
+                    echo "<option value='hybride'>Hybride</option>";
+                  } elseif (isset($type_boite_vitesse) && ($type_boite_vitesse == "hybride")) {
+                    echo "<option value='automatique'>Automatique</option>";
+                    echo "<option value='semi-automatique'>Semi-automatique</option>";
+                    echo "<option value='Manuel'>Manuel</option>";
+                    echo "<option selected value='" . $type_boite_vitesse . "'>Hybride</option>";
                   } else {
                     echo "<option value='automatique'>Automatique</option>";
+                    echo "<option value='semi-automatique'>Semi-automatique</option>";
                     echo "<option value='Manuel'>Manuel</option>";
+                    echo "<option value='hybride'>Hybride</option>";
                   }
                   ?>
                 </select>

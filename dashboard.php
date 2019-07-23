@@ -14,6 +14,10 @@ $car_stock = $wms->getAllActiveCarList($link);
 $personnel = $wms->getAllPersonnelList($link);
 $settings = $wms->getWebsiteSettingsInformation($link);
 
+$delinfo = 'none';
+$addinfo = 'none';
+$failedinfo = 'none';
+
 //get all car info by current year
 $total_car_year_sold = 0;
 $sold_car = $wms->getSellCarMonthlyData($link, date('Y'));
@@ -179,17 +183,69 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
   <div>
     <?php
 
+    if (isset($_GET['m']) && $_GET['m'] == 'exp_vistech_sms_succes') {
+      $addinfo = 'block';
+      $msg = "SMS de rappel de la visite technique envoyé avec succès";
+    }
+
+    if (isset($_GET['m']) && $_GET['m'] == 'av_exp_assur_sms_succes') {
+      $addinfo = 'block';
+      $msg = "SMS de rappel de l'assurance envoyé avec succès";
+    }
+
+    if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_succes') {
+      $addinfo = 'block';
+      $msg = "SMS de rappel de la visite technique envoyé avec succès";
+    }
+
+    if (isset($_GET['m']) && $_GET['m'] == 'exp_assur_sms_failed') {
+      $failedinfo = 'block';
+      $msg = "L'envoi du SMS de rappel de l'assurance à échoué";
+    }
+
+    if (isset($_GET['m']) && $_GET['m'] == 'exp_vistech_sms_failed') {
+      $failedinfo = 'block';
+      $msg = "L'envoi du SMS de rappel de la visite technique à échoué";
+    }
+
+    if (isset($_GET['m']) && $_GET['m'] == 'av_exp_assur_sms_failed') {
+      $failedinfo = 'block';
+      $msg = "L'envoi du SMS de rappel de l'assurance à échoué";
+    }
+
+    if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
+      $failedinfo = 'block';
+      $msg = "L'envoi du SMS de rappel de la visite technique à échoué";
+    }
+
     $url_reste_sms = "https://app.emisms.com/sms/api?action=check-balance&api_key=S2NnRmFuck5KZGJheEFBQUVoc2k=&response=json";
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $url_reste_sms);
-    curl_exec($curl);
-    curl_close($curl);
+    // $curl = curl_init();
+    // curl_setopt($curl, CURLOPT_URL, $url_reste_sms);
+    // curl_exec($curl);
+    // curl_close($curl);
     $reste_sms = file_get_contents($url_reste_sms);
-    $reste_sms_list = json_decode($reste_sms,true);
-    echo "Il vous reste encore <span class='label label-success'>".$reste_sms_list['balance']."</span> SMS";
+    $reste_sms_list = json_decode($reste_sms, true);
+    echo "<p style='font-size:12pt;font-weigth:500'>Nombre de SMS restants : <span class='label label-success'>" . $reste_sms_list['balance'] . "</span></p>";
     ?>
 
+    <div id="us" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+      <!-- <h4><i class="icon fa fa-ban"></i></h4> -->
+      <?php echo $msg; ?>
+    </div>
+    <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+      <!-- <h4><i class="icon fa fa-ban"></i></h4> -->
+      <?php echo $msg; ?>
+    </div>
+    <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+      <!-- <h4><i class="icon fa fa-check"></i> Success!</h4> -->
+      <?php echo $msg; ?>
+    </div>
+
   </div>
+
 
   <div class="box box-success">
     <div class="box-header">
@@ -200,7 +256,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
       <table class="table sakotable table-bordered table-striped dt-responsive">
         <thead>
           <tr>
-            <th>ID Reception</th>
+            <th>ID Diagnostic</th>
             <th>Immatriculation du véhicule</th>
             <th>Receptionné par</th>
             <th>Statut attribution</th>
@@ -232,10 +288,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
             // if (file_exists(ROOT_PATH . '/img/upload/' . $row['customer_image']) && $row['customer_image'] != '') {
             //     $image_customer = WEB_URL . 'img/upload/' . $row['customer_image']; //customer iamge
             // }
-
             ?>
             <tr>
-              <td><?php echo $row['car_id']; ?></td>
+              <td><?php echo $row['vehi_diag_id']; ?></td>
+              <!-- <td><?php echo $row['car_id']; ?></td> -->
               <td><?php echo $row['num_matricule']; ?></td>
               <td><?php echo $row['recep_name']; ?></td>
               <td><?php
@@ -685,10 +741,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
   // - END PIE CHART -
   // -----------------
   $(document).ready(function() {
-    setTimeout(function() {
-      $("#me").hide(300);
-      $("#you").hide(300);
-    }, 3000);
-  });
+      setTimeout(function() {
+        $("#me").hide(300);
+        $("#you").hide(300);
+        $("#us").hide(300);
+      }, 3000);
+    });
+
 </script>
 <?php include('footer.php'); ?>

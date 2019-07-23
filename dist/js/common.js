@@ -485,13 +485,29 @@ function totalRemiseCalculate() {
 	// Application de la remise sur le total ht
 	total_ht = parseFloat(total_ht) - parseFloat(total_remise);
 
-
 	// console.log('Total HT general (après remise) : ' + total_ht);
 
 	// total_ttc du row courant
 	total_ht = parseFloat(total_ht).toFixed(2);
+
 	$("#total_ht_gene").val(total_ht);
 	totalEstCost();
+}
+
+function totalDepenseCalculate() {
+	var total_depense_general = 0;
+
+	if ($(".etotal").length > 0) { // Si le nombre d'élément possédant la classe etotal est supérieur à 0
+		for (var i = 0; i < $(".etotal").length; i++) {// on parcours ces éléments
+			total_depense_general += parseInt($(".etotal")[i].value); // On prend la valeur (converti en flottant) de chaque élément qu'on additionne au total des dépenses generales
+		}
+	}
+
+	// on récupère le total ht général que l'on converti en flottant
+
+	total_depense_general = parseFloat(total_depense_general).toFixed(2);
+
+	$("#total_depense").val(total_depense_general);
 }
 
 function CalculTotalHTGene() {

@@ -359,7 +359,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                 totalEstCost();
                 $("#filter_popup").modal("hide")
             } else {
-                alert("Stock Empty so you cannot add parts");
+                alert("Le stock de la pièce est vide");
             }
         }
 

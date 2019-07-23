@@ -35,12 +35,12 @@ class SmsApi
         //dump($smsapiUrl);die();
         //return file_get_contents($smsapiUrl);
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $smsapiUrl);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_exec($curl);
-        curl_close($curl);
+        // $curl = curl_init();
+        // curl_setopt($curl, CURLOPT_URL, $smsapiUrl);
+        // curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        // curl_setopt($curl, CURLOPT_POST, true);
+        // curl_exec($curl);
+        // curl_close($curl);
         $reste_sms = file_get_contents($smsapiUrl);
         $reste_sms_list = json_decode($reste_sms,true);
         return $reste_sms_list['code'];

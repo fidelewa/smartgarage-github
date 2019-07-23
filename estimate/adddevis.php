@@ -253,37 +253,7 @@ if (isset($_POST) && !empty($_POST)) {
                             <div class="box-header">
                                 <h3 class="box-title"><i class="fa fa-search"></i> Rechercher des pièces</h3>
                             </div>
-                            <!-- <div class="form-group col-md-6">
-                                <label for="ddlMake">Marque :</label>
-                                <select class="form-control" onchange="loadYear(this.value);" name="ddlMake" id="ddlMake">
-                                    <option value=''>--Sélectionnez Marque--</option>
-                                    <?php
-                                    $make_list = $wms->get_all_make_list($link);
-                                    foreach ($make_list as $make) {
-                                        echo "<option value='" . $make['make_id'] . "'>" . $make['make_name'] . "</option>";
-                                    }
-
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="ddl_model">Modèle :</label>
-                                <select class="form-control" onchange="loadPartsData();" name="ddlModel" id="ddl_model">
-                                    <option value=''>--Choisir un modèle--</option>
-                                </select>
-                            </div> -->
-                            <!-- <div class="form-group col-md-4">
-                                <label for="ddl_model">Modèle :</label>
-                                <select class="form-control" onchange="loadYearData(this.value);" name="ddlModel" id="ddl_model">
-                                    <option value=''>--Choisir un modèle--</option>
-                                </select>
-                            </div> -->
-                            <!-- <div class="form-group col-md-4">
-                                <label for="ddlYear">Année :</label>
-                                <select class="form-control" name="ddlYear" onchange="loadPartsData();" id="ddlYear">
-                                    <option value=''>--Sélectionnez Année--</option>
-                                </select>
-                            </div> -->
+                            
                             <div class="form-group col-md-12">
                                 <label for="txtPartsName">Saisissez le nom ou le code barre de la pièce :</label>
                                 <input class="form-control" type="text" name="txtPartsName" id="txtPartsName" />
@@ -317,7 +287,6 @@ if (isset($_POST) && !empty($_POST)) {
     <input type="hidden" id="estimate_row" value="0" />
     <script>
         var row = <?php echo $row; ?>;
-        var web_url = "<?php echo WEB_URL; ?>";
 
         function addEstimate() {
             html = '<tr id="estimate-row' + row + '">';
@@ -380,6 +349,7 @@ if (isset($_POST) && !empty($_POST)) {
 
         function verif_pwd() {
             devis_pwd = $("#devis_pwd").val();
+            msg_invalid = "<div class='alert alert-warning alert-dismissable' style='display:block'><button aria-hidden='true' data-dismiss='alert' class='close' type='button'><i class='fa fa-close'></i></button><h4> mot de passe invalide </h4></div>";
 
             $.ajax({
                 url: '../ajax/getstate.php',
@@ -389,11 +359,12 @@ if (isset($_POST) && !empty($_POST)) {
                 success: function(data) {
 
                     if(data != "") {
-                        console.log(data)
+                        // console.log(data)
                         $("#mdp_valid_msg").html(data);
                         $("#form_devis").prop('disabled', false);
                     } else {
-                        console.log(data)
+                        // console.log(msg_invalid)
+                        $("#mdp_valid_msg").html(msg_invalid);
                         $("#form_devis").prop('disabled', true);
                     }
                     
@@ -418,7 +389,7 @@ if (isset($_POST) && !empty($_POST)) {
                 totalEstCost();
                 $("#filter_popup").modal("hide")
             } else {
-                alert("Stock Empty so you cannot add parts");
+                alert("Le stock de la pièce est vide");
             }
         }
 

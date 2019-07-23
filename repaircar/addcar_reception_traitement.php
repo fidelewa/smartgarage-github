@@ -5,46 +5,304 @@ include_once('../header.php');
 // var_dump($_POST);
 // die();
 
+// Fonction d'upload des pièces jointes
+function uploadPJ_1_car()
+{
+	if ((!empty($_FILES["pj_1_car"])) && ($_FILES['pj_1_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_1_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_1_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_1_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_1_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_1_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_1_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_1_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+// Fonction d'upload des pièces jointes
+function uploadPJ_2_car()
+{
+	if ((!empty($_FILES["pj_2_car"])) && ($_FILES['pj_2_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_2_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_2_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_2_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_2_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_2_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_2_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_2_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_2_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+// Fonction d'upload des pièces jointes
+function uploadPJ_3_car()
+{
+	if ((!empty($_FILES["pj_3_car"])) && ($_FILES['pj_3_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_3_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_3_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_3_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_3_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_3_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_3_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_3_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_3_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+// Fonction d'upload des pièces jointes
+function uploadPJ_4_car()
+{
+	if ((!empty($_FILES["pj_4_car"])) && ($_FILES['pj_4_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_4_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_4_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_4_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_4_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_4_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_4_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_4_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_4_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+// Fonction d'upload des pièces jointes
+function uploadPJ_5_car()
+{
+	if ((!empty($_FILES["pj_5_car"])) && ($_FILES['pj_5_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_5_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_5_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_5_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_5_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_5_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_5_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_5_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_5_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+function uploadPJ_6_car()
+{
+	if ((!empty($_FILES["pj_6_car"])) && ($_FILES['pj_6_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_6_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_6_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_6_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_6_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_6_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_6_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_6_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_6_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+function uploadPJ_7_car()
+{
+	if ((!empty($_FILES["pj_7_car"])) && ($_FILES['pj_7_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_7_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_7_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_7_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_7_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_7_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_7_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_7_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+function uploadPJ_8_car()
+{
+	if ((!empty($_FILES["pj_8_car"])) && ($_FILES['pj_8_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_8_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_8_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_8_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_8_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_8_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_8_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_8_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+function uploadPJ_9_car()
+{
+	if ((!empty($_FILES["pj_9_car"])) && ($_FILES['pj_9_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_9_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_9_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_9_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_9_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_9_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_9_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_9_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+function uploadPJ_10_car()
+{
+	if ((!empty($_FILES["pj_10_car"])) && ($_FILES['pj_10_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_10_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_10_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_10_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_10_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_10_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_10_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_10_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+function uploadPJ_11_car()
+{
+	if ((!empty($_FILES["pj_11_car"])) && ($_FILES['pj_11_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_11_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_11_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_11_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_11_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_11_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_11_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_11_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+function uploadPJ_12_car()
+{
+	if ((!empty($_FILES["pj_12_car"])) && ($_FILES['pj_12_car']['error'] == 0)) {
+		$filename = basename($_FILES['pj_12_car']['name']);
+		$ext = substr($filename, strrpos($filename, '.') + 1);
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_12_car"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_12_car"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_12_car"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_12_car"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_12_car"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
+		) {
+			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_12_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
+			return $filename;
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
+// Enregistrement des informations du véhicule
 if (isset($_POST['car_names'])) {
 
 	// TRAITEMENT DES PIECES JOINTES
 
 	// Récupération des URL des pièces jointes
-	if (isset($_FILES["pj_1"]) && !empty($_FILES["pj_1"])) {
-		$_POST['pj1_url'] = uploadPJ_1();
+	if (isset($_FILES["pj_1_car"]) && !empty($_FILES["pj_1_car"])) {
+		$_POST['pj1_url_car'] = uploadPJ_1_car();
 	}
-	if (isset($_FILES["pj_2"]) && !empty($_FILES["pj_2"])) {
-		$_POST['pj2_url'] = uploadPJ_2();
+	if (isset($_FILES["pj_2_car"]) && !empty($_FILES["pj_2_car"])) {
+		$_POST['pj2_url_car'] = uploadPJ_2_car();
 	}
-	if (isset($_FILES["pj_3"]) && !empty($_FILES["pj_3"])) {
-		$_POST['pj3_url'] = uploadPJ_3();
+	if (isset($_FILES["pj_3_car"]) && !empty($_FILES["pj_3_car"])) {
+		$_POST['pj3_url_car'] = uploadPJ_3_car();
 	}
-	if (isset($_FILES["pj_4"]) && !empty($_FILES["pj_4"])) {
-		$_POST['pj4_url'] = uploadPJ_4();
+	if (isset($_FILES["pj_4_car"]) && !empty($_FILES["pj_4_car"])) {
+		$_POST['pj4_url_car'] = uploadPJ_4_car();
 	}
-	if (isset($_FILES["pj_5"]) && !empty($_FILES["pj_5"])) {
-		$_POST['pj5_url'] = uploadPJ_5();
+	if (isset($_FILES["pj_5_car"]) && !empty($_FILES["pj_5_car"])) {
+		$_POST['pj5_url_car'] = uploadPJ_5_car();
 	}
-	if (isset($_FILES["pj_6"]) && !empty($_FILES["pj_6"])) {
-		$_POST['pj6_url'] = uploadPJ_6();
+	if (isset($_FILES["pj_6_car"]) && !empty($_FILES["pj_6_car"])) {
+		$_POST['pj6_url_car'] = uploadPJ_6_car();
 	}
-	if (isset($_FILES["pj_7"]) && !empty($_FILES["pj_7"])) {
-		$_POST['pj7_url'] = uploadPJ_7();
+	if (isset($_FILES["pj_7_car"]) && !empty($_FILES["pj_7_car"])) {
+		$_POST['pj7_url_car'] = uploadPJ_7_car();
 	}
-	if (isset($_FILES["pj_8"]) && !empty($_FILES["pj_8"])) {
-		$_POST['pj8_url'] = uploadPJ_8();
+	if (isset($_FILES["pj_8_car"]) && !empty($_FILES["pj_8_car"])) {
+		$_POST['pj8_url_car'] = uploadPJ_8_car();
 	}
-	if (isset($_FILES["pj_9"]) && !empty($_FILES["pj_9"])) {
-		$_POST['pj9_url'] = uploadPJ_9();
+	if (isset($_FILES["pj_9_car"]) && !empty($_FILES["pj_9_car"])) {
+		$_POST['pj9_url_car'] = uploadPJ_9_car();
 	}
-	if (isset($_FILES["pj_10"]) && !empty($_FILES["pj_10"])) {
-		$_POST['pj10_url'] = uploadPJ_10();
+	if (isset($_FILES["pj_10_car"]) && !empty($_FILES["pj_10_car"])) {
+		$_POST['pj10_url_car'] = uploadPJ_10_car();
 	}
-	if (isset($_FILES["pj_11"]) && !empty($_FILES["pj_11"])) {
-		$_POST['pj11_url'] = uploadPJ_11();
+	if (isset($_FILES["pj_11_car"]) && !empty($_FILES["pj_11_car"])) {
+		$_POST['pj11_url_car'] = uploadPJ_11_car();
 	}
-	if (isset($_FILES["pj_12"]) && !empty($_FILES["pj_12"])) {
-		$_POST['pj12_url'] = uploadPJ_12();
+	if (isset($_FILES["pj_12_car"]) && !empty($_FILES["pj_12_car"])) {
+		$_POST['pj12_url_car'] = uploadPJ_12_car();
 	}
 
 	$image_url = uploadImage();
@@ -416,6 +674,9 @@ if (isset($_POST['car_names'])) {
 	// var_dump($_POST['statut_vistech']);
 	// die();
 
+	// var_dump($_FILES);
+	// die();
+
 	// On insère la nouvelle valeur de la colonne car_name en BDD
 	$wms->saveUpdateRepairCarInformation($link, $_POST, $image_url);
 }
@@ -553,69 +814,60 @@ if (!empty($_POST['sortie_remarq_recep_vehi_text'])) {
 	$_POST['sortie_remarq_recep_vehi_text'] = mysql_real_escape_string($_POST['sortie_remarq_recep_vehi_text']);
 }
 
+
+// Récupération des fichiers joints de la réception
 // Récupération des URL des pièces jointes
-if (isset($_FILES["pj_1"]) && !empty($_FILES["pj_1"])) {
-	$_POST['pj1_url'] = uploadPJ_1();
+if (isset($_FILES["pj_1_recep"]) && !empty($_FILES["pj_1_recep"])) {
+	$_POST['pj1_url'] = uploadPJ_1_recep();
 }
-if (isset($_FILES["pj_2"]) && !empty($_FILES["pj_2"])) {
-	$_POST['pj2_url'] = uploadPJ_2();
+if (isset($_FILES["pj_2_recep"]) && !empty($_FILES["pj_2_recep"])) {
+	$_POST['pj2_url'] = uploadPJ_2_recep();
 }
-if (isset($_FILES["pj_3"]) && !empty($_FILES["pj_3"])) {
-	$_POST['pj3_url'] = uploadPJ_3();
+if (isset($_FILES["pj_3_recep"]) && !empty($_FILES["pj_3_recep"])) {
+	$_POST['pj3_url'] = uploadPJ_3_recep();
 }
-if (isset($_FILES["pj_4"]) && !empty($_FILES["pj_4"])) {
-	$_POST['pj4_url'] = uploadPJ_4();
+if (isset($_FILES["pj_4_recep"]) && !empty($_FILES["pj_4_recep"])) {
+	$_POST['pj4_url'] = uploadPJ_4_recep();
 }
-if (isset($_FILES["pj_5"]) && !empty($_FILES["pj_5"])) {
-	$_POST['pj5_url'] = uploadPJ_5();
+if (isset($_FILES["pj_5_recep"]) && !empty($_FILES["pj_5_recep"])) {
+	$_POST['pj5_url'] = uploadPJ_5_recep();
 }
-if (isset($_FILES["pj_6"]) && !empty($_FILES["pj_6"])) {
-	$_POST['pj6_url'] = uploadPJ_6();
+if (isset($_FILES["pj_6_recep"]) && !empty($_FILES["pj_6_recep"])) {
+	$_POST['pj6_url'] = uploadPJ_6_recep();
 }
-if (isset($_FILES["pj_7"]) && !empty($_FILES["pj_7"])) {
-	$_POST['pj7_url'] = uploadPJ_7();
+if (isset($_FILES["pj_7_recep"]) && !empty($_FILES["pj_7_recep"])) {
+	$_POST['pj7_url'] = uploadPJ_7_recep();
 }
-if (isset($_FILES["pj_8"]) && !empty($_FILES["pj_8"])) {
-	$_POST['pj8_url'] = uploadPJ_8();
+if (isset($_FILES["pj_8_recep"]) && !empty($_FILES["pj_8_recep"])) {
+	$_POST['pj8_url'] = uploadPJ_8_recep();
 }
-if (isset($_FILES["pj_9"]) && !empty($_FILES["pj_9"])) {
-	$_POST['pj9_url'] = uploadPJ_9();
+if (isset($_FILES["pj_9_recep"]) && !empty($_FILES["pj_9_recep"])) {
+	$_POST['pj9_url'] = uploadPJ_9_recep();
 }
-if (isset($_FILES["pj_10"]) && !empty($_FILES["pj_10"])) {
-	$_POST['pj10_url'] = uploadPJ_10();
+if (isset($_FILES["pj_10_recep"]) && !empty($_FILES["pj_10_recep"])) {
+	$_POST['pj10_url'] = uploadPJ_10_recep();
 }
-if (isset($_FILES["pj_11"]) && !empty($_FILES["pj_11"])) {
-	$_POST['pj11_url'] = uploadPJ_11();
+if (isset($_FILES["pj_11_recep"]) && !empty($_FILES["pj_11_recep"])) {
+	$_POST['pj11_url'] = uploadPJ_11_recep();
 }
-if (isset($_FILES["pj_12"]) && !empty($_FILES["pj_12"])) {
-	$_POST['pj12_url'] = uploadPJ_12();
-}
-if (isset($_FILES["pj_13"]) && !empty($_FILES["pj_13"])) {
-	$_POST['pj13_url'] = uploadPJ_13();
-}
-if (isset($_FILES["pj_14"]) && !empty($_FILES["pj_14"])) {
-	$_POST['pj14_url'] = uploadPJ_14();
-}
-if (isset($_FILES["pj_15"]) && !empty($_FILES["pj_15"])) {
-	$_POST['pj15_url'] = uploadPJ_15();
-}
-if (isset($_FILES["pj_16"]) && !empty($_FILES["pj_16"])) {
-	$_POST['pj16_url'] = uploadPJ_16();
+if (isset($_FILES["pj_12_recep"]) && !empty($_FILES["pj_12_recep"])) {
+	$_POST['pj12_url'] = uploadPJ_12_recep();
 }
 
-// Fonction d'upload des pièces jointes
-function uploadPJ_1()
+function uploadPJ_1_recep()
 {
-	if ((!empty($_FILES["pj_1"])) && ($_FILES['pj_1']['error'] == 0)) {
-		$filename = basename($_FILES['pj_1']['name']);
+	if ((!empty($_FILES["pj_1_recep"])) && ($_FILES['pj_1_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_1_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_1"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_1"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_1"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_1"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_1_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_1_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_1_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_1_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_1_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_1"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_1"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_1_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -623,18 +875,20 @@ function uploadPJ_1()
 	return '';
 }
 
-function uploadPJ_2()
+function uploadPJ_2_recep()
 {
-	if ((!empty($_FILES["pj_2"])) && ($_FILES['pj_2']['error'] == 0)) {
-		$filename = basename($_FILES['pj_2']['name']);
+	if ((!empty($_FILES["pj_2_recep"])) && ($_FILES['pj_2_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_2_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_2"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_2"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_2"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_2"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_2_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_2_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_2_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_2_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_2_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_2"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_2"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_2_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -642,18 +896,20 @@ function uploadPJ_2()
 	return '';
 }
 
-function uploadPJ_3()
+function uploadPJ_3_recep()
 {
-	if ((!empty($_FILES["pj_3"])) && ($_FILES['pj_3']['error'] == 0)) {
-		$filename = basename($_FILES['pj_3']['name']);
+	if ((!empty($_FILES["pj_3_recep"])) && ($_FILES['pj_3_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_3_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_3"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_3"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_3"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_3"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_3_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_3_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_3_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_3_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_3_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_3"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_3"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_3_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -661,18 +917,20 @@ function uploadPJ_3()
 	return '';
 }
 
-function uploadPJ_4()
+function uploadPJ_4_recep()
 {
-	if ((!empty($_FILES["pj_4"])) && ($_FILES['pj_4']['error'] == 0)) {
-		$filename = basename($_FILES['pj_4']['name']);
+	if ((!empty($_FILES["pj_4_recep"])) && ($_FILES['pj_4_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_4_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_4"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_4"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_4"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_4"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_4_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_4_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_4_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_4_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_4_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_4"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_4"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_4_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -680,18 +938,20 @@ function uploadPJ_4()
 	return '';
 }
 
-function uploadPJ_5()
+function uploadPJ_5_recep()
 {
-	if ((!empty($_FILES["pj_5"])) && ($_FILES['pj_5']['error'] == 0)) {
-		$filename = basename($_FILES['pj_5']['name']);
+	if ((!empty($_FILES["pj_5_recep"])) && ($_FILES['pj_5_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_5_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_5"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_5"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_5"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_5"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_5_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_5_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_5_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_5_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_5_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_5"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_5"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_5_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -699,18 +959,20 @@ function uploadPJ_5()
 	return '';
 }
 
-function uploadPJ_6()
+function uploadPJ_6_recep()
 {
-	if ((!empty($_FILES["pj_6"])) && ($_FILES['pj_6']['error'] == 0)) {
-		$filename = basename($_FILES['pj_6']['name']);
+	if ((!empty($_FILES["pj_6_recep"])) && ($_FILES['pj_6_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_6_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_6"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_6"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_6"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_6"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_6_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_6_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_6_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_6_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_6_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_6"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_6"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_6_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -718,18 +980,20 @@ function uploadPJ_6()
 	return '';
 }
 
-function uploadPJ_7()
+function uploadPJ_7_recep()
 {
-	if ((!empty($_FILES["pj_7"])) && ($_FILES['pj_7']['error'] == 0)) {
-		$filename = basename($_FILES['pj_7']['name']);
+	if ((!empty($_FILES["pj_7_recep"])) && ($_FILES['pj_7_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_7_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_7"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_7"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_7"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_7"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_7_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_7_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_7_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_7_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_7_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_7"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_7"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_7_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -737,18 +1001,20 @@ function uploadPJ_7()
 	return '';
 }
 
-function uploadPJ_8()
+function uploadPJ_8_recep()
 {
-	if ((!empty($_FILES["pj_8"])) && ($_FILES['pj_8']['error'] == 0)) {
-		$filename = basename($_FILES['pj_8']['name']);
+	if ((!empty($_FILES["pj_8_recep"])) && ($_FILES['pj_8_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_8_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_8"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_8"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_8"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_8"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_8_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_8_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_8_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_8_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_8_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_8"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_8"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_8_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -756,18 +1022,20 @@ function uploadPJ_8()
 	return '';
 }
 
-function uploadPJ_9()
+function uploadPJ_9_recep()
 {
-	if ((!empty($_FILES["pj_9"])) && ($_FILES['pj_9']['error'] == 0)) {
-		$filename = basename($_FILES['pj_9']['name']);
+	if ((!empty($_FILES["pj_9_recep"])) && ($_FILES['pj_9_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_9_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_9"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_9"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_9"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_9"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_9_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_9_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_9_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_9_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_9_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_9"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_9"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_9_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -775,18 +1043,20 @@ function uploadPJ_9()
 	return '';
 }
 
-function uploadPJ_10()
+function uploadPJ_10_recep()
 {
-	if ((!empty($_FILES["pj_10"])) && ($_FILES['pj_10']['error'] == 0)) {
-		$filename = basename($_FILES['pj_10']['name']);
+	if ((!empty($_FILES["pj_10_recep"])) && ($_FILES['pj_10_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_10_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_10"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_10"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_10"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_10"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_10_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_10_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_10_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_10_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_10_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_10"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_10"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_10_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -794,18 +1064,20 @@ function uploadPJ_10()
 	return '';
 }
 
-function uploadPJ_11()
+function uploadPJ_11_recep()
 {
-	if ((!empty($_FILES["pj_11"])) && ($_FILES['pj_11']['error'] == 0)) {
-		$filename = basename($_FILES['pj_11']['name']);
+	if ((!empty($_FILES["pj_11_recep"])) && ($_FILES['pj_11_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_11_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_11"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_11"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_11"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_11"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_11_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_11_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_11_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_11_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_11_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_11"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_11"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_11_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -813,94 +1085,20 @@ function uploadPJ_11()
 	return '';
 }
 
-function uploadPJ_12()
+function uploadPJ_12_recep()
 {
-	if ((!empty($_FILES["pj_12"])) && ($_FILES['pj_12']['error'] == 0)) {
-		$filename = basename($_FILES['pj_12']['name']);
+	if ((!empty($_FILES["pj_12_recep"])) && ($_FILES['pj_12_recep']['error'] == 0)) {
+		$filename = basename($_FILES['pj_12_recep']['name']);
 		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_12"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_12"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_12"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_12"]["type"] == 'application/pdf') || ($ext == "docx")
+		if ((($ext == "jpg" || $ext == "JPG") && $_FILES["pj_12_recep"]["type"] == 'image/jpeg') || (($ext == "png" || $ext == "PNG") && $_FILES["pj_12_recep"]["type"] == 'image/png')
+			|| (($ext == "gif" || $ext == "GIF") && $_FILES["pj_12_recep"]["type"] == 'image/gif') || (($ext == "pdf" || $ext == "PDF") && $_FILES["pj_12_recep"]["type"] == 'application/pdf')
+			|| (($ext == "txt" || $ext == "TXT") && $_FILES["pj_12_recep"]["type"] == 'text/plain')
+			|| ($ext == "docx" || $ext == "DOCX")
 		) {
-			$temp = explode(".", $_FILES["pj_12"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_12"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
-		} else {
-			return '';
-		}
-	}
-	return '';
-}
-
-function uploadPJ_13()
-{
-	if ((!empty($_FILES["pj_13"])) && ($_FILES['pj_13']['error'] == 0)) {
-		$filename = basename($_FILES['pj_13']['name']);
-		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_13"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_13"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_13"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_13"]["type"] == 'application/pdf') || ($ext == "docx")
-		) {
-			$temp = explode(".", $_FILES["pj_13"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_13"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
-		} else {
-			return '';
-		}
-	}
-	return '';
-}
-
-function uploadPJ_14()
-{
-	if ((!empty($_FILES["pj_14"])) && ($_FILES['pj_14']['error'] == 0)) {
-		$filename = basename($_FILES['pj_14']['name']);
-		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_14"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_14"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_14"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_14"]["type"] == 'application/pdf') || ($ext == "docx")
-		) {
-			$temp = explode(".", $_FILES["pj_14"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_14"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
-		} else {
-			return '';
-		}
-	}
-	return '';
-}
-
-function uploadPJ_15()
-{
-	if ((!empty($_FILES["pj_15"])) && ($_FILES['pj_15']['error'] == 0)) {
-		$filename = basename($_FILES['pj_15']['name']);
-		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_15"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_15"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_15"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_15"]["type"] == 'application/pdf') || ($ext == "docx")
-		) {
-			$temp = explode(".", $_FILES["pj_15"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_15"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
-		} else {
-			return '';
-		}
-	}
-	return '';
-}
-
-function uploadPJ_16()
-{
-	if ((!empty($_FILES["pj_16"])) && ($_FILES['pj_16']['error'] == 0)) {
-		$filename = basename($_FILES['pj_16']['name']);
-		$ext = substr($filename, strrpos($filename, '.') + 1);
-		if (($ext == "jpg" && $_FILES["pj_16"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["pj_16"]["type"] == 'image/png')
-			|| ($ext == "gif" && $_FILES["pj_16"]["type"] == 'image/gif') || ($ext == "pdf" && $_FILES["pj_16"]["type"] == 'application/pdf') || ($ext == "docx")
-		) {
-			$temp = explode(".", $_FILES["pj_16"]["name"]);
-			$newfilename = NewGuid() . '.' . end($temp);
-			move_uploaded_file($_FILES["pj_16"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $newfilename);
-			return $newfilename;
+			// $temp = explode(".", $_FILES["pj_1"]["name"]);
+			// $newfilename = NewGuid() . '.' . end($temp);
+			move_uploaded_file($_FILES["pj_12_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+			return $filename;
 		} else {
 			return '';
 		}
@@ -960,44 +1158,26 @@ $_POST['add_car_id'] = (int) $_POST['add_car_id'];
 // Exécution de la réquête et redirection vers la liste des voitures à faire réparer
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
 
-// importation du fichier de l'API SMS
-require_once(ROOT_PATH . '/SmsApi.php');
+include(ROOT_PATH.'/sendSmsToClient_2.php');
 
-// instanciation de la classe de l'API SMS
-$smsApi = new SmsApi();
+// if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {
 
-// $mobile_mech  = "02280768";
+// 	if ((int) $_POST['repair_car'] > 0) {
+// 		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=up';
+// 		header("Location: $url");
+// 	} else {
 
-// Message d'alerte
-$content_msg = $client_nom . ', votre véhicule ' . $make_name . ' ' . $model_name . ' ' . $_POST['ddlImma'] . ' a bien été réceptionné';
+// 		$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=add';
+// 		header("Location: $url");
+// 	}
+// } else {
 
-// Exécution de la méthode d'envoi 
-$resultSmsSent = $smsApi->isSmsapi($client_telephone, $content_msg);
+// 	if ((int) $_POST['repair_car'] > 0) {
+// 		$url = WEB_URL . 'reception/repaircar_reception_list.php?m=up';
+// 		header("Location: $url");
+// 	} else {
 
-// On fait une redirection si le sms a été envoyé avec succès
-if ($resultSmsSent) {
-	// Si c'est le récetionniste qui fait la reception, alors on fait une redirection vers son dashboard
-	if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {
-
-		if ((int) $_POST['repair_car'] > 0) {
-			$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=up';
-			header("Location: $url");
-		} else {
-
-			$url = WEB_URL . 'recep_panel/recep_dashboard.php?m=add';
-			header("Location: $url");
-		}
-	} else {
-
-		if ((int) $_POST['repair_car'] > 0) {
-			$url = WEB_URL . 'reception/repaircar_reception_list.php?m=up';
-			header("Location: $url");
-		} else {
-
-			$url = WEB_URL . 'reception/repaircar_reception_list.php?m=add';
-			header("Location: $url");
-		}
-	}
-} else {
-	echo "L'envoi du SMS a échoué !";
-}
+// 		$url = WEB_URL . 'reception/repaircar_reception_list.php?m=add';
+// 		header("Location: $url");
+// 	}
+// }
