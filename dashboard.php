@@ -225,7 +225,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
     // curl_close($curl);
     $reste_sms = file_get_contents($url_reste_sms);
     $reste_sms_list = json_decode($reste_sms, true);
-    echo "<p style='font-size:12pt;font-weigth:500'>Nombre de SMS restants : <span class='label label-success'>" . ($reste_sms_list['balance']/30) . "</span></p>";
+    $reste_sms_2 = $reste_sms_list['balance']/30;
+    echo "<p style='font-size:12pt;font-weigth:500'>Nombre de SMS restants : <span class='label label-success'>" . 
+    round($reste_sms_2, 0) . "</span></p>";
     ?>
 
     <div id="us" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">

@@ -22,7 +22,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
     $addinfo = 'block';
     $msg = "La voiture receptionnée a été modifiée";
 }
-if ($_GET['att'] == 'attribution') {
+if (isset($_GET['att']) && $_GET['att'] == 'attribution') {
 
     if (isset($_GET['car_id']) && isset($_GET['mecanicien_id'])) {
 

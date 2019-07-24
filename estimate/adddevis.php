@@ -175,69 +175,7 @@ if (isset($_POST) && !empty($_POST)) {
                     </div>
             </section>
         </form>
-        <div id="devis_vehicule_modal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <a class="close" data-dismiss="modal">×</a>
-                        <h3>Formulaire d'attribution du devis à un véhicule</h3>
-                    </div>
-                    <form id="devisVehiForm" name="devis_vehi" role="form" enctype="multipart/form-data" method="POST">
-                        <div class="modal-body">
-
-                            <div class="form-group">
-                                <label for="txtCName"><span style="color:red;">*</span> Nom & prénom du client :</label>
-                                <!-- <input type="text" name="txtCName" value="" id="txtCName" class="form-control" /> -->
-                                <input type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client" onfocus="">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="txtCName"><span style="color:red;">*</span> Numéro de téléphone du client :</label>
-                                <!-- <input type="text" name="txtCName" value="" id="txtCName" class="form-control" /> -->
-                                <input type="text" name="princ_tel_client_devis" value="" id="princ_tel_client_devis" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" />
-                            </div>
-
-                            <div class="form-group">
-                                <label>Immatriculation du véhicule :</label>
-                                <input type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule">
-                            </div>
-
-                            <!-- <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="ddlMake">Marque du véhicule :</label>
-                                    <select class="form-control" onchange="loadModel(this.value);" name="ddlMake_2" id="ddlMake_2">
-                                        <option value=''>--Sélectionnez Marque--</option>
-                                        <?php
-                                        $make_list = $wms->get_all_make_list($link);
-                                        foreach ($make_list as $make) {
-                                            echo "<option value='" . $make['make_id'] . "'>" . $make['make_name'] . "</option>";
-                                        }
-
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="ddl_model">Modèle du véhicule :</label>
-                                    <select class="form-control" onchange="loadYearData(this.value);" name="ddlModel_2" id="ddl_model_2">
-                                        <option value=''>--Choisir un modèle--</option>
-                                    </select>
-                                </div>
-                            </div> -->
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-success" id="submit">Valider</button>
-                        </div>
-
-                        <input type="hidden" value="" name="txtCPassword" />
-                        <input type="hidden" value="" name="tel_wa" />
-                        <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
-                        <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
-                    </form>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
     <div id="filter_popup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -387,6 +325,7 @@ if (isset($_POST) && !empty($_POST)) {
                 $("#parts_id_" + row).val(parts_id);
                 $("#codepiece_" + row).val(code_piece);
                 totalEstCost();
+                totalHtCalculate($("#price_" + row).attr('id'));
                 $("#filter_popup").modal("hide")
             } else {
                 alert("Le stock de la pièce est vide");
