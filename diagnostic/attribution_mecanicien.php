@@ -18,5 +18,5 @@ if (isset($_POST['mecanicienList']) && isset($_POST['car_id'])) {
     }
 
     // Faire une rédirection vers la liste des véhicules réceptionnés avec un paramètre d'attribution
-    header("Location: ".WEB_URL."reception/repaircar_reception_list.php?m=attribution&car_id=".$_POST['car_id']."&mecanicien_id=".$_POST['mecanicienList']);
+    header("Location: ".WEB_URL."reception/repaircar_reception_list.php?att=attribution&car_id=".$_POST['car_id']."&mecanicien_id=".$_POST['mecanicienList']);
 } ?>

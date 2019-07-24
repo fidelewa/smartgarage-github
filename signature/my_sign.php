@@ -177,6 +177,7 @@ include("../config.php");
 					var immavehi = "<?php echo $_GET['immavehi']; ?>";
 					var web_url = "<?php echo WEB_URL; ?>";
 					var image_url = "<?php echo $image_sign_client_depot; ?>";
+					var login_type = "<?php echo $_GET['login_type']; ?>";
 					//ajax call to save image inside folder
 					$.ajax({
 						url: 'save_sign.php',
@@ -192,7 +193,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url;
+							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;
 						}
 					});
 				}
@@ -213,6 +214,7 @@ include("../config.php");
 					var immavehi = "<?php echo $_GET['immavehi']; ?>";
 					var web_url = "<?php echo WEB_URL; ?>";
 					var image_url = "<?php echo $image_sign_client_sortie; ?>";
+					var login_type = "<?php echo $_GET['login_type']; ?>";
 					//ajax call to save image inside folder
 					$.ajax({
 						url: 'save_sign.php',
@@ -228,7 +230,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url;
+							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
 						}
 					});
 				}
@@ -249,6 +251,7 @@ include("../config.php");
 					var immavehi = "<?php echo $_GET['immavehi']; ?>";
 					var web_url = "<?php echo WEB_URL; ?>";
 					var image_url = "<?php echo $image_sign_recep_depot; ?>";
+					var login_type = "<?php echo $_GET['login_type']; ?>";
 					//ajax call to save image inside folder
 					$.ajax({
 						url: 'save_sign.php',
@@ -264,7 +267,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url;
+							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
 						}
 					});
 				}
@@ -285,6 +288,7 @@ include("../config.php");
 					var immavehi = "<?php echo $_GET['immavehi']; ?>";
 					var web_url = "<?php echo WEB_URL; ?>";
 					var image_url = "<?php echo $image_sign_recep_sortie; ?>";
+					var login_type = "<?php echo $_GET['login_type']; ?>";
 					//ajax call to save image inside folder
 					$.ajax({
 						url: 'save_sign.php',
@@ -300,7 +304,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url;
+							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
 						}
 					});
 				}

@@ -1,64 +1,75 @@
 <?php
 
-$dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
+include_once('config.php');
+include_once('helper/common.php');
+$wms = new wms_core();
 
-if ($dateFinAssur instanceof DateTime) {
+$result = $wms->getAllRepairCarList($link);
 
-    $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
-    $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
-    $diffDateDebutFinAssurStr_2 = $dateFinAssur->diff(new \DateTime())->format('%a');
+foreach ($result as $row) {
 
-    // conversion en entier
-    $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
+    $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
 
-    if (($diffDateDebutFinAssur == -14) || ($diffDateDebutFinAssur == -3)) {
+    if ($dateFinAssur instanceof DateTime) {
 
-        $remainingDays = $diffDateDebutFinAssurStr_2;
-        $marque = $row['make_name'];
-        $modele = $row['model_name'];
-        $imma = $row['VIN'];
-        $nom_client = $row['c_name'];
-        $mobile_customer = $row['princ_tel'];
+        $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+        $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
+        $diffDateDebutFinAssurStr_2 = $dateFinAssur->diff(new \DateTime())->format('%a');
 
-        // Message de confirmation du devis
-        $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc a la renouveler merci !';
+        // conversion en entier
+        $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
 
-        // importation du fichier
-        require_once(ROOT_PATH . '/SmsApi.php');
+        if (($diffDateDebutFinAssur == -14) || ($diffDateDebutFinAssur == -3)) {
 
-        // instanciation de la classe
-        $smsApi = new SmsApi();
+            $remainingDays = $diffDateDebutFinAssurStr_2;
+            $marque = $row['make_name'];
+            $modele = $row['model_name'];
+            $imma = $row['VIN'];
+            $nom_client = $row['c_name'];
+            $mobile_customer = $row['princ_tel'];
 
-        // Exécution de la méthode d'envoi 
-        $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
+            // Message de confirmation du devis
+            $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc a la renouveler merci !';
 
-        if ($resultSmsSent == "ok") {
-            echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
-        }
-    } elseif ($diffDateDebutFinAssur == 0) {
+            // importation du fichier
+            require_once(ROOT_PATH . '/SmsApi.php');
 
-        $marque = $row['make_name'];
-        $modele = $row['model_name'];
-        $imma = $row['VIN'];
-        $nom_client = $row['c_name'];
-        $mobile_customer = $row['princ_tel'];
+            // instanciation de la classe
+            $smsApi = new SmsApi();
 
-        // Message de confirmation du devis
-        $content_msg = 'Cher client ' . $nom_client . ' nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' a expire ! Pensez donc a la renouveler merci !';
+            // Exécution de la méthode d'envoi 
+            $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
-        // importation du fichier
-        require_once(ROOT_PATH . '/SmsApi.php');
+            if ($resultSmsSent == "ok") {
+                echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
+            }
+        } elseif ($diffDateDebutFinAssur == 0) {
 
-        // instanciation de la classe
-        $smsApi = new SmsApi();
+            $marque = $row['make_name'];
+            $modele = $row['model_name'];
+            $imma = $row['VIN'];
+            $nom_client = $row['c_name'];
+            $mobile_customer = $row['princ_tel'];
 
-        // Exécution de la méthode d'envoi 
-        $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
+            // Message de confirmation du devis
+            $content_msg = 'Cher client ' . $nom_client . ' nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' a expire ! Pensez donc a la renouveler merci !';
 
-        if ($resultSmsSent == 'ok') {
-            echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
-            // $url = WEB_URL.'dashboard.php';
-            // header("Location: $url");
+            // importation du fichier
+            require_once(ROOT_PATH . '/SmsApi.php');
+
+            // instanciation de la classe
+            $smsApi = new SmsApi();
+
+            // Exécution de la méthode d'envoi 
+            $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
+
+            if ($resultSmsSent == 'ok') {
+                echo "<p><span class='label label-success'>SMS automatique de rappel de l'assurance envoyé avec succès !</p><span>";
+                // $url = WEB_URL.'dashboard.php';
+                // header("Location: $url");
+            }
         }
     }
 }
+
+mysql_close($link);

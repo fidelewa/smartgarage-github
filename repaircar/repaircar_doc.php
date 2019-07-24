@@ -22,9 +22,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                                                                                    border: 1px dotted rgb(0, 0, 0);
-                                                                                    border-radius: 1px;
-                                                                                } */
+                                                                                                    border: 1px dotted rgb(0, 0, 0);
+                                                                                                    border-radius: 1px;
+                                                                                                } */
         </style>
         <script src="<?php echo WEB_URL; ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
     </head>
@@ -687,8 +687,13 @@ if (!empty($row) && count($row) > 0) { ?>
                         <div class="col-sm-3" style="height:150px;">
                             <p class="signature">Nom et signature du client</p>
                             <p style="font-family:'Roboto Mono',monospace,serif;font-weight:bold;font-style:italic;text-align:center">Contrat au verso lu et approuvé</p>
-                            <button id="signature_client_depot"><a href="<?php echo WEB_URL ?>signature/my_sign.php?etat=depot&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>">Signer au dépot</a></button>
-                            <button id="signature_client_sortie"><a href="<?php echo WEB_URL ?>signature/my_sign.php?etat=sortie&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>">Signer à la sortie</a></button>
+                            <?php if (isset($_GET['login_type']) && $_GET['login_type'] != "mechanics") { ?>
+
+                                <button id="signature_client_depot"><a href="<?php echo WEB_URL ?>signature/my_sign.php?etat=depot&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>&login_type=<?php echo $_GET['login_type'] ?>">Signer au dépot</a></button>
+                                <button id="signature_client_sortie"><a href="<?php echo WEB_URL ?>signature/my_sign.php?etat=sortie&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>&login_type=<?php echo $_GET['login_type'] ?>">Signer à la sortie</a></button>
+
+                            <?php } ?>
+
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
@@ -894,10 +899,15 @@ if (!empty($row) && count($row) > 0) { ?>
                         </div>
                         <div class="col-sm-3" style="height:150px;">
                             <p class="signature">Nom et signature du réceptionniste</p>
-                            <div style="margin-top:40px;">
-                                <button id="signature_receptionniste_depot"><a href="<?php echo WEB_URL ?>signature/my_sign.php?etat=depot&sign=recep&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>">Signer au dépot</a></button>
-                                <button id="signature_receptionniste_sortie"><a href="<?php echo WEB_URL ?>signature/my_sign.php?etat=sortie&sign=recep&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>">Signer à la sortie</a></button>
-                            </div>
+                            <?php if (isset($_GET['login_type']) && $_GET['login_type'] != "mechanics") { ?>
+
+                                <div style="margin-top:40px;">
+                                    <button id="signature_receptionniste_depot"><a href="<?php echo WEB_URL ?>signature/my_sign.php?etat=depot&sign=recep&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>&login_type=<?php echo $_GET['login_type'] ?>">Signer au dépot</a></button>
+                                    <button id="signature_receptionniste_sortie"><a href="<?php echo WEB_URL ?>signature/my_sign.php?etat=sortie&sign=recep&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>&login_type=<?php echo $_GET['login_type'] ?>">Signer à la sortie</a></button>
+                                </div>
+
+                            <?php } ?>
+
                         </div>
                     </div>
                 </div>
@@ -988,8 +998,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
 
             @media print {
 
@@ -1015,11 +1025,11 @@ if (!empty($row) && count($row) > 0) { ?>
         </style>
         <div id="mobile-preview-close">
             <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
-            <a style="" href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
+            <!-- <a style="" href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a> -->
         </div>
         <div id="mobile-preview-close_2">
             <!-- <a onclick="reloadPage();" href=""> Rafraichir la page </a> -->
-            <a style="" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_verso.php?car_id=<?php echo $_GET['car_id']; ?>"> Afficher le verso</a>
+            <a style="" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_verso.php?car_id=<?php echo $_GET['car_id']; ?>&login_type=<?php echo $_GET['login_type']; ?>"> Afficher le verso</a>
         </div>
     </body>
 

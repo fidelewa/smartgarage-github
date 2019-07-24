@@ -1,67 +1,78 @@
 <?php
 
-$dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
+include_once('config.php');
+include_once('helper/common.php');
+$wms = new wms_core();
 
-if ($dateprochvistech instanceof DateTime) {
+$result = $wms->getAllRepairCarList($link);
 
-  // Définition du statut de la visite technique
-  $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
-  $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
-  $diffTodayDateprochvistechStr_2 = $dateprochvistech->diff(new \DateTime())->format('%a');
+foreach ($result as $row) {
 
-  // Conversion en entier
-  $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
+  $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
 
-  if (($diffTodayDateprochvistech == -14) || ($diffTodayDateprochvistech == -3)) {
+  if ($dateprochvistech instanceof DateTime) {
 
-    $remainingDays = $diffTodayDateprochvistechStr_2;
-    $marque = $row['make_name'];
-    $modele = $row['model_name'];
-    $imma = $row['VIN'];
-    $nom_client = $row['c_name'];
-    $mobile_customer = $row['princ_tel'];
+    // Définition du statut de la visite technique
+    $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
+    $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
+    $diffTodayDateprochvistechStr_2 = $dateprochvistech->diff(new \DateTime())->format('%a');
 
-    // Message de confirmation du devis
-    $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc a la repasser merci !';
+    // Conversion en entier
+    $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
 
-    // importation du fichier
-    require_once(ROOT_PATH . '/SmsApi.php');
+    if (($diffTodayDateprochvistech == -14) || ($diffTodayDateprochvistech == -3)) {
 
-    // instanciation de la classe
-    $smsApi = new SmsApi();
+      $remainingDays = $diffTodayDateprochvistechStr_2;
+      $marque = $row['make_name'];
+      $modele = $row['model_name'];
+      $imma = $row['VIN'];
+      $nom_client = $row['c_name'];
+      $mobile_customer = $row['princ_tel'];
 
-    // Exécution de la méthode d'envoi 
-    $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
+      // Message de confirmation du devis
+      $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc a la repasser merci !';
 
-    if ($resultSmsSent == "ok") {
-      echo "<p><span class='label label-success'>SMS automatique de rappel de la visite technique envoyé avec succès !</p><span>";
-      // $url = WEB_URL.'dashboard.php';
-      // header("Location: $url");
-    }
-  } elseif ($diffTodayDateprochvistech == 0) {
+      // importation du fichier
+      require_once(ROOT_PATH . '/SmsApi.php');
 
-    $marque = $row['make_name'];
-    $modele = $row['model_name'];
-    $imma = $row['VIN'];
-    $nom_client = $row['c_name'];
-    $mobile_customer = $row['princ_tel'];
+      // instanciation de la classe
+      $smsApi = new SmsApi();
 
-    // Message de confirmation du devis
-    $content_msg = 'Cher  client  ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture' . $marque . ' ' . $modele . ' ' . $imma . ' est depassee ! Pensez donc a la repasser !';
+      // Exécution de la méthode d'envoi 
+      $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
-    // importation du fichier
-    require_once(ROOT_PATH . '/SmsApi.php');
+      if ($resultSmsSent == "ok") {
+        echo "<p><span class='label label-success'>SMS automatique de rappel de la visite technique envoyé avec succès !</p><span>";
+        // $url = WEB_URL.'dashboard.php';
+        // header("Location: $url");
+      }
+    } elseif ($diffTodayDateprochvistech == 0) {
 
-    // instanciation de la classe
-    $smsApi = new SmsApi();
+      $marque = $row['make_name'];
+      $modele = $row['model_name'];
+      $imma = $row['VIN'];
+      $nom_client = $row['c_name'];
+      $mobile_customer = $row['princ_tel'];
 
-    // Exécution de la méthode d'envoi 
-    $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
+      // Message de confirmation du devis
+      $content_msg = 'Cher  client  ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture' . $marque . ' ' . $modele . ' ' . $imma . ' est depassee ! Pensez donc a la repasser !';
 
-    if ($resultSmsSent == "ok") {
-      echo "<p><span class='label label-success'>SMS automatique de rappel de la visite technique envoyé avec succès !</p><span>";
-      // $url = WEB_URL.'dashboard.php';
-      // header("Location: $url");
+      // importation du fichier
+      require_once(ROOT_PATH . '/SmsApi.php');
+
+      // instanciation de la classe
+      $smsApi = new SmsApi();
+
+      // Exécution de la méthode d'envoi 
+      $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
+
+      if ($resultSmsSent == "ok") {
+        echo "<p><span class='label label-success'>SMS automatique de rappel de la visite technique envoyé avec succès !</p><span>";
+        // $url = WEB_URL.'dashboard.php';
+        // header("Location: $url");
+      }
     }
   }
 }
+
+mysql_close($link);

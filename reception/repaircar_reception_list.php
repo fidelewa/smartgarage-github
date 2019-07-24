@@ -3,6 +3,7 @@
 $delinfo = 'none';
 $addinfo = 'none';
 $failedinfo = 'none';
+$addinfo_2 = 'none';
 $msg = "";
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
     $wms->deleteRepairCar($link, $_GET['id']);
@@ -21,7 +22,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
     $addinfo = 'block';
     $msg = "La voiture receptionnée a été modifiée";
 }
-if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
+if ($_GET['att'] == 'attribution') {
 
     if (isset($_GET['car_id']) && isset($_GET['mecanicien_id'])) {
 
@@ -31,7 +32,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
     }
 }
 
-if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
+if (isset($_GET['att']) && $_GET['att'] == 'attribution_done') {
 
     if (isset($_GET['car_id']) && isset($_GET['mecanicien_id'])) {
 
@@ -42,8 +43,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution_done') {
 }
 
 if (isset($_GET['sms']) && $_GET['sms'] == 'send_client_sms_succes') {
-    $failedinfo = 'block';
-    $msg = "SMS envoyé au client avec succès";
+    $addinfo_2 = 'block';
+    $msg_2 = "SMS envoyé au client avec succès";
 }
 
 if (isset($_GET['sms']) && $_GET['sms'] == 'send_client_sms_failed') {
@@ -54,6 +55,11 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_client_sms_failed') {
 if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_failed') {
     $failedinfo = 'block';
     $msg = "L'envoi du SMS au mécanicien à échoué";
+}
+
+if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
+    $addinfo_2 = 'block';
+    $msg_2 = "SMS a été envoyé au mécanicien";
 }
 ?>
 <!-- Content Header (Page header) -->
@@ -82,9 +88,15 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_failed') {
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 <?php echo $msg; ?>
             </div>
+            <div id="us" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_2; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
+                </button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <?php echo $msg_2; ?>
+            </div>
             <div id="his" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-                <!-- <h4><i class="icon fa fa-ban"></i></h4> -->
+                <h4><i class="icon fa fa-ban"></i></h4>
                 <?php echo $msg; ?>
             </div>
             <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
@@ -154,7 +166,7 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_failed') {
 
                                         <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/pj_car_recep_list.php?car_recep_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la réception du véhicule"><i class="fa fa-paperclip"></i></a>
                                         <!-- <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a> -->
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
+                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
                                         <?php
 
                                         // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
@@ -261,6 +273,7 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_failed') {
                 $("#me").hide(8000);
                 $("#you").hide(8000);
                 $("#his").hide(8000);
+                $("#us").hide(8000);
             }, 8000);
         });
     </script>

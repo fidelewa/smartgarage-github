@@ -70,6 +70,6 @@ if (isset($_POST['mecanicienList']) && isset($_POST['car_id'])) {
         // Récupération des données de la voiture
         $voiture = $wms->getMarkModelListByImmaVehi($link, $_POST['imma_vehi']);
         
-        echo "<script type='text/javascript'> document.location.href='". WEB_URL ."reception/repaircar_reception_list.php?m=attribution_done&car_id=". $_POST['car_id'] ."&mecanicien_id=". $_POST['mecanicienList'] ."&marque=". $voiture['make_name'] ."&modele=". $voiture['model_name'] ."&imma=". $voiture['VIN'] ."&mech_name=". $row['usr_name'] ."&date_attrib=". $date_attr ."'</script>";
+        echo "<script type='text/javascript'> document.location.href='". WEB_URL ."reception/repaircar_reception_list.php?att=attribution_done&car_id=". $_POST['car_id'] ."&mecanicien_id=". $_POST['mecanicienList'] ."&marque=". $voiture['make_name'] ."&modele=". $voiture['model_name'] ."&imma=". $voiture['VIN'] ."&mech_name=". $row['usr_name'] ."&date_attrib=". $date_attr ."'</script>";
     }
 }

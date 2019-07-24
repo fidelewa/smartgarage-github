@@ -88,6 +88,7 @@ function submitClientForm() {
         processData: false,
         success: function () {
             $("#client-modal").modal('hide');
+            $("#ddlCustomerList").focus();
         },
         error: function () {
             alert("Error");

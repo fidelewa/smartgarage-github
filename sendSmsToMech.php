@@ -18,7 +18,7 @@
         // On fait une redirection si le sms a été envoyé avec succès
         if ($resultSmsSent == "ok") {
             // Faire une rédirection vers la liste des véhicules réceptionnés avec un paramètre d'attribution
-            header("Location: " . WEB_URL . "reception/repaircar_reception_list.php?m=attribution&car_id=" . $_POST['car_id'] . "&mecanicien_id=" . $_POST['mecanicienList'] . "&marque=" . $voiture['make_name'] . "&modele=" . $voiture['model_name'] . "&imma=" . $voiture['VIN'] . "&mech_name=" . $row['usr_name']);
+            header("Location: " . WEB_URL . "reception/repaircar_reception_list.php?att=attribution&sms=send_mech_sms_succes&car_id=" . $_POST['car_id'] . "&mecanicien_id=" . $_POST['mecanicienList'] . "&marque=" . $voiture['make_name'] . "&modele=" . $voiture['model_name'] . "&imma=" . $voiture['VIN'] . "&mech_name=" . $row['usr_name']);
         } else {
-            echo "<script type='text/javascript'> document.location.href='". WEB_URL ."reception/repaircar_reception_list.php?m=attribution&car_id=". $_POST['car_id'] ."&mecanicien_id=". $_POST['mecanicienList'] ."&marque=". $voiture['make_name'] ."&modele=". $voiture['model_name'] ."&imma=". $voiture['VIN'] ."&mech_name=". $row['usr_name'] ."&sms=send_mech_sms_failed'</script>";
+            echo "<script type='text/javascript'> document.location.href='". WEB_URL ."reception/repaircar_reception_list.php?att=attribution&car_id=". $_POST['car_id'] ."&mecanicien_id=". $_POST['mecanicienList'] ."&marque=". $voiture['make_name'] ."&modele=". $voiture['model_name'] ."&imma=". $voiture['VIN'] ."&mech_name=". $row['usr_name'] ."&sms=send_mech_sms_failed'</script>";
         }

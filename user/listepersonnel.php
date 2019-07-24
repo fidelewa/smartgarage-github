@@ -300,36 +300,36 @@ $i = 0;
 
   // analyse de la chaîne de caractères JSON et 
   // construction de la valeur JavaScript ou l'objet décrit par cette chaîne
-  // var perso_data_obj = JSON.parse('<?= $perso_data_json; ?>');
+  var perso_data_obj = JSON.parse('<?= $perso_data_json; ?>');
 
   // console.log(perso_data_obj);
 
-  // // Déclaration et initialisation de l'objet itérateur
-  // var iterateur = perso_data_obj.keys();
+  // Déclaration et initialisation de l'objet itérateur
+  var iterateur = perso_data_obj.keys();
 
-  // // Déclaration et initialisation de l'indice ou compteur
-  // var row = iterateur.next().value + 1;
+  // Déclaration et initialisation de l'indice ou compteur
+  var row = iterateur.next().value;
 
-  // // Parcours du tableau d'objet
-  // for (const key of perso_data_obj) {
+  // Parcours du tableau d'objet
+  for (const key of perso_data_obj) {
 
-  //   // Conversion en flottant
-  //   key.per_sal = parseFloat(key.per_sal);
+    // Conversion en flottant
+    key.per_sal = parseFloat(key.per_sal);
 
-  //   // Affectation des nouvelles valeurs
-  //   $("#salaire_brute_perso_" + row).html(numeral(key.per_sal).format('0,0 $'));
+    // Affectation des nouvelles valeurs
+    $("#salaire_brute_perso_" + row).html(numeral(key.per_sal).format('0,0 $'));
 
-  //   // incrémentation du compteur
-  //   row++;
+    // incrémentation du compteur
+    row++;
 
-  // }
+  }
 
   // Conversion des variables en flottant
   per_sal = parseFloat(per_sal);
 
-  console.log(numeral(per_sal).format('0,0 $'));
+  // console.log(numeral(per_sal).format('0,0 $'));
 
-  console.log($("#salaire_base_perso"));
+  // console.log($("#salaire_base_perso"));
 
   $("#salaire_base_perso").html(numeral(per_sal).format('0,0 $'));
 

@@ -337,7 +337,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 </div>
               </div>
               <div class="form-group">
-                <label for="assurance_vehi_recep"><span style="color:red;">*</span> Client :<span style="color:red;"> (si le client n'existe pas encore, veuillez cliquer sur le bouton "+" pour l'enregistrer)</span></label>
+                <label for="assurance_vehi_recep"><span style="color:red;">*</span> Client :<span style="color:red;"> (si le client n'existe pas encore, veuillez cliquer sur le bouton "+" pour l'enregistrer, puis saisissez son nom à nouveau)</span></label>
                 <div class="row">
                   <div class="col-md-11">
                     <input onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span>

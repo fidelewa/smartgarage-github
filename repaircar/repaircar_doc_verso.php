@@ -22,9 +22,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                border: 1px dotted rgb(0, 0, 0);
-                border-radius: 1px;
-            } */
+                        border: 1px dotted rgb(0, 0, 0);
+                        border-radius: 1px;
+                    } */
         </style>
         <script src="<?php echo WEB_URL; ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
     </head>
@@ -203,7 +203,13 @@ if (!empty($row) && count($row) > 0) { ?>
                         <div class="col-sm-4" style="height:150px;">
                             <p class="signature">Signature du client</p>
                             <p style="font-family:'Roboto Mono',monospace,serif;font-weight:bold;font-style:italic;text-align:center">Lu et approuvé</p>
-                            <button id="signature_client_verso"><a href="<?php echo WEB_URL ?>signature/my_sign_verso.php?etat=verso&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>">Signer</a></button>
+
+                            <?php
+                            if (isset($_GET['login_type']) && $_GET['login_type'] != "mechanics") { ?>
+
+                                <button id="signature_client_verso"><a href="<?php echo WEB_URL ?>signature/my_sign_verso.php?etat=verso&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>&login_type=<?php echo $_GET['login_type'] ?>">Signer</a></button>
+
+                            <?php } ?>
 
                             <div class="row">
                                 <div class="col-sm-12">
@@ -260,7 +266,13 @@ if (!empty($row) && count($row) > 0) { ?>
                         <div class="col-sm-4 col-md-offset-4" style="height:150px;">
                             <p class="signature">Signature du technicien</p>
                             <div style="margin-top:40px;">
-                                <button id="signature_receptionniste_depot"><a href="<?php echo WEB_URL ?>signature/my_sign_verso.php?etat=verso&sign=tech&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>">Signer</a></button>
+
+                                <?php
+                                if (isset($_GET['login_type']) && $_GET['login_type'] != "mechanics") { ?>
+
+                                    <button id="signature_client_verso"><a href="<?php echo WEB_URL ?>signature/my_sign_verso.php?etat=verso&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>&login_type=<?php echo $_GET['login_type'] ?>">Signer</a></button>
+
+                                <?php } ?>
 
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -402,8 +414,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
 
             @media print {
 
@@ -429,10 +441,10 @@ if (!empty($row) && count($row) > 0) { ?>
         </style>
         <div id="mobile-preview-close">
             <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
-            <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
+            <!-- <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a> -->
         </div>
         <div id="mobile-preview-close_2">
-            <a style="" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>"> Afficher le recto</a>
+            <a style="" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&login_type=<?php echo $_GET['login_type']; ?>"> Afficher le recto</a>
         </div>
 
     </body>

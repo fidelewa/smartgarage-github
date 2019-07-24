@@ -2910,7 +2910,7 @@ GROUP BY pp.per_id";
 		// identifiants de diagnostic
 		$query = "SELECT DISTINCT devsim.devis_id, adv.*
 			from tbl_add_devis_simulation devsim
-			join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
+			left join tbl_attri_devis_vehicule adv on adv.devis_simulation_id = devsim.devis_id
 			";
 
 		// Exécution et stockage du résultat de la requête

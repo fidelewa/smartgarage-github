@@ -71,7 +71,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
   <!-- Full Width boxes (Stat box) -->
   <div class="row">
     <div class="col-xs-12">
-      <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
+      <div id="his" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
         <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
         <?php echo $msg; ?>
@@ -269,6 +269,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
       setTimeout(function() {
         $("#me").hide(300);
         $("#you").hide(300);
+        $("#his").hide(300);
       }, 3000);
     });
   </script>

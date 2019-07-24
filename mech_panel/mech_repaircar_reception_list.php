@@ -102,7 +102,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'attribution') {
                                     <td><?php echo $row['add_date_visitetech']; ?></td>
                                     <!-- <td><?php echo $row['m_name']; ?></td> -->
                                     <td>
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la fiche de reception"><i class="fa fa-file-text-o"></i></a>
+                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Afficher la fiche de reception"><i class="fa fa-file-text-o"></i></a>
                                         <?php
                                         // Si le véhicule réceptionné n'a pas encore été diagnostiqué
                                         if ($row['vehi_diag_id'] != null) { ?>

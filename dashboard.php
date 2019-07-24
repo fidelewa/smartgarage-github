@@ -225,7 +225,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
     // curl_close($curl);
     $reste_sms = file_get_contents($url_reste_sms);
     $reste_sms_list = json_decode($reste_sms, true);
-    echo "<p style='font-size:12pt;font-weigth:500'>Nombre de SMS restants : <span class='label label-success'>" . $reste_sms_list['balance'] . "</span></p>";
+    echo "<p style='font-size:12pt;font-weigth:500'>Nombre de SMS restants : <span class='label label-success'>" . ($reste_sms_list['balance']/30) . "</span></p>";
     ?>
 
     <div id="us" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
@@ -313,7 +313,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
 
                 <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/pj_car_recep_list.php?car_recep_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la réception du véhicule"><i class="fa fa-paperclip"></i></a>
                 <!-- <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a> -->
-                <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
+                <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
                 <?php
 
                 // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
@@ -430,16 +430,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
 
             // ENVOI D'ALERTE AUTOMATIQUE
             // VISITE TECHNIQUE
-            if (isset($row['add_date_visitetech'])) {
+            // if (isset($row['add_date_visitetech'])) {
 
-              include('sendAlerteAutoVistech.php');
-            }
+            //   include('sendAlerteAutoVistech.php');
+            // }
 
             // ASSURANCE
-            if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
+            // if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
 
-              include('sendAlerteAutoAssurance.php');
-            }
+            //   include('sendAlerteAutoAssurance.php');
+            // }
 
             $image = WEB_URL . 'img/no_image.jpg';
             $image_customer = WEB_URL . 'img/no_image.jpg';
