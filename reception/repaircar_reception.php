@@ -307,8 +307,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         </div>
                     </div>
 
-                    <div class="form-group" id="marque_modele_vehi_box">
+                    <!-- <div class="form-group" id="marque_modele_vehi_box">
                         <input readonly onfocus="loadVehiData();" type="text" name="modeleMarqueVehi" id="marque_modele_vehi" class="form-control" value="">
+                    </div> -->
+
+                    <div class="form-group" id="marque_modele_vehi_box">
+                        <input readonly type="text" name="modeleMarqueVehi" id="marque_modele_vehi" class="form-control" value="">
                     </div>
 
                     <div class="form-group row">
@@ -420,7 +424,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
                     </div>
 
-                    <div class="container" id="date_assurance_visitetech" style="width:auto;">
+                    <!-- <div class="container" id="date_assurance_visitetech" style="width:auto;">
                         <div class="form-group row">
                             <div class="col-md-3">
                                 <input type="checkbox" id="assur_recep_vehi" name="assur_recep_vehi" value="Assurance" class="form-check-input">
@@ -440,7 +444,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                                 <input type="text" name="add_date_visitetech" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="datepicker form-control" />
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- </div> -->
                     <!-- <div class="tab"> -->
                     <h1 style="text-align:center;">Accessoires véhicule</h1>

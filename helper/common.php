@@ -1,7 +1,7 @@
 <?php
 //include_once('../config.php');v
 class wms_core
-{ 
+{
 	// public function saveUpdateDepenseCarInfo($con, $data, $depense_car_data)
 	// {
 	// 	if (!empty($data)) {
@@ -35,6 +35,95 @@ class wms_core
 	// 		}
 	// 	}
 	// }
+
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRecepCarListByCustomer($con, $customer_id)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT * 
+		FROM tbl_recep_vehi_repar rvr
+		JOIN tbl_add_car cr on cr.car_id = rvr.add_car_id
+		JOIN tbl_model mo on mo.model_id = cr.car_model
+		JOIN tbl_add_customer c on cr.customer_id = c.customer_id 
+		JOIN tbl_repaircar_diagnostic diag ON diag.car_id = cr.car_id
+		WHERE c.customer_id = '" . (int) $customer_id . "'";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getFactureFromDevis($con, $devisId)
+	{
+		$data = array();
+
+		$query = "SELECT fac.*, car_name, model_name, VIN, add_date_assurance, add_date_visitetech
+			FROM tbl_add_devis dev
+			JOIN tbl_add_facture fac on fac.devis_id = dev.devis_id
+			JOIN tbl_repaircar_diagnostic diag ON diag.id = dev.repaircar_diagnostic_id 
+			JOIN tbl_add_car cr on cr.car_id = diag.car_id
+			JOIN tbl_model mo on mo.model_id = cr.car_model
+			WHERE dev.devis_id ='" . (int) $devisId . "'
+			ORDER BY fac.date_facture DESC";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getAllDevisDataByCarId($con, $car_id)
+	{
+		$data = array();
+
+		$query = "SELECT dev.*, car_name, model_name, VIN, add_date_assurance, add_date_visitetech
+		FROM tbl_add_devis dev
+		JOIN tbl_repaircar_diagnostic diag ON diag.id = dev.repaircar_diagnostic_id 
+		JOIN tbl_add_car cr on cr.car_id = diag.car_id
+		JOIN tbl_model mo on mo.model_id = cr.car_model
+		WHERE cr.car_id = '" . $car_id . "'
+		ORDER BY dev.date_devis DESC";
+
+		$result = mysql_query($query, $con);
+
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
 
 	public function updateDateSignTechverso($con, $dateSignTechVerso, $car_id)
 	{
@@ -404,7 +493,6 @@ class wms_core
 				 WHERE usr_id='" . $data['usr_id'] . "'";
 
 				mysql_query($query_2, $con);
-
 			}
 		}
 	}
@@ -1081,7 +1169,7 @@ class wms_core
 		inner join tbl_model mo on mo.model_id = ac.car_model 
 		group by ac.car_id, car_name, chasis_no, stat_empla_vehi, date_emplacement
         having rvr.stat_empla_vehi = 'au garage'
-		order by ac.car_id DESC", $con);
+		order by date_emplacement DESC", $con);
 		while ($row = mysql_fetch_array($result)) {
 			$data[] = $row;
 		}
@@ -1096,7 +1184,7 @@ class wms_core
 		$data = array();
 
 		$query = "SELECT ac.added_date, repair_car_id, VIN, note, car_id, chasis_no, car_name, ac.image as car_image,c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,ac.repair_car_id, ac.year
-		,add_date_visitetech, add_date_assurance, add_date_assurance_fin, princ_tel, m.*, mo.*, VIN, c_name
+		,add_date_visitetech, add_date_assurance, add_date_assurance_fin, princ_tel, m.*, mo.*, VIN, c_name, princ_tel
 		FROM tbl_add_car ac 
 		inner join tbl_add_customer c on c.customer_id = ac.customer_id 
 		inner join tbl_make m on m.make_id = ac.car_make 
@@ -1183,7 +1271,7 @@ class wms_core
 	// 		$result = mysql_query($query, $con);
 
 	// 		if (!$result) {
-				// var_dump($data);
+	// var_dump($data);
 	// 			$message  = 'Invalid query: ' . mysql_error() . "\n";
 	// 			$message .= 'Whole query: ' . $query;
 	// 			die($message);
@@ -2976,7 +3064,7 @@ GROUP BY pp.per_id";
 
 	public function deleteDevis($con, $devis_id)
 	{
-		mysql_query("DELETE FROM `tbl_add_devis_simulation` WHERE devis_id = " . (int)$devis_id, $con);
+		mysql_query("DELETE FROM `tbl_add_devis_simulation` WHERE devis_id = " . (int) $devis_id, $con);
 	}
 
 	public function getRepairCarSimuDevis($con, $devisSimuId)
@@ -4271,38 +4359,6 @@ GROUP BY pp.per_id";
 		return $model;
 	}
 
-	/*
-	* @get all Voiture de réparation list
-	*/
-	public function getAllRecepCarListByCustomer($con, $customer_id)
-	{
-		// Déclaration et initialisation d'un array vide
-		$data = array();
-
-		$query = "SELECT * 
-		FROM tbl_recep_vehi_repar rvr
-		inner join tbl_add_customer c on rvr.customer_name = c.customer_id 
-		WHERE c.customer_id = '" . (int) $customer_id . "'";
-
-		// Exécution et stockage du résultat de la requête
-		$result = mysql_query($query, $con);
-
-		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' . $query;
-			die($message);
-		}
-
-		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
-		// Pour chaque ligne, on l'affecte à une variable tampon
-		// Puis dans l'array
-		while ($row = mysql_fetch_array($result)) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
 	public function updateDateSignRecepDepot($con, $dateSignRecepDepot, $car_id)
 	{
 		// Enregistrement du nom du fichier image de la signature du client en base de données
@@ -4517,7 +4573,7 @@ GROUP BY pp.per_id";
 
 		// formulation de la réquête
 		$query = "SELECT tbl_make.make_id, tbl_model.model_id, make_name, model_name, VIN , cus.customer_id, cus.princ_tel, cus.c_name,
-		car_id, tbl_make.*,tbl_model.*
+		car_id, tbl_make.*,tbl_model.*, add_date_visitetech, add_date_assurance
 			FROM tbl_add_car JOIN tbl_make ON tbl_add_car.car_make = tbl_make.make_id 
 			JOIN tbl_model ON tbl_model.model_id = tbl_add_car.car_model 
 			JOIN tbl_add_customer cus ON tbl_add_car.customer_id = cus.customer_id

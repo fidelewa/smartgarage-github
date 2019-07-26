@@ -122,13 +122,15 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
 			// $html .= "<option value='" . $result_car_model['make_id']." ". $result_car_model['model_id']." ". $result_car_model['make_name']." ".$result_car_model['model_name']." ".$result_car_model['VIN'] . "'>" . $result_car_model['make_name']." ".$result_car_model['model_name']." ".$result_car_model['VIN'] . "</option>";
 			//$html .= "<input readonly name='modeleMarqueVehi' id='marque_modele_vehi' class='form-control' value='". $result_car_model['make_id']." ". $result_car_model['model_id']." ". $result_car_model['make_name']." ".$result_car_model['model_name']." ".$result_car_model['VIN']."'>";
-			$html = "<input readonly onfocus='loadVehiData();' name='modeleMarqueVehi' id='marque_modele_vehi' class='form-control' value='" . $result_car_model['make_name'] . " " . $result_car_model['model_name'] . " " . $result_car_model['VIN'] . "'>
+			$html = "<input readonly name='modeleMarqueVehi' id='marque_modele_vehi' class='form-control' value='" . $result_car_model['make_name'] . " " . $result_car_model['model_name'] . " " . $result_car_model['VIN'] . "'>
 				<input type='hidden' name='car_id' value='" . $result_car_model['car_id'] . "' />
 				<input type='hidden' name='customer_id' value='" . $result_car_model['customer_id'] . "' />
 				<input type='hidden' name='car_make_id' value='" . $result_car_model['make_id'] . "' />
 				<input type='hidden' name='car_model_id' value='" . $result_car_model['model_id'] . "' />
 				<input type='hidden' name='client_telephone' value='" . $result_car_model['princ_tel'] . "' />
 				<input type='hidden' name='client_nom' value='" . $result_car_model['c_name'] . "' />
+				<input type='hidden' name='add_date_visitetech' value='" . $result_car_model['add_date_visitetech'] . "' />
+				<input type='hidden' name='add_date_assurance' value='" . $result_car_model['add_date_assurance'] . "' />
 				";
 		}
 		echo $html;

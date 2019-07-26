@@ -1976,7 +1976,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
       // This function will figure out which tab to display
       var x = document.getElementsByClassName("tab");
       // Exit the function if any field in the current tab is invalid:
-      if (n == 1 && !validateForm() && !validateMe()) return false;
+      if (n == 1 && !validateMe()) return false;
       // Hide the current tab:
       x[currentTab].style.display = "none";
       // Increase or decrease the current tab by 1:
@@ -2975,18 +2975,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
       } else if ($("#fisc_vehi").val() == '') {
         alert("La puissance fiscale du véhicule est obligatoire !!!");
         $("#fisc_vehi").focus();
-        return false;
-      } else if ($("#cle_recep_vehi_text").val() == '') {
-        alert("Le nombre de clé du véhicule est obligatoire !!!");
-        $("#cle_recep_vehi_text").focus();
-        return false;
-      } else if ($("#cle_recep_vehi_text").val() == '') {
-        alert("Le nombre de clé du véhicule est obligatoire, saisissez le !!!");
-        $("#cle_recep_vehi_text").focus();
-        return false;
-      } else if ($("#km_reception_vehi").val() == '') {
-        alert("Le kilométrage du véhicule est obligatoire !!!");
-        $("#km_reception_vehi").focus();
         return false;
       } else {
         return true;

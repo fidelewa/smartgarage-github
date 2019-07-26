@@ -11,8 +11,8 @@ if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
     $msg = "La voiture a été supprimée de la liste des véhicules réceptionnés";
 }
 if (isset($_GET['m']) && $_GET['m'] == 'add') {
-    $addinfo = 'block';
-    $msg = "La voiture a été ajoutée à la liste des véhicules réceptionnés";
+    $addinfo_2 = 'block';
+    $msg_2 = "La voiture a été ajoutée à la liste des véhicules réceptionnés";
 }
 if (isset($_GET['m']) && $_GET['m'] == 'etat_vehi_sortie') {
     $addinfo = 'block';
@@ -96,7 +96,7 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
             </div>
             <div id="his" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-                <h4><i class="icon fa fa-ban"></i></h4>
+                <!-- <h4><i class="icon fa fa-ban"></i></h4> -->
                 <?php echo $msg; ?>
             </div>
             <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
