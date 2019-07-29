@@ -115,6 +115,8 @@ function NewGuid()
   return $guidText;
 }
 
+// var_dump($_SESSION);
+
 ?>
 <!-- Content Header (Page header) -->
 
@@ -133,7 +135,7 @@ function NewGuid()
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Liste des derniers véhicules réceptionnés pour diagnostic par <?php echo '<b>' . $_SESSION['objMech']['name'] . '</b>'; ?></h3>
+          <h3 class="box-title">Liste des derniers véhicules réceptionnés pour diagnostic et scanner par <?php echo '<b>' . $_SESSION['objMech']['name'] . '</b>'; ?></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -181,12 +183,12 @@ function NewGuid()
 
                         <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule"><i class="fa fa-file-text-o"></i></a>
                       <?php } else { ?>
-                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>&vehicule_scanner_id=<?php echo $row['vehicule_scanner_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a>
                       <?php } ?>
                     </td>
                   </tr>
                 <?php }
-                mysql_close($link); ?>
+                 ?>
 
               </tbody>
             </table>
@@ -199,6 +201,96 @@ function NewGuid()
       </div>
     </div>
   </div>
+
+  <?php
+
+  if ($_SESSION['objMech']['usr_type'] == 'chef mecanicien' or $_SESSION['objMech']['usr_type'] == 'chef electricien') {  ?>
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">Liste des nouveaux véhicules réceptionnés</h3>
+          </div>
+         
+          <div class="box-body">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                  <tr>
+                    <th>ID Reception</th>
+                    <th>Immatriculation du véhicule</th>
+                    <th>Receptionné par</th>
+                    <th>Statut attribution</th>
+                    <th>Attribué à</th>
+                    <th>Statut diagnostic</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+
+                  $result = $wms->getAllRecepRepairCarListMech($link);
+
+                  ?>
+
+                  <?php foreach ($result as $row) { ?>
+                    <tr>
+                      <td><?php echo $row['car_id']; ?></td>
+                      <td><?php echo $row['num_matricule']; ?></td>
+                      <td><?php echo $row['recep_name']; ?></td>
+                      <td><?php
+                          if ($row['status_attribution_vehicule'] == null) {
+                            echo "<span class='label label-default'>En attente d'attribution</span> <br/>";
+                          } else if ($row['status_attribution_vehicule'] == 1) {
+                            echo "<span class='label label-success'>Attribué</span> <br/>";
+                          }
+                          ?></td>
+                      <td><?php echo $row['mech_name']; ?></td>
+                      <td><?php
+                          if ($row['status_diagnostic_vehicule'] == null) {
+                            echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
+                          } else if ($row['status_attribution_vehicule'] == 1) {
+                            echo "<span class='label label-success'>Diagnostiqué</span> <br/>";
+                          }
+                          ?></td>
+                      <td>
+                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
+                        <?php
+
+                        // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
+                        $rows = $wms->getComparPrixPieceRechangeInfoByDiagId($link, $row['vehi_diag_id']);
+
+                        // S'il y a des enregistrements correspondant à cet id existant déja en BDD
+                        // On affiche l'icone de la fiche
+                        if (!empty($rows)) { ?>
+                          <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule"><i class="fa fa-file-text-o"></i></a>
+                        <?php }
+
+                        // Si le client et le receptionniste ont signé au dépot la fiche de reception du véhicule
+                        if (isset($row['sign_cli_depot']) && isset($row['sign_recep_depot'])) { ?>
+
+                          <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" href="<?php echo WEB_URL; ?>diagnostic/attribution_chef_mech_elec_process.php" data-original-title="S'attribuer le véhicule réceptionné pour diagnostic"><i class="fa fa-user"></i></a>
+
+                        <?php } ?>
+                    
+                      </td>
+                    </tr>
+                  <?php }
+                  mysql_close($link); ?>
+
+                </tbody>
+              </table>
+            </div>
+           
+          </div>
+          
+          <div class="box-footer clearfix"><a href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_reception_list.php" class="btn btn-sm btn-success btn-flat pull-right"><b><i class="fa fa-list"></i> &nbsp;Voir toute la liste</b></a> </div>
+          
+        </div>
+      </div>
+    </div> -->
+  <?php  }
+  ?>
 
 </section>
 

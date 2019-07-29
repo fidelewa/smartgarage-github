@@ -2,9 +2,6 @@
 
 include_once('../header.php');
 
-// var_dump($_POST);
-// die();
-
 // Fonction d'upload des pièces jointes
 function uploadPJ_1_car()
 {
@@ -327,6 +324,7 @@ if (isset($_POST['car_names'])) {
 	$listeMarques = array();
 	$listeModeles = array();
 	$listeClient = array();
+	$listeChefMechElec = array();
 	$listeAssurance = array();
 	$cptOccur = 0;
 
@@ -349,6 +347,23 @@ if (isset($_POST['car_names'])) {
 	// die();
 
 	// ETAPE 2
+
+	// Chef mécanicien et électricien
+	$queryChefMechElec = "SELECT * FROM tbl_add_user WHERE usr_type IN ('chef mecanicien','chef electricien')";
+
+	// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+	$resultChefMechElec = mysql_query($queryChefMechElec, $link);
+
+	if (!$resultChefMechElec) {
+		$message  = 'Invalid query: ' . mysql_error() . "\n";
+		$message .= 'Whole query: ' .  $$queryChefMechElec;
+		die($message);
+	}
+
+	// On récupère la liste des chefs mécaniciens et électriciens
+	while ($row = mysql_fetch_assoc($resultChefMechElec)) {
+		$listeChefMechElec[] = $row;
+	}
 
 	// Assurance
 	$queryAssur = "SELECT * FROM tbl_assurance_vehicule WHERE assur_vehi_libelle LIKE '" . $arr_assurance_form_str . "%'";
@@ -675,6 +690,9 @@ if (isset($_POST['car_names'])) {
 	// die();
 
 	// var_dump($_FILES);
+	// die();
+
+	// var_dump($_POST);
 	// die();
 
 	// On insère la nouvelle valeur de la colonne car_name en BDD
@@ -1155,10 +1173,26 @@ $_POST['add_car_id'] = (int) $_POST['add_car_id'];
 // var_dump($_POST['ddlImma']);
 // die();
 
+// On défini le statut de réception du véhicule
+$query = "UPDATE tbl_vehicule_scanning SET statut_reception=1 WHERE id='" . (int) $_POST['vehicule_scanner_id'] . "'";
+
+// Exécution de la requête
+mysql_query($query, $link);
+
+// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
+// if (!$result) {
+// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+// 	$message .= 'Whole query: ' . $query;
+// 	die($message);
+// }
+
 // Exécution de la réquête et redirection vers la liste des voitures à faire réparer
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
 
+// Envoi de SMS aux clients, chef mécanicien et chef électricien
+include(ROOT_PATH.'/sendSmsToChefMechElec.php');
 include(ROOT_PATH.'/sendSmsToClient_2.php');
+
 
 // if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {
 

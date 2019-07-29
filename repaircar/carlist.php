@@ -100,6 +100,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                 <th>Immatriculation</th>
                 <th>N° Chasis</th>
                 <th>Nom du client</th>
+                <th>Téléphone</th>
                 <th>Marque</th>
                 <th>Modèle</th>
                 <!-- <th>Année</th> -->
@@ -132,6 +133,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                   <td><span><?php echo $row['VIN']; ?></span></td>
                   <td><?php echo $row['chasis_no']; ?></td>
                   <td><?php echo $row['c_name']; ?></td>
+                  <td><?php echo $row['princ_tel']; ?></td>
                   <td><?php echo $row['make_name']; ?></td>
                   <td><?php echo $row['model_name']; ?></td>
                   <!-- <td><?php echo $row['year']; ?></td> -->
@@ -145,7 +147,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                     <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
                     <a class="btn btn-info" style="background-color:orange;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/bon_cmde_car.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer un bon de commande pour ce véhicule"><i class="fa fa-plus"></i></a>
                     <a class="btn btn-success" style="background-color:#CF7B00;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/liste_bcmde_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des bons de commande du véhicule"><i class="fa fa-list"></i></a>
-                    <!-- <a class="btn btn-info" style="background-color:blue;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/depense_car.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Ajoter une dépense pour ce véhicule"><i class="fa fa-plus"></i></a> -->
+                    <!-- <a class="btn btn-success" style="background-color:#CFA;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/liste_bcmde_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des devis du véhicule"><i class="fa fa-list"></i></a> -->
+                    <!-- <a class="btn btn-success" style="background-color:#CF2;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/liste_bcmde_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des fatures du véhicule"><i class="fa fa-list"></i></a> -->
+                    <!-- <a class="btn btn-info" style="background-color:blue;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/depense_car.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Ajouter une dépense pour ce véhicule"><i class="fa fa-plus"></i></a> -->
 
                     <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
                       <div class="modal-dialog">

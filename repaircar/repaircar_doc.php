@@ -22,9 +22,9 @@ if (!empty($row) && count($row) > 0) { ?>
         <style>
             /* Echaffaudage #2 */
             /* [class*="col-"] {
-                                                                                                    border: 1px dotted rgb(0, 0, 0);
-                                                                                                    border-radius: 1px;
-                                                                                                } */
+                border: 1px dotted rgb(0, 0, 0);
+                border-radius: 1px;
+            } */
         </style>
         <script src="<?php echo WEB_URL; ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
     </head>
@@ -128,7 +128,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <?php
                             if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
                             <?php } else { ?>
-                                <p>E-mail : <?php echo $row['c_email']; ?></p>
+                                <p>E-mail / téléphone: <?php echo $row['c_email']; ?></p>
                             <?php } ?>
                         </div>
                         <div class="col-sm-5" style="text-align:center;">
@@ -743,6 +743,9 @@ if (!empty($row) && count($row) > 0) { ?>
                                         } ?>
 
                                     </div>
+                                    <div class="col-md-12">
+                                        <?php echo $row['date_sign_cli_depot']; ?>
+                                    </div>
                                 </div>
                                 <div class="col-md-offset-1 col-sm-4" style="padding-right:0px;">
                                     <div style="border:solid #000 1px; height:45px; width:100px" id="sign_recep_depot">
@@ -786,19 +789,20 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <?php }
                                         }
                                         ?>
-
-
+                                    </div>
+                                    <div class="col-md-12">
+                                        <?php echo $row['date_sign_recep_depot']; ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-offset-2 col-md-6">
                                     <?php echo $row['date_sign_cli_depot']; ?>
                                 </div>
                                 <div class="col-md-4">
                                     <?php echo $row['date_sign_recep_depot']; ?>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col-sm-2" style="font-weight:bold;font-style:italic">
                                     (Sortie)
@@ -845,6 +849,9 @@ if (!empty($row) && count($row) > 0) { ?>
                                         } ?>
 
                                     </div>
+                                    <div class="col-md-12">
+                                        <?php echo $row['date_sign_cli_sortie']; ?>
+                                    </div>
                                 </div>
                                 <div class="col-md-offset-1 col-sm-4" style="padding-right:0px;">
                                     <div style="border:solid #000 1px; height:45px; width:100px" id="sign_recep_sortie">
@@ -886,16 +893,19 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <?php }
                                         } ?>
                                     </div>
+                                    <div class="col-md-12">
+                                        <?php echo $row['date_sign_recep_sortie']; ?>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-offset-2 col-md-6">
                                     <?php echo $row['date_sign_cli_sortie']; ?>
                                 </div>
                                 <div class="col-md-4">
                                     <?php echo $row['date_sign_recep_sortie']; ?>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-sm-3" style="height:150px;">
                             <p class="signature">Nom et signature du réceptionniste</p>
@@ -998,8 +1008,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             /* html {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin: 0 6cm
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin: 0 6cm
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
 
             @media print {
 

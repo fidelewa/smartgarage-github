@@ -227,6 +227,19 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                             </div>
                         </div>
                     </div>
+                    <fieldset>
+                        <legend>Ajouter le résultat du scanner en fichier joint</legend>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_scanner" />
+                                </span>
+                            </div>
+                            <!-- <div class="col-md-1">
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_scanner_electrique" />
+                                </span>
+                            </div> -->
+                        </div>
+                    </fieldset>
 
                 </div>
 
@@ -264,7 +277,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="9"></td>
+                                                <td colspan="2"></td>
                                                 <td class="text-left"><button type="button" onclick="addEstimate();" data-toggle="tooltip" title="Add Estimate" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                             </tr>
                                             <!-- <tr>
@@ -334,6 +347,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                 <input type="hidden" name="add_car_id" value="<?php echo $_GET['add_car_id']; ?>" />
                 <input type="hidden" name="recep_car_id" value="<?php echo $_GET['car_id']; ?>" />
                 <input type="hidden" name="mech_fonction" value="<?php echo $_GET['mech_fonction']; ?>" />
+                <input type="hidden" name="vehicule_scanner_id" value="<?php echo $_GET['vehicule_scanner_id']; ?>" />
             </section>
         </form>
     </div>
@@ -351,8 +365,6 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
             html += '</tr>';
             $('#labour_table tbody').append(html);
             row++;
-            reloadQtyRow();
-            numberAllow();
         }
 
         function addDataToEstimate(obj, parts_id, price, qty, warranty) {
@@ -371,10 +383,6 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                 alert("Le stock de la pièce est vide");
             }
         }
-
-        $(document).ready(function() {
-            reloadQtyRow();
-        });
 
         var currentTab = 0; // Current tab is set to be the first tab (0)
         showTab(currentTab); // Display the current tab
@@ -429,7 +437,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                     // add an "invalid" class to the field:
                     y[i].className += " invalid";
                     // and set the current valid status to false
-                    valid = false;
+                    valid = true;
                 }
             }
             // If the valid status is true, mark the step as finished and valid:

@@ -4,7 +4,15 @@ $delinfo = 'none';
 $addinfo = 'none';
 $failedinfo = 'none';
 $addinfo_2 = 'none';
+$addinfo_3 = 'none';
+$failedinfo_2 = 'none';
+$addinfo_att = 'none';
 $msg = "";
+$msg_2 = "";
+$msg_3 = "";
+$msg_att = "";
+$mech_msg_failedinfo = "";
+
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
     $wms->deleteRepairCar($link, $_GET['id']);
     $delinfo = 'block';
@@ -26,9 +34,9 @@ if (isset($_GET['att']) && $_GET['att'] == 'attribution') {
 
     if (isset($_GET['car_id']) && isset($_GET['mecanicien_id'])) {
 
-        $addinfo = 'block';
+        $addinfo_att = 'block';
         // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
-        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à été attribuée à " . $_GET['mech_name'];
+        $msg_att = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à été attribuée à " . $_GET['mech_name'];
     }
 }
 
@@ -59,8 +67,19 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_failed') {
 
 if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
     $addinfo_2 = 'block';
-    $msg_2 = "SMS a été envoyé au mécanicien";
+    $msg_2 = "Un SMS a été envoyé au mécanicien";
 }
+
+if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_sms_succes') {
+    $addinfo_3 = 'block';
+    $msg_3 = "SMS envoyé avec succès aux chefs mécaniciens et électriciens";
+}
+
+if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_sms_failed') {
+    $failedinfo_2 = 'block';
+    $mech_msg_failedinfo = "L'envoi des SMS aux chefs mécaniciens et électriciens à échoué";
+}
+
 ?>
 <!-- Content Header (Page header) -->
 
@@ -88,16 +107,33 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 <?php echo $msg; ?>
             </div>
+            <div id="youyou" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_att; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
+                </button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <?php echo $msg_att; ?>
+            </div>
             <div id="us" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_2; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
                 </button>
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 <?php echo $msg_2; ?>
             </div>
+            <div id="usus" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_3; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
+                </button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <?php echo $msg_3; ?>
+            </div>
             <div id="his" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
                 <!-- <h4><i class="icon fa fa-ban"></i></h4> -->
                 <?php echo $msg; ?>
+            </div>
+            <div id="hishis" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo_2; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+                <!-- <h4><i class="icon fa fa-ban"></i></h4> -->
+                <?php echo $mech_msg_failedinfo; ?>
             </div>
             <div align="right" style="margin-bottom:1%;"><a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a></div>
             <div class="box box-success">
@@ -115,10 +151,6 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
                                 <th>Statut attribution</th>
                                 <th>Attribué à</th>
                                 <th>Statut diagnostic</th>
-                                <!-- <th>Date reception</th>
-                                <th>Date exp. assur</th>
-                                <th>Date exp. vis. tech.</th> -->
-                                <!-- <th>Attribué à</th> -->
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -272,8 +304,11 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
             setTimeout(function() {
                 $("#me").hide(8000);
                 $("#you").hide(8000);
+                $("#youyou").hide(8000);
                 $("#his").hide(8000);
                 $("#us").hide(8000);
+                $("#usus").hide(8000);
+                $("#hishis").hide(8000);
             }, 8000);
         });
     </script>

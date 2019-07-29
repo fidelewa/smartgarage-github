@@ -59,7 +59,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'exiting_piece') {
       <div class="col-xs-12">
         <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
           <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-          <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
+          <h4><i class="icon fa fa-ban"></i> Supprimé!</h4>
           <?php echo $msg; ?>
         </div>
         <div id="me" class="alert alert-warning alert-dismissable" style="display:<?php echo $warninginfo; ?>">

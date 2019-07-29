@@ -51,11 +51,13 @@ if (isset($_POST) && !empty($_POST)) {
         // die('je suis dans admin');
 
         $wms->createAdminUser($link, $_POST, $image_url);
-    } else if ($_POST['user_type'] == "mecanicien" OR $_POST['user_type'] == "electricien") {
+    } else if ($_POST['user_type'] == "mecanicien" OR $_POST['user_type'] == "electricien" OR $_POST['user_type'] == "chef mecanicien" OR $_POST['user_type'] == "chef electricien") {
 
+        // die('je suis dans mech');
         // Méhode à exécuter lorsque l'on veut créer un mécanicien ou un électricien
         $wms->createMechUser($link, $_POST, $image_url);
     } else {
+
         $wms->saveUpdateUserInformation($link, $_POST, $image_url);
     }
 
@@ -168,6 +170,10 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
+                                    echo "<option value='mecanicien'>Mécanicien</option>";
+                                    echo "<option value='electricien'>Electricien</option>";
+                                    echo "<option value='chef mecanicien'>Chef mécanicien</option>";
+                                    echo "<option value='chef electricien'>Chef électricien</option>";
                                     echo "<option value='service client'>Service client</option>";
                                     echo "<option value='administrateur'>Administrateur</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "comptable")) {
@@ -175,6 +181,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     echo "<option selected value='" . $usr_type . "'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
+                                    echo "<option value='chef mecanicien'>Chef mécanicien</option>";
+                                    echo "<option value='chef electricien'>Chef électricien</option>";
                                     echo "<option value='service client'>Service client</option>";
                                     echo "<option value='administrateur'>Administrateur</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "mecanicien")) {
@@ -182,6 +190,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option selected value='" . $usr_type . "'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
+                                    echo "<option value='chef mecanicien'>Chef mécanicien</option>";
+                                    echo "<option value='chef electricien'>Chef électricien</option>";
                                     echo "<option value='service client'>Service client</option>";
                                     echo "<option value='administrateur'>Administrateur</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "electricien")) {
@@ -189,6 +199,26 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option selected value='" . $usr_type . "'>Electricien</option>";
+                                    echo "<option value='chef mecanicien'>Chef mécanicien</option>";
+                                    echo "<option value='chef electricien'>Chef électricien</option>";
+                                    echo "<option value='service client'>Service client</option>";
+                                    echo "<option value='administrateur'>Administrateur</option>";
+                                } elseif (isset($usr_type) && ($usr_type == "chef mecanicien")) {
+                                    echo "<option value='receptionniste'>Réceptioniste</option>";
+                                    echo "<option value='comptable'>Comptable</option>";
+                                    echo "<option value='mecanicien'>Mécanicien</option>";
+                                    echo "<option value='electricien'>Electricien</option>";
+                                    echo "<option selected value='" . $usr_type . "'>Chef mécanicien</option>";
+                                    echo "<option value='chef electricien'>Chef électricien</option>";
+                                    echo "<option value='service client'>Service client</option>";
+                                    echo "<option value='administrateur'>Administrateur</option>";
+                                } elseif (isset($usr_type) && ($usr_type == "chef electricien")) {
+                                    echo "<option value='receptionniste'>Réceptioniste</option>";
+                                    echo "<option value='comptable'>Comptable</option>";
+                                    echo "<option value='mecanicien'>Mécanicien</option>";
+                                    echo "<option value='electricien'>Electricien</option>";
+                                    echo "<option value='chef mecanicien'>Chef mécanicien</option>";
+                                    echo "<option selected value='" . $usr_type . "'>Chef électricien</option>";
                                     echo "<option value='service client'>Service client</option>";
                                     echo "<option value='administrateur'>Administrateur</option>";
                                 } elseif (isset($usr_type) && ($usr_type == "service client")) {
@@ -210,6 +240,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     echo "<option value='comptable'>Comptable</option>";
                                     echo "<option value='mecanicien'>Mécanicien</option>";
                                     echo "<option value='electricien'>Electricien</option>";
+                                    echo "<option value='chef mecanicien'>Chef mécanicien</option>";
+                                    echo "<option value='chef electricien'>Chef électricien</option>";
                                     echo "<option value='service client'>Service client</option>";
                                     echo "<option value='administrateur'>Administrateur</option>";
                                 }

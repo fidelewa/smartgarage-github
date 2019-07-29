@@ -53,8 +53,7 @@ if (isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
 } else if (isset($_SESSION['objServiceClient']) && !empty($_SESSION['objServiceClient'])) {
 
   $recep_id = $_SESSION['objServiceClient']['user_id'];
-} 
-else {
+} else {
   $recep_id = 0;
 }
 
@@ -85,6 +84,46 @@ if (isset($_POST['car_names'])) { // Si le nom de la voiture existe et à une va
   // 	header("Location: $url");
   // }
   exit();
+}
+
+if (isset($_GET['immat']) && $_GET['immat'] != '') {
+  $row = $wms->getRepairCarInfoByRepairCarImma($link, $_GET['immat']);
+
+  // var_dump($row);
+
+  if (!empty($row)) {
+    $cus_id = $row['customer_id'];
+    $car_names = $row['car_name'];
+    $c_make = $row['car_make'];
+    $c_model = $row['car_model'];
+    $c_year = $row['year'];
+    $c_chasis_no = $row['chasis_no'];
+    // $c_registration = $row['car_reg_no'];
+    $vin = $row['VIN'];
+    $c_note = $row['note'];
+    $c_add_date = $row['added_date'];
+
+    $car_pneu_av = $row['car_pneu_av'];
+    $car_gente_ar = $row['car_gente_ar'];
+    $car_pneu_ar = $row['car_pneu_ar'];
+    $car_gente_av = $row['car_gente_av'];
+    $add_date_visitetech = $row['add_date_visitetech'];
+    $add_date_assurance  = $row['add_date_assurance'];
+
+    if ($row['image'] != '') {
+      $image_cus = WEB_URL . 'img/upload/' . $row['image'];
+      $img_track = $row['image'];
+    }
+    $invoice_id = $row['repair_car_id'];
+    $hdnid = $_GET['immat'];
+    // $title = 'Update Car Information';
+    $button_text = "Update Information";
+
+    //$successful_msg="Update car Successfully";
+    // $form_url = WEB_URL . "repaircar/addcar.php?id=" . $_GET['id'];
+  }
+
+  //mysql_close($link);
 }
 
 if (isset($_GET['id']) && $_GET['id'] != '') {
@@ -292,19 +331,25 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <label for="ddlMake"><span style="color:red;">*</span> Marque :</label>
                 <div class="row">
                   <div class="col-md-12">
-                    <input type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
-                    <!-- <select class="form-control" onchange="loadYear(this.value);" name="ddlMake" id="ddlMake" onfocus="getAllMarque();">
-                      <option value=''>--Sélectionnez Marque--</option>
-                      <?php
-                      $result = $wms->get_all_make_list($link);
-                      foreach ($result as $row) {
-                        if ($c_make > 0 && $c_make == $row['make_id']) {
-                          echo "<option selected value='" . $row['make_id'] . "'>" . $row['make_name'] . "</option>";
-                        } else {
-                          echo "<option value='" . $row['make_id'] . "'>" . $row['make_name'] . "</option>";
-                        }
-                      } ?>
-                    </select> -->
+                    <!-- <input type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture"> -->
+                    <?php
+
+                    if ($hdnid == $_GET['immat']) {
+
+                      $make_list = $wms->get_all_make_list($link);
+
+                      foreach ($make_list as $make) {
+                        if ($c_make == $make['make_id']) { ?>
+
+                          <input type="text" class='form-control' value="<?php echo $make['make_name']; ?>" name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
+
+                        <?php }
+                      }
+                    } else { ?>
+                      <input type="text" class='form-control' value="<?php echo $model['model_name']; ?>" name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
+                    <?php
+                    }
+                    ?>
                   </div>
                   <!-- <div class="col-md-1" id="marque">
                     <a class="btn btn-success" data-toggle="modal" data-target="#marque-modal" data-original-title="Ajouter une nouvelle marque">ajouter</a> -->
@@ -316,7 +361,25 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <label for="ddl_model"><span style="color:red;">*</span> Modèle :</label>
                 <div class="row">
                   <div class="col-md-12">
-                    <input type="text" class='form-control' name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture">
+                    <!-- <input type="text" class='form-control' name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture"> -->
+                    <?php
+
+                    if ($hdnid == $_GET['immat']) {
+
+                      $model_list = $wms->get_all_model_list($link);
+
+                      foreach ($model_list as $model) {
+                        if ($c_model == $model['model_id']) { ?>
+
+                          <input type="text" class='form-control' value="<?php echo $model['model_name']; ?>" name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture">
+
+                        <?php }
+                      }
+                    } else { ?>
+                      <input type="text" class='form-control' value="<?php echo $model['model_name']; ?>" name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture">
+                    <?php
+                    }
+                    ?>
                   </div>
                 </div>
               </div>
@@ -340,20 +403,25 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <label for="assurance_vehi_recep"><span style="color:red;">*</span> Client :<span style="color:red;"> (si le client n'existe pas encore, veuillez cliquer sur le bouton "+" pour l'enregistrer, puis saisissez son nom à nouveau)</span></label>
                 <div class="row">
                   <div class="col-md-11">
-                    <input onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span>
-                    <!-- <select class='form-control' id="ddlCustomerList" name="ddlCustomerList">
-                      <option value="">--Saisissez ou sélectionnez un client--</option>
-                      <?php
-                      $customer_list = $wms->getAllCustomerList($link);
-                      foreach ($customer_list as $crow) {
-                        if ($cus_id > 0 && $cus_id == $crow['customer_id']) {
-                          echo '<option selected value="' . $crow['customer_id'] . '">' . $crow['c_name'] . '</option>';
-                        } else {
-                          echo '<option value="' . $crow['customer_id'] . '">' . $crow['c_name'] . '</option>';
-                        }
+                    <!-- <input onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span> -->
+                    <?php
+
+                    if ($hdnid == $_GET['immat']) {
+
+                      $customer_list = $wms->get_all_customer_list($link);
+
+                      foreach ($customer_list as $customer) {
+                        if ($cus_id == $customer['customer_id']) { ?>
+
+                          <input value="<?php echo $customer['c_name']; ?>" onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span>
+
+                        <?php }
                       }
-                      ?>
-                    </select> -->
+                    } else { ?>
+                      <input value="<?php echo $customer['c_name']; ?>" onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span>
+                    <?php
+                    }
+                    ?>
                   </div>
                   <div class="col-md-1" id="client">
                     <a class="btn btn-success" data-toggle="modal" data-target="#client-modal" data-original-title="Ajouter un nouveau client"><i class="fa fa-plus"></i></a>
@@ -403,7 +471,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               </div>
               <div class="form-group">
                 <label for="add_date"><span style="color:red;">*</span> Date de la prochaine visite technique:</label>
-                <input type="text" name="add_date_visitetech_car" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+                <input type="text" name="add_date_visitetech_car" value="" id="add_date_visitetech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <div class="form-group">
                 <label for="add_date"> Date de dernière vidange:</label>
@@ -603,7 +671,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           <div class="form-group row">
             <label for="heure_reception" class="col-md-3 col-form-label">Date de réception du véhicule</label>
             <div class="col-md-9" style="padding-left:0px;">
-              <input type="text" name="add_date" value="<?php echo $c_add_date; ?>" id="add_date" class="form-control datepicker" placeholder="Saisissez la date de reception du véhicule" />
+              <input type="text" name="add_date" value="<?php echo date_format(date_create('now'), 'd/m/Y'); ?>" id="add_date" class="form-control datepicker" placeholder="Saisissez la date de reception du véhicule" />
             </div>
           </div>
 
@@ -676,6 +744,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
           <input type="hidden" name="add_date_assurance" value="<?php echo $add_date_assurance; ?>" id="add_date_assurance" class="datepicker form-control" />
           <input type="hidden" name="add_date_visitetech" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="datepicker form-control" />
+          <input type="hidden" value="<?php echo $_GET['vehicule_scanner_id']; ?>" name="vehicule_scanner_id" />
 
           <!-- <div class="container" id="date_assurance_visitetech" style="width:auto;">
             <div class="form-group row">
@@ -1899,8 +1968,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
           <input type="hidden" value="" name="txtCPassword" />
           <input type="hidden" value="" name="tel_wa" />
-          <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
+          <input type="hidden" value="<?php echo $cus_id; ?>" name="customer_id" />
           <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
+          
         </form>
       </div>
     </div>

@@ -13,6 +13,7 @@ $c_civilite_client = '';
 $c_princ_tel = '';
 $c_tel_wa = '';
 $c_tel_dom = '';
+
 $title = 'Add New Customer';
 $button_text = "Enregistrer information";
 $successful_msg = "Add Customer Successfully";
@@ -22,6 +23,14 @@ $hdnid = "0";
 $image_cus = WEB_URL . 'img/no_image.jpg';
 $img_track = '';
 $wow = false;
+
+// Si c'est un chargé du service client qui enregistre le client, on récupère son identifiant
+$servcli_id = null;
+
+if ($_SESSION['login_type'] == 'service client') {
+	$servcli_id = $_SESSION['objServiceClient']['user_id'];
+}
+
 
 /*#############################################################*/
 if (isset($_POST['txtCName'])) {
@@ -92,7 +101,7 @@ if (isset($_POST['txtCName'])) {
 		$url = WEB_URL . 'customer/customerlist.php?m=up';
 		header("Location: $url");
 	} else {
-		$url = WEB_URL . 'repaircar/addcar.php?m=add_customer';
+		$url = WEB_URL . 'customer/customerlist.php?m=add';
 		header("Location: $url");
 	}
 	exit();
@@ -436,7 +445,7 @@ function uploadPJ_12()
 	</ol>
 </section>
 <!-- Main content -->
-<form onSubmit="return validateMe();" method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
 	<section class="content">
 		<!-- Full Width boxes (Stat box) -->
 		<div class="row">
@@ -512,7 +521,7 @@ function uploadPJ_12()
 						</div>
 						<div class="form-group">
 							<label for="princ_tel"><span style="color:red;">*</span> Téléphone principal :<span style="color:red;">(ce numéro de téléphone est le mot de passe)</span></label>
-							<input onkeyup="verifTelClient(this.value);" required type="text" name="princ_tel" value="<?php echo $c_princ_tel; ?>" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" /><span id="telclibox"></span>
+							<input onkeyup="verifTelClient(this.value);" maxlength="12" required type="text" name="princ_tel" value="<?php echo $c_princ_tel; ?>" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" /><span id="telclibox"></span>
 							<!-- <input onkeyup="verifTelClient(this.value);" type="text" name="princ_tel" maxlength="10" value="" id="princ_tel" class="form-control" placeholder="Saisissez votre numéro de téléphone principal" /> -->
 							<!-- <input onkeyup="verifImma(this.value);" onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation"><span id="immabox"></span> -->
 						</div>
@@ -605,6 +614,7 @@ function uploadPJ_12()
 						</fieldset>
 					</div>
 					<input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" />
+					<input type="hidden" value="<?php echo $servcli_id; ?>" name="servcli_id" />
 
 					<!-- /.box-body -->
 				</div>
@@ -614,8 +624,8 @@ function uploadPJ_12()
 					<button type="submit" class="btn btn-success btnsp"><i class="fa fa-save fa-2x"></i><br />
 						<?php echo $button_text; ?></button>&emsp;
 					<!-- <?php if (isset($_GET['id']) && $_GET['id'] != '') { ?>
-																				<button type="button" onclick="javascript:window.print();" class="btn btn-danger btnsp"><i class="fa fa-print fa-2x"></i><br />
-																					Imprimer</button>&emsp;
+																								<button type="button" onclick="javascript:window.print();" class="btn btn-danger btnsp"><i class="fa fa-print fa-2x"></i><br />
+																									Imprimer</button>&emsp;
 					<?php } ?> -->
 					<a class="btn btn-warning btnsp" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Retour"><i class="fa fa-reply  fa-2x"></i><br />
 						Retour</a> </div>
