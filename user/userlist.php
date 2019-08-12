@@ -68,6 +68,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                 <th>Avatar</th>
                                 <th>Nom</th>
                                 <th>Numéro de téléphone</th>
+                                <th>E-mail</th>
                                 <th>Type utilisateur</th>
                                 <th>Action</th>
                             </tr>
@@ -84,6 +85,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                 <tr>
                                     <td><img class="photo_img_round img_size" src="<?php echo $image;  ?>" /></td>
                                     <td><?php echo $row['usr_name']; ?></td>
+                                    <td><?php echo $row['usr_tel']; ?></td>
                                     <td><?php echo $row['usr_email']; ?></td>
                                     <td><?php echo $row['usr_type']; ?></td>
                                     <td>

@@ -112,6 +112,21 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		die();
 	}
 
+	if (isset($_POST['token']) && $_POST['token'] == 'getmarquemodelecar') {
+		// $html = '<option value="">--Veuillez sélectionner le véhicule correspondant à cette immatriculation--</option>';
+	
+			$result_car = $wms->getMarkModelListByImmaVehi($link, $_POST['immavehi']);
+
+			$tableau = array(
+				'make_name' => $result_car['make_name'],
+				'model_name' => $result_car['model_name']
+			);
+
+			echo json_encode($tableau);
+
+		die();
+	}
+
 	if (isset($_POST['token']) && $_POST['token'] == 'getmarquemodelevoiture') {
 		// $html = '<option value="">--Veuillez sélectionner le véhicule correspondant à cette immatriculation--</option>';
 		if (isset($_POST['immavehi'])) {
@@ -216,13 +231,12 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
 			$html = "";
 
-			if(count($result) > 0){
+			if (count($result) > 0) {
 				$html = '<div class="alert alert-success alert-dismissable" style="display:block">
 				<button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
 				<h4> mot de passe valide </h4>
 				</div>';
 			}
-			
 		}
 		echo $html;
 		die();

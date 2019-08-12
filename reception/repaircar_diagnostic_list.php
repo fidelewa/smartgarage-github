@@ -65,6 +65,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                 <th>Date exp. assur</th>
                                 <th>Date exp. vis. tech.</th>
                                 <!-- <th>Attribué à</th> -->
+                                <th>Type de diagnostic</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -87,6 +88,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                     <!-- <td><?php echo $row['add_date_recep_vehi']; ?></td> -->
                                     <td><?php echo $row['add_date_assurance']; ?></td>
                                     <td><?php echo $row['add_date_visitetech']; ?></td>
+                                    <td><?php echo $row['type_diagnostic']; ?></td>
                                     <!-- <td><?php echo $row['m_name']; ?></td> -->
                                     <td>
 
@@ -135,9 +137,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 
         $(document).ready(function() {
             setTimeout(function() {
-                $("#me").hide(300);
-                $("#you").hide(200000);
-            }, 200000);
+                $("#me").hide(8000);
+                $("#you").hide(8000);
+            }, 8000);
         });
     </script>
     <?php include('../footer.php'); ?>

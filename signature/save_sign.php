@@ -87,6 +87,19 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 				// On insère la date de la signature du client à la sortie en BDD
 				$wms->updateDateSignCliSortie($link, $dateSignClientSortie, (int) $_POST['car_id']);
 
+				// Mise à jour du dernier statu de l'emplacement du véhicule
+				$query_statut_emplacement_vehicule = "UPDATE tbl_recep_vehi_repar SET statut_emplacement_vehicule=0 WHERE car_id='" . (int) $_POST['car_id'] . "'";
+
+				// Exécution de la requête
+				$result_statut_emplacement_vehicule = mysql_query($query_statut_emplacement_vehicule, $link);
+
+				// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
+				if (!$result_statut_emplacement_vehicule) {
+					$message  = 'Invalid query: ' . mysql_error() . "\n";
+					$message .= 'Whole query: ' . $query_statut_emplacement_vehicule;
+					die($message);
+				}
+
 				// Déclaration et initialisation de la variable d'emplacement du véhicule
 				$emplacement_vehi = "hors du garage";
 
@@ -107,6 +120,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 						$message .= 'Whole query: ' . $query;
 						die($message);
 					}
+
+					
 				}
 			}
 		}

@@ -4,12 +4,13 @@ include_once('config.php');
 $vehi_diag_id = $_GET['vehi_diag_id'];
 $devis_id = $_GET['devis_id'];
 $mobile_customer = $_GET['mobile_customer'];
+// $mobile_customer = "02280768";
 
 // Lien de confirmation du devis envoyé par e-mail
-$url_devis = '<a href='.WEB_URL.'confirmDevisTraitement.php?confirm_devis=1&vehi_diag_id='.$_GET['vehi_diag_id'].'&devis_id='.$_GET['devis_id'].'>cliquer sur ce lien</a>';
+$url_devis = WEB_URL.'confirmDevisTraitement.php?confirm_devis=1&vehi_diag_id='.$_GET['vehi_diag_id'].'&devis_id='.$_GET['devis_id'];
 
 // Message de confirmation du devis
-$content_msg = 'Pour voir votre devis, vous pouvez '.$url_devis;
+$content_msg = 'Un devis vous a été envoyé pour validation. Pour voir ce devis, vous pouvez aller à cette adresse '.$url_devis;
 
 // $title = "Nouveau devis à confirmer";
 

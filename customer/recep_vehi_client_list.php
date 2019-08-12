@@ -56,10 +56,10 @@ $result = $wms->getAllRecepCarListByCustomer($link, $_GET['cid']);
             <div class="box box-success">
                 <div class="box-header">
                     <h3 class="box-title"><i class="fa fa-list"></i> Liste des voitures appartenant au client <?php
-                                                                                                                            if (isset($result) && !empty($result)) {
-                                                                                                                                echo '<b>' . $result[0]['c_name'] . '</b>';
-                                                                                                                            }
-                                                                                                                            ?></h3>
+                                                                                                                if (isset($result) && !empty($result)) {
+                                                                                                                    echo '<b>' . $result[0]['c_name'] . '</b>';
+                                                                                                                }
+                                                                                                                ?></h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -100,11 +100,18 @@ $result = $wms->getAllRecepCarListByCustomer($link, $_GET['cid']);
 
                                 ?>
                                 <tr>
-                                
+
                                     <td><?php echo $row['num_matricule']; ?></td>
                                     <td><?php echo $row['chasis_no']; ?></td>
-                                    <td><?php 
-                                    echo "<span class='label label-success'>" . $row['stat_empla_vehi'] . "</span>"; ?></td>
+                                    <td><?php
+                                        if ($row['statut_emplacement_vehicule'] == NULL) {
+                                            echo "<span class='label label-default'>Pas encore au garage</span> <br/>";
+                                        } else if ($row['statut_emplacement_vehicule'] == 0) {
+                                            echo "<span class='label label-default'>Sortie du garage</span> <br/>";
+                                        } else if ($row['statut_emplacement_vehicule'] == 1) {
+                                            echo "<span class='label label-success'>Rentré au garage</span> <br/>";
+                                        }
+                                        ?></td>
                                     <td><?php
                                         if ($row['status_attribution_vehicule'] == null) {
                                             echo "<span class='label label-default'>En attente d'attribution</span>";
@@ -114,9 +121,9 @@ $result = $wms->getAllRecepCarListByCustomer($link, $_GET['cid']);
                                         ?></td>
                                     <td><?php
                                         if ($row['status_diagnostic_vehicule'] == null) {
-                                            echo "<span class='label label-default'>En attente de diagnostic</span>";
-                                        } else if ($row['status_attribution_vehicule'] == 1) {
-                                            echo "<span class='label label-success'>Diagnostiqué</span>";
+                                            echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
+                                        } else if ($row['status_diagnostic_vehicule'] == 1) {
+                                            echo "<span class='label label-success'>Diagnostiqué</span> <br/>";
                                         }
                                         ?></td>
                                     <td><?php echo $row['add_date_assurance']; ?></td>
@@ -130,54 +137,54 @@ $result = $wms->getAllRecepCarListByCustomer($link, $_GET['cid']);
                                     <!-- <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
                                     <!-- <div class="modal-dialog"> -->
                                     <!-- <div class="modal-content">
-                                              <div class="modal-header orange_header">
-                                                <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                                                <h3 class="modal-title">Repair Détails de la voiture</h3>
-                                              </div>
-                                              <div class="modal-body model_view" align="center">&nbsp;
-                                                <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>
-                                                <div class="model_title"><?php echo $row['car_name']; ?></div>
-                                                <div style="color:#fff;font-size:15px;font-weight:bold;">Facture No: <?php echo $row['repair_car_id']; ?></div>
-                                              </div>
-                                              <div class="modal-body">
-                                                <h3 style="text-decoration:underline;">Détails de la voiture Information</h3>
-                                                <div class="row">
-                                                  <div class="col-xs-12">
-                                                    <b>Nom de la voiture :</b> <?php echo $row['car_name']; ?><br />
-                                                    <b>Réparation automobile ID :</b> <?php echo $row['repair_car_id']; ?><br />
-                                                    <b>Marque voiture :</b> <?php echo $row['make_name']; ?><br />
-                                                    <b>Modèle de voiture:</b> <?php echo $row['model_name']; ?><br />
-                                                    <b>Année :</b> <?php echo $row['year_name']; ?><br />
-                                                    <b>Chasis No :</b> <?php echo $row['chasis_no']; ?><br />
-                                                    <b>Enregistrement No :</b> <?php echo $row['car_reg_no']; ?><br />
-                                                    <b>VIN No :</b> <?php echo $row['VIN']; ?><br />
-                                                    <b>Note :</b> <?php echo $row['note']; ?><br />
-                                                    <b> Date d'Ajout:</b> <?php echo date('d/m/Y h:m:s', strtotime($row['added_date'])); ?><br />
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div> -->
+                                                      <div class="modal-header orange_header">
+                                                        <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                                                        <h3 class="modal-title">Repair Détails de la voiture</h3>
+                                                      </div>
+                                                      <div class="modal-body model_view" align="center">&nbsp;
+                                                        <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>
+                                                        <div class="model_title"><?php echo $row['car_name']; ?></div>
+                                                        <div style="color:#fff;font-size:15px;font-weight:bold;">Facture No: <?php echo $row['repair_car_id']; ?></div>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        <h3 style="text-decoration:underline;">Détails de la voiture Information</h3>
+                                                        <div class="row">
+                                                          <div class="col-xs-12">
+                                                            <b>Nom de la voiture :</b> <?php echo $row['car_name']; ?><br />
+                                                            <b>Réparation automobile ID :</b> <?php echo $row['repair_car_id']; ?><br />
+                                                            <b>Marque voiture :</b> <?php echo $row['make_name']; ?><br />
+                                                            <b>Modèle de voiture:</b> <?php echo $row['model_name']; ?><br />
+                                                            <b>Année :</b> <?php echo $row['year_name']; ?><br />
+                                                            <b>Chasis No :</b> <?php echo $row['chasis_no']; ?><br />
+                                                            <b>Enregistrement No :</b> <?php echo $row['car_reg_no']; ?><br />
+                                                            <b>VIN No :</b> <?php echo $row['VIN']; ?><br />
+                                                            <b>Note :</b> <?php echo $row['note']; ?><br />
+                                                            <b> Date d'Ajout:</b> <?php echo date('d/m/Y h:m:s', strtotime($row['added_date'])); ?><br />
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div> -->
                                     <!-- /.modal-content -->
                                     <!-- <div class="modal-content">
-                                              <div class="modal-header orange_header">
-                                                <h3 class="modal-title">Détails du client</h3>
-                                              </div>
-                                              <div class="modal-body model_view" align="center">&nbsp;
-                                                <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image_customer;  ?>" /></div>
-                                                <div class="model_title"><?php echo $row['c_name']; ?></div>
-                                              </div>
-                                              <div class="modal-body">
-                                                <h3 style="text-decoration:underline;">Détails du client Information</h3>
-                                                <div class="row">
-                                                  <div class="col-xs-12">
-                                                    <b>Nom du client :</b> <?php echo $row['c_name']; ?><br />
-                                                    <b> Email Client :</b> <?php echo $row['c_email']; ?><br />
-                                                    <b> Telephone Client :</b> <?php echo $row['c_mobile']; ?><br />
+                                                      <div class="modal-header orange_header">
+                                                        <h3 class="modal-title">Détails du client</h3>
+                                                      </div>
+                                                      <div class="modal-body model_view" align="center">&nbsp;
+                                                        <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image_customer;  ?>" /></div>
+                                                        <div class="model_title"><?php echo $row['c_name']; ?></div>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        <h3 style="text-decoration:underline;">Détails du client Information</h3>
+                                                        <div class="row">
+                                                          <div class="col-xs-12">
+                                                            <b>Nom du client :</b> <?php echo $row['c_name']; ?><br />
+                                                            <b> Email Client :</b> <?php echo $row['c_email']; ?><br />
+                                                            <b> Telephone Client :</b> <?php echo $row['c_mobile']; ?><br />
 
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div> -->
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div> -->
                                     <!-- /.modal-content -->
                                     <!-- </div> -->
                                     <!-- </div> -->

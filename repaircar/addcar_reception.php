@@ -1561,6 +1561,40 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 </div>
               </div>
 
+              <!-- Suspension -->
+              <div class="form-group row">
+                <label for="suspension" class="col-md-6 col-form-label">Suspension</label>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="suspension" id="suspension" value="Bon" checked>
+                  <label class="form-check-label" for="suspension">B</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="suspension" id="suspension" value="Mauvais">
+                  <label class="form-check-label" for="suspension">M</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="suspension" id="suspension" value="Absent">
+                  <label class="form-check-label" for="suspension">A</label>
+                </div>
+              </div>
+
+              <!-- Etat carosserie -->
+              <div class="form-group row">
+                <label for="cache_moteur" class="col-md-6 col-form-label">Etat carosserie</label>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="etat_carosserie" id="etat_carosserier" value="Bon" checked>
+                  <label class="form-check-label" for="etat_carosserie">B</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="etat_carosserie" id="etat_carosserier" value="Mauvais">
+                  <label class="form-check-label" for="etat_carosserie">M</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="etat_carosserie" id="etat_carosserie" value="Absent">
+                  <label class="form-check-label" for="etat_carosserie">A</label>
+                </div>
+              </div>
+
             </div> <!-- fin droit-->
 
           </div> <!-- fin row -->
@@ -1807,6 +1841,40 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
                   <input class="form-check-input" type="radio" name="bouton_siege" id="bouton_siege" value="Absent">
+                  <label class="form-check-label" for="bouton_siege">A</label>
+                </div>
+              </div>
+
+              <!-- Frein à main -->
+              <div class="form-group row">
+                <label for="frein_main" class="col-md-6 col-form-label">Frein à main</label>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="frein_main" id="frein_main" value="Bon" checked>
+                  <label class="form-check-label" for="frein_main">B</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="frein_main" id="frein_main" value="Mauvais">
+                  <label class="form-check-label" for="frein_maine">M</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="frein_main" id="frein_main" value="Absent">
+                  <label class="form-check-label" for="frein_main">A</label>
+                </div>
+              </div>
+
+              <!-- Bouton de detresse -->
+              <div class="form-group row">
+                <label for="bouton_siege" class="col-md-6 col-form-label">Bouton de detresse</label>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="bouton_detresse" id="bouton_detresse" value="Bon" checked>
+                  <label class="form-check-label" for="bouton_detresse">B</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="bouton_detresse" id="bouton_detresse" value="Mauvais">
+                  <label class="form-check-label" for="bouton_detresse">M</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="bouton_detresse" id="bouton_siege" value="Absent">
                   <label class="form-check-label" for="bouton_siege">A</label>
                 </div>
               </div>

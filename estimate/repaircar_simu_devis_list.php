@@ -118,7 +118,7 @@ $model_post_token = 0;
                                                 if ($_SESSION['login_type'] != "service client") {
                                                     // Le service client n'est pas sensé créer les factures
                                                     ?>
-                                                    <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_simu.php?devis_simu_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture à partir de ce devis"><i class="fa fa-plus"></i></a>
+                                                    <a class="btn btn-info" style="background-color:gray;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_simu.php?devis_simu_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture à partir de ce devis"><i class="fa fa-plus"></i></a>
                                                 <?php }
                                             } ?>
 
@@ -170,7 +170,7 @@ $model_post_token = 0;
                         <div class="form-group">
                             <label> Immatriculation du véhicule :</label>
                             <!-- <input required type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule"> -->
-                            <input onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Rechercher un véhicule en saisissant son immatriculation">
+                            <input onchange="loadMarqueModeleVoiture(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule">
                         </div>
 
                         <!-- <div class="form-group" id="marque_modele_vehi_box">
@@ -238,9 +238,9 @@ mysql_close($link); ?>
 
     $(document).ready(function() {
         setTimeout(function() {
-            $("#me").hide(300);
-            $("#you").hide(200000);
-        }, 200000);
+            $("#me").hide(8000);
+            $("#you").hide(8000);
+        }, 8000);
     });
 </script>
 <?php include('../footer.php'); ?>

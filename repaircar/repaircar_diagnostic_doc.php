@@ -141,7 +141,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                     <?php
 
                                     if ($_GET['login_type'] != 'mechanics') {
-                                        echo $row['tel_wa_client'];
+                                        echo $row['princ_tel'];
                                     }
 
                                     ?>

@@ -107,7 +107,7 @@ include("../config.php");
 		?>
 
 		<button id="btnSaveSignClientDepot" class="btn btn-primary btn-lg active" role="button">
-			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_client_depot; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>"> -->
+			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_gene.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_client_depot; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>"> -->
 			Enregistrer la signature
 			<!-- </a> -->
 		</button>
@@ -120,7 +120,7 @@ include("../config.php");
 		?>
 
 		<button id="btnSaveSignClientSortie" class="btn btn-primary btn-lg active" role="button">
-			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_client_sortie; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>"> -->
+			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_gene.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_client_sortie; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>"> -->
 			Enregistrer la signature
 			<!-- </a> -->
 		</button>
@@ -134,7 +134,7 @@ include("../config.php");
 
 		<!-- A la soumission du bouton,  -->
 		<button id="btnSaveSignRecepDepot" class="btn btn-primary btn-lg active" role="button">
-			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_recep_depot; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat'] ?>"> -->
+			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_gene.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_recep_depot; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat'] ?>"> -->
 			Enregistrer la signature
 			<!-- </a> -->
 		</button>
@@ -147,7 +147,7 @@ include("../config.php");
 		?>
 
 		<button id="btnSaveSignRecepSortie" class="btn btn-primary btn-lg active" role="button">
-			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_recep_sortie; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>"> -->
+			<!-- <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_gene.php?car_id=<?php echo $_GET['car_id']; ?>&image=<?php echo $image_sign_recep_sortie; ?>&sign=<?php echo $_GET['sign']; ?>&etat=<?php echo $_GET['etat']; ?>"> -->
 			Enregistrer la signature
 			<!-- </a> -->
 		</button>
@@ -193,7 +193,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;
+							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;
 						}
 					});
 				}
@@ -230,7 +230,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
+							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
 						}
 					});
 				}
@@ -267,7 +267,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
+							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
 						}
 					});
 				}
@@ -304,7 +304,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
+							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
 						}
 					});
 				}

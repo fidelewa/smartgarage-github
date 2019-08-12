@@ -1059,6 +1059,25 @@ function loadMarqueModeleVoiture(immavehi) {
 	});
 }
 
+function loadMarqueModeleVoiture_2(immavehi) {
+	// Permet de récupérer la valeur du matricule qui a été sélectionnée
+	// var immavehi = $("#ddl_imma").val();
+
+	$.ajax({
+		url: '../ajax/getstate.php',
+		type: 'POST',
+		data: 'immavehi=' + immavehi + '&token=getmarquemodelecar',
+		dataType: 'json',
+		success: function (data) {
+
+			$("#ddlMake").val(data.make_name);
+			$("#ddl_model").val(data.model_name);
+
+		}
+	});
+}
+
+
 // function loadVehiData(){
 // 	// Permet de récupérer l'immatriculation du véhicule
 // 	var immavehi = $("#ddl_imma").val();

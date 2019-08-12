@@ -5,7 +5,8 @@ include_once('../config.php');
 $wms = new wms_core();
 
 // $row = $wms->getBoncmdeInfo($link, $_GET['boncmde_id']);
-$row = $wms->getCarScanningById($link, $_GET['vehicule_scanning_id']);
+// $row = $wms->getCarScanningById($link, $_GET['vehicule_scanning_id']);
+$row = $wms->getCarScanningByNbAleatoire($link, $_GET['nb_aleatoire']);
 
 // var_dump($row);
 // die();
@@ -351,7 +352,7 @@ if (!empty($row) && count($row) > 0) { ?>
         </style>
         <div id="mobile-preview-close">
             <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
-            <!-- <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a> -->
+            <a style="" href="<?php echo WEB_URL; ?>repaircar/vehicule_scanning_list.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
         </div>
         <div id="mobile-preview-close_2">
             <!-- <a style="" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>"> Créer un devis </a> -->

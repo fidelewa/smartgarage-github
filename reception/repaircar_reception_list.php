@@ -36,19 +36,19 @@ if (isset($_GET['att']) && $_GET['att'] == 'attribution') {
 
         $addinfo_att = 'block';
         // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
-        $msg_att = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à été attribuée à " . $_GET['mech_name'];
+        $msg_att = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à été attribuée à " . $_GET['mecanicien_id'];
     }
 }
 
-if (isset($_GET['att']) && $_GET['att'] == 'attribution_done') {
+// if (isset($_GET['att']) && $_GET['att'] == 'attribution_done') {
 
-    if (isset($_GET['car_id']) && isset($_GET['mecanicien_id'])) {
+//     if (isset($_GET['car_id']) && isset($_GET['mecanicien_id'])) {
 
-        $addinfo = 'block';
-        // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
-        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à déja été attribuée à " . $_GET['mech_name'] . " à la date du " . $_GET['date_attrib'];
-    }
-}
+//         $addinfo = 'block';
+//         // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
+//         $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à déja été attribuée à " . $_GET['mecanicien_id'] . " à la date du " . $_GET['date_attrib'];
+//     }
+// }
 
 if (isset($_GET['sms']) && $_GET['sms'] == 'send_client_sms_succes') {
     $addinfo_2 = 'block';
@@ -65,10 +65,10 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_failed') {
     $msg = "L'envoi du SMS au mécanicien à échoué";
 }
 
-if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
-    $addinfo_2 = 'block';
-    $msg_2 = "Un SMS a été envoyé au mécanicien";
-}
+// if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
+//     $addinfo_2 = 'block';
+//     $msg_2 = "Un SMS a été envoyé au mécanicien";
+// }
 
 if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_sms_succes') {
     $addinfo_3 = 'block';
@@ -79,6 +79,8 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
     $failedinfo_2 = 'block';
     $mech_msg_failedinfo = "L'envoi des SMS aux chefs mécaniciens et électriciens à échoué";
 }
+
+// var_dump($_SESSION);
 
 ?>
 <!-- Content Header (Page header) -->
@@ -113,12 +115,12 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 <?php echo $msg_att; ?>
             </div>
-            <div id="us" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_2; ?>">
+            <!-- <div id="us" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_2; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
                 </button>
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 <?php echo $msg_2; ?>
-            </div>
+            </div> -->
             <div id="usus" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_3; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
                 </button>
@@ -148,9 +150,10 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                                 <th>ID Reception</th>
                                 <th>Immatriculation du véhicule</th>
                                 <th>Receptionné par</th>
-                                <th>Statut attribution</th>
+                                <!-- <th>Statut attribution</th> -->
                                 <th>Attribué à</th>
-                                <th>Statut diagnostic</th>
+                                <th>Statut diagnostic mécanique</th>
+                                <th>Statut diagnostic électrique</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -179,26 +182,131 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                                     <td><?php echo $row['car_id']; ?></td>
                                     <td><?php echo $row['num_matricule']; ?></td>
                                     <td><?php echo $row['recep_name']; ?></td>
-                                    <td><?php
-                                        if ($row['status_attribution_vehicule'] == null) {
-                                            echo "<span class='label label-default'>En attente d'attribution</span> <br/>";
-                                        } else if ($row['status_attribution_vehicule'] == 1) {
-                                            echo "<span class='label label-success'>Attribué</span> <br/>";
+                                    <!-- <td><?php if ($row['mech_name'] == '') {
+                                                    if (isset($row['attribution_mecanicien'])) {
+                                                        echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_mecanicien'] . "</span> <br/>";
+                                                    }
+                                                    if (isset($row['attribution_electricien'])) {
+                                                        echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_electricien'] . "</span> <br/>";
+                                                    }
+                                                } else {
+                                                    echo $row['mech_name'];
+                                                }
+                                                ?></td> -->
+                                    <!-- <td>
+                                                            <?php if ($row['statut_diagnostic_mecanique'] == 1 && isset($row['attribution_mecanicien'])) {
+                                                                echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien'];
+                                                            } else {
+                                                                echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_mecanicien'] . "</span> <br/>";
+                                                            } ?>
+                                                            <?php if ($row['statut_diagnostic_electrique'] == 1 && isset($row['attribution_electricien'])) {
+                                                                echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
+                                                            } else {
+                                                                echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_electricien'] . "</span> <br/>";
+                                                            } ?>
+                                                        </td> -->
+                                    <td>
+                                        <?php
+                                        /* Si le véhicule réceptionné en question à été attribué seulement au chef mécanicien 
+                                        et n'a pas encore fait l'objet de diagnostic mécanique */
+                                        if (isset($row['attribution_mecanicien']) && !isset($row['attribution_electricien'])) {
+                                            if (!isset($row['statut_diagnostic_mecanique'])) {
+                                                echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_mecanicien'] . "</span> <br/>";
+                                            }
                                         }
-                                        ?></td>
-                                    <td><?php echo $row['mech_name']; ?></td>
+                                        /* Si le véhicule réceptionné en question à été attribué seulement au chef électricien 
+                                         et n'a pas encore fait l'objet de diagnostic électrique*/
+                                        if (isset($row['attribution_electricien']) && !isset($row['attribution_mecanicien'])) {
+                                            if (!isset($row['statut_diagnostic_electrique'])) {
+                                                echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_electricien'] . "</span> <br/>";
+                                            }
+                                        }
+
+                                        /* Si le véhicule réceptionné en question à été attribué seulement au chef mécanicien 
+                                        et a déja fait l'objet de diagnostic mécanique */
+                                        if (isset($row['attribution_mecanicien']) && !isset($row['attribution_electricien'])) {
+                                            if ($row['statut_diagnostic_mecanique'] == 1) {
+                                                echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien'];
+                                            }
+                                        }
+                                        /* Si le véhicule réceptionné en question à été attribué seulement au chef électricien 
+                                         et a déja fait l'objet de diagnostic électrique */
+                                        if (isset($row['attribution_electricien']) && !isset($row['attribution_mecanicien'])) {
+                                            if ($row['statut_diagnostic_electrique'] == 1) {
+                                                echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
+                                            }
+                                        }
+
+                                        /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
+                                        mécanicien et n'a pas encore fait l'objet de diagnostic électrique, ni mécanique
+                                        */
+                                        if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
+
+                                            if (!isset($row['statut_diagnostic_electrique']) && !isset($row['statut_diagnostic_mecanique'])) {
+                                                echo "<span class='label label-default'>En cours d'attribution aux chefs mécaniciens et électriciens</span> <br/>";
+                                            }
+                                        }
+
+                                        /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
+                                        mécanicien et a déja fait l'objet de diagnostic électrique
+                                        */
+                                        if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
+
+                                            if ($row['statut_diagnostic_electrique'] == 1) {
+                                                echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
+                                            }
+                                        }
+
+                                        /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
+                                        mécanicien et a déja fait l'objet de diagnostic mécanique
+                                        */
+                                        if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
+
+                                            if ($row['statut_diagnostic_mecanique'] == 1) {
+                                                echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien'];
+                                            }
+                                        }
+
+                                        /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
+                                        mécanicien et a déja fait l'objet de diagnostic mécanique
+                                        */
+                                        if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
+
+                                            if ($row['statut_diagnostic_mecanique'] == 1 && $row['statut_diagnostic_electrique'] == 1) {
+                                                echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien']."\n";
+                                                echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
+                                            }
+                                        }
+
+                                        ?>
+                                    </td>
                                     <td><?php
-                                        if ($row['status_diagnostic_vehicule'] == null) {
+
+                                        if (!isset($row['statut_diagnostic_mecanique'])) {
+                                            echo "";
+                                        } else if ($row['statut_diagnostic_mecanique'] == null) {
                                             echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
-                                        } else if ($row['status_attribution_vehicule'] == 1) {
-                                            echo "<span class='label label-success'>Diagnostiqué</span> <br/>";
+                                        } else if ($row['statut_diagnostic_mecanique'] == 1) {
+                                            echo "<span class='label label-success'>Diagnostic éffectué</span> <br/>";
                                         }
-                                        ?></td>
+                                        ?>
+                                    </td>
+                                    <td><?php
+
+                                        if (!isset($row['statut_diagnostic_electrique'])) {
+                                            echo "";
+                                        } else if ($row['statut_diagnostic_electrique'] == null) {
+                                            echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
+                                        } else if ($row['statut_diagnostic_electrique'] == 1) {
+                                            echo "<span class='label label-success'>Diagnostic éffectué</span> <br/>";
+                                        }
+                                        ?>
+                                    </td>
                                     <td>
 
                                         <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/pj_car_recep_list.php?car_recep_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la réception du véhicule"><i class="fa fa-paperclip"></i></a>
                                         <!-- <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a> -->
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
+                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_gene.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
                                         <?php
 
                                         // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
@@ -252,16 +360,9 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                                                             <div class="col-md-12">
                                                                 <select required class='form-control' id="mecanicienList" name="mecanicienList">
                                                                     <option selected value="">--Veuillez saisir ou sélectionner un mécanicien ou un électricien--</option>
-                                                                    <?php
-                                                                    $mecanicien_list = $wms->getAllMechanicsListByTitle($link);
-                                                                    foreach ($mecanicien_list as $mrow) {
-                                                                        // if ($cus_id > 0 && $cus_id == $mrow['customer_id']) {
-                                                                        echo '<option value="' . $mrow['usr_id'] . '">' . $mrow['usr_name'] . ' - ' . $mrow['usr_type'] . '</option>';
-                                                                        // } else {
-                                                                        // echo '<option value="' . $mrow['customer_id'] . '">' . $mrow['c_name'] . '</option>';
-                                                                        // }
-                                                                    }
-                                                                    ?>
+                                                                    <option value="chef mecanicien">Chef mécanicien</option>
+                                                                    <option value="chef electricien">Chef électricien</option>
+                                                                    <option value="chef mecanicien et electricien">Chef mécanicien et électricien</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -270,6 +371,8 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                                                     <input type="hidden" value="<?php echo $row['add_car_id'] ?>" name="car_id" />
                                                     <input type="hidden" value="<?php echo $row['car_id'] ?>" name="reception_id" />
                                                     <input type="hidden" value="<?php echo $row['num_matricule'] ?>" name="imma_vehi" />
+                                                    <!-- <input type="hidden" value="<?php echo $_SESSION['objLogin']['email'] ?>" name="admin_ges_tel" /> -->
+                                                    <input type="hidden" value="<?php echo $_SESSION['objLogin']['telephone'] ?>" name="admin_ges_tel" />
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>

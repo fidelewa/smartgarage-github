@@ -1,12 +1,7 @@
 <?php
-include('../helper/common.php');
-include_once('../config.php');
 
-$wms = new wms_core();
 $row = $wms->getRecepRepairCarByCarId($link, $_GET['car_id']);
 
-// var_dump($row );
-// die();
 
 if (!empty($row) && count($row) > 0) { ?>
     <!DOCTYPE html>
@@ -111,11 +106,11 @@ if (!empty($row) && count($row) > 0) { ?>
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <p>
+                            <!-- <p>
                                 ENTRE : Société LUXURY GARAGE Représentée par monsieur Mohamed Kassem
                                 D'une part ET . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
                                 Monsieur, Madame. . . . . . . . . . . . . . . . . . . . Tel : . . . . . . . . . . . . . . . . . . . .Propriétaire du véhicule immatriculé. . . . . . . . D'autre part Les parties conviennent de ce qui suit conformément à l'article 1134 du code civil.
-                            </p>
+                            </p> -->
                             <p>
                                 <span class="souligne">Article 1</span>:
                                 objet : Le présent contrat a pour objet la réparation des véhicules confiés à LUXURY GARAGE par le client avec l'acceptation des clauses figurantes dans le présent contrat.
@@ -199,133 +194,8 @@ if (!empty($row) && count($row) > 0) { ?>
                         </div>
                     </div>
 
-                    <div class="row" id="signature">
-                        <div class="col-sm-4" style="height:150px;">
-                            <p class="signature">Signature du client</p>
-                            <p style="font-family:'Roboto Mono',monospace,serif;font-weight:bold;font-style:italic;text-align:center">Lu et approuvé</p>
-
-                            <?php
-                            if (isset($_GET['login_type']) && $_GET['login_type'] != "mechanics") { ?>
-
-                                <button id="signature_client_verso"><a href="<?php echo WEB_URL ?>signature/my_sign_verso.php?etat=verso&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>&login_type=<?php echo $_GET['login_type'] ?>">Signer</a></button>
-
-                            <?php } ?>
-
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div style="border:solid #000 1px; height:45px; width:100px;" id="sign_client_verso">
-                                        <?php
-                                        // Si le fichier image de la signature au verso vient du client et n'existe pas encore en base de données
-
-                                        if (isset($_GET['image']) && $_GET['sign'] == 'client') {
-
-                                            // On extrait le nom de l'image du chemin vers l'image
-                                            $name_image_sign_client_verso = str_replace('../img/signature/', '', $_GET['image']);
-
-                                            // Enregistrement du nom du fichier image de la signature au dépot du client en base de données
-                                            $query = "UPDATE tbl_recep_vehi_repar SET sign_cli_verso='" . $name_image_sign_client_verso . "' WHERE car_id='" . (int) $row['car_id'] . "'";
-
-                                            // Exécution de la requête
-                                            $result = mysql_query($query, $link);
-
-                                            // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-                                            if (!$result) {
-                                                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                                $message .= 'Whole query: ' . $query;
-                                                die($message);
-                                            }
-                                            ?>
-
-                                            <!-- On place l'image de la signature du client à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                de la signature du client -->
-                                            <!-- <img src="<?php echo WEB_URL ?>signature/doc_signs/<?php echo ltrim($name_image_sign_client_verso) ?>" alt="" height="40" width="80"> -->
-                                            <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_client_verso) ?>" alt="" height="40" width="80">
-                                        <?php } else {
-
-                                            // Sinon on récupère la signature enregistrer en base de données
-                                            $rowsRecepVehiSignatureByRecepId = $wms->getRecepVehiSignatureByRecepCarId($link, $_GET['car_id']);
-
-                                            if ($rowsRecepVehiSignatureByRecepId['sign_cli_verso'] != null) {
-                                                ?>
-                                                <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($rowsRecepVehiSignatureByRecepId['sign_cli_verso']) ?>" alt="" height="40" width="80">
-
-                                            <?php }
-                                        } ?>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <?php echo $row['date_sign_cli_verso']; ?>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-sm-4 col-md-offset-4" style="height:150px;">
-                            <p class="signature">Signature du technicien</p>
-                            <div style="margin-top:40px;">
-
-                                <?php
-                                if (isset($_GET['login_type']) && $_GET['login_type'] != "mechanics") { ?>
-
-                                    <button id="signature_client_verso"><a href="<?php echo WEB_URL ?>signature/my_sign_verso.php?etat=verso&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>&login_type=<?php echo $_GET['login_type'] ?>">Signer</a></button>
-
-                                <?php } ?>
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div style="border:solid #000 1px; height:45px; width:100px;" id="sign_tech_verso">
-                                            <?php
-                                            // Si le fichier image de la signature au verso vient du technicien et n'existe pas encore en base de données
-
-                                            if (isset($_GET['image']) && $_GET['sign'] == 'tech') {
-
-                                                // On extrait le nom de l'image du chemin vers l'image
-
-                                                $name_image_sign_tech_verso = str_replace('../img/signature/', '', $_GET['image']);
-
-                                                // Enregistrement du nom du fichier image de la signature au dépot du technicien en base de données
-                                                $query = "UPDATE tbl_recep_vehi_repar SET sign_tech_verso='" . $name_image_sign_tech_verso . "' WHERE car_id='" . (int) $row['car_id'] . "'";
-
-                                                // Exécution de la requête
-                                                $result = mysql_query($query, $link);
-
-                                                // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-                                                if (!$result) {
-                                                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                                    $message .= 'Whole query: ' . $query;
-                                                    die($message);
-                                                }
-                                                ?>
-
-                                                <!-- On place l'image de la signature du technicien à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
-                                                                                                                                        de la signature du client -->
-                                                <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($name_image_sign_tech_verso) ?>" alt="" height="40" width="80">
-                                            <?php } else {
-
-                                                // Sinon on récupère la signature enregistrer en base de données
-                                                $rowsRecepVehiSignatureByRecepId = $wms->getRecepVehiSignatureByRecepCarId($link, $_GET['car_id']);
-
-                                                if ($rowsRecepVehiSignatureByRecepId['sign_tech_verso'] != null) {
-                                                    ?>
-                                                    <img src="<?php echo WEB_URL ?>img/signature/<?php echo ltrim($rowsRecepVehiSignatureByRecepId['sign_tech_verso']) ?>" alt="" height="40" width="80">
-
-                                                <?php }
-                                            } ?>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <?php echo $row['date_sign_tech_verso']; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php include('signature_box.php');; ?>
+                    
                 </div>
 
             </div>
@@ -440,11 +310,11 @@ if (!empty($row) && count($row) > 0) { ?>
             }
         </style>
         <div id="mobile-preview-close">
-            <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
+            <!-- <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a> -->
             <!-- <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a> -->
         </div>
         <div id="mobile-preview-close_2">
-            <a style="" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&login_type=<?php echo $_GET['login_type']; ?>"> Afficher le recto</a>
+            <!-- <a style="" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $_GET['car_id']; ?>&login_type=<?php echo $_GET['login_type']; ?>"> Afficher le recto</a> -->
         </div>
 
     </body>

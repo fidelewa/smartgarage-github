@@ -4,6 +4,7 @@ $hdnid = "0";
 $button_text = "Enregistrer information";
 $usr_name = "";
 $usr_email = "";
+$usr_tel = "";
 $usr_password = "";
 $usr_type = "";
 $usr_image = "";
@@ -45,18 +46,28 @@ if (isset($_POST) && !empty($_POST)) {
     // $_POST['txtUserPassword'] = $hashed;
 
     if ($_POST['user_type'] == "administrateur") {
-// Méhode à exécuter lorsque l'on veut créer un administrateur
+        // Méhode à exécuter lorsque l'on veut créer un administrateur
 
         // var_dump($_POST);
         // die('je suis dans admin');
 
         $wms->createAdminUser($link, $_POST, $image_url);
-    } else if ($_POST['user_type'] == "mecanicien" OR $_POST['user_type'] == "electricien" OR $_POST['user_type'] == "chef mecanicien" OR $_POST['user_type'] == "chef electricien") {
+    } else if ($_POST['user_type'] == "mecanicien" or $_POST['user_type'] == "electricien" or $_POST['user_type'] == "chef mecanicien" or $_POST['user_type'] == "chef electricien") {
 
         // die('je suis dans mech');
         // Méhode à exécuter lorsque l'on veut créer un mécanicien ou un électricien
         $wms->createMechUser($link, $_POST, $image_url);
+    } else if ($_POST['user_type'] == "receptionniste") {
+        // Méhode à exécuter lorsque l'on veut créer un administrateur
+
+        // var_dump($_POST);
+        // die('je suis dans admin');
+
+        $wms->createReceptionniste($link, $_POST, $image_url);
     } else {
+
+        // var_dump($_POST);
+        // die();
 
         $wms->saveUpdateUserInformation($link, $_POST, $image_url);
     }
@@ -113,6 +124,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     if (!empty($row)) {
         $usr_name = $row['usr_name'];
         $usr_email = $row['usr_email'];
+        $usr_tel = $row['usr_tel'];
         $usr_password = $row['usr_password'];
         $usr_type = $row['usr_type'];
         $usr_image = $row['usr_image'];
@@ -155,7 +167,11 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                         </div>
                         <div class="form-group">
                             <label for="txtEmail"><span style="color:red;">*</span>N° téléphone :<span style="color:red;"> (le numéro de téléphone est le login)</span></label>
-                            <input type="text" maxlength="10" name="txtUserEmail" value="<?php echo $usr_email ?>" id="txtUserEmail" class="form-control" required />
+                            <input type="text" maxlength="12" name="usr_tel" value="<?php echo $usr_tel ?>" id="usr_tel" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtEmail">E-mail (ou numéro de téléphone si vous n'avez pas d'adresse e-mail):</label>
+                            <input type="text" name="txtUserEmail" value="<?php echo $usr_email ?>" id="txtUserEmail" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="txtPassword"><span style="color:red;">*</span>Mot de passe :</label>

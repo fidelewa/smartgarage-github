@@ -17,7 +17,7 @@ $rows = $wms->getComparPrixPieceRechangeMinByDiagId($link, $_GET['vehi_diag_id']
 // Lorsqu'on soumet ou valide le formulaire
 if (isset($_POST) && !empty($_POST)) {
 
-    // var_dump($_POST);
+    // var_dump($_POST['devis_data']);
     // die();
 
     // Persister les données du devis en BDD
@@ -45,6 +45,13 @@ if (isset($_POST) && !empty($_POST)) {
 
     // Exécution de la requête
     $result = mysql_query($query, $link);
+
+    // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
+    if (!$result) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' . $query;
+        die($message);
+    }
 
     // Lors de l'enregistrement du devis lié au diagnostic d'un véhicule
     // On persiste les données d'historisation du devis lié à un diagnostic donné concernant un véhicule
@@ -154,8 +161,8 @@ if (isset($_POST) && !empty($_POST)) {
                                                                 <input id="price_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][prix_piece_rechange_min_devis]" type="text" value="<?php echo $row['prix_piece_rechange_min']; ?>" class="form-control eFirePrice" />
                                                             </td>
                                                             <!-- <td>
-                                                                            <input id="remise_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][remise_piece_rechange_devis]" type="text" value="" class="form-control eFireRemise" required />
-                                                                        </td> -->
+                                                                                <input id="remise_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][remise_piece_rechange_devis]" type="text" value="" class="form-control eFireRemise" required />
+                                                                            </td> -->
                                                             <td>
                                                                 <input id="totalht_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][total_prix_piece_rechange_devis_ht]" type="text" value="<?php echo $total_prix_piece_rechange; ?>" class="form-control allownumberonly" />
                                                             </td>
@@ -329,6 +336,48 @@ if (isset($_POST) && !empty($_POST)) {
                 CalculTotalHTGene()
             });
         }
+
+        $(".eFireQty").keyup(function() {
+            // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
+            totalHtCalculate(this.id);
+        });
+
+        $(".eFirePrice").keyup(function() {
+            // Cette fonction récupère l'id de l'élément qui possède la classe eFirePrice
+            totalHtCalculate(this.id);
+        });
+
+        $(".eFireRemise").change(function() {
+            // Cette fonction récupère l'id de l'élément qui possède la classe eFireRemise
+            // console.log('remise')
+            totalRemiseCalculate();
+            // totalEstCost();
+
+            // On récupère la valeur du taux de la remise en (%)
+            if ($("#devis_remise").val() != '') {
+                taux_remise_percent = $("#devis_remise").val();
+
+                if (taux_remise_percent > 10) {
+
+                    html = "<td colspan='6' class='text-right'>Mot de passe:</td><td><input id='devis_pwd' name='devis_pwd' type='password' value='' class='form-control' /> <button class='btn btn-success' type='button' onclick='verif_pwd();' data-original-title='vérifier la validité du mot de passe'><i class='fa fa-check'></i></button></td>"
+
+                    $("#devis_pwd_box").html(html);
+
+                    if ($("#devis_pwd").val() == '') {
+                        alert("Le mot de passe est obligatoire !!!");
+                        $("#devis_pwd").prop('required', true);
+                        $("#devis_pwd").focus();
+                        $("#form_devis").prop('disabled', true);
+                    }
+
+                }
+            }
+        });
+
+        $("#labour").keyup(function() {
+            // totalEstCost();
+            CalculTotalHTGene()
+        });
 
         function verif_pwd() {
             devis_pwd = $("#devis_pwd").val();

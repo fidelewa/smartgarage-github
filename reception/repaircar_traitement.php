@@ -14,7 +14,7 @@ $modeleMarqueVehiDatas = explode(" ", $_POST['modeleMarqueVehi']);
 
 // $_POST['add_car_id'] = $modeleMarqueVehiDatas[3];
 
-// var_dump($_POST);
+// var_dump($_POST['modeleMarqueVehi']);
 // die();
 
 $_POST['ddlImma'] = $_POST['immat'];

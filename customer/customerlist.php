@@ -127,7 +127,7 @@ $invoice_id = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                   <?php }  ?>
                   <?php if ($_SESSION['login_type'] == 'service client') { ?>
                     <td>
-                      <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#infos_vehicule_modal_<?php echo $row['customer_id']; ?>').modal('show');" data-original-title="Enregistrement du véhicule et du scanner"><i class="fa fa-car"></i></a>
+                      <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#infos_vehicule_modal_<?php echo $row['customer_id']; ?>').modal('show');" data-original-title="Enregistrement du véhicule et du scanner">Délivrer un reçu</a>
                     </td>
                   <?php }  ?>
 
@@ -139,14 +139,14 @@ $invoice_id = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                         <a class="close" data-dismiss="modal">×</a>
                         <h3>Formulaire d'enregistrement du véhicule et du scanner</h3>
                       </div>
-                      <form id="devisVehiForm" name="devis_vehi" role="form" enctype="multipart/form-data" method="POST" action="vehicule_scanning_traitement.php">
+                      <form id="devisVehiForm" name="devis_vehi" role="form" enctype="multipart/form-data" method="POST" action="../repaircar/vehicule_scanning_traitement.php">
                         <div class="modal-body">
 
-                          <fieldset>
+                          <!-- <fieldset>
                             <legend>Informations du véhicule</legend>
                             <div class="form-group">
                               <label> Immatriculation du véhicule :</label>
-                              <!-- <input required type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule"> -->
+                              
                               <input maxlength="15" type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule">
                             </div>
 
@@ -159,6 +159,27 @@ $invoice_id = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                               <label>Modèle du véhicule :</label>
                               <input type="text" class='form-control' name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle du véhicule">
                             </div>
+                          </fieldset> -->
+
+                          <fieldset>
+                            <legend>Informations du véhicule</legend>
+                            <div class="form-group">
+                              <label> Immatriculation du véhicule :</label>
+                              <!-- <input required type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule"> -->
+                              <input onchange="loadMarqueModeleVoiture_2(this.value);" type="text" name="immat" id="immat" class="form-control" placeholder="Saisissez l'immatriculation du véhicule">
+                            </div>
+
+                            <!-- <div id="marque_modele_box"> -->
+                              <div class="form-group">
+                                <label>Marque du véhicule :</label>
+                                <input type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque du véhicule" value="">
+                              </div>
+
+                              <div class="form-group">
+                                <label>Modèle du véhicule :</label>
+                                <input type="text" class='form-control' name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle du véhicule" value="">
+                              </div>
+                            <!-- </div> -->
                           </fieldset>
 
                           <fieldset>
@@ -218,9 +239,9 @@ $invoice_id = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
 
     $(document).ready(function() {
       setTimeout(function() {
-        $("#me").hide(300);
-        $("#you").hide(300);
-      }, 3000);
+        $("#me").hide(8000);
+        $("#you").hide(8000);
+      }, 8000);
     });
   </script>
   <?php include('../footer.php'); ?>

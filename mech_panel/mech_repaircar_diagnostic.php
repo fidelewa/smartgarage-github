@@ -11,6 +11,8 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
 // var_dump($ligne);
 // die();
 
+// var_dump($_SESSION);
+
 ?>
 
 <!DOCTYPE html>
@@ -119,7 +121,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                 <!-- One "tab" for each step in the form: -->
 
                 <input type="hidden" id="nom_client" name="nom_client" value="<?php echo $ligne['c_name'] ?>" class="form-control">
-                <input type="hidden" id="tel_wa_client" name="tel_wa_client" value="<?php echo $ligne['tel_wa'] ?>" class="form-control">
+                <input type="hidden" id="tel_wa_client" name="princ_tel" value="<?php echo $ligne['princ_tel'] ?>" class="form-control">
                 <input type="hidden" id="type_vehicule" name="type_vehicule" value="<?php echo $ligne['type_boite_vitesse'] ?>" class="form-control">
                 <input type="hidden" id="imma_vehicule" name="imma_vehicule" value="<?php echo $ligne['VIN'] ?>" class="form-control">
                 <input type="hidden" id="num_chasis_vehicule" name="num_chasis_vehicule" value="<?php echo $ligne['chasis_no'] ?>" class="form-control">
@@ -127,8 +129,22 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                 <input type="hidden" id="modele_vehicule" name="modele_vehicule" value="<?php echo $ligne['car_model'] ?>" class="form-control">
                 <input type="hidden" id="date_creation_fiche_diag" name="date_creation_fiche_diag" value="<?php echo date('d/m/Y') ?>" class="form-control">
 
+                <input type="hidden" id="admin_ges_tel" name="admin_ges_tel" value="<?php echo $_GET['admin_ges_tel'] ?>" class="form-control">
+                <input type="hidden" id="recep_tel" name="recep_tel" value="<?php echo $_GET['recep_tel'] ?>" class="form-control">
+                <input type="hidden" id="att_mecano_id" name="att_mecano_id" value="<?php echo $_GET['att_mecano_id'] ?>" class="form-control">
+                <input type="hidden" id="att_electro_id" name="att_electro_id" value="<?php echo $_GET['att_electro_id'] ?>" class="form-control">
+                <input type="hidden" value="<?php echo $_SESSION['objMech']['usr_type']; ?>" name="chef_mech_elec_type" />
+                
+                <?php if (isset($_GET['elec_tel'])) { ?>
+                    <input type="hidden" id="elec_tel" name="elec_tel" value="<?php echo $_GET['elec_tel'] ?>" class="form-control">
+                <?php } ?>
+
+                <?php if (isset($_GET['mech_tel'])) { ?>
+                    <input type="hidden" id="mech_tel" name="mech_tel" value="<?php echo $_GET['mech_tel'] ?>" class="form-control">
+                <?php } ?>
+                
                 <!-- <div class="tab"> -->
-                    <!-- <h1 style="text-align:center;">Récapitulatif des informations du client et du véhicule</h1>
+                <!-- <h1 style="text-align:center;">Récapitulatif des informations du client et du véhicule</h1>
                     <br>
                     <p>
                         <div class="form-group row">
@@ -146,7 +162,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                             </div>
                         </div>
                     </p> -->
-                    <!-- <p>
+                <!-- <p>
                         <div class="form-group row">
                             <label for="type_vehicule" class="col-md-3 col-form-label">Type du véhicule</label>
                             <div class="col-md-9" style="padding-left:0px;">
@@ -154,7 +170,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                             </div>
                         </div>
                     </p> -->
-                    <!-- <p>
+                <!-- <p>
                         <div class="form-group row">
                             <label for="type_vehicule" class="col-md-3 col-form-label">Type du véhicule</label>
                             <div class="col-md-9" style="padding-left:0px;">
@@ -162,7 +178,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                             </div>
                         </div>
                     </p> -->
-                    <!-- <p>
+                <!-- <p>
                         <div class="form-group row">
                             <label for="type_vehicule" class="col-md-3 col-form-label">Type du véhicule :</label>
                             <div class="col-md-9" style="padding-left:0px;">
@@ -170,7 +186,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                             </div>
                         </div>
                     </p> -->
-                    <!-- <p>
+                <!-- <p>
                         <div class="form-group row">
                             <label for="imma_vehicule" class="col-md-3 col-form-label">Immatriculation du véhicule :</label>
                             <div class="col-md-9" style="padding-left:0px;">
@@ -179,7 +195,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                         </div>
                     </p> -->
 
-                    <!-- <p>
+                <!-- <p>
                         <div class="form-group row">
                             <label for="num_chasis_vehicule" class="col-md-3 col-form-label">N° Chassis du véhicule :</label>
                             <div class="col-md-9" style="padding-left:0px;">
@@ -188,7 +204,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                         </div>
                     </p> -->
 
-                    <!-- <p>
+                <!-- <p>
                         <div class="form-group row">
                             <label for="marque_vehicule" class="col-md-3 col-form-label">Marque du véhiclule :</label>
                             <div class="col-md-9" style="padding-left:0px;">
@@ -197,7 +213,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                         </div>
                     </p> -->
 
-                    <!-- <p>
+                <!-- <p>
                         <div class="form-group row">
                             <label for="modele_vehicule" class="col-md-3 col-form-label">Modèle du véhiclule :</label>
                             <div class="col-md-9" style="padding-left:0px;">
@@ -206,7 +222,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                         </div>
                     </p> -->
 
-                    <!-- <p>
+                <!-- <p>
                         <div class="form-group row">
                             <label for="date_creation_fiche_diag" class="col-md-3 col-form-label">Date de création de la fiche:</label>
                             <div class="col-md-9" style="padding-left:0px;">
@@ -278,7 +294,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                                         <tfoot>
                                             <tr>
                                                 <td colspan="2"></td>
-                                                <td class="text-left"><button type="button" onclick="addEstimate();" data-toggle="tooltip" title="Add Estimate" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                                                <td class="text-left"><button type="button" onclick="addEstimate();" data-toggle="tooltip" title="Ajouter une pièce de rechange" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                             </tr>
                                             <!-- <tr>
                                                 <td colspan="8" class="text-right">Total(<?php echo $currency; ?>):</td>

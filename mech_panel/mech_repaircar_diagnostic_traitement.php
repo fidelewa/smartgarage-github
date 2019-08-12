@@ -1,6 +1,9 @@
 <?php
 
-include('../mech_panel/header.php');
+include('../header.php');
+
+// Inclusion de l'API SMS
+require_once(ROOT_PATH . '/SmsApi.php');
 
 // var_dump($_POST);
 // die();
@@ -88,16 +91,120 @@ if (isset($_POST['pj_scanner']) && $_POST['pj_scanner'] != "") {
     }
 }
 
-$query = "INSERT INTO tbl_repaircar_diagnostic (nom_client, tel_wa_client, type_voiture, imma_vehicule, num_chasis_vehicule, rapport_diagnostic,
-estimate_data, duree_commande, duree_travaux, travaux_prevoir, date_creation_fiche_diag, car_id, type_diagnostic, mech_id, status_diagnostic_vehicule, 
-recep_car_id, pj_scanner) 
-VALUES ('$_POST[nom_client]','$_POST[tel_wa_client]','$_POST[type_vehicule]','$_POST[imma_vehicule]','$_POST[num_chasis_vehicule]',
-'$rapport_diagnostic','$estimate_data','$_POST[duree_commande]','$_POST[duree_travaux]','$_POST[travaux_prevoir]',
-'$_POST[date_creation_fiche_diag]','$_POST[add_car_id]','$type_diagnostic','$mech_id', 1, '$_POST[recep_car_id]',
-'$_POST[pj_scanner]')";
+// Si celui qui fait le diagnostic est le chef electricien
+if ($_POST['chef_mech_elec_type'] == "chef electricien") {
 
-// Exécution et stockage du résultat de la requête sous forme de ressource
-$result = mysql_query($query, $link);
+    // On enregistre un diagnostic en son nom
+    $query = "INSERT INTO tbl_repaircar_diagnostic (nom_client, tel_wa_client, type_voiture, imma_vehicule, num_chasis_vehicule, rapport_diagnostic,
+    estimate_data, duree_commande, duree_travaux, travaux_prevoir, date_creation_fiche_diag, car_id, type_diagnostic, mech_id, status_diagnostic_vehicule, 
+    recep_car_id, pj_scanner, statut_diagnostic_electrique) 
+    VALUES ('$_POST[nom_client]','$_POST[princ_tel]','$_POST[type_vehicule]','$_POST[imma_vehicule]','$_POST[num_chasis_vehicule]',
+    '$rapport_diagnostic','$estimate_data','$_POST[duree_commande]','$_POST[duree_travaux]','$_POST[travaux_prevoir]',
+    '$_POST[date_creation_fiche_diag]','$_POST[add_car_id]','$type_diagnostic','$mech_id', 1, '$_POST[recep_car_id]',
+    '$_POST[pj_scanner]',1)";
+
+    // Exécution et stockage du résultat de la requête sous forme de ressource
+    $result = mysql_query($query, $link);
+
+    // Si le chef électricien fini de faire son diagnostic, alors on annule le statut de son acceptation de faire le diagnostic
+    $result_2 = $wms->updateStatutActionElectro($link, $_POST['recep_car_id']);
+
+    // var_dump($_POST);
+    // var_dump($result_2);
+    // die();
+}
+
+// Si celui qui fait le diagnostic est le chef mécanicien
+if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+
+    // On enregistre un diagnostic en son nom
+    $query = "INSERT INTO tbl_repaircar_diagnostic (nom_client, tel_wa_client, type_voiture, imma_vehicule, num_chasis_vehicule, rapport_diagnostic,
+    estimate_data, duree_commande, duree_travaux, travaux_prevoir, date_creation_fiche_diag, car_id, type_diagnostic, mech_id, status_diagnostic_vehicule, 
+    recep_car_id, pj_scanner, statut_diagnostic_mecanique) 
+    VALUES ('$_POST[nom_client]','$_POST[princ_tel]','$_POST[type_vehicule]','$_POST[imma_vehicule]','$_POST[num_chasis_vehicule]',
+    '$rapport_diagnostic','$estimate_data','$_POST[duree_commande]','$_POST[duree_travaux]','$_POST[travaux_prevoir]',
+    '$_POST[date_creation_fiche_diag]','$_POST[add_car_id]','$type_diagnostic','$mech_id', 1, '$_POST[recep_car_id]',
+    '$_POST[pj_scanner]',1)";
+
+    // Exécution et stockage du résultat de la requête sous forme de ressource
+    $result = mysql_query($query, $link);
+
+    // Si le chef mécanicien fini de faire son diagnostic, alors on annule le statut de son acceptation de faire le diagnostic
+    $result_2 = $wms->updateStatutActionMecano($link, $_POST['recep_car_id']);
+
+    // var_dump($result_2);
+    // die();
+
+}
+
+/***********************************************
+ * Envoi du SMS à l'administrateur gestionnaire
+ ***********************************************/
+
+// require_once(ROOT_PATH . '/SmsApi.php');
+
+// instanciation de la classe de l'API SMS
+$smsApi = new SmsApi();
+
+// Récupération du numéro de téléphone de l'administration gestionnaire
+$admin_ges_tel = $_POST['admin_ges_tel'];
+// $admin_ges_tel  = "02280768";
+
+// Message d'alerte
+$content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+
+// Exécution de la méthode d'envoi 
+$resultSmsSent = $smsApi->isSmsapi($admin_ges_tel, $content_msg);
+
+/**********************************
+ * Envoi du SMS au receptionniste
+ **********************************/
+
+ // Récupération du numéro de téléphone du receptionniste
+$recep_tel = $_POST['recep_tel'];
+// $recep_tel  = "02280768";
+
+// Message d'alerte
+$content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+
+// Exécution de la méthode d'envoi 
+$resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);
+
+/*****************************************************************
+ * Envoi du SMS soit au chef mécanicien soit au chef électricien
+ *****************************************************************/
+
+// Si c'est le chef mécanicien qui est prêt à faire le diagnostic
+// alors on envoi le SMS au chef électricien
+if ($_POST['att_mecano_id'] == $_SESSION['objMech']['user_id']) {
+
+    $elec_tel = $_POST['elec_tel'];
+    // $elec_tel = "02280768";
+
+    // Message d'alerte
+    $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+
+    // Exécution de la méthode d'envoi 
+    $resultSmsSent = $smsApi->isSmsapi($elec_tel, $content_msg);
+}
+
+/*****************************************************************
+ * Envoi du SMS soit au chef mécanicien soit au chef électricien
+ *****************************************************************/
+
+// Si c'est le chef électricien qui est prêt à faire le diagnostic
+// alors on envoi le SMS au chef mécanicien
+if ($_POST['att_electro_id'] == $_SESSION['objMech']['user_id']) {
+
+    $mech_tel = $_POST['mech_tel'];
+    // $elec_tel = "02280768";
+
+    // Message d'alerte
+    $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+
+    // Exécution de la méthode d'envoi 
+    $resultSmsSent = $smsApi->isSmsapi($mech_tel, $content_msg);
+}
 
 // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
 if (!$result) {

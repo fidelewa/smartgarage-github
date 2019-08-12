@@ -10,7 +10,7 @@ if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
 }
 if (isset($_GET['m']) && $_GET['m'] == 'add') {
     $addinfo = 'block';
-    $msg = "Ajout de la facture réussi";
+    $msg = "Enregistrement de la facture réussi";
 }
 if (isset($_GET['m']) && $_GET['m'] == 'up') {
     $addinfo = 'block';
@@ -110,9 +110,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
     <script type="text/javascript">
         $(document).ready(function() {
             setTimeout(function() {
-                $("#me").hide(300);
-                $("#you").hide(200000);
-            }, 200000);
+                $("#me").hide(8000);
+                $("#you").hide(8000);
+            }, 8000);
         });
     </script>
     <?php include('../footer.php'); ?>

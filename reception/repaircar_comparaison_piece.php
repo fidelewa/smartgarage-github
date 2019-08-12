@@ -129,7 +129,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                                 <td><?php echo str_replace('u0027', "'", $estimate['designation']); ?></td>
                                                                 <td><input type="text" name="estimate_data[<?php echo $i; ?>][marque_piece_rechange]" class="form-control" placeholder="Renseigner la marque de la pièce proposé par ce fournisseur" /></td>
                                                                 <td><?php echo $estimate['quantity']; ?></td>
-                                                                <td><input type="text" name="estimate_data[<?php echo $i; ?>][prix_piece_rechange]" class="form-control" placeholder="Renseigner le prix proposé par ce fournisseur" /></td>
+                                                                <td><input required type="text" name="estimate_data[<?php echo $i; ?>][prix_piece_rechange]" class="form-control" placeholder="Renseigner le prix proposé par ce fournisseur" /></td>
                                                                 <td><?php echo $supplier['s_name']; ?></td>
                                                             </tr>
 

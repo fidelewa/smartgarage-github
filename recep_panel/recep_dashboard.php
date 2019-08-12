@@ -19,6 +19,8 @@ $failedinfo = 'none';
 $msg = "";
 $addinfo_2 = 'none';
 $msg_2 = "";
+$addinfo_3 = 'none';
+$msg_3 = "";
 
 if (isset($_GET['sms']) && $_GET['sms'] == 'send_client_sms_succes') {
   $addinfo = 'block';
@@ -36,8 +38,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add') {
 }
 
 if (isset($_GET['m']) && $_GET['m'] == 'up') {
-  $addinfo = 'block';
-  $msg = "La voiture receptionnée a été modifiée";
+  $addinfo_3 = 'block';
+  $msg_3 = "La voiture receptionnée a été modifiée";
 }
 
 //get car repair chart data
@@ -191,6 +193,12 @@ function arrayValueExist($array, $value)
         <h4><i class="icon fa fa-check"></i> Success!</h4>
         <?php echo $msg_2; ?>
       </div>
+      <div id="her" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_3; ?>">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
+        </button>
+        <h4><i class="icon fa fa-check"></i> Success!</h4>
+        <?php echo $msg_3; ?>
+      </div>
       <div align="right" style="margin-bottom:1%;">
         <!-- <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php" data-original-title="Créer un nouveau formulaire de réception de véhicule"><i class="fa fa-plus"></i></a> -->
         <!-- <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>recep_panel/recep_dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> -->
@@ -198,7 +206,7 @@ function arrayValueExist($array, $value)
       <div class="box box-success">
         <div class="box-header">
           <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
-          <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers véhicules réceptionnés par <?php echo '<b>' . $_SESSION['objRecep']['name'] . '</b>'; ?></h3>
+          <h3 class="box-title"><i class="fa fa-list"></i> Liste des véhicules réceptionnés par <?php echo '<b>' . $_SESSION['objRecep']['name'] . '</b>'; ?></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -247,7 +255,8 @@ function arrayValueExist($array, $value)
                   <td>
 
                     <!-- <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a> -->
-                    <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
+                    <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a> -->
+                    <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_gene.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
                   </td>
                 </tr>
               <?php }
@@ -261,19 +270,20 @@ function arrayValueExist($array, $value)
 
       <div class="box box-success">
         <div class="box-header">
-          <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers véhicules à réceptionner</h3>
+          <h3 class="box-title"><i class="fa fa-list"></i> Liste des véhicules à réceptionner</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
           <table class="table sakotable table-bordered table-striped dt-responsive">
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Immatriculation</th>
                 <th>Marque</th>
                 <th>Modèle</th>
                 <th>Scanner mécanique</th>
                 <th>Scanner électrique</th>
-                <th>Frais de scanner</th>
+                <!-- <th>Frais de scanner</th> -->
                 <th>Statut scanner</th>
                 <th>Statut reception</th>
                 <th>Action</th>
@@ -289,12 +299,13 @@ function arrayValueExist($array, $value)
                 // }
                 ?>
                 <tr>
+                  <td><?php echo $row['id']; ?></td>
                   <td><?php echo $row['imma_vehi_client']; ?></td>
                   <td><?php echo $row['marque_vehi_client']; ?></td>
                   <td><?php echo $row['model_vehi_client']; ?></td>
                   <td><?php echo $row['scanner_mecanique']; ?></td>
                   <td><?php echo $row['scanner_electrique']; ?></td>
-                  <td><?php echo $row['frais_scanner']; ?></td>
+                  <!-- <td><?php echo $row['frais_scanner']; ?></td> -->
                   <td><?php
                       if ($row['statut_scannage'] == null) {
                         echo "<span class='label label-default'>En attente de scan</span> <br/>";
@@ -310,16 +321,125 @@ function arrayValueExist($array, $value)
                       }
                       ?></td>
                   <td>
-                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar_reception.php?immat=<?php echo $row['imma_vehi_client']; ?>&vehicule_scanner_id=<?php echo $row['id']; ?>" data-original-title="Receptionner ce véhicule"><i class="fa fa-user"></i></a>
+                    <?php if ($row['statut_reception'] == null) { ?>
+                      <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar_reception.php?immat=<?php echo $row['imma_vehi_client']; ?>&vehicule_scanner_id=<?php echo $row['id']; ?>" data-original-title="Receptionner ce véhicule"><i class="fa fa-user"></i></a>
+                    <?php } else {
+                      ?>
+                      <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php?immat=<?php echo $row['imma_vehi_client']; ?>" data-original-title="Receptionner ce véhicule"><i class="fa fa-user"></i></a>
+                    <?php }
+                    ?>
+
                     <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="#" data-original-title="Afficher le reçu de paiement du scanner"><i class="fa fa-file-text-o"></i></a> -->
                   </td>
                 </tr>
               <?php }
-              mysql_close($link); ?>
+              ?>
             </tbody>
           </table>
         </div>
         <!-- /.box-body -->
+      </div>
+
+      <?php
+
+      $result = $wms->getRecepCarListRepar($link);
+
+      foreach ($result as $row) { ?>
+
+        <div class="box box-success">
+          <div class="box-header with-border">
+
+            <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers véhicules en réparation</h3>
+          </div>
+
+          <div class="box-body">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                  <tr>
+                    <th>ID Réception</th>
+                    <th>Immatriculation</th>
+                    <?php
+                    if ($_SESSION['login_type'] != "mechanics") { ?>
+                      <th>Client</th>
+                    <?php } ?>
+                    <th>Date reception</th>
+                    <th>Date exp. assur</th>
+                    <th>Date exp. vis. tech.</th>
+                    <th>Statut réparation</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+
+                    <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
+                    <td><?php echo $row['num_matricule']; ?></td>
+                    <td><?php echo $row['c_name']; ?></td>
+                    <td><?php echo $row['add_date_recep_vehi']; ?></td>
+                    <td><?php echo $row['add_date_assurance']; ?></td>
+                    <td><?php echo $row['add_date_visitetech']; ?></td>
+                    <td><?php
+                        if ($row['statut_reparation'] == null) {
+                          echo "<span class='label label-default'>En attente de réparation</span> <br/>";
+                        } else if ($row['statut_reparation'] == 0) {
+                          echo "<span class='label label-warning'>En cours de reparation</span> <br/>";
+                        } else if ($row['statut_reparation'] == 1) {
+                          echo "<span class='label label-success'>Reparation effectuée</span> <br/>";
+                        }
+                        ?>
+                    </td>
+                    <td>
+                      <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#infos_vehicule_modal_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Envoyer un SMS au client concernant le statut de réparation de son véhicule"><i class="fa fa-envelope-o"></i></a>
+                    </td>
+                  </tr>
+                  <div id="infos_vehicule_modal_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <a class="close" data-dismiss="modal">×</a>
+                          <h3>Envoyer un SMS à <?php echo $row['c_name']; ?></h3>
+                        </div>
+                        <form id="devisVehiForm" name="devis_vehi" role="form" enctype="multipart/form-data" method="POST" action="sendRepairSmsToClient.php">
+                          <div class="modal-body">
+
+                            <div class="form-group row">
+                              <label for="remarque_mecano" class="col-md-2 col-form-label">Message</label>
+                              <div class="col-md-10" style="padding-left:0px;">
+                                <textarea class="form-control" id="message_status_reparation" rows="4" name="message_status_reparation"></textarea>
+                              </div>
+                            </div>
+
+                            <input type="hidden" value="<?php echo $row['car_id']; ?>" name="reception_car_id" />
+                            <input type="hidden" value="<?php echo $row['princ_tel']; ?>" name="client_telephone" />
+
+                            <input type="hidden" value="<?php echo $row['make_name']; ?>" name="make_name" />
+                            <input type="hidden" value="<?php echo $row['model_name']; ?>" name="model_name" />
+                            <input type="hidden" value="<?php echo $row['VIN']; ?>" name="immatri" />
+                            <input type="hidden" value="<?php echo $row['c_name']; ?>" name="client_nom" />
+                            <input type="hidden" value="<?php echo $row['statut_reparation']; ?>" name="statut_reparation" />
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-success" id="submit">Envoyer</button>
+                          </div>
+
+                        </form>
+                      </div>
+                    </div>
+                  <?php }
+
+                  mysql_close($link);
+                  ?>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- <div class="box-footer clearfix"><a href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_reception_list.php" class="btn btn-sm btn-success btn-flat pull-right"><b><i class="fa fa-list"></i> &nbsp;Voir toute la liste</b></a> </div> -->
+
       </div>
 
       <!-- /.box -->
@@ -329,16 +449,16 @@ function arrayValueExist($array, $value)
 </section>
 <!-- /.content -->
 <script type="text/javascript">
-
-$(document).ready(function() {
+  $(document).ready(function() {
     setTimeout(function() {
       $("#me").hide(8000);
       $("#you").hide(8000);
       $("#his").hide(8000);
+      $("#her").hide(8000);
       $("#us").hide(8000);
     }, 8000);
   });
-  
+
   // Get context with jQuery - using jQuery's .get() method.
   var salesChartCanvas = $('#salesChart').get(0).getContext('2d');
   // This will get the first returned node in the jQuery collection.
@@ -404,7 +524,5 @@ $(document).ready(function() {
   // ---------------------------
   // - END MONTHLY SALES CHART -
   // ---------------------------
-
-  
 </script>
 <?php include('../footer.php'); ?>

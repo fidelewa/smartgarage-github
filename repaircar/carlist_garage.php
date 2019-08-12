@@ -60,7 +60,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                 <th>Chasis No</th>
                 <th>Emplacement du véhicule</th>
                 <th>Date d'entrée au garage</th>
-                <!-- <th>Nom du client</th> -->
+                <th>Nom du client</th>
                 <!-- <th>Marque</th>
                 <th>Modèle</th>
                 <th>Année</th> -->
@@ -93,7 +93,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                   <td><span class="label label-danger"><?php echo $row['chasis_no']; ?></span></td>
                   <td><span class="label label-success"><?php echo $row['stat_empla_vehi']; ?></span></td>
                   <td><?php echo $row['date_emplacement']; ?></td>
-
+                  <td><?php echo $row['c_name']; ?></td>
                   <td>
                     <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_garage_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des emplacements du véhicule"><i class="fa fa-eye"></i></a>
                     <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Afficher les détails du véhicule"><i class="fa fa-eye"></i></a>

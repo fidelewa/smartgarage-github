@@ -272,7 +272,9 @@ if (!empty($row) && count($row) > 0) { ?>
                                             // var_dump($devis_data);
                                             // die();
 
-                                            foreach ($devis_data as $devis) { ?>
+                                            foreach ($devis_data as $devis) { 
+                                               
+                                                ?>
                                                 <tr>
                                                     <td><?php echo $devis['code_piece_rechange_devis']; ?></td>
                                                     <td><?php echo str_replace('u0027', "'", $devis['designation_piece_rechange_devis']); ?></td>
@@ -458,6 +460,8 @@ if (!empty($row) && count($row) > 0) { ?>
         </div>
         <div id="mobile-preview-close_2">
             <!-- <a href="edition.php?devis_id=<?php echo $_GET['devis_id']; ?>" onClick="edition();return false;">Imprimer</a> -->
+            <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>&devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>"> Envoyer au client par e-mail</a>
+            <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>&devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>"> Envoyer au client par SMS</a>
         </div>
         <script type="text/javascript">
             var devis_id = "<?php echo $_GET['devis_id']; ?>";
@@ -511,12 +515,12 @@ if (!empty($row) && count($row) > 0) { ?>
             for (const key of devis_data_obj) {
 
                 // Conversion en flottant
-                key.price = parseFloat(key.price);
+                key.prix_piece_rechange_min_devis = parseFloat(key.prix_piece_rechange_min_devis);
                 key.total_prix_piece_rechange_devis_ht = parseFloat(key.total_prix_piece_rechange_devis_ht);
                 key.total_prix_piece_rechange_devis_ttc = parseFloat(key.total_prix_piece_rechange_devis_ttc);
 
                 // Affectation des nouvelles valeurs
-                $("#article_price_" + row).html(numeral(key.price).format('0,0 $'));
+                $("#article_price_" + row).html(numeral(key.prix_piece_rechange_min_devis).format('0,0 $'));
                 $("#article_total_ht_" + row).html(numeral(key.total_prix_piece_rechange_devis_ht).format('0,0 $'));
                 $("#article_total_ttc_" + row).html(numeral(key.total_prix_piece_rechange_devis_ttc).format('0,0 $'));
 

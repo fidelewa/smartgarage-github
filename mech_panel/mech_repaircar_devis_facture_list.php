@@ -110,9 +110,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 
         $(document).ready(function() {
             setTimeout(function() {
-                $("#me").hide(300);
-                $("#you").hide(200000);
-            }, 200000);
+                $("#me").hide(8000);
+                $("#you").hide(8000);
+            }, 8000);
         });
     </script>
     <?php include('footer.php'); ?>

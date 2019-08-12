@@ -349,7 +349,7 @@ if (isset($_POST['car_names'])) {
 	// ETAPE 2
 
 	// Chef mécanicien et électricien
-	$queryChefMechElec = "SELECT * FROM tbl_add_user WHERE usr_type IN ('chef mecanicien','chef electricien')";
+	$queryChefMechElec = "SELECT * FROM tbl_add_mech WHERE usr_type IN ('chef mecanicien','chef electricien')";
 
 	// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 	$resultChefMechElec = mysql_query($queryChefMechElec, $link);
@@ -797,6 +797,26 @@ if (empty($_POST['sortie_remarq_recep_vehi'])) {
 
 // Echappement des caractères spéciaux
 
+if (!empty($_POST['remarque_access_vehi'])) {
+	$_POST['remarque_access_vehi'] = mysql_real_escape_string($_POST['remarque_access_vehi']);
+}
+
+if (!empty($_POST['remarque_motif_depot'])) {
+	$_POST['remarque_motif_depot'] = mysql_real_escape_string($_POST['remarque_motif_depot']);
+}
+
+if (!empty($_POST['remarque_etat_vehi_arrive'])) {
+	$_POST['remarque_etat_vehi_arrive'] = mysql_real_escape_string($_POST['remarque_etat_vehi_arrive']);
+}
+
+if (!empty($_POST['remarque_aspect_ext'])) {
+	$_POST['remarque_aspect_ext'] = mysql_real_escape_string($_POST['remarque_aspect_ext']);
+}
+
+if (!empty($_POST['remarque_aspect_int'])) {
+	$_POST['remarque_aspect_int'] = mysql_real_escape_string($_POST['remarque_aspect_int']);
+}
+
 // Remarque sur la voiture à son arrivée
 if (!empty($_POST['arriv_remarq_recep_vehi_text'])) {
 	$_POST['arriv_remarq_recep_vehi_text'] = mysql_real_escape_string($_POST['arriv_remarq_recep_vehi_text']);
@@ -1192,7 +1212,6 @@ $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
 // Envoi de SMS aux clients, chef mécanicien et chef électricien
 include(ROOT_PATH.'/sendSmsToChefMechElec.php');
 include(ROOT_PATH.'/sendSmsToClient_2.php');
-
 
 // if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {
 
