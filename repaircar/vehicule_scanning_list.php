@@ -54,7 +54,7 @@ $i = 0;
                 <h4><i class="icon fa fa-check"></i> Erreur!</h4>
                 <?php echo $msg_error; ?>
             </div>
-            <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php" data-original-title="Ajouter un utilisateur"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div>
+            <!-- <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php" data-original-title="Ajouter un utilisateur"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div> -->
             <div class="box box-success">
                 <!-- <div class="box-header">
                     <h3 class="box-title">Liste des véhicules à scanner</h3>
@@ -65,6 +65,8 @@ $i = 0;
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Nom client</th>
+                                <th>Numéro téléphone</th>
                                 <th>Immatriculation</th>
                                 <th>Marque</th>
                                 <th>Modèle</th>
@@ -85,33 +87,35 @@ $i = 0;
                                 // 	$image = WEB_URL . 'img/upload/' . $row['usr_image'];
                                 // }
                                 ?>
-                                <tr>
-                                    <td><?php echo $row['id']; ?></td>
-                                    <td><?php echo $row['imma_vehi_client']; ?></td>
-                                    <td><?php echo $row['marque_vehi_client']; ?></td>
-                                    <td><?php echo $row['model_vehi_client']; ?></td>
-                                    <td><?php echo $row['scanner_mecanique']; ?></td>
-                                    <td><?php echo $row['scanner_electrique']; ?></td>
-                                    <td id="frais_scanner_<?php echo $i; ?>"><?php echo $row['frais_scanner']; ?></td>
-                                    <td><?php
+                            <tr>
+                                <td><?php echo $row['id']; ?></td>
+                                <td><?php echo $row['c_name']; ?></td>
+                                <td><?php echo $row['princ_tel']; ?></td>
+                                <td><?php echo $row['imma_vehi_client']; ?></td>
+                                <td><?php echo $row['marque_vehi_client']; ?></td>
+                                <td><?php echo $row['model_vehi_client']; ?></td>
+                                <td><?php echo $row['scanner_mecanique']; ?></td>
+                                <td><?php echo $row['scanner_electrique']; ?></td>
+                                <td id="frais_scanner_<?php echo $i; ?>"><?php echo $row['frais_scanner']; ?></td>
+                                <td><?php
                                         if ($row['statut_scannage'] == null) {
                                             echo "<span class='label label-default'>En attente de scan</span> <br/>";
                                         } else if ($row['statut_scannage'] == 1) {
                                             echo "<span class='label label-success'>Scan effectué</span> <br/>";
                                         }
                                         ?></td>
-                                    <td><?php
+                                <td><?php
                                         if ($row['statut_reception'] == null) {
                                             echo "<span class='label label-default'>En attente de reception</span> <br/>";
                                         } else if ($row['statut_reception'] == 1) {
                                             echo "<span class='label label-success'>Reception effectuée</span> <br/>";
                                         }
                                         ?></td>
-                                    <td>
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?vehicule_scanning_id=<?php echo $row['id']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer reçu de paiement du scanner</a>
-                                    </td>
-                                </tr>
-                                <?php
+                                <td>
+                                    <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?vehicule_scanning_id=<?php echo $row['id']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer reçu de paiement du scanner</a>
+                                </td>
+                            </tr>
+                            <?php
                                 $i++;
                             }
 

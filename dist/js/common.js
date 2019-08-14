@@ -1070,8 +1070,23 @@ function loadMarqueModeleVoiture_2(immavehi) {
 		dataType: 'json',
 		success: function (data) {
 
-			$("#ddlMake").val(data.make_name);
-			$("#ddl_model").val(data.model_name);
+			// Si le nom de la marque est connu
+			if (data.make_name != null) {
+
+				// On affiche le nom de la marque dans le champs texte
+				$("#ddlMake").val(data.make_name);
+				// On désactive le champ texte
+				$("#ddlMake").prop('disabled', true);
+			}
+
+			// Si le nom du modèle de la voiture est connu
+			if (data.model_name != null) {
+
+				// On affiche le nom du modèle dans le champs texte
+				$("#ddl_model").val(data.model_name);
+				// On désactive le champ texte
+				$("#ddl_model").prop('disabled', true);
+			}
 
 		}
 	});

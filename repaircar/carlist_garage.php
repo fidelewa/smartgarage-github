@@ -20,7 +20,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
-  <h1><i class="fa fa-wrench"></i> Liste de tous les véhicules actuellement au garage</h1>
+  <h1><i class="fa fa-list"></i> Liste de tous les véhicules actuellement au garage</h1>
   <ol class="breadcrumb">
     <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active">Liste des véhicules du garage</li>
@@ -59,7 +59,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                 <th>Immatriculation</th>
                 <th>Chasis No</th>
                 <th>Emplacement du véhicule</th>
-                <th>Date d'entrée au garage</th>
+                <!-- <th>Date d'entrée au garage</th> -->
                 <th>Nom du client</th>
                 <!-- <th>Marque</th>
                 <th>Modèle</th>
@@ -87,42 +87,47 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                 // }
 
                 ?>
-                <tr>
+              <tr>
 
-                  <td><?php echo $row['VIN']; ?></td>
-                  <td><span class="label label-danger"><?php echo $row['chasis_no']; ?></span></td>
-                  <td><span class="label label-success"><?php echo $row['stat_empla_vehi']; ?></span></td>
-                  <td><?php echo $row['date_emplacement']; ?></td>
-                  <td><?php echo $row['c_name']; ?></td>
-                  <td>
-                    <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_garage_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des emplacements du véhicule"><i class="fa fa-eye"></i></a>
-                    <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Afficher les détails du véhicule"><i class="fa fa-eye"></i></a>
+                <td><?php echo $row['VIN']; ?></td>
+                <td><span class="label label-danger"><?php echo $row['chasis_no']; ?></span></td>
+                <td>
+                  <?php
+                    if ($row['statut_emplacement_vehicule'] == 1) {
+                      echo "<span class='label label-success'>Au garage</span> <br/>";
+                    }
+                    ?></td>
+                <!-- <td><?php echo $row['date_emplacement']; ?></td> -->
+                <td><?php echo $row['c_name']; ?></td>
+                <td>
+                  <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_garage_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des emplacements du véhicule"><i class="fa fa-eye"></i></a>
+                  <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Afficher les détails du véhicule"><i class="fa fa-eye"></i></a>
 
-                    <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header orange_header">
-                            <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                            <h3 class="modal-title">Détails des informations de la voiture</h3>
-                          </div>
-                          <div class="modal-body model_view" align="center">&nbsp;
-                            <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>
-                            <div class="model_title"><?php echo $row['car_name']; ?></div>
-                            <div style="color:#fff;font-size:15px;font-weight:bold;">Facture No: <?php echo $row['repair_car_id']; ?></div>
-                          </div>
-                          <div class="modal-body">
-                            <h3 style="text-decoration:underline;"></h3>
-                            <div class="row">
-                              <div class="col-xs-12">
-                                <b>Nom de la voiture :</b> <?php echo $row['car_name']; ?><br />
-                                <b>Réparation automobile ID :</b> <?php echo $row['repair_car_id']; ?><br />
-                                <b>Marque voiture :</b> <?php echo $row['make_name']; ?><br />
-                                <b>Modèle de voiture:</b> <?php echo $row['model_name']; ?><br />
-                                <b>Année :</b> <?php echo $row['year']; ?><br />
-                                <b>Chasis No :</b> <?php echo $row['chasis_no']; ?><br />
-                                <!-- <b>Enregistrement No :</b> <?php echo $row['car_reg_no']; ?><br /> -->
-                                <b>VIN No :</b> <?php echo $row['VIN']; ?><br />
-                                <?php
+                  <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header orange_header">
+                          <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                          <h3 class="modal-title">Détails des informations de la voiture</h3>
+                        </div>
+                        <div class="modal-body model_view" align="center">&nbsp;
+                          <div><img class="photo_img_round" style="width:100px;height:100px;" src="<?php echo $image;  ?>" /></div>
+                          <div class="model_title"><?php echo $row['car_name']; ?></div>
+                          <div style="color:#fff;font-size:15px;font-weight:bold;">Facture No: <?php echo $row['repair_car_id']; ?></div>
+                        </div>
+                        <div class="modal-body">
+                          <h3 style="text-decoration:underline;"></h3>
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <b>Nom de la voiture :</b> <?php echo $row['car_name']; ?><br />
+                              <b>Réparation automobile ID :</b> <?php echo $row['repair_car_id']; ?><br />
+                              <b>Marque voiture :</b> <?php echo $row['make_name']; ?><br />
+                              <b>Modèle de voiture:</b> <?php echo $row['model_name']; ?><br />
+                              <b>Année :</b> <?php echo $row['year']; ?><br />
+                              <b>Chasis No :</b> <?php echo $row['chasis_no']; ?><br />
+                              <!-- <b>Enregistrement No :</b> <?php echo $row['car_reg_no']; ?><br /> -->
+                              <b>VIN No :</b> <?php echo $row['VIN']; ?><br />
+                              <?php
 
                                 // Visite technique (par ans)
 
@@ -186,16 +191,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                 }
 
                                 ?>
-                              </div>
                             </div>
                           </div>
                         </div>
-                        <!-- /.modal-content -->
-                        <!-- /.modal-content -->
                       </div>
+                      <!-- /.modal-content -->
+                      <!-- /.modal-content -->
                     </div>
-                  </td>
-                </tr>
+                  </div>
+                </td>
+              </tr>
               <?php }
               mysql_close($link); ?>
             </tbody>

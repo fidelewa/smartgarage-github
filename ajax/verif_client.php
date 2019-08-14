@@ -6,7 +6,7 @@ include('../config.php');
 if ($_POST['client'] != "") {
 	$keyword = strval($_POST["client"]);
 
-	$query = "SELECT * FROM tbl_add_customer where c_name LIKE '" . $keyword . "%'";
+	$query = "SELECT * FROM tbl_add_customer where c_name LIKE '" . $keyword . "%' LIMIT 5";
 
 	// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 	$result = mysql_query($query, $link);
@@ -21,7 +21,7 @@ if ($_POST['client'] != "") {
 
 	if (mysql_num_rows($result) > 0) {
 		while ($row = mysql_fetch_assoc($result)) {
-			$countryResult[] = $row["c_name"];
+			$countryResult[] = $row["c_name"]."//".$row["princ_tel"];
 		}
 		echo json_encode($countryResult);
 	}
@@ -31,7 +31,7 @@ if ($_POST['client'] != "") {
 if ($_POST['tel_client'] != "") {
 	$keyword = strval($_POST["tel_client"]);
 
-	$query = "SELECT * FROM tbl_add_customer where princ_tel LIKE '" . $keyword . "%'";
+	$query = "SELECT * FROM tbl_add_customer where princ_tel LIKE '" . $keyword . "%' LIMIT 5";
 
 	// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 	$result = mysql_query($query, $link);

@@ -6,8 +6,40 @@ include("../helper/common.php");
 
 $wms = new wms_core();
 
-// var_dump($_POST);
+var_dump($_POST);
 // die();
+
+$clientData = explode("//", $_POST['ddlCustomerList']);
+
+$client_nom = $clientData[0];
+$client_num_tel = $clientData[1];
+
+// Récupération de l'indentifiant du client à partir de son numéro de téléphone (qui a un index unique)
+// $queryclient = "SELECT customer_id FROM tbl_add_customer WHERE princ_tel = '022807686'";
+
+// $queryclient = mysql_real_escape_string($queryclient);
+
+// var_dump($queryclient);
+
+// On exécute la requête
+$resultListeClients = mysql_query("SELECT customer_id FROM tbl_add_customer WHERE princ_tel = '".$client_num_tel."'", $link);
+
+// var_dump($resultListeClients);
+
+// // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+if (!$resultListeClients) {
+    $message  = 'Invalid query: ' . mysql_error() . "\n";
+    $message .= 'Whole query: ' . $queryClient;
+    die($message);
+}
+
+// On récupère la liste des modèles commençant par le même caractère que la valeur du modèle soumis via le formulaire
+while ($row = mysql_fetch_assoc($resultListeClients)) {
+    
+    $client_id = (int)$row['customer_id'];
+    var_dump($row);
+    var_dump($client_id);
+}
 
 if ($_POST['scanner_electrique'] == null && $_POST['scanner_mecanique'] == null) {
     $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=scanner_error";
@@ -243,6 +275,15 @@ if ($_POST['scanner_electrique'] == null && $_POST['scanner_mecanique'] == null)
     // On retourne le nom de la marque dans un tableau associatif
     $rowCar = mysql_fetch_array($resultListeCar);
 
+    // $_POST['ddlCustomerList'] = (int)$_POST['cli'];
+
+    $_POST['ddlCustomerList'] = (int) $client_id;
+
+    // var_dump($_POST);
+    // die();
+
+    // $cli = (int)$_POST['cli'];
+
     // Si la voiture n'est pas encore enregistrée en BDD
     // On l'enregistre
     if (empty($rowCar)) {
@@ -256,13 +297,13 @@ if ($_POST['scanner_electrique'] == null && $_POST['scanner_mecanique'] == null)
     $frais_scanner = (float) $_POST['frais_scanner'];
 
     // $nbr_aleatoire = rand();
-    $nbr_aleatoire = substr(number_format(rand()), 0, 6);
-    
+    $nbr_aleatoire = substr(rand(), 0, 6);
+
     $query = "INSERT INTO tbl_vehicule_scanning (imma_vehi_client, marque_vehi_client, 
        model_vehi_client, scanner_mecanique, scanner_electrique, frais_scanner, customer_id, nbr_aleatoire
     )
     VALUES('$_POST[immat]','$make_name_str','$model_name_str','$_POST[scanner_mecanique]','$_POST[scanner_electrique]',
-    '$frais_scanner','$_POST[customer_id]', $nbr_aleatoire)";
+    '$frais_scanner','$_POST[ddlCustomerList]', $nbr_aleatoire)";
 
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
     $result = mysql_query($query, $link);
@@ -278,7 +319,7 @@ if ($_POST['scanner_electrique'] == null && $_POST['scanner_mecanique'] == null)
     }
     // Redirection vers la liste des devis
     // $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=add";
-    $url = WEB_URL . "servcli_panel/recu_paiement_scanner.php?nb_aleatoire=".$nbr_aleatoire;
+    $url = WEB_URL . "servcli_panel/recu_paiement_scanner.php?nb_aleatoire=" . $nbr_aleatoire;
     header("Location: $url");
     // }
 

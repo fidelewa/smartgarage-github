@@ -627,7 +627,7 @@ function uploadPJ_12()
 																								<button type="button" onclick="javascript:window.print();" class="btn btn-danger btnsp"><i class="fa fa-print fa-2x"></i><br />
 																									Imprimer</button>&emsp;
 					<?php } ?> -->
-					<a class="btn btn-warning btnsp" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/customerlist.php" data-original-title="Retour"><i class="fa fa-reply  fa-2x"></i><br />
+					<a class="btn btn-warning btnsp" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/servcli_dashboard.php" data-original-title="Retour"><i class="fa fa-reply  fa-2x"></i><br />
 						Retour</a> </div>
 			</div>
 		</div>
