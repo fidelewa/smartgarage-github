@@ -79,13 +79,10 @@ if (isset($_POST['mecanicienList']) && isset($_POST['car_id'])) {
     }
 
     // Récupération des données du mécanicien
-    $row = $wms->getMechanicsInfoByMechanicsId($link, $mech_id);
+    $row = $wms->getMechanicsInfoByMechanicsId($link, $_POST['mech_id']);
 
     // Récupération des données de la voiture
     $voiture = $wms->getMarkModelListByImmaVehi($link, $_POST['imma_vehi']);
-
-    // var_dump($voiture);
-    // die();
 
     // Si le véhicule à été attribué à la fois aux chefs électricien et mécanicien
     if ($_POST['mecanicienList'] == "chef mecanicien et electricien") {
@@ -97,11 +94,15 @@ if (isset($_POST['mecanicienList']) && isset($_POST['car_id'])) {
     // Si le véhicule à été attribué soit au chef électricien ou soit au chef mécanicien
     if ($_POST['mecanicienList'] == "chef mecanicien" || $_POST['mecanicienList'] == "chef electricien") {
 
+        // var_dump($row);
+        // var_dump($voiture);
+        // die();
+
         // On envoi un SMS d'attribution à la personne indiquée
         include(ROOT_PATH . '/sendSmsToMech.php');
     }
 
-    
+
     // } else { // Si oui, on ne fait pas d'insertion mais plutôt une redirection (javascript)
     // header("Location: " . WEB_URL . "reception/repaircar_reception_list.php?m=attribution_done&car_id=" . $_POST['car_id'] . "&mecanicien_id=" . $_POST['mecanicienList'] . "&marque=" . $voiture['make_name'] . "&modele=" . $voiture['model_name'] . "&imma=" . $voiture['VIN'] . "&mech_name=" . $row['usr_name'] . "&date_attrib=" . $date_attr);
     // Récupération des données du mécanicien

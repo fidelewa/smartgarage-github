@@ -607,7 +607,7 @@ $i = 0;
                       <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#diag_vehicule_modal_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Affecter un mécanicien à la réparation du véhicule"><i class="fa fa-user"></i></a>
                     <?php
                     } elseif ($row['statut_reparation_mecanique'] == 0) { ?>
-                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_fin_reparation_process.php?recep_car_id=<?php echo $row['car_id']; ?>&chef_mech_elec_type=<?php echo $_SESSION['objMech']['usr_type']; ?>" data-original-title="Terminer la réparation du véhicule"><i class="fa fa-car"></i></a>
+                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_fin_reparation_process.php?recep_car_id=<?php echo $row['car_id']; ?>&chef_mech_elec_type=<?php echo $_SESSION['objMech']['usr_type']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>" data-original-title="Terminer la réparation du véhicule"><i class="fa fa-car"></i></a>
                     <?php }
                   }
                 }
@@ -625,7 +625,7 @@ $i = 0;
                       <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#diag_vehicule_modal_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Affecter un mécanicien à la réparation du véhicule"><i class="fa fa-user"></i></a>
                     <?php
                     } elseif ($row['statut_reparation_electrique'] == 0) { ?>
-                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_fin_reparation_process.php?recep_car_id=<?php echo $row['car_id']; ?>&chef_mech_elec_type=<?php echo $_SESSION['objMech']['usr_type']; ?>" data-original-title="Terminer la réparation du véhicule"><i class="fa fa-car"></i></a>
+                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_fin_reparation_process.php?recep_car_id=<?php echo $row['car_id']; ?>&chef_mech_elec_type=<?php echo $_SESSION['objMech']['usr_type']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>" data-original-title="Terminer la réparation du véhicule"><i class="fa fa-car"></i></a>
                     <?php }
                   }
                 }
@@ -722,6 +722,10 @@ $i = 0;
                       <input type="hidden" value="<?php echo $_SESSION['objMech']['usr_type']; ?>" name="chef_mech_elec_type" />
                       <input type="hidden" value="<?php echo $row['admin_ges_tel']; ?>" name="admin_ges_tel" />
                       <input type="hidden" value="<?php echo $row['recep_tel']; ?>" name="recep_tel" />
+
+                      <input type="hidden" value="<?php echo $row['make_name']; ?>" name="make_name" />
+                      <input type="hidden" value="<?php echo $row['model_name']; ?>" name="model_name" />
+                      <input type="hidden" value="<?php echo $row['VIN']; ?>" name="VIN" />
 
                       <!-- <input type="hidden" value="<?php echo $row['attrib_recep']; ?>" name="attrib_recep" /> -->
                       <input type="hidden" value="<?php echo $row['car_id']; ?>" name="reception_id" />

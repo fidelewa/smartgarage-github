@@ -6,6 +6,8 @@ require_once(ROOT_PATH . '/SmsApi.php');
 // instanciation de la classe de l'API SMS
 $smsApi = new SmsApi();
 
+$listeChefMechElec = array();
+
 // Liste des chefs mécanicien et électricien
 $queryChefMechElec = "SELECT * FROM tbl_add_mech WHERE usr_type IN ('chef mecanicien','chef electricien')";
 
@@ -23,8 +25,8 @@ while ($rowChefMechElec = mysql_fetch_assoc($resultChefMechElec)) {
 
     // On envoi le message d'attribution à chacun des chefs mécanicien et électricien 
     // Message d'alerte
-    $content_msg = 'Un véhicule, ' . $voiture['make_name'] . ' ' . $voiture['model_name'] . ' ' . $voiture['VIN'] .
-        ' appartenant au client ' . $voiture['c_name'] . ' vient d\'être réceptionné, veuillez signaler votre disponibilité pour diagnostic.';
+    $content_msg = 'Un véhicule, ' . $make_name . ' ' . $model_name . ' ' . $imma_vehi .
+        ' appartenant au client ' . $client_nom . ' vient d\'être réceptionné, veuillez signaler votre disponibilité pour diagnostic.';
 
     $resultSmsSent = $smsApi->isSmsapi($rowChefMechElec['usr_tel'], $content_msg);
 }

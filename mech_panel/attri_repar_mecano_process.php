@@ -62,7 +62,7 @@ foreach ($mecano as $mrow) {
     $content_msg = $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ';
 
     // Exécution de la méthode d'envoi 
-    // $resultSmsSent = $smsApi->isSmsapi($admin_ges_tel, $content_msg);
+    $resultSmsSent = $smsApi->isSmsapi($admin_ges_tel, $content_msg);
 }
 
 /***********************************************
@@ -78,7 +78,7 @@ foreach ($mecano as $mrow) {
     $content_msg = $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ';
 
     // Exécution de la méthode d'envoi 
-    // $resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);
+    $resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);
 }
 
 // On redirige vers le tableau de bord

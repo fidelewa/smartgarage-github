@@ -705,6 +705,7 @@ $result_car_model = $wms->getMarkModelListByImmaVehi($link, $_POST['vin']);
 // $result_car_model['make_id'];
 // $result_car_model['model_id'];
 $_POST['ddlImma'] = $_POST['vin'];
+$imma_vehi = $_POST['vin'];
 $_POST['add_car_id'] = $result_car_model['car_id'];
 // $_POST['ddlCustomerList'] = $_POST['customer_id'];
 // $_POST['ddlMake'] = $_POST['car_make_id'];
@@ -1210,7 +1211,7 @@ mysql_query($query, $link);
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
 
 // Envoi de SMS aux clients, chef mécanicien et chef électricien
-include(ROOT_PATH.'/sendSmsToChefMechElec.php');
+include(ROOT_PATH.'/sendSmsToChefMechElec_2.php');
 include(ROOT_PATH.'/sendSmsToClient_2.php');
 
 // if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {

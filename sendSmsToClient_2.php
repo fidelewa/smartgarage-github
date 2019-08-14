@@ -8,8 +8,16 @@ $smsApi = new SmsApi();
 
 // $mobile_mech  = "02280768";
 
+if(isset($_POST['ddlImma'])){
+	$immat_car = $_POST['ddlImma'];
+}
+
+if(isset($_POST['immat'])){
+	$immat_car = $_POST['immat'];
+}
+
 // Message d'alerte
-$content_msg = $client_nom . ', votre véhicule ' . $make_name . ' ' . $model_name . ' ' . $_POST['ddlImma'] . ' a bien été réceptionné';
+$content_msg = $client_nom . ', votre véhicule ' . $make_name . ' ' . $model_name . ' ' . $immat_car . ' a bien été réceptionné';
 
 // Exécution de la méthode d'envoi 
 $resultSmsSent = $smsApi->isSmsapi($client_telephone, $content_msg);

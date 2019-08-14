@@ -42,6 +42,60 @@ if ($_GET['chef_mech_elec_type'] == "chef electricien") {
     }
 }
 
+
+/***********************************************
+ * Envoi du SMS à l'administrateur gestionnaire
+ ***********************************************/
+
+require_once(ROOT_PATH . '/SmsApi.php');
+
+// instanciation de la classe de l'API SMS
+$smsApi = new SmsApi();
+
+$admin_ges_tel = $_GET['admin_ges_tel'];
+// $admin_ges_tel  = "02280768";
+
+// var_dump($mecano);
+// die();
+
+if ($_GET['chef_mech_elec_type'] == "chef mecanicien") {
+
+    // Message d'alerte
+    $content_msg = ' La réparation mécanique du véhicule ' . $_GET['make_name'] . ' ' . $_GET['model_name'] . ' ' . $_GET['VIN'] . ' est terminée ';
+}
+
+if ($_GET['chef_mech_elec_type'] == "chef electricien") {
+
+    // Message d'alerte
+    $content_msg = ' La réparation électrique du véhicule ' . $_GET['make_name'] . ' ' . $_GET['model_name'] . ' ' . $_GET['VIN'] . ' est terminée ';
+}
+
+// Exécution de la méthode d'envoi 
+$resultSmsSent = $smsApi->isSmsapi($admin_ges_tel, $content_msg);
+
+/***********************************************
+ * Envoi du SMS au receptionniste
+ ***********************************************/
+
+$recep_tel = $_GET['recep_tel'];
+// $recep_tel  = "02280768";
+
+if ($_GET['chef_mech_elec_type'] == "chef mecanicien") {
+
+    // Message d'alerte
+    $content_msg = ' la réparation mécanique du véhicule ' . $_GET['make_name'] . ' ' . $_GET['model_name'] . ' ' . $_GET['VIN'] . ' est terminée ';
+}
+
+if ($_GET['chef_mech_elec_type'] == "chef electricien") {
+
+    // Message d'alerte
+    $content_msg = ' la réparation électrique du véhicule ' . $_GET['make_name'] . ' ' . $_GET['model_name'] . ' ' . $_GET['VIN'] . ' est terminée ';
+}
+
+// Exécution de la méthode d'envoi 
+$resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);
+
+
 // On redirige vers le tableau de bord
 header("Location: " . WEB_URL . "mech_panel/mech_dashboard.php");
 // echo "<script type='text/javascript'> document.location.href='" . WEB_URL . "cust_panel/cust_dashboard.php'</script>";

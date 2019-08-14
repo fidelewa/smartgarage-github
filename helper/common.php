@@ -212,7 +212,7 @@ class wms_core
 
 		$query = "SELECT DISTINCT num_matricule, c_name, rvr.car_id, attribution_mecanicien, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
 		add_car_id, diag.id as vehi_diag_id, status_attribution_vehicule, usr.usr_name as recep_name, status_diagnostic_vehicule, mech.usr_name as mech_name,
-		attribution_mecanicien, attribution_electricien, statut_diagnostic_mecanique, statut_diagnostic_electrique, mecano_name, electro_name
+		attribution_mecanicien, attribution_electricien, statut_diagnostic_mecanique, statut_diagnostic_electrique, mecano_name, electro_name, mech.usr_id as mech_id
 			from tbl_recep_vehi_repar rvr
 			left join tbl_add_user usr on rvr.attrib_recep = usr.usr_id
 			left join tbl_add_mech mech on (rvr.chef_mech_elec_id = mech.usr_id) 
@@ -627,7 +627,7 @@ class wms_core
 		// Déclaration et initialisation d'un array vide
 		$data = array();
 
-		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, 
+		$query = "SELECT DISTINCT rd.id as vehi_diag_id, dev.devis_id, num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, 
 		rd.car_id, dev.confirm_devis, VIN, statut_validation_devis, rvr.car_id as recep_car_id, statut_autorisation_reparation
 		FROM tbl_add_devis dev 
 		JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
@@ -678,7 +678,7 @@ class wms_core
 		// Déclaration et initialisation d'un array vide
 		$data = array();
 
-		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, 
+		$query = "SELECT DISTINCT rd.id as vehi_diag_id, dev.devis_id, num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, 
 		rd.car_id, dev.confirm_devis, VIN, statut_validation_devis
 		FROM tbl_add_devis dev 
 		JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id

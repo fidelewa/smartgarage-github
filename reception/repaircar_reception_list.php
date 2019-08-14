@@ -3,14 +3,20 @@
 $delinfo = 'none';
 $addinfo = 'none';
 $failedinfo = 'none';
+$failedinfo_2 = 'none';
 $addinfo_2 = 'none';
 $addinfo_3 = 'none';
+$addinfo_4 = 'none';
+$addinfo_5 = 'none';
 $failedinfo_2 = 'none';
 $addinfo_att = 'none';
 $msg = "";
 $msg_2 = "";
 $msg_3 = "";
 $msg_att = "";
+$msg_4 = "";
+$msg_5 = "";
+$msg_sms_failed = "";
 $mech_msg_failedinfo = "";
 
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
@@ -60,15 +66,31 @@ if (isset($_GET['sms']) && $_GET['sms'] == 'send_client_sms_failed') {
     $msg = "L'envoi du SMS au client à échoué";
 }
 
+// NOTIFICATION MECANICIEN SEUL
+
 if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_failed') {
     $failedinfo = 'block';
-    $msg = "L'envoi du SMS au mécanicien à échoué";
+    $msg = "L'envoi du SMS au chef mécanicien à échoué";
 }
 
-// if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
-//     $addinfo_2 = 'block';
-//     $msg_2 = "Un SMS a été envoyé au mécanicien";
-// }
+if (isset($_GET['sms']) && $_GET['sms'] == 'send_mech_sms_succes') {
+    $addinfo_4 = 'block';
+    $msg_4 = "Un SMS a été envoyé au chef mécanicien";
+}
+
+// NOTIFICATION ELECTRICIEN SEUL
+
+if (isset($_GET['sms']) && $_GET['sms'] == 'send_electro_sms_failed') {
+    $failedinfo_2 = 'block';
+    $msg_sms_failed = "L'envoi du SMS au chef électricien à échoué";
+}
+
+if (isset($_GET['sms']) && $_GET['sms'] == 'send_electro_sms_succes') {
+    $addinfo_5 = 'block';
+    $msg_5 = "Un SMS a été envoyé au chef électricien";
+}
+
+// NOTIFICATION ELECTRICIEN ET MECANICIEN
 
 if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_sms_succes') {
     $addinfo_3 = 'block';
@@ -109,6 +131,18 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 <?php echo $msg; ?>
             </div>
+            <div id="you_2" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_4; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
+                </button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <?php echo $msg_4; ?>
+            </div>
+            <div id="you_3" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_5; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
+                </button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <?php echo $msg_5; ?>
+            </div>
             <div id="youyou" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo_att; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i>
                 </button>
@@ -131,6 +165,11 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
                 <!-- <h4><i class="icon fa fa-ban"></i></h4> -->
                 <?php echo $msg; ?>
+            </div>
+            <div id="his_2" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo_2; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+                <!-- <h4><i class="icon fa fa-ban"></i></h4> -->
+                <?php echo $msg_sms_failed; ?>
             </div>
             <div id="hishis" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo_2; ?>">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
@@ -367,7 +406,8 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                                                             </div>
                                                         </div>
                                                     </div>
-
+                                                    
+                                                    <input type="hidden" value="<?php echo $row['mech_id'] ?>" name="mech_id" />
                                                     <input type="hidden" value="<?php echo $row['add_car_id'] ?>" name="car_id" />
                                                     <input type="hidden" value="<?php echo $row['car_id'] ?>" name="reception_id" />
                                                     <input type="hidden" value="<?php echo $row['num_matricule'] ?>" name="imma_vehi" />
@@ -412,6 +452,9 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                 $("#us").hide(8000);
                 $("#usus").hide(8000);
                 $("#hishis").hide(8000);
+                $("#his_2").hide(8000);
+                $("#you_2").hide(8000);
+                $("#you_3").hide(8000);
             }, 8000);
         });
     </script>

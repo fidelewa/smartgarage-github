@@ -5,8 +5,8 @@ include_once('../config.php');
 $wms = new wms_core();
 
 // $row = $wms->getBoncmdeInfo($link, $_GET['boncmde_id']);
-$row = $wms->getCarScanningById($link, $_GET['vehicule_scanning_id']);
-// $row = $wms->getCarScanningByNbAleatoire($link, $_GET['nb_aleatoire']);
+// $row = $wms->getCarScanningById($link, $_GET['vehicule_scanning_id']);
+$row = $wms->getCarScanningByNbAleatoire($link, $_GET['nb_aleatoire']);
 
 // var_dump($row);
 // die();
