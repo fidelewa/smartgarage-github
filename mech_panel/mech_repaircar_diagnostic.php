@@ -120,6 +120,12 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
 
                 <!-- One "tab" for each step in the form: -->
 
+                <input type="hidden" value="<?php echo $_GET['make_name']; ?>" name="make_name" />
+                <input type="hidden" value="<?php echo $_GET['model_name']; ?>" name="model_name" />
+                <input type="hidden" value="<?php echo $_GET['VIN']; ?>" name="VIN" />
+                <input type="hidden" name="statut_acceptation_electricien" value="<?php echo $ligne['statut_acceptation_electricien'] ?>" class="form-control">
+                <input type="hidden" name="statut_acceptation_mecanicien" value="<?php echo $ligne['statut_acceptation_mecanicien'] ?>" class="form-control">
+
                 <input type="hidden" id="nom_client" name="nom_client" value="<?php echo $ligne['c_name'] ?>" class="form-control">
                 <input type="hidden" id="tel_wa_client" name="princ_tel" value="<?php echo $ligne['princ_tel'] ?>" class="form-control">
                 <input type="hidden" id="type_vehicule" name="type_vehicule" value="<?php echo $ligne['type_boite_vitesse'] ?>" class="form-control">

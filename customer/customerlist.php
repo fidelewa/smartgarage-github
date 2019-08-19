@@ -9,7 +9,7 @@ if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
 }
 if (isset($_GET['m']) && $_GET['m'] == 'add') {
   $addinfo = 'block';
-  $msg = "Ajout d'informations client avec succès";
+  $msg = "Client ajouté avec succès !";
 }
 if (isset($_GET['m']) && $_GET['m'] == 'up') {
   $addinfo = 'block';
@@ -48,7 +48,10 @@ $invoice_id = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
         <h4><i class="icon fa fa-check"></i> Réussi!</h4>
         <?php echo $msg; ?>
       </div>
-      <!-- <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/addcustomer.php" data-original-title="Add Customer"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div> -->
+      <div align="right" style="margin-bottom:1%;"> 
+        <!-- <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/addcustomer.php" data-original-title="Add Customer"><i class="fa fa-plus"></i></a>  -->
+        <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/servcli_dashboard.php" data-original-title="Aller au tableau de bord"><i class="fa fa-dashboard"></i></a> 
+      </div>
       <div class="box box-success">
         <!-- /.box-header -->
         <div class="box-body">

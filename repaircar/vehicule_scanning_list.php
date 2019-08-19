@@ -54,7 +54,10 @@ $i = 0;
                 <h4><i class="icon fa fa-check"></i> Erreur!</h4>
                 <?php echo $msg_error; ?>
             </div>
-            <!-- <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php" data-original-title="Ajouter un utilisateur"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div> -->
+            <div align="right" style="margin-bottom:1%;"> 
+                <!-- <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php" data-original-title="Ajouter un utilisateur"><i class="fa fa-plus"></i></a>  -->
+                <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/servcli_dashboard.php" data-original-title="Aller au tableau de bord"><i class="fa fa-dashboard"></i></a> 
+            </div>
             <div class="box box-success">
                 <!-- <div class="box-header">
                     <h3 class="box-title">Liste des véhicules à scanner</h3>

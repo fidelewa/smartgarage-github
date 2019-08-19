@@ -567,6 +567,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
 
               $result = $wms->getAllValidatedDiagnosticDevisByClient($link);
 
+              // var_dump($result);
+
               foreach ($result as $row) {
 
                 ?>
@@ -597,7 +599,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
                     <?php
                     if ($row['statut_autorisation_reparation'] == null) { ?>
                       <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a> -->
-                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_debut_reparation_process.php?recep_car_id=<?php echo $row['recep_car_id']; ?>" data-original-title="Autoriser la réparation du véhicule"><i class="fa fa-car"></i></a>
+                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_debut_reparation_process.php?recep_car_id=<?php echo $row['recep_car_id']; ?>&attribution_mecanicien=<?php echo $row['attribution_mecanicien']; ?>&attribution_electricien=<?php echo $row['attribution_electricien']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>" data-original-title="Autoriser la réparation du véhicule"><i class="fa fa-car"></i></a>
                     <?php }
                     ?>
                   </td>

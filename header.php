@@ -1,7 +1,8 @@
 <?php
-ob_start();
-session_start();
+// ob_start();
+// session_start();
 
+include(__DIR__ . "/session.php");
 include(__DIR__ . "/config.php");
 include(__DIR__ . "/helper/common.php");
 

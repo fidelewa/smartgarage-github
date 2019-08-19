@@ -343,7 +343,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
         }
 
       } else {
-        alert("Veuillez saisir un montant supérieur à 50 000 FCFA SVP !!!");
+        alert("Veuillez saisir un montant supérieur ou égale à 50 000 FCFA SVP !!!");
       }
     }
 

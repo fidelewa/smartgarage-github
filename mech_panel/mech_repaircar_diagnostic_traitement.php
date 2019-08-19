@@ -151,7 +151,8 @@ $admin_ges_tel = $_POST['admin_ges_tel'];
 // $admin_ges_tel  = "02280768";
 
 // Message d'alerte
-$content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+// $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+$content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée '. $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 
 // Exécution de la méthode d'envoi 
 $resultSmsSent = $smsApi->isSmsapi($admin_ges_tel, $content_msg);
@@ -165,7 +166,8 @@ $recep_tel = $_POST['recep_tel'];
 // $recep_tel  = "02280768";
 
 // Message d'alerte
-$content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+// $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+$content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée '. $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 
 // Exécution de la méthode d'envoi 
 $resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);
@@ -176,13 +178,30 @@ $resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);
 
 // Si c'est le chef mécanicien qui est prêt à faire le diagnostic
 // alors on envoi le SMS au chef électricien
-if ($_POST['att_mecano_id'] == $_SESSION['objMech']['user_id']) {
 
-    $elec_tel = $_POST['elec_tel'];
+if ($_POST['statut_acceptation_mecanicien'] == '1') {
+
+    // On récupère le numéro de téléphone du chef électricien
+    $queryChefElec = "SELECT usr_tel FROM tbl_add_mech WHERE usr_type = 'chef electricien'";
+
+    // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+    $resultChefElec = mysql_query($queryChefElec, $link);
+
+    if (!$resultChefElec) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' .  $queryChefElec;
+        die($message);
+    }
+
+    $rowChefElec = mysql_fetch_assoc($resultChefElec);
+    // $elec_tel = $_POST['elec_tel'];
+    $elec_tel = $rowChefElec['usr_tel'];
+
+    // $elec_tel = $_POST['elec_tel'];
     // $elec_tel = "02280768";
 
     // Message d'alerte
-    $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+    $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée '. $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 
     // Exécution de la méthode d'envoi 
     $resultSmsSent = $smsApi->isSmsapi($elec_tel, $content_msg);
@@ -194,13 +213,29 @@ if ($_POST['att_mecano_id'] == $_SESSION['objMech']['user_id']) {
 
 // Si c'est le chef électricien qui est prêt à faire le diagnostic
 // alors on envoi le SMS au chef mécanicien
-if ($_POST['att_electro_id'] == $_SESSION['objMech']['user_id']) {
+if ($_POST['statut_acceptation_electricien'] == '1') {
 
-    $mech_tel = $_POST['mech_tel'];
+    // On récupère le numéro de téléphone du chef mécanicien
+    $queryChefMecano = "SELECT usr_tel FROM tbl_add_mech WHERE usr_type = 'chef mecanicien'";
+
+    // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
+    $resultChefMecano = mysql_query($queryChefMecano, $link);
+
+    if (!$resultChefMecano) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' .  $queryChefMecano;
+        die($message);
+    }
+
+    $rowChefMecano = mysql_fetch_assoc($resultChefMecano);
+    $mech_tel = $rowChefMecano['usr_tel'];
+
+    // $mech_tel = $_POST['mech_tel'];
     // $elec_tel = "02280768";
 
     // Message d'alerte
-    $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+    // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+    $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée '. $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 
     // Exécution de la méthode d'envoi 
     $resultSmsSent = $smsApi->isSmsapi($mech_tel, $content_msg);

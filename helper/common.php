@@ -102,7 +102,7 @@ class wms_core
 		LEFT join tbl_repaircar_diagnostic diag on diag.recep_car_id = rvr.car_id
 		WHERE (ac.add_date_visitetech IS NOT NULL OR ac.add_date_assurance_fin IS NOT NULL) AND statut_emplacement_vehicule = 1
 		order by ac.car_id DESC
-		LIMIT 5";
+		";
 
 		$result = mysql_query($query, $con);
 
@@ -245,13 +245,16 @@ class wms_core
 		// Déclaration et initialisation d'un array vide
 		$data = array();
 
-		$query = "SELECT DISTINCT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
+		$query = "SELECT DISTINCT num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, 
 		rvr.car_id, rvr.add_car_id, diag.id as vehi_diag_id, vehicule_scanner_id, attrib_recep, chef_mech_elec_id, admin_ges_tel,
 		attribution_mecanicien, attribution_electricien, attribution_electricien_id, attribution_mecanicien_id, recep.usr_tel as recep_tel,
 		mech.usr_tel as mech_tel, statut_reparation, mech.usr_name as mech_name, mech.usr_type, electro_name, mecano_name, statut_acceptation_electricien,
 		statut_acceptation_mecanicien, statut_diagnostic_mecanique, statut_diagnostic_electrique, type_diagnostic, statut_acceptation,
-		statut_action_mecanicien, statut_action_electricien
+		statut_action_mecanicien, statut_action_electricien, make_name, model_name, VIN
 		FROM tbl_recep_vehi_repar rvr
+		JOIN tbl_add_car cr on cr.car_id = rvr.add_car_id
+		JOIN tbl_model mo on mo.model_id = cr.car_model
+		JOIN tbl_make m on m.make_id = cr.car_make
 		JOIN tbl_add_customer cus on rvr.customer_name = cus.customer_id 
 		-- JOIN tbl_add_user us on us.usr_type = rvr.attribution_mecanicien
 		LEFT JOIN tbl_add_reception recep on recep.usr_id = rvr.attrib_recep
@@ -628,12 +631,16 @@ class wms_core
 		$data = array();
 
 		$query = "SELECT DISTINCT rd.id as vehi_diag_id, dev.devis_id, num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, 
-		rd.car_id, dev.confirm_devis, VIN, statut_validation_devis, rvr.car_id as recep_car_id, statut_autorisation_reparation
+		rd.car_id, dev.confirm_devis, VIN, statut_validation_devis, rvr.car_id as recep_car_id, statut_autorisation_reparation,
+		admin_ges_tel, attribution_mecanicien, attribution_electricien, make_name, model_name, recep.usr_tel as recep_tel
 		FROM tbl_add_devis dev 
 		JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
 		JOIN tbl_add_car cr ON cr.car_id = rd.car_id
+		JOIN tbl_model mo on mo.model_id = cr.car_model
+		JOIN tbl_make m on m.make_id = cr.car_make 
 		JOIN tbl_add_customer cus on cus.customer_id = cr.customer_id
 		LEFT JOIN tbl_recep_vehi_repar rvr ON cr.car_id = rvr.add_car_id
+		LEFT JOIN tbl_add_reception recep on recep.usr_id = rvr.attrib_recep
 		WHERE statut_validation_devis = 1";
 
 		// Exécution et stockage du résultat de la requête
@@ -752,12 +759,16 @@ class wms_core
 		// Déclaration et initialisation d'un array vide
 		$data = array();
 
-		$query = "SELECT DISTINCT repair_car_id, num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, 
+		$query = "SELECT DISTINCT num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, 
 		rvr.car_id, rvr.add_car_id, diag.id as vehi_diag_id, vehicule_scanner_id, attrib_recep, statut_acceptation_mecanicien, chef_mech_elec_id, admin_ges_tel,
 		attribution_mecanicien, attribution_electricien, attribution_electricien_id, attribution_mecanicien_id, recep.usr_tel as recep_tel,
 		mech.usr_tel as elec_tel, statut_reparation, mech.usr_name as mech_name, mech.usr_type, mecano_name, electro_name, statut_acceptation_electricien,
-		statut_diagnostic_mecanique, statut_diagnostic_electrique, type_diagnostic, statut_acceptation, statut_action_mecanicien, statut_action_electricien
+		statut_diagnostic_mecanique, statut_diagnostic_electrique, type_diagnostic, statut_acceptation, statut_action_mecanicien, statut_action_electricien,
+		make_name, model_name, VIN
 		FROM tbl_recep_vehi_repar rvr
+		JOIN tbl_add_car cr on cr.car_id = rvr.add_car_id
+		JOIN tbl_model mo on mo.model_id = cr.car_model
+		JOIN tbl_make m on m.make_id = cr.car_make
 		JOIN tbl_add_customer cus on rvr.customer_name = cus.customer_id 
 		-- JOIN tbl_add_user us on us.usr_type = rvr.attribution_mecanicien
 		LEFT JOIN tbl_add_reception recep on recep.usr_id = rvr.attrib_recep
@@ -4935,7 +4946,7 @@ GROUP BY pp.per_id";
 	{
 		$data = array();
 		if (!empty($carId)) {
-			$query = "SELECT c_name, cus.*, ac.*
+			$query = "SELECT c_name, cus.*, ac.*, statut_acceptation_electricien, statut_acceptation_mecanicien
 			from tbl_recep_vehi_repar rvr
 			inner join tbl_add_car ac on ac.car_id = rvr.add_car_id
 			inner join tbl_add_customer cus on rvr.customer_name = cus.customer_id 

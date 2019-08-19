@@ -311,7 +311,7 @@ $i = 0;
                       } else {
                         // Sinon, on affiche le bouton de création du formulaire de diagnostic
                         ?>
-                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>&vehicule_scanner_id=<?php echo $row['vehicule_scanner_id']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&elec_tel=<?php echo $elec_tel; ?>&mech_tel=<?php echo $mech_tel; ?>&att_mecano_id=<?php echo $row['attribution_mecanicien_id']; ?>&att_electro_id=<?php echo $row['attribution_electricien_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule pour le chef mécanicien"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>&vehicule_scanner_id=<?php echo $row['vehicule_scanner_id']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&elec_tel=<?php echo $elec_tel; ?>&mech_tel=<?php echo $mech_tel; ?>&att_mecano_id=<?php echo $row['attribution_mecanicien_id']; ?>&att_electro_id=<?php echo $row['attribution_electricien_id']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule pour le chef mécanicien"><i class="fa fa-plus"></i></a>
                       <?php }
                     } else {
                       // Sinon, on affiche le bouton permettant au chef mécanicien de signaler sa disponibilité de faire
@@ -349,7 +349,7 @@ $i = 0;
                       } else {
                         // Sinon, on affiche le bouton de création du formulaire de diagnostic
                         ?>
-                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>&vehicule_scanner_id=<?php echo $row['vehicule_scanner_id']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&elec_tel=<?php echo $elec_tel; ?>&mech_tel=<?php echo $mech_tel; ?>&att_mecano_id=<?php echo $row['attribution_mecanicien_id']; ?>&att_electro_id=<?php echo $row['attribution_electricien_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule pour le chef électricien"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>&vehicule_scanner_id=<?php echo $row['vehicule_scanner_id']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&elec_tel=<?php echo $elec_tel; ?>&mech_tel=<?php echo $mech_tel; ?>&att_mecano_id=<?php echo $row['attribution_mecanicien_id']; ?>&att_electro_id=<?php echo $row['attribution_electricien_id']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule pour le chef électricien"><i class="fa fa-plus"></i></a>
                       <?php }
                     } else {
                       // Sinon, on affiche le bouton permettant au chef électricien de signaler sa disponibilité de faire
@@ -391,7 +391,7 @@ $i = 0;
                       } else {
                         // Sinon, on affiche le bouton de création du formulaire de diagnostic
                         ?>
-                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>&vehicule_scanner_id=<?php echo $row['vehicule_scanner_id']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&elec_tel=<?php echo $elec_tel; ?>&mech_tel=<?php echo $mech_tel; ?>&att_mecano_id=<?php echo $row['attribution_mecanicien_id']; ?>&att_electro_id=<?php echo $row['attribution_electricien_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule pour le chef mécanicien"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>&vehicule_scanner_id=<?php echo $row['vehicule_scanner_id']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&elec_tel=<?php echo $elec_tel; ?>&mech_tel=<?php echo $mech_tel; ?>&att_mecano_id=<?php echo $row['attribution_mecanicien_id']; ?>&att_electro_id=<?php echo $row['attribution_electricien_id']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule pour le chef mécanicien"><i class="fa fa-plus"></i></a>
                       <?php }
                     } else {
                       // Sinon, on affiche le bouton permettant au chef mécanicien de signaler sa disponibilité de faire
@@ -431,7 +431,7 @@ $i = 0;
                       } else {
                         // Sinon, on affiche le bouton de création du formulaire de diagnostic
                         ?>
-                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>&vehicule_scanner_id=<?php echo $row['vehicule_scanner_id']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&elec_tel=<?php echo $elec_tel; ?>&mech_tel=<?php echo $mech_tel; ?>&att_mecano_id=<?php echo $row['attribution_mecanicien_id']; ?>&att_electro_id=<?php echo $row['attribution_electricien_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule pour le chef électricien"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>mech_panel/mech_repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>&mech_fonction=<?php echo $row['usr_type']; ?>&vehicule_scanner_id=<?php echo $row['vehicule_scanner_id']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>&elec_tel=<?php echo $elec_tel; ?>&mech_tel=<?php echo $mech_tel; ?>&att_mecano_id=<?php echo $row['attribution_mecanicien_id']; ?>&att_electro_id=<?php echo $row['attribution_electricien_id']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule pour le chef électricien"><i class="fa fa-plus"></i></a>
                       <?php }
                     } else {
                       // Sinon, on affiche le bouton permettant au chef électricien de signaler sa disponibilité de faire
@@ -466,6 +466,13 @@ $i = 0;
                           <textarea class="form-control" id="remarque_mecano" rows="4" name="remarque_mecano"></textarea>
                         </div>
                       </div>
+
+                      <input type="hidden" value="<?php echo $row['statut_acceptation_electricien']; ?>" name="statut_acceptation_electricien" />
+                      <input type="hidden" value="<?php echo $row['statut_acceptation_mecanicien']; ?>" name="statut_acceptation_mecanicien" />
+
+                      <input type="hidden" value="<?php echo $row['make_name']; ?>" name="make_name" />
+                      <input type="hidden" value="<?php echo $row['model_name']; ?>" name="model_name" />
+                      <input type="hidden" value="<?php echo $row['VIN']; ?>" name="VIN" />
 
                       <input type="hidden" value="<?php echo $row['attrib_recep']; ?>" name="attrib_recep" />
                       <input type="hidden" value="<?php echo $row['car_id']; ?>" name="reception_id" />

@@ -46,15 +46,15 @@ if (isset($_GET['att']) && $_GET['att'] == 'attribution') {
     }
 }
 
-// if (isset($_GET['att']) && $_GET['att'] == 'attribution_done') {
+if (isset($_GET['att']) && $_GET['att'] == 'attribution_done') {
 
-//     if (isset($_GET['car_id']) && isset($_GET['mecanicien_id'])) {
+    if (isset($_GET['car_id']) && isset($_GET['mecanicien_id'])) {
 
-//         $addinfo = 'block';
-//         // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
-//         $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à déja été attribuée à " . $_GET['mecanicien_id'] . " à la date du " . $_GET['date_attrib'];
-//     }
-// }
+        $addinfo = 'block';
+        // $msg = "La fiche de réception du véhicule d'identifiant " . $_GET['car_id'] . " à été attribuée au mécanicien d'identifiant " . $_GET['mecanicien_id'];
+        $msg = "La fiche de réception du véhicule " . $_GET['marque'] . ' ' . $_GET['modele'] . ' ' . $_GET['imma'] . " à été attribuée à " . $_GET['mecanicien_id'];
+    }
+}
 
 if (isset($_GET['sms']) && $_GET['sms'] == 'send_client_sms_succes') {
     $addinfo_2 = 'block';
