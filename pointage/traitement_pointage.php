@@ -62,11 +62,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 		$result = mysql_query($query, $link);
 
-		if (!$result) {
-			$message  = 'Invalid query: ' . mysql_error() . "\n";
-			$message .= 'Whole query: ' .  $query;
-			die($message);
-		}
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' .  $query;
+		// 	die($message);
+		// }
 
 		if (mysql_num_rows($result) > 0) {
 			// Si le numéro de téléphone appartient bien à un employé
@@ -89,11 +89,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 			// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 			$resultSelDateArrDepart = mysql_query($querySelDateArrDepart, $link);
 
-			if (!$resultSelDateArrDepart) {
-				$message  = 'Invalid query: ' . mysql_error() . "\n";
-				$message .= 'Whole query: ' .  $querySelDateArrDepart;
-				die($message);
-			}
+			// if (!$resultSelDateArrDepart) {
+			// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+			// 	$message .= 'Whole query: ' .  $querySelDateArrDepart;
+			// 	die($message);
+			// }
 
 			if (mysql_num_rows($resultSelDateArrDepart) > 0) {
 
@@ -125,11 +125,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 				// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 				$resultSelDateArr = mysql_query($querySelDateArr, $link);
 
-				if (!$resultSelDateArr) {
-					$message  = 'Invalid query: ' . mysql_error() . "\n";
-					$message .= 'Whole query: ' .  $querySelDateArr;
-					die($message);
-				}
+				// if (!$resultSelDateArr) {
+				// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+				// 	$message .= 'Whole query: ' .  $querySelDateArr;
+				// 	die($message);
+				// }
 
 				if (mysql_num_rows($resultSelDateArr) > 0) {
 					// Si l'employé possédant ce numéro de téléphone à pointé aujourd'hui en date d'arrivée
@@ -198,11 +198,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 					$result_3 = mysql_query($query_3, $link);
 
-					if (!$result_3) {
-						$message  = 'Invalid query: ' . mysql_error() . "\n";
-						$message .= 'Whole query: ' .  $query_3;
-						die($message);
-					}
+					// if (!$result_3) {
+					// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+					// 	$message .= 'Whole query: ' .  $query_3;
+					// 	die($message);
+					// }
 
 					$msg = "Au revoir " . $dataEmploye['per_name'];
 
@@ -266,11 +266,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
 					$result_2 = mysql_query($query_2, $link);
 
-					if (!$result_2) {
-						$message  = 'Invalid query: ' . mysql_error() . "\n";
-						$message .= 'Whole query: ' .  $query_2;
-						die($message);
-					}
+					// if (!$result_2) {
+					// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+					// 	$message .= 'Whole query: ' .  $query_2;
+					// 	die($message);
+					// }
 
 					$msg = $gretting . " " . $dataEmploye['per_name'] . ", bienvenu et bon service";
 

@@ -21,11 +21,11 @@ $querySelMechElecDroitMenuRole = "SELECT droit_menu_role_id, role_name FROM tbl_
 $resultSelMechElecDroitMenuRole = mysql_query($querySelMechElecDroitMenuRole, $link);
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-if (!$resultSelMechElecDroitMenuRole) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $querySelMechElecDroitMenuRole;
-    die($message);
-}
+// if (!$resultSelMechElecDroitMenuRole) {
+//     $message  = 'Invalid query: ' . mysql_error() . "\n";
+//     $message .= 'Whole query: ' . $querySelMechElecDroitMenuRole;
+//     die($message);
+// }
 
 // On récupère le jeu de résultat de la requête
 $listeMechElecDroitMenuRole = mysql_fetch_assoc($resultSelMechElecDroitMenuRole);
@@ -47,11 +47,11 @@ $querySelRecepDroitMenuRole = "SELECT droit_menu_role_id, role_name FROM tbl_dro
 $resultSelRecepDroitMenuRole = mysql_query($querySelRecepDroitMenuRole, $link);
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-if (!$resultSelRecepDroitMenuRole) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $querySelRecepDroitMenuRole;
-    die($message);
-}
+// if (!$resultSelRecepDroitMenuRole) {
+//     $message  = 'Invalid query: ' . mysql_error() . "\n";
+//     $message .= 'Whole query: ' . $querySelRecepDroitMenuRole;
+//     die($message);
+// }
 
 // On récupère le jeu de résultat de la requête
 $listeRecepDroitMenuRole = mysql_fetch_assoc($resultSelRecepDroitMenuRole);
@@ -73,11 +73,11 @@ $querySelClientDroitMenuRole = "SELECT droit_menu_role_id, role_name FROM tbl_dr
 $resultSelClientDroitMenuRole = mysql_query($querySelClientDroitMenuRole, $link);
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-if (!$resultSelClientDroitMenuRole) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $querySelClientDroitMenuRole;
-    die($message);
-}
+// if (!$resultSelClientDroitMenuRole) {
+//     $message  = 'Invalid query: ' . mysql_error() . "\n";
+//     $message .= 'Whole query: ' . $querySelClientDroitMenuRole;
+//     die($message);
+// }
 
 // On récupère le jeu de résultat de la requête
 $listeClientDroitMenuRole = mysql_fetch_assoc($resultSelClientDroitMenuRole);
@@ -99,11 +99,11 @@ $querySelComptaDroitMenuRole = "SELECT droit_menu_role_id, role_name FROM tbl_dr
 $resultSelComptaDroitMenuRole = mysql_query($querySelComptaDroitMenuRole, $link);
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-if (!$resultSelComptaDroitMenuRole) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $querySelComptaDroitMenuRole;
-    die($message);
-}
+// if (!$resultSelComptaDroitMenuRole) {
+//     $message  = 'Invalid query: ' . mysql_error() . "\n";
+//     $message .= 'Whole query: ' . $querySelComptaDroitMenuRole;
+//     die($message);
+// }
 
 // On récupère le jeu de résultat de la requête
 $listeComptaDroitMenuRole = mysql_fetch_assoc($resultSelComptaDroitMenuRole);

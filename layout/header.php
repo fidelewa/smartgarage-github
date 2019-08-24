@@ -82,7 +82,7 @@ if(!empty($settings)) {
 <body>
 <div id="wrapper">
 <!--Header Section Start Here -->
-<header id="header">
+<!-- <header id="header">
   <div class="container">
     <div class="row primary-header"> <a href="<?php echo WEB_URL; ?>" class="col-xs-12 col-sm-4 brand" title="<?php echo $site_name; ?>"><img src="<?php echo WEB_URL; ?>img/logo.png" alt="Charity"></a>
       <div class="col-xs-12 col-sm-8 cp-top-right"> <a data-toggle="modal" data-target=".join-now-form" class="btn btn-default btn-estimate"><?php echo $_lang['__get_apointment']; ?></a>
@@ -95,90 +95,7 @@ if(!empty($settings)) {
       </div>
     </div>
   </div>
-  <div class="navbar navbar-default" role="navigation">
-    <div class="container">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      </div>
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <nav>
-          <ul class="nav navbar-nav">
-            <?php
-					$i = 0;
-					foreach($menu_array as $menu) {
-						$href = '#';
-						$url_slug = $menu['url_slug'];
-						if(!empty($menu['href'])){
-							$href = WEB_URL.$menu['href'];
-						}
-						if(!empty($menu['child_menu']) && count($menu['child_menu']) > 0) {
-							echo '<li> <a href="'.$href.'" data-toggle="dropdown" class="submenu-icon">'.$menu['menu_name'].' <i class="fa fa-caret-down" aria-hidden="true"></i></a>';
-						} else {
-							echo '<li> <a href="'.$href.'">'.$menu['menu_name'].'</a>';
-						}
-						?>
-            			<?php if(!empty($menu['child_menu'])) { ?>
-            			<div  class="dropdown-menu">
-              			<ul>
-                			<?php
-								foreach($menu['child_menu'] as $child) {
-									$href = '#';
-									if(!empty($child['href'])){
-										if($url_slug != '') {
-											$href = WEB_URL.$url_slug.'/'.$child['href'];
-										} else {
-											$href = WEB_URL.$child['href'];
-										}
-									}
-									echo '<li> <a href="'.$href.'">'.$child['menu_name'].'</a></li>';
-								} 
-							?>
-              			</ul>
-            		</div>
-           		 <?php } ?>
-            </li>
-            	<?php
-					$i++; 
-				} 
-			  ?>
-          </ul>
-        </nav>
-        <div class="navbar-form navbar-right search-form" style="display:none;">
-          <ul>
-            <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart"></i> <span class="badge">3</span> </a>
-              <ul class="dropdown-menu cart-list animated" style="display: none; opacity: 1;">
-                <li> <a href="#" class="photo"><img src="<?php echo WEB_URL; ?>images/shop/s1.jpg" class="cart-thumb" alt="s1.jpg"></a>
-                  <h6><a href="#">Delica omtantur </a></h6>
-                  <p>2x - <span class="price">$99.99</span></p>
-                </li>
-                <li> <a href="#" class="photo"><img src="<?php echo WEB_URL; ?>images/shop/s2.jpg" class="cart-thumb" alt="s2.jpg"></a>
-                  <h6><a href="#">Omnes ocurreret</a></h6>
-                  <p>1x - <span class="price">$33.33</span></p>
-                </li>
-                <li> <a href="#" class="photo"><img src="<?php echo WEB_URL; ?>images/shop/s3.jpg" class="cart-thumb" alt="s3.jpg"></a>
-                  <h6><a href="#">Agam facilisis</a></h6>
-                  <p>2x - <span class="price">$99.99</span></p>
-                </li>
-                <li class="total"> <span class="pull-right"><strong>Total</strong>: $0.00</span> <a href="#" class="btn btn-default btn-cart">Cart</a> </li>
-              </ul>
-            </li>
-            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-          </ul>
-        </div>
-        <!--<form class="navbar-form navbar-right search-form" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search Here">
-          </div>
-          <button type="submit"> <i class="fa fa-search"></i> </button>
-        </form>-->
-      </div>
-      <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-  </div>
-</header>
+</header> -->
 <!-- Header Section End Here -->
 <!-- Site Content -->
 <div id="main">

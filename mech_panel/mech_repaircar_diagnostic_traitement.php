@@ -84,11 +84,11 @@ if (isset($_POST['pj_scanner']) && $_POST['pj_scanner'] != "") {
     $result = mysql_query($query, $link);
 
     // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    }
+    // if (!$result) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' . $query;
+    //     die($message);
+    // }
 }
 
 // Si celui qui fait le diagnostic est le chef electricien
@@ -150,9 +150,17 @@ $smsApi = new SmsApi();
 $admin_ges_tel = $_POST['admin_ges_tel'];
 // $admin_ges_tel  = "02280768";
 
-// Message d'alerte
-// $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
-$content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée '. $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+    // Message d'alerte
+    // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+    $content_msg = 'Le chef mécanicien' . $_SESSION['objMech']['name'] . ', a fait le diagnostic mécanique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+}
+
+if ($_POST['chef_mech_elec_type'] == "chef electricien") {
+    // Message d'alerte
+    // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+    $content_msg = 'Le chef électricien' . $_SESSION['objMech']['name'] . ', a fait le diagnostic électrique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+}
 
 // Exécution de la méthode d'envoi 
 $resultSmsSent = $smsApi->isSmsapi($admin_ges_tel, $content_msg);
@@ -161,13 +169,21 @@ $resultSmsSent = $smsApi->isSmsapi($admin_ges_tel, $content_msg);
  * Envoi du SMS au receptionniste
  **********************************/
 
- // Récupération du numéro de téléphone du receptionniste
+// Récupération du numéro de téléphone du receptionniste
 $recep_tel = $_POST['recep_tel'];
 // $recep_tel  = "02280768";
 
-// Message d'alerte
-// $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
-$content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée '. $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+    // Message d'alerte
+    // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+    $content_msg = 'Le chef mécanicien' . $_SESSION['objMech']['name'] . ', a fait le diagnostic mécanique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+}
+
+if ($_POST['chef_mech_elec_type'] == "chef electricien") {
+    // Message d'alerte
+    // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+    $content_msg = 'Le chef électricien' . $_SESSION['objMech']['name'] . ', a fait le diagnostic électrique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+}
 
 // Exécution de la méthode d'envoi 
 $resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);
@@ -187,11 +203,11 @@ if ($_POST['statut_acceptation_mecanicien'] == '1') {
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
     $resultChefElec = mysql_query($queryChefElec, $link);
 
-    if (!$resultChefElec) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' .  $queryChefElec;
-        die($message);
-    }
+    // if (!$resultChefElec) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' .  $queryChefElec;
+    //     die($message);
+    // }
 
     $rowChefElec = mysql_fetch_assoc($resultChefElec);
     // $elec_tel = $_POST['elec_tel'];
@@ -201,7 +217,7 @@ if ($_POST['statut_acceptation_mecanicien'] == '1') {
     // $elec_tel = "02280768";
 
     // Message d'alerte
-    $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée '. $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    $content_msg = 'Le chef mécanicien ' . $_SESSION['objMech']['name'] . ', a fait le diagnostic mécanique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 
     // Exécution de la méthode d'envoi 
     $resultSmsSent = $smsApi->isSmsapi($elec_tel, $content_msg);
@@ -221,11 +237,11 @@ if ($_POST['statut_acceptation_electricien'] == '1') {
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
     $resultChefMecano = mysql_query($queryChefMecano, $link);
 
-    if (!$resultChefMecano) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' .  $queryChefMecano;
-        die($message);
-    }
+    // if (!$resultChefMecano) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' .  $queryChefMecano;
+    //     die($message);
+    // }
 
     $rowChefMecano = mysql_fetch_assoc($resultChefMecano);
     $mech_tel = $rowChefMecano['usr_tel'];
@@ -235,21 +251,17 @@ if ($_POST['statut_acceptation_electricien'] == '1') {
 
     // Message d'alerte
     // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
-    $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée '. $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    $content_msg = 'Le chef électricien ' . $_SESSION['objMech']['name'] . ', a fait le diagnostic électrique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 
     // Exécution de la méthode d'envoi 
     $resultSmsSent = $smsApi->isSmsapi($mech_tel, $content_msg);
 }
 
 // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-if (!$result) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $query;
-    die($message);
-} else {
+// if ($result) {
 
-    // Redirection vers la liste des diagnostic des véhicules
-    // $url = WEB_URL . 'reception/repaircar_diagnostic_list.php?m=add';
-    $url = WEB_URL . 'mech_panel/mech_dashboard.php';
-    header("Location: $url");
-}
+// Redirection vers la liste des diagnostic des véhicules
+// $url = WEB_URL . 'reception/repaircar_diagnostic_list.php?m=add';
+$url = WEB_URL . 'mech_panel/mech_dashboard.php';
+header("Location: $url");
+// }

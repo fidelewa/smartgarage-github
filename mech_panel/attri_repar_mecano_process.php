@@ -58,8 +58,17 @@ $admin_ges_tel = $_POST['admin_ges_tel'];
 
 foreach ($mecano as $mrow) {
 
-    // Message d'alerte
-    $content_msg = $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ';
+    if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+        // Message d'alerte
+        $content_msg = 'Le mécanicien' . $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    }
+
+    if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+        // Message d'alerte
+        $content_msg = 'l\'électricien' . $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    }
+
+
 
     // Exécution de la méthode d'envoi 
     $resultSmsSent = $smsApi->isSmsapi($admin_ges_tel, $content_msg);
@@ -74,8 +83,15 @@ $recep_tel = $_POST['recep_tel'];
 
 foreach ($mecano as $mrow) {
 
-    // Message d'alerte
-    $content_msg = $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ';
+    if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+        // Message d'alerte
+        $content_msg = 'Le mécanicien' . $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    }
+
+    if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+        // Message d'alerte
+        $content_msg = 'l\'électricien' . $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    }
 
     // Exécution de la méthode d'envoi 
     $resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);

@@ -101,7 +101,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
       <div class="box box-success">
         <div class="box-header">
           <!-- <h3 class="box-title"><i class="fa fa-list"></i> Voiture de réparation List</h3> -->
-          <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers clients enregistrés par <?php echo "<b>" . $_SESSION['objServiceClient']['name'] . "</b>" ?></h3>
+          <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers clients enregistrés</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -119,7 +119,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
               <?php
 
               // $result = $wms->getAllRecepRepairCarListByRecepId($link, $_SESSION['objServiceClient']['user_id']);
-              $result = $wms->getAllCustomerListByServcliIdTen($link, $_SESSION['objServiceClient']['user_id']);
+              $result = $wms->getAllCustomerListByServcliIdTen($link);
 
               // var_dump($result);
 
@@ -335,7 +335,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
 
         // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
         if (elt_scanner_electrique.checked == false && elt_scanner_mecanique.checked == false) {
-          alert("Veuillez cocher un seul type de scanner SVP !!!");
+          alert("Veuillez cocher un seul type de scanner SVP !!!");dashboard
         }
 
         if (elt_scanner_electrique.checked == true && elt_scanner_mecanique.checked == true) {

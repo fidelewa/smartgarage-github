@@ -141,11 +141,11 @@ if (isset($_POST['car_names'])) {
   // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
   $resultAssur = mysql_query($queryAssur, $link);
 
-  if (!$resultAssur) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' .  $queryAssur;
-    die($message);
-  }
+  // if (!$resultAssur) {
+  //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+  //   $message .= 'Whole query: ' .  $queryAssur;
+  //   die($message);
+  // }
 
   // On récupère la liste des marques commençant par le même caractère que la valeur de la marque soumise via le formulaire
   while ($row = mysql_fetch_assoc($resultAssur)) {
@@ -173,11 +173,11 @@ if (isset($_POST['car_names'])) {
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
     $resultInsertAssur = mysql_query($queryInsertAssur, $link);
 
-    if (!$resultInsertAssur) {
-      $message  = 'Invalid query: ' . mysql_error() . "\n";
-      $message .= 'Whole query: ' . $queryInsertAssur;
-      die($message);
-    }
+    // if (!$resultInsertAssur) {
+    //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //   $message .= 'Whole query: ' . $queryInsertAssur;
+    //   die($message);
+    // }
   }
 
   // Client
@@ -187,11 +187,11 @@ if (isset($_POST['car_names'])) {
   $resultListeClient = mysql_query($queryClient, $link);
 
   // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-  if (!$resultListeClient) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $queryClient;
-    die($message);
-  }
+  // if (!$resultListeClient) {
+  //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+  //   $message .= 'Whole query: ' . $queryClient;
+  //   die($message);
+  // }
 
   // On récupère la liste des marques commençant par le même caractère que la valeur de la marque soumise via le formulaire
   while ($row = mysql_fetch_assoc($resultListeClient)) {
@@ -209,11 +209,11 @@ if (isset($_POST['car_names'])) {
   $resultListeMarques = mysql_query($queryMarque, $link);
 
   // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-  if (!$resultListeMarques) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $queryMarque;
-    die($message);
-  }
+  // if (!$resultListeMarques) {
+  //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+  //   $message .= 'Whole query: ' . $queryMarque;
+  //   die($message);
+  // }
 
   // On récupère la liste des marques commençant par le même caractère que la valeur de la marque soumise via le formulaire
   while ($row = mysql_fetch_assoc($resultListeMarques)) {
@@ -237,11 +237,11 @@ if (isset($_POST['car_names'])) {
   $resultListeModeles = mysql_query($queryModele, $link);
 
   // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-  if (!$resultListeModeles) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $queryModele;
-    die($message);
-  }
+  // if (!$resultListeModeles) {
+  //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+  //   $message .= 'Whole query: ' . $queryModele;
+  //   die($message);
+  // }
 
   // On récupère la liste des modèles commençant par le même caractère que la valeur du modèle soumis via le formulaire
   while ($row = mysql_fetch_assoc($resultListeModeles)) {
@@ -295,11 +295,11 @@ if (isset($_POST['car_names'])) {
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
     $resultInsertMake = mysql_query($queryInsertMake, $link);
 
-    if (!$resultInsertMake) {
-      $message  = 'Invalid query: ' . mysql_error() . "\n";
-      $message .= 'Whole query: ' . $queryInsertMake;
-      die($message);
-    }
+    // if (!$resultInsertMake) {
+    //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //   $message .= 'Whole query: ' . $queryInsertMake;
+    //   die($message);
+    // }
 
     // Récupération de l'id de la nouvelle marque pour faire l'insertion du modèle en BDD
     $queryGetMakeId = "SELECT make_id FROM tbl_make WHERE make_name='" . $marque_name_form . "'";
@@ -307,11 +307,11 @@ if (isset($_POST['car_names'])) {
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
     $resultMakeId = mysql_query($queryGetMakeId, $link);
 
-    if (!$resultMakeId) {
-      $message  = 'Invalid query: ' . mysql_error() . "\n";
-      $message .= 'Whole query: ' . $queryGetMakeId;
-      die($message);
-    }
+    // if (!$resultMakeId) {
+    //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //   $message .= 'Whole query: ' . $queryGetMakeId;
+    //   die($message);
+    // }
 
     // On retourne les données de la marque référencée dans un tableau associatif
     $rowMakeId = mysql_fetch_assoc($resultMakeId);
@@ -341,11 +341,11 @@ if (isset($_POST['car_names'])) {
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
     $resultInsertModel = mysql_query($queryInsertModel, $link);
 
-    if (!$resultInsertModel) {
-      $message  = 'Invalid query: ' . mysql_error() . "\n";
-      $message .= 'Whole query: ' . $queryInsertModel;
-      die($message);
-    }
+    // if (!$resultInsertModel) {
+    //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //   $message .= 'Whole query: ' . $queryInsertModel;
+    //   die($message);
+    // }
 
     // Récupération de l'id du nouveau modèle de voiture ajouté
     $queryGetModeleId = "SELECT model_id FROM tbl_model WHERE model_name='" . $modele_name_form . "'";
@@ -354,11 +354,11 @@ if (isset($_POST['car_names'])) {
     $resultModeleId = mysql_query($queryGetModeleId, $link);
 
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-    if (!$resultModeleId) {
-      $message  = 'Invalid query: ' . mysql_error() . "\n";
-      $message .= 'Whole query: ' . $queryGetModeleId;
-      die($message);
-    }
+    // if (!$resultModeleId) {
+    //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //   $message .= 'Whole query: ' . $queryGetModeleId;
+    //   die($message);
+    // }
 
     // On retourne les données du modèle référencé dans un tableau associatif
     $rowModeleId = mysql_fetch_assoc($resultModeleId);
@@ -384,11 +384,11 @@ if (isset($_POST['car_names'])) {
   // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
   $result = mysql_query($query, $link);
 
-  if (!$result) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $query;
-    die($message);
-  }
+  // if (!$result) {
+  //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+  //   $message .= 'Whole query: ' . $query;
+  //   die($message);
+  // }
 
   // On retourne le nom de la marque dans un tableau associatif
   $row = mysql_fetch_array($result);

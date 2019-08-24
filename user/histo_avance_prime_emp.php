@@ -27,11 +27,11 @@ if (isset($_GET['car_id']) && $_GET['car_id'] != '') {
             $result_histo_assurance = mysql_query($query, $link);
 
             // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-            if (!$result_histo_assurance) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $query;
-                die($message);
-            }
+            // if (!$result_histo_assurance) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $query;
+            //     die($message);
+            // }
         }
     }
 
@@ -52,11 +52,11 @@ if (isset($_GET['car_id']) && $_GET['car_id'] != '') {
             $result_histo_visetech = mysql_query($query, $link);
 
             // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-            if (!$result_histo_visetech) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $query;
-                die($message);
-            }
+            // if (!$result_histo_visetech) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $query;
+            //     die($message);
+            // }
         }
     }
 }

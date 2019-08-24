@@ -72,11 +72,11 @@ if (isset($_POST['mecanicienList']) && isset($_POST['car_id'])) {
     // On teste le résultat de la requête pour savoir si elle n'a pas déclenché des erreurs
     $result = mysql_query($query, $link);
 
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    }
+    // if (!$result) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' . $query;
+    //     die($message);
+    // }
 
     // Récupération des données du mécanicien
     $row = $wms->getMechanicsInfoByMechanicsId($link, $_POST['mech_id']);

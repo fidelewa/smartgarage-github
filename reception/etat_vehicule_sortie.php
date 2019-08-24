@@ -25,21 +25,17 @@ sortie_remarq_recep_vehi='" . $_POST[sortie_remarq_recep_vehi] . "' ,
 sortie_remarq_recep_vehi_text='" . $_POST[sortie_remarq_recep_vehi_text] . "',
 remarque_etat_vehi_sortie='" . $_POST[remarque_etat_vehi_sortie] . "',
 status_sortie_vehicule=1
-WHERE car_id='" . (int)$_GET['cid'] . "'";
+WHERE car_id='" . (int) $_GET['cid'] . "'";
 
     // Exécution de la requête
     $result = mysql_query($query, $link);
 
     // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    } else {
-        // Redirection vers la liste des devis
-        $url = WEB_URL . 'reception/repaircar_reception_list.php?m=etat_vehi_sortie';
-        header("Location: $url");
-    }
+    // if ($result) {
+    // Redirection vers la liste des devis
+    $url = WEB_URL . 'reception/repaircar_reception_list.php?m=etat_vehi_sortie';
+    header("Location: $url");
+    // }
 }
 
 ?>
@@ -134,7 +130,7 @@ WHERE car_id='" . (int)$_GET['cid'] . "'";
                         </div>
                         <!-- <input type="hidden" value="<?php echo $hdnid; ?>" name="customer_id" /> -->
                         <!-- /.box-body -->
-                        
+
                     </div>
                     <!-- /.box -->
                 </div>

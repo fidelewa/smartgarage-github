@@ -22,10 +22,10 @@ if (isset($_POST) && !empty($_POST)) {
 
     // Calcul du montant du avec la main d'oeuvre
     $_POST['montant_du_piece_rechange_devis'] = $_POST['somme_total_prix_piece_rechange_devis'] - $_POST['montant_paye_piece_rechange_devis'];
-    
+
     // var_dump($_POST);
     // die();
-    
+
     // Persister les données du devis en BDD
 
     // Linéarisation de l'array des estimations pour le stocker en base de données
@@ -47,15 +47,11 @@ if (isset($_POST) && !empty($_POST)) {
     $result = mysql_query($query, $link);
 
     // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    } else {
-        // Redirection vers la liste des devis
-        $url = WEB_URL . 'mech_panel/mech_repaircar_diagnostic_devis_list.php?m=add';
-        header("Location: $url");
-    }
+    // if ($result) {
+    // Redirection vers la liste des devis
+    $url = WEB_URL . 'mech_panel/mech_repaircar_diagnostic_devis_list.php?m=add';
+    header("Location: $url");
+    // }
 }
 
 ?>
@@ -132,24 +128,24 @@ if (isset($_POST) && !empty($_POST)) {
 
                                                             ?>
 
-                                                            <!-- Affichage des données du devis -->
-                                                            <tr>
-                                                                <td><?php echo $row['designation_piece_rechange']; ?></td>
-                                                                <td><?php echo $row['marque_piece_rechange']; ?></td>
-                                                                <td><?php echo $row['qte_piece_rechange']; ?></td>
-                                                                <td><?php echo $row['prix_piece_rechange_min']; ?></td>
-                                                                <td>
-                                                                    <input id="total_prix_piece_rechange" name="total_prix_piece_rechange" type="text" value=<?php echo $total_prix_piece_rechange; ?> readonly class="form-control allownumberonly" />
-                                                                </td>
-                                                            </tr>
+                                                        <!-- Affichage des données du devis -->
+                                                        <tr>
+                                                            <td><?php echo $row['designation_piece_rechange']; ?></td>
+                                                            <td><?php echo $row['marque_piece_rechange']; ?></td>
+                                                            <td><?php echo $row['qte_piece_rechange']; ?></td>
+                                                            <td><?php echo $row['prix_piece_rechange_min']; ?></td>
+                                                            <td>
+                                                                <input id="total_prix_piece_rechange" name="total_prix_piece_rechange" type="text" value=<?php echo $total_prix_piece_rechange; ?> readonly class="form-control allownumberonly" />
+                                                            </td>
+                                                        </tr>
 
-                                                            <!-- Récupération des données du devis -->
-                                                            <input type="hidden" value="<?php echo $row['designation_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][designation_piece_rechange_devis]" />
-                                                            <input type="hidden" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" />
-                                                            <input type="hidden" value="<?php echo $row['qte_piece_rechange']; ?>" id="qty_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][qte_piece_rechange_devis]" />
-                                                            <input type="hidden" value="<?php echo $row['prix_piece_rechange_min']; ?>" id="price_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][prix_piece_rechange_min_devis]" />
-                                                            <input type="hidden" value="<?php echo $total_prix_piece_rechange; ?>" id="tot_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][total_prix_piece_rechange_devis]" />
-                                                            <?php
+                                                        <!-- Récupération des données du devis -->
+                                                        <input type="hidden" value="<?php echo $row['designation_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][designation_piece_rechange_devis]" />
+                                                        <input type="hidden" value="<?php echo $row['marque_piece_rechange']; ?>" name="devis_data[<?php echo $i; ?>][marque_piece_rechange_devis]" />
+                                                        <input type="hidden" value="<?php echo $row['qte_piece_rechange']; ?>" id="qty_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][qte_piece_rechange_devis]" />
+                                                        <input type="hidden" value="<?php echo $row['prix_piece_rechange_min']; ?>" id="price_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][prix_piece_rechange_min_devis]" />
+                                                        <input type="hidden" value="<?php echo $total_prix_piece_rechange; ?>" id="tot_<?php echo $i; ?>" name="devis_data[<?php echo $i; ?>][total_prix_piece_rechange_devis]" />
+                                                        <?php
                                                             // Incrémentation du compteur
                                                             $i++;
                                                             // Concaténation et calcul de la somme des totaux des prix des pièces de rechange

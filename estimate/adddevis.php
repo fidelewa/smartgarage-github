@@ -46,15 +46,11 @@ if (isset($_POST) && !empty($_POST)) {
     $result = mysql_query($query, $link);
 
     // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    } else {
+    // if ($result) {
         // Redirection vers la liste des devis
         $url = WEB_URL . 'estimate/repaircar_simu_devis_list.php?m=add';
         header("Location: $url");
-    }
+    // }
 }
 
 ?>

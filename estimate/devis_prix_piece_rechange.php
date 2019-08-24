@@ -47,11 +47,11 @@ if (isset($_POST) && !empty($_POST)) {
     $result = mysql_query($query, $link);
 
     // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    }
+    // if (!$result) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' . $query;
+    //     die($message);
+    // }
 
     // Lors de l'enregistrement du devis lié au diagnostic d'un véhicule
     // On persiste les données d'historisation du devis lié à un diagnostic donné concernant un véhicule
@@ -66,11 +66,11 @@ if (isset($_POST) && !empty($_POST)) {
     $resultInsHistoDevVehi = mysql_query($queryInsHistoDevVehi, $link);
 
     // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-    if (!$resultInsHistoDevVehi) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $queryInsHistoDevVehi;
-        die($message);
-    }
+    // if (!$resultInsHistoDevVehi) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' . $queryInsHistoDevVehi;
+    //     die($message);
+    // }
 
     // Redirection vers la liste des devis
     $url = WEB_URL . 'estimate/repaircar_diagnostic_devis_list.php?m=add';

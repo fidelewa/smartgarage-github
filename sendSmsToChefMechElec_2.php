@@ -16,11 +16,11 @@ $queryChefElec = "SELECT usr_tel FROM tbl_add_mech WHERE usr_type = 'chef electr
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 $resultChefElec = mysql_query($queryChefElec, $link);
 
-if (!$resultChefElec) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' .  $queryChefElec;
-    die($message);
-}
+// if (!$resultChefElec) {
+//     $message  = 'Invalid query: ' . mysql_error() . "\n";
+//     $message .= 'Whole query: ' .  $queryChefElec;
+//     die($message);
+// }
 
 $rowChefElec = mysql_fetch_assoc($resultChefElec);
 // $elec_tel = $_POST['elec_tel'];
@@ -43,11 +43,11 @@ $queryChefMecano = "SELECT usr_tel FROM tbl_add_mech WHERE usr_type = 'chef meca
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 $resultChefMecano = mysql_query($queryChefMecano, $link);
 
-if (!$resultChefMecano) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' .  $queryChefMecano;
-    die($message);
-}
+// if (!$resultChefMecano) {
+//     $message  = 'Invalid query: ' . mysql_error() . "\n";
+//     $message .= 'Whole query: ' .  $queryChefMecano;
+//     die($message);
+// }
 
 $rowChefMecano = mysql_fetch_assoc($resultChefMecano);
 $mech_tel = $rowChefMecano['usr_tel'];

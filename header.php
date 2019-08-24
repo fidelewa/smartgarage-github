@@ -11,6 +11,13 @@ include(__DIR__ . "/helper/common.php");
 //   die();
 // }
 
+// if($_SESSION['objLogin'] == null){
+//         header("Location: logout.php");
+//         unset($_SESSION);
+// 	die();
+
+// }
+
 // core init
 $wms = new wms_core();
 
@@ -45,6 +52,7 @@ if (!empty($result_settings)) {
   $email = $result_settings['email'];
   $address = $result_settings['address'];
 }
+
 
 //mini cart load
 $cart_total = $wms->loadMiniCartHtml();
@@ -461,11 +469,11 @@ if (!empty($_SESSION['objCust']['image'])) {
           $resultSelMechElecDroitMenuRole = mysql_query($querySelMechElecDroitMenuRole, $link);
 
           // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-          if (!$resultSelMechElecDroitMenuRole) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $querySelMechElecDroitMenuRole;
-            die($message);
-          }
+          // if (!$resultSelMechElecDroitMenuRole) {
+          //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+          //   $message .= 'Whole query: ' . $querySelMechElecDroitMenuRole;
+          //   die($message);
+          // }
 
           // On récupère le jeu de résultat de la requête
           $listeMechElecDroitMenuRole = mysql_fetch_assoc($resultSelMechElecDroitMenuRole);
@@ -722,11 +730,11 @@ if (!empty($_SESSION['objCust']['image'])) {
           $resultSelRecepDroitMenuRole = mysql_query($querySelRecepDroitMenuRole, $link);
 
           // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-          if (!$resultSelRecepDroitMenuRole) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $querySelRecepDroitMenuRole;
-            die($message);
-          }
+          // if (!$resultSelRecepDroitMenuRole) {
+          //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+          //   $message .= 'Whole query: ' . $querySelRecepDroitMenuRole;
+          //   die($message);
+          // }
 
           // On récupère le jeu de résultat de la requête
           $listeRecepDroitMenuRole = mysql_fetch_assoc($resultSelRecepDroitMenuRole);
@@ -983,11 +991,11 @@ if (!empty($_SESSION['objCust']['image'])) {
           $resultSelComptaDroitMenuRole = mysql_query($querySelComptaDroitMenuRole, $link);
 
           // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-          if (!$resultSelComptaDroitMenuRole) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $querySelComptaDroitMenuRole;
-            die($message);
-          }
+          // if (!$resultSelComptaDroitMenuRole) {
+          //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+          //   $message .= 'Whole query: ' . $querySelComptaDroitMenuRole;
+          //   die($message);
+          // }
 
           // On récupère le jeu de résultat de la requête
           $listeComptaDroitMenuRole = mysql_fetch_assoc($resultSelComptaDroitMenuRole);
@@ -1245,11 +1253,11 @@ if (!empty($_SESSION['objCust']['image'])) {
           $resultSelClientDroitMenuRole = mysql_query($querySelClientDroitMenuRole, $link);
 
           // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-          if (!$resultSelClientDroitMenuRole) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $querySelClientDroitMenuRole;
-            die($message);
-          }
+          // if (!$resultSelClientDroitMenuRole) {
+          //   $message  = 'Invalid query: ' . mysql_error() . "\n";
+          //   $message .= 'Whole query: ' . $querySelClientDroitMenuRole;
+          //   die($message);
+          // }
 
           // On récupère le jeu de résultat de la requête
           $listeClientDroitMenuRole = mysql_fetch_assoc($resultSelClientDroitMenuRole);

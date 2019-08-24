@@ -52,11 +52,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					$result_stat_empla_vehi = mysql_query($query, $link);
 
 					// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-					if (!$result_stat_empla_vehi) {
-						$message  = 'Invalid query: ' . mysql_error() . "\n";
-						$message .= 'Whole query: ' . $query;
-						die($message);
-					}
+					// if (!$result_stat_empla_vehi) {
+					// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+					// 	$message .= 'Whole query: ' . $query;
+					// 	die($message);
+					// }
 				}
 			}
 		}
@@ -94,11 +94,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 				$result_statut_emplacement_vehicule = mysql_query($query_statut_emplacement_vehicule, $link);
 
 				// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-				if (!$result_statut_emplacement_vehicule) {
-					$message  = 'Invalid query: ' . mysql_error() . "\n";
-					$message .= 'Whole query: ' . $query_statut_emplacement_vehicule;
-					die($message);
-				}
+				// if (!$result_statut_emplacement_vehicule) {
+				// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+				// 	$message .= 'Whole query: ' . $query_statut_emplacement_vehicule;
+				// 	die($message);
+				// }
 
 				// Déclaration et initialisation de la variable d'emplacement du véhicule
 				$emplacement_vehi = "hors du garage";
@@ -115,13 +115,12 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 					$result_stat_empla_vehi = mysql_query($query, $link);
 
 					// Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-					if (!$result_stat_empla_vehi) {
-						$message  = 'Invalid query: ' . mysql_error() . "\n";
-						$message .= 'Whole query: ' . $query;
-						die($message);
-					}
-
-					
+					// if (!$result_stat_empla_vehi) {
+					// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+					// 	$message .= 'Whole query: ' . $query;
+					// 	die($message);
+					// }
+	
 				}
 			}
 		}

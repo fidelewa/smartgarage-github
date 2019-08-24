@@ -1,7 +1,7 @@
 <!--Footer Section Start Here -->
 <footer>
-  <div id="scroll_to_top"><i class="fa fa-angle-up"></i></div>
-  <div id="zo-footer-top">
+  <!-- <div id="scroll_to_top"><i class="fa fa-angle-up"></i></div> -->
+  <!-- <div id="zo-footer-top">
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 cp-bottom-mobile-space">
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </footer>
 <!--Footer Section End Here -->
 </div>
@@ -87,7 +87,7 @@
 <div class="copyright">
   <div class="container">
     <div class="row">
-      <div class="col-xs-12"><span><?php echo $footer_box_5; ?></span></div>
+      <div class="col-xs-12"></div>
     </div>
   </div>
 </div>

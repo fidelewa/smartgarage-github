@@ -12,11 +12,11 @@ $queryChefMechElec = "SELECT * FROM tbl_add_mech WHERE usr_type IN ('chef mecani
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 $resultChefMechElec = mysql_query($queryChefMechElec, $link);
 
-if (!$resultChefMechElec) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' .  $$queryChefMechElec;
-    die($message);
-}
+// if (!$resultChefMechElec) {
+//     $message  = 'Invalid query: ' . mysql_error() . "\n";
+//     $message .= 'Whole query: ' .  $$queryChefMechElec;
+//     die($message);
+// }
 
 // On récupère la liste des chefs mécaniciens et électriciens
 while ($rowChefMechElec = mysql_fetch_assoc($resultChefMechElec)) {

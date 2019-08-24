@@ -214,6 +214,7 @@ function arrayValueExist($array, $value)
             <thead>
               <tr>
                 <th>ID Reception</th>
+                <th>ID Diagnostic</th>
                 <th>Immatriculation</th>
                 <th>Client</th>
                 <th>Date reception</th>
@@ -229,7 +230,6 @@ function arrayValueExist($array, $value)
               $result = $wms->getAllRecepRepairCarListByRecepId($link, $_SESSION['objRecep']['user_id']);
 
               // var_dump($result);
-
               // die();
 
               foreach ($result as $row) {
@@ -246,6 +246,7 @@ function arrayValueExist($array, $value)
                 ?>
               <tr>
                 <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
+                <td><?php echo $row['vehi_diag_id']; ?></td>
                 <td><?php echo $row['num_matricule']; ?></td>
                 <td><?php echo $row['c_name']; ?></td>
                 <td><?php echo $row['add_date_recep_vehi']; ?></td>
@@ -359,7 +360,8 @@ function arrayValueExist($array, $value)
                 <th>Date reception</th>
                 <th>Date exp. assur</th>
                 <th>Date exp. vis. tech.</th>
-                <th>Statut réparation</th>
+                <th>Statut réparation mécanique</th>
+                <th>Statut réparation électrique</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -383,11 +385,25 @@ function arrayValueExist($array, $value)
                 <td><?php echo $row['add_date_assurance']; ?></td>
                 <td><?php echo $row['add_date_visitetech']; ?></td>
                 <td><?php
-                      if ($row['statut_reparation'] == null) {
+                      if (!isset($row['statut_reparation_mecanique'])) {
+                        echo "";
+                      } else if ($row['statut_reparation_mecanique'] == null) {
                         echo "<span class='label label-default'>En attente de réparation</span> <br/>";
-                      } else if ($row['statut_reparation'] == 0) {
+                      } else if ($row['statut_reparation_mecanique'] == 0) {
                         echo "<span class='label label-warning'>En cours de reparation</span> <br/>";
-                      } else if ($row['statut_reparation'] == 1) {
+                      } else if ($row['statut_reparation_mecanique'] == 1) {
+                        echo "<span class='label label-success'>Reparation effectuée</span> <br/>";
+                      }
+                      ?>
+                </td>
+                <td><?php
+                      if (!isset($row['statut_reparation_electrique'])) {
+                        echo "";
+                      } else if ($row['statut_reparation_electrique'] == null) {
+                        echo "<span class='label label-default'>En attente de réparation</span> <br/>";
+                      } else if ($row['statut_reparation_electrique'] == 0) {
+                        echo "<span class='label label-warning'>En cours de reparation</span> <br/>";
+                      } else if ($row['statut_reparation_electrique'] == 1) {
                         echo "<span class='label label-success'>Reparation effectuée</span> <br/>";
                       }
                       ?>

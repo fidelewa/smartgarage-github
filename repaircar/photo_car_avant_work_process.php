@@ -316,11 +316,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
 
     $resultGetPhotoCarAvantWork = mysql_query($queryGetPhotoCarAvantWork, $link);
 
-    if (!$resultGetPhotoCarAvantWork) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $queryGetPhotoCarAvantWork;
-        die($message);
-    }
+    // if (!$resultGetPhotoCarAvantWork) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' . $queryGetPhotoCarAvantWork;
+    //     die($message);
+    // }
 
     $rowPhotoCarAvantWork = mysql_fetch_assoc($resultGetPhotoCarAvantWork);
 
@@ -339,11 +339,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
         // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
         $result = mysql_query($query, $link);
 
-        if (!$result) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $query;
-            die($message);
-        }
+        // if (!$result) {
+        //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+        //     $message .= 'Whole query: ' . $query;
+        //     die($message);
+        // }
 
     } else { // Sinon on fait une mise à jour
 
@@ -361,11 +361,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 2EME IMAGE
@@ -376,11 +376,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 3EME IMAGE
@@ -391,11 +391,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 4EME IMAGE
@@ -406,11 +406,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 5EME IMAGE
@@ -421,11 +421,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 6EME IMAGE
@@ -436,11 +436,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 7EME IMAGE
@@ -451,11 +451,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 8EME IMAGE
@@ -466,11 +466,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 9EME IMAGE
@@ -481,11 +481,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 10EME IMAGE
@@ -496,11 +496,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 11EME IMAGE
@@ -511,11 +511,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
 
             // 12EME IMAGE
@@ -526,11 +526,11 @@ if (isset($_FILES) && !empty($_FILES)) { //Si les données ont été soumis à p
                 ";
                 $result = mysql_query($query, $link);
 
-                if (!$result) {
-                    $message  = 'Invalid query: ' . mysql_error() . "\n";
-                    $message .= 'Whole query: ' . $query;
-                    die($message);
-                }
+                // if (!$result) {
+                //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                //     $message .= 'Whole query: ' . $query;
+                //     die($message);
+                // }
             }
         }
 

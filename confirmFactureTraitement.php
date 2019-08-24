@@ -13,11 +13,11 @@ AND facture_id='" . (int)$_GET['facture_id'] . "'
 $result = mysql_query($query, $link);
 
 // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-if (!$result) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $query;
-    die($message);
-}
+// if (!$result) {
+//     $message  = 'Invalid query: ' . mysql_error() . "\n";
+//     $message .= 'Whole query: ' . $query;
+//     die($message);
+// }
 
 ?>
 

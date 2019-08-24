@@ -19,13 +19,8 @@ VALUES('$_POST[ddlCustomerList]','$_POST[princ_tel_client_devis]','$_POST[immat]
 $result = mysql_query($query, $link);
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-if (!$result) {
-    // var_dump($data);
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $query;
-    die($message);
-} else {
+// if ($result) {
     // Redirection vers la liste des devis
     $url = WEB_URL . "estimate/repaircar_simu_devis_list.php?m=attrib_vehi&devis_simu_id=".$_GET['devis_simu_id']."&car_make=".$_POST['ddlMake']."&car_model=".$_POST['ddlModel']."&car_imma=".$_POST['immat'];
     header("Location: $url");
-}
+// }

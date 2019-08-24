@@ -14,11 +14,11 @@ if ($_GET['chef_mech_elec_type'] == "chef mecanicien") {
 
     // var_dump($result);
 
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    }
+    // if (!$result) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' . $query;
+    //     die($message);
+    // }
 }
 
 if ($_GET['chef_mech_elec_type'] == "chef electricien") {
@@ -35,11 +35,11 @@ if ($_GET['chef_mech_elec_type'] == "chef electricien") {
     // var_dump($result);
     // die();
 
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    }
+    // if (!$result) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' . $query;
+    //     die($message);
+    // }
 }
 
 

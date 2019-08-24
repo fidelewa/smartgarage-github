@@ -55,11 +55,11 @@ if (!empty($row)) {
     $result = mysql_query($query, $link);
 
     // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    }
+    // if (!$result) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' . $query;
+    //     die($message);
+    // }
 
     // Redirection vers la page de confirmation de l'envoi du courrier de création du non de commande
     $url = WEB_URL . 'confirmBoncmdeEmailSent.php';

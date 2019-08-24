@@ -47,15 +47,11 @@ if (isset($_POST) && !empty($_POST)) {
     $result = mysql_query($query, $link);
 
     // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    } else {
-        // Redirection vers la liste des devis
-        $url = WEB_URL . 'estimate/repaircar_simu_devis_list.php?m=up';
-        header("Location: $url");
-    }
+    // if ($result) {
+    // Redirection vers la liste des devis
+    $url = WEB_URL . 'estimate/repaircar_simu_devis_list.php?m=up';
+    header("Location: $url");
+    // }
 }
 
 ?>
@@ -124,23 +120,23 @@ if (isset($_POST) && !empty($_POST)) {
                                                     // die();
 
                                                     foreach ($devis_data as $devis) { ?>
-                                                        <tr id="estimate-row<?php echo $i; ?>">
-                                                            <td><input type="text" id="codepiece_<?php echo $i; ?>" value="<?php echo $devis['code_piece']; ?>" name="devis_data_2[<?php echo $i; ?>][code_piece]" class="form-control" /></td>
-                                                            <td class="text-right">
-                                                                <button data-toggle="tooltip" title="Ajouter une pièce de rechange à partir du stock" type="button" name="devis_data_2[<?php echo $i; ?>][button]" onClick=loadModal(<?php echo $i; ?>); class="btn btn-info btnsp"><i class="fa fa-plus"></i></button>
-                                                                <input type="hidden" id="parts_id_<?php echo $i; ?>" name="devis_data_2[<?php echo $i; ?>][stock_parts]" value="<?php echo $devis->stock_parts; ?>" />
-                                                            </td>
-                                                            <td><input type="text" id="designation_<?php echo $i; ?>" value="<?php echo str_replace('u0027', "'", $devis['designation']); ?>" name="devis_data_2[<?php echo $i; ?>][designation]" class="form-control" /></td>
-                                                            <td><input type="text" id="qty_<?php echo $i; ?>" value="<?php echo $devis['quantity']; ?>" name="devis_data_2[<?php echo $i; ?>][quantity]" class="form-control eFireQty allownumberonly" /></td>
-                                                            <td><input type="text" id="price_<?php echo $i; ?>" value="<?php echo $devis['price']; ?>" name="devis_data_2[<?php echo $i; ?>][price]" class="form-control eFirePrice" /></td>
-                                                            <td><input type="text" id="totalht_<?php echo $i; ?>" value="<?php echo $devis['total_prix_piece_rechange_devis_ht']; ?>" name="devis_data_2[<?php echo $i; ?>][total_prix_piece_rechange_devis_ht]" class="form-control allownumberonly" /></td>
-                                                            <td><input type="text" id="totalttc_<?php echo $i; ?>" value="<?php echo $devis['total_prix_piece_rechange_devis_ttc']; ?>" name="devis_data_2[<?php echo $i; ?>][total_prix_piece_rechange_devis_ttc]" class="form-control allownumberonly etotal" /></td>
-                                                            <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $i; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                                                        </tr>
-                                                        <!-- Récupération des données du devis -->
-                                                        <!-- <input type="hidden" value="<?php echo $devis['stock_parts']; ?>" name="devis_data_2[<?php echo $i; ?>][piece_rechange_id]" /> -->
+                                                    <tr id="estimate-row<?php echo $i; ?>">
+                                                        <td><input type="text" id="codepiece_<?php echo $i; ?>" value="<?php echo $devis['code_piece']; ?>" name="devis_data_2[<?php echo $i; ?>][code_piece]" class="form-control" /></td>
+                                                        <td class="text-right">
+                                                            <button data-toggle="tooltip" title="Ajouter une pièce de rechange à partir du stock" type="button" name="devis_data_2[<?php echo $i; ?>][button]" onClick=loadModal(<?php echo $i; ?>); class="btn btn-info btnsp"><i class="fa fa-plus"></i></button>
+                                                            <input type="hidden" id="parts_id_<?php echo $i; ?>" name="devis_data_2[<?php echo $i; ?>][stock_parts]" value="<?php echo $devis->stock_parts; ?>" />
+                                                        </td>
+                                                        <td><input type="text" id="designation_<?php echo $i; ?>" value="<?php echo str_replace('u0027', "'", $devis['designation']); ?>" name="devis_data_2[<?php echo $i; ?>][designation]" class="form-control" /></td>
+                                                        <td><input type="text" id="qty_<?php echo $i; ?>" value="<?php echo $devis['quantity']; ?>" name="devis_data_2[<?php echo $i; ?>][quantity]" class="form-control eFireQty allownumberonly" /></td>
+                                                        <td><input type="text" id="price_<?php echo $i; ?>" value="<?php echo $devis['price']; ?>" name="devis_data_2[<?php echo $i; ?>][price]" class="form-control eFirePrice" /></td>
+                                                        <td><input type="text" id="totalht_<?php echo $i; ?>" value="<?php echo $devis['total_prix_piece_rechange_devis_ht']; ?>" name="devis_data_2[<?php echo $i; ?>][total_prix_piece_rechange_devis_ht]" class="form-control allownumberonly" /></td>
+                                                        <td><input type="text" id="totalttc_<?php echo $i; ?>" value="<?php echo $devis['total_prix_piece_rechange_devis_ttc']; ?>" name="devis_data_2[<?php echo $i; ?>][total_prix_piece_rechange_devis_ttc]" class="form-control allownumberonly etotal" /></td>
+                                                        <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $i; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                                    </tr>
+                                                    <!-- Récupération des données du devis -->
+                                                    <!-- <input type="hidden" value="<?php echo $devis['stock_parts']; ?>" name="devis_data_2[<?php echo $i; ?>][piece_rechange_id]" /> -->
 
-                                                        <?php $i++;
+                                                    <?php $i++;
                                                     }
                                                     ?>
 

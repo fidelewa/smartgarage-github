@@ -73,17 +73,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
     <div class="col-xs-12">
       <div id="his" class="alert alert-danger alert-dismissable" style="display:<?php echo $failedinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-        <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
+        <h4><i class="icon fa fa-ban"></i> Supprimé!</h4>
         <?php echo $msg; ?>
       </div>
       <div id="me" class="alert alert-danger alert-dismissable" style="display:<?php echo $delinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-        <h4><i class="icon fa fa-ban"></i> Deleted!</h4>
+        <h4><i class="icon fa fa-ban"></i> Supprimé!</h4>
         <?php echo $msg; ?>
       </div>
       <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
-        <h4><i class="icon fa fa-check"></i> Success!</h4>
+        <h4><i class="icon fa fa-check"></i> Ajouté!</h4>
         <?php echo $msg; ?>
       </div>
       <!-- <div align="right" style="margin-bottom:1%;"> <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php" data-original-title="Add Voiture de réparation"><i class="fa fa-plus"></i></a> <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>dashboard.php" data-original-title="Dashboard"><i class="fa fa-dashboard"></i></a> </div> -->

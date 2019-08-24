@@ -21,11 +21,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
         $resultSelDroitMenuRole = mysql_query($querySelDroitMenuRole, $link);
 
         // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-        if (!$resultSelDroitMenuRole) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $querySelDroitMenuRole;
-            die($message);
-        }
+        // if (!$resultSelDroitMenuRole) {
+        //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+        //     $message .= 'Whole query: ' . $querySelDroitMenuRole;
+        //     die($message);
+        // }
 
         // On récupère le jeu de résultat de la requête
         $listeDroitMenuRole = mysql_fetch_assoc($resultSelDroitMenuRole);
@@ -68,11 +68,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
         }
 
         // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-        if (!$result) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $query;
-            die($message);
-        }
+        // if (!$result) {
+        //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+        //     $message .= 'Whole query: ' . $query;
+        //     die($message);
+        // }
     }
 
     // RECEPTIONNISTE
@@ -85,11 +85,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
         $resultSelDroitMenuRole = mysql_query($querySelDroitMenuRole, $link);
 
         // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-        if (!$resultSelDroitMenuRole) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $querySelDroitMenuRole;
-            die($message);
-        }
+        // if (!$resultSelDroitMenuRole) {
+        //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+        //     $message .= 'Whole query: ' . $querySelDroitMenuRole;
+        //     die($message);
+        // }
 
         // On récupère le jeu de résultat de la requête
         $listeDroitMenuRole = mysql_fetch_assoc($resultSelDroitMenuRole);
@@ -129,11 +129,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
         }
 
         // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-        if (!$result) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $query;
-            die($message);
-        }
+        // if (!$result) {
+        //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+        //     $message .= 'Whole query: ' . $query;
+        //     die($message);
+        // }
     }
 
     // CLIENT
@@ -146,11 +146,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
         $resultSelDroitMenuRole = mysql_query($querySelDroitMenuRole, $link);
 
         // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-        if (!$resultSelDroitMenuRole) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $querySelDroitMenuRole;
-            die($message);
-        }
+        // if (!$resultSelDroitMenuRole) {
+        //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+        //     $message .= 'Whole query: ' . $querySelDroitMenuRole;
+        //     die($message);
+        // }
 
         // On récupère le jeu de résultat de la requête
         $listeDroitMenuRole = mysql_fetch_assoc($resultSelDroitMenuRole);
@@ -189,11 +189,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
         }
 
         // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-        if (!$result) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $query;
-            die($message);
-        }
+        // if (!$result) {
+        //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+        //     $message .= 'Whole query: ' . $query;
+        //     die($message);
+        // }
     }
 
     // COMPTABLE
@@ -206,11 +206,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
         $resultSelDroitMenuRole = mysql_query($querySelDroitMenuRole, $link);
 
         // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-        if (!$resultSelDroitMenuRole) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $querySelDroitMenuRole;
-            die($message);
-        }
+        // if (!$resultSelDroitMenuRole) {
+        //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+        //     $message .= 'Whole query: ' . $querySelDroitMenuRole;
+        //     die($message);
+        // }
 
         // On récupère le jeu de résultat de la requête
         $listeDroitMenuRole = mysql_fetch_assoc($resultSelDroitMenuRole);
@@ -250,11 +250,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
         }
 
         // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-        if (!$result) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $query;
-            die($message);
-        }
+        // if (!$result) {
+        //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+        //     $message .= 'Whole query: ' . $query;
+        //     die($message);
+        // }
     }
 } else { // Si au moins un droit sur les menus a été défini
 
@@ -354,11 +354,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
             $resultSelDroitMenuRole = mysql_query($querySelDroitMenuRole, $link);
 
             // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-            if (!$resultSelDroitMenuRole) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $querySelDroitMenuRole;
-                die($message);
-            }
+            // if (!$resultSelDroitMenuRole) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $querySelDroitMenuRole;
+            //     die($message);
+            // }
 
             // On récupère le jeu de résultat de la requête
             $listeDroitMenuRole = mysql_fetch_assoc($resultSelDroitMenuRole);
@@ -405,11 +405,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
             }
 
             // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-            if (!$result) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $query;
-                die($message);
-            }
+            // if (!$result) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $query;
+            //     die($message);
+            // }
         }
 
         // RECEPTIONNISTE
@@ -429,11 +429,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
             $resultSelDroitMenuRole = mysql_query($querySelDroitMenuRole, $link);
 
             // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-            if (!$resultSelDroitMenuRole) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $querySelDroitMenuRole;
-                die($message);
-            }
+            // if (!$resultSelDroitMenuRole) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $querySelDroitMenuRole;
+            //     die($message);
+            // }
 
             // On récupère le jeu de résultat de la requête
             $listeDroitMenuRole = mysql_fetch_assoc($resultSelDroitMenuRole);
@@ -481,11 +481,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
             }
 
             // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-            if (!$result) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $query;
-                die($message);
-            }
+            // if (!$result) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $query;
+            //     die($message);
+            // }
         }
 
         // CLIENT
@@ -502,11 +502,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
             $resultSelDroitMenuRole = mysql_query($querySelDroitMenuRole, $link);
 
             // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-            if (!$resultSelDroitMenuRole) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $querySelDroitMenuRole;
-                die($message);
-            }
+            // if (!$resultSelDroitMenuRole) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $querySelDroitMenuRole;
+            //     die($message);
+            // }
 
             // On récupère le jeu de résultat de la requête
             $listeDroitMenuRole = mysql_fetch_assoc($resultSelDroitMenuRole);
@@ -554,11 +554,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
             }
 
             // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-            if (!$result) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $query;
-                die($message);
-            }
+            // if (!$result) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $query;
+            //     die($message);
+            // }
         }
 
         // COMPTABLE
@@ -575,11 +575,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
             $resultSelDroitMenuRole = mysql_query($querySelDroitMenuRole, $link);
 
             // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-            if (!$resultSelDroitMenuRole) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $querySelDroitMenuRole;
-                die($message);
-            }
+            // if (!$resultSelDroitMenuRole) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $querySelDroitMenuRole;
+            //     die($message);
+            // }
 
             // On récupère le jeu de résultat de la requête
             $listeDroitMenuRole = mysql_fetch_assoc($resultSelDroitMenuRole);
@@ -627,11 +627,11 @@ if (!isset($_POST['role_data'])) { // Si aucun droit sur les menus n'a été dé
             }
 
             // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-            if (!$result) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $query;
-                die($message);
-            }
+            // if (!$result) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $query;
+            //     die($message);
+            // }
         }
 
         // $listKeys[] = $key;

@@ -22,11 +22,11 @@ $query = "INSERT INTO tbl_boncmde_four (boncmde_id, supplier_id, boncmde_date_em
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 $result = mysql_query($query, $link);
 
-if (!$result) {
-	$message  = 'Invalid query: ' . mysql_error() . "\n";
-	$message .= 'Whole query: ' . $query;
-	die($message);
-}
+// if (!$result) {
+// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+// 	$message .= 'Whole query: ' . $query;
+// 	die($message);
+// }
 
 // Définition du message et trraitement de l'envoi
 if ($_POST['email']) {

@@ -51,15 +51,13 @@ if (isset($_POST) && !empty($_POST)) {
             $result = mysql_query($query, $link);
     
             // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-            if (!$result) {
-                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                $message .= 'Whole query: ' . $query;
-                die($message);
-            }
+            // if (!$result) {
+            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+            //     $message .= 'Whole query: ' . $query;
+            //     die($message);
+            // }
 
         }
-
-        
     }
 
     // Redirection vers la liste des devis

@@ -45,11 +45,11 @@
                             $result = mysql_query($query, $link);
 
                             // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-                            if (!$result) {
-                                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                $message .= 'Whole query: ' . $query;
-                                die($message);
-                            }
+                            // if (!$result) {
+                            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                            //     $message .= 'Whole query: ' . $query;
+                            //     die($message);
+                            // }
                             ?>
 
                             <!-- On place l'image de la signature du client à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
@@ -91,11 +91,11 @@
                             // On teste le résultat de la requête
                             $result = mysql_query($query, $link);
 
-                            if (!$result) {
-                                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                $message .= 'Whole query: ' . $query;
-                                die($message);
-                            }
+                            // if (!$result) {
+                            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                            //     $message .= 'Whole query: ' . $query;
+                            //     die($message);
+                            // }
 
                             ?>
 
@@ -151,11 +151,11 @@
                             $result = mysql_query($query, $link);
 
                             // Vérification du résultat de la requête et affichage d'un message en cas d'erreur
-                            if (!$result) {
-                                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                $message .= 'Whole query: ' . $query;
-                                die($message);
-                            }
+                            // if (!$result) {
+                            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                            //     $message .= 'Whole query: ' . $query;
+                            //     die($message);
+                            // }
                             ?>
 
                             <!-- On place l'image de la signature du client à l'emplacement prévu à cet effet en prenant soin d'éliminer les espaces au debut du nom du fichier image
@@ -195,11 +195,11 @@
                             // On teste le résultat de la requête
                             $result = mysql_query($query, $link);
 
-                            if (!$result) {
-                                $message  = 'Invalid query: ' . mysql_error() . "\n";
-                                $message .= 'Whole query: ' . $query;
-                                die($message);
-                            }
+                            // if (!$result) {
+                            //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+                            //     $message .= 'Whole query: ' . $query;
+                            //     die($message);
+                            // }
 
                             ?>
 

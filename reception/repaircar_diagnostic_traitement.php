@@ -20,14 +20,10 @@ estimate_data, duree_commande, duree_travaux, travaux_prevoir, date_creation_fic
 $result = mysql_query($query, $link);
 
 // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-if (!$result) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $query;
-    die($message);
-} else {
+// if ($result) {
 
     // Redirection vers la liste des diagnostic des véhicules
     $url = WEB_URL . 'reception/repaircar_diagnostic_list.php?m=add';
     header("Location: $url");
 
-}
+// }

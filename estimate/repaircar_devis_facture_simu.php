@@ -34,7 +34,6 @@ if (isset($_POST) && !empty($_POST)) {
         // A la validation du formulaire de facture
         // $row = $wms->updateQtyPartsStock($link, $fac_data);
         $row = $wms->updateQtyPieceStock($link, $fac_data);
-        
     }
 
     // Linéarisation de l'array des estimations pour le stocker en base de données
@@ -58,15 +57,11 @@ if (isset($_POST) && !empty($_POST)) {
     $result = mysql_query($query, $link);
 
     // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-    if (!$result) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' . $query;
-        die($message);
-    } else {
-        // Redirection vers la liste des devis
-        $url = WEB_URL . 'estimate/repaircar_simu_devis_facture_list.php?m=add';
-        header("Location: $url");
-    }
+    // if ($result) {
+    // Redirection vers la liste des devis
+    $url = WEB_URL . 'estimate/repaircar_simu_devis_facture_list.php?m=add';
+    header("Location: $url");
+    // }
 }
 
 ?>
@@ -79,7 +74,7 @@ if (isset($_POST) && !empty($_POST)) {
 <body>
 
     <section class="content-header">
-    <h1>Formulaire de création de la facture de réparation d'un véhicule
+        <h1>Formulaire de création de la facture de réparation d'un véhicule
         </h1>
         <!-- <ol class="breadcrumb">
             <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -133,22 +128,22 @@ if (isset($_POST) && !empty($_POST)) {
                                                     // var_dump($devis_data);
                                                     // die();
 
-                                                    
+
                                                     foreach ($devis_data as $devis) { ?>
-                                                        <tr id="estimate-row<?php echo $i; ?>">
-                                                            <td><input type="text" id="codepiece_<?php echo $i; ?>" value="<?php echo $devis['code_piece']; ?>" name="facture_data[<?php echo $i; ?>][code_piece_rechange_facture]" class="form-control" /></td>
-                                                            <td><input type="text" id="designation_<?php echo $i; ?>" value="<?php echo str_replace('u0027', "'", $devis['designation']); ?>" name="facture_data[<?php echo $i; ?>][designation_piece_rechange_facture]" class="form-control" /></td>
-                                                            <!-- <td><input type="text" value="<?php echo $devis['marque']; ?>" name="facture_data[<?php echo $i; ?>][marque_piece_rechange_facture]" class="form-control" /></td> -->
-                                                            <td><input type="text" id="qty_<?php echo $i; ?>" value="<?php echo $devis['quantity']; ?>" name="facture_data[<?php echo $i; ?>][qte_piece_rechange_facture]" class="form-control eFireQty allownumberonly" /></td>
-                                                            <td><input type="text" id="price_<?php echo $i; ?>" value="<?php echo $devis['price']; ?>" name="facture_data[<?php echo $i; ?>][prix_piece_rechange_min_facture]" class="form-control eFirePrice" /></td>
-                                                            <!-- <td><input type="text" id="remise_<?php echo $i; ?>" value="<?php echo $devis['remise_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][remise_piece_rechange_facture]" class="form-control eFireRemise allownumberonly" /></td> -->
-                                                            <td><input type="text" id="totalht_<?php echo $i; ?>" value="<?php echo $devis['total_prix_piece_rechange_devis_ht']; ?>" name="facture_data[<?php echo $i; ?>][total_prix_piece_rechange_facture_ht]" class="form-control allownumberonly" /></td>
-                                                            <td><input type="text" id="totalttc_<?php echo $i; ?>" value="<?php echo $devis['total_prix_piece_rechange_devis_ttc']; ?>" name="facture_data[<?php echo $i; ?>][total_prix_piece_rechange_facture_ttc]" class="form-control allownumberonly etotal" /></td>
-                                                            <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $i; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                                                        </tr>
-                                                        <!-- Récupération des données de la facture -->
-                                                        <input type="hidden" value="<?php echo $devis['stock_parts']; ?>" name="facture_data[<?php echo $i; ?>][piece_rechange_id]" />
-                                                        <?php $i++;
+                                                    <tr id="estimate-row<?php echo $i; ?>">
+                                                        <td><input type="text" id="codepiece_<?php echo $i; ?>" value="<?php echo $devis['code_piece']; ?>" name="facture_data[<?php echo $i; ?>][code_piece_rechange_facture]" class="form-control" /></td>
+                                                        <td><input type="text" id="designation_<?php echo $i; ?>" value="<?php echo str_replace('u0027', "'", $devis['designation']); ?>" name="facture_data[<?php echo $i; ?>][designation_piece_rechange_facture]" class="form-control" /></td>
+                                                        <!-- <td><input type="text" value="<?php echo $devis['marque']; ?>" name="facture_data[<?php echo $i; ?>][marque_piece_rechange_facture]" class="form-control" /></td> -->
+                                                        <td><input type="text" id="qty_<?php echo $i; ?>" value="<?php echo $devis['quantity']; ?>" name="facture_data[<?php echo $i; ?>][qte_piece_rechange_facture]" class="form-control eFireQty allownumberonly" /></td>
+                                                        <td><input type="text" id="price_<?php echo $i; ?>" value="<?php echo $devis['price']; ?>" name="facture_data[<?php echo $i; ?>][prix_piece_rechange_min_facture]" class="form-control eFirePrice" /></td>
+                                                        <!-- <td><input type="text" id="remise_<?php echo $i; ?>" value="<?php echo $devis['remise_piece_rechange_devis']; ?>" name="facture_data[<?php echo $i; ?>][remise_piece_rechange_facture]" class="form-control eFireRemise allownumberonly" /></td> -->
+                                                        <td><input type="text" id="totalht_<?php echo $i; ?>" value="<?php echo $devis['total_prix_piece_rechange_devis_ht']; ?>" name="facture_data[<?php echo $i; ?>][total_prix_piece_rechange_facture_ht]" class="form-control allownumberonly" /></td>
+                                                        <td><input type="text" id="totalttc_<?php echo $i; ?>" value="<?php echo $devis['total_prix_piece_rechange_devis_ttc']; ?>" name="facture_data[<?php echo $i; ?>][total_prix_piece_rechange_facture_ttc]" class="form-control allownumberonly etotal" /></td>
+                                                        <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $i; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                                    </tr>
+                                                    <!-- Récupération des données de la facture -->
+                                                    <input type="hidden" value="<?php echo $devis['stock_parts']; ?>" name="facture_data[<?php echo $i; ?>][piece_rechange_id]" />
+                                                    <?php $i++;
                                                     } ?>
                                                 </tbody>
                                                 <tfoot>

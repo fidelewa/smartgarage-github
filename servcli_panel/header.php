@@ -73,11 +73,11 @@ $querySelClientDroitMenuRole = "SELECT droit_menu_role_id, role_name FROM tbl_dr
 $resultSelClientDroitMenuRole = mysql_query($querySelClientDroitMenuRole, $link);
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-if (!$resultSelClientDroitMenuRole) {
-  $message  = 'Invalid query: ' . mysql_error() . "\n";
-  $message .= 'Whole query: ' . $querySelClientDroitMenuRole;
-  die($message);
-}
+// if (!$resultSelClientDroitMenuRole) {
+//   $message  = 'Invalid query: ' . mysql_error() . "\n";
+//   $message .= 'Whole query: ' . $querySelClientDroitMenuRole;
+//   die($message);
+// }
 
 // On récupère le jeu de résultat de la requête
 $listeClientDroitMenuRole = mysql_fetch_assoc($resultSelClientDroitMenuRole);

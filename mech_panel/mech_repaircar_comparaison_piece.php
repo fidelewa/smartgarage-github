@@ -30,15 +30,11 @@ if (isset($_POST) && !empty($_POST)) {
         $result = mysql_query($query, $link);
 
         // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-        if (!$result) {
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $query;
-            die($message);
-        } else {
+        // if ($result) {
             // Redirection vers la liste des diagnostic des véhicules
             $url = WEB_URL . 'mech_panel/mech_repaircar_diagnostic_list.php?m=add_compar_prix_piece_rechange';
             header("Location: $url");
-        }
+        // }
     }
 }
 

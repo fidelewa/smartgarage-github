@@ -5,6 +5,12 @@ $addinfo = 'none';
 $msg = "";
 $error_info = 'none';
 $msg_error = "";
+$error_info_2 = 'none';
+$msg_error_2 = "";
+$error_info_3 = 'none';
+$msg_error_3 = "";
+$error_info_4 = 'none';
+$msg_error_4 = "";
 if (isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] > 0) {
     $wms->deleteCustomer($link, $_GET['id']);
     $delinfo = 'block';
@@ -21,6 +27,26 @@ if (isset($_GET['m']) && $_GET['m'] == 'add') {
 if (isset($_GET['m']) && $_GET['m'] == 'scanner_error') {
     $error_info = 'block';
     $msg_error = "Veuillez sélectionner au moin un type de scanner";
+}
+
+// if (isset($_GET['m']) && $_GET['m'] == 'scanner_error_deux') {
+//     $error_info_2 = 'block';
+//     $msg_error_2 = "Veuillez cocher les deux types de scanner SVP !!!";
+// }
+
+// if (isset($_GET['m']) && $_GET['m'] == 'scanner_error_un') {
+//     $error_info_3 = 'block';
+//     $msg_error_3 = "Veuillez cocher un seul type de scanner SVP !!!";
+// }
+
+if (isset($_GET['m']) && $_GET['m'] == 'scanner_error_50k') {
+    $error_info_2 = 'block';
+    $msg_error_2 = "Veuillez saisir un montant égal à 50 000 FCFA SVP !!!";
+}
+
+if (isset($_GET['m']) && $_GET['m'] == 'scanner_error_100k') {
+    $error_info_3 = 'block';
+    $msg_error_3 = "Veuillez saisir un montant égal à 100 000 FCFA SVP !!!";
 }
 
 $i = 0;
@@ -53,6 +79,21 @@ $i = 0;
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
                 <h4><i class="icon fa fa-check"></i> Erreur!</h4>
                 <?php echo $msg_error; ?>
+            </div>
+            <div id="his_2" class="alert alert-error alert-dismissable" style="display:<?php echo $error_info_2; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+                <h4><i class="icon fa fa-check"></i> Erreur!</h4>
+                <?php echo $msg_error_2; ?>
+            </div>
+            <div id="his_3" class="alert alert-error alert-dismissable" style="display:<?php echo $error_info_3; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+                <h4><i class="icon fa fa-check"></i> Erreur!</h4>
+                <?php echo $msg_error_3; ?>
+            </div>
+            <div id="his_4" class="alert alert-error alert-dismissable" style="display:<?php echo $error_info_4; ?>">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="fa fa-close"></i></button>
+                <h4><i class="icon fa fa-check"></i> Erreur!</h4>
+                <?php echo $msg_error_4; ?>
             </div>
             <div align="right" style="margin-bottom:1%;"> 
                 <!-- <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php" data-original-title="Ajouter un utilisateur"><i class="fa fa-plus"></i></a>  -->
@@ -205,10 +246,13 @@ $i = 0;
 
         $(document).ready(function() {
             setTimeout(function() {
-                $("#me").hide(300);
-                $("#you").hide(300);
-                $("#his").hide(300);
-            }, 3000);
+                $("#me").hide(8000);
+                $("#you").hide(8000);
+                $("#his").hide(8000);
+                $("#his_2").hide(8000);
+                $("#his_3").hide(8000);
+                $("#his_4").hide(8000);
+            }, 8000);
         });
     </script>
     <?php include('../footer.php'); ?>

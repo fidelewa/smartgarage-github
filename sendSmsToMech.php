@@ -13,11 +13,11 @@ if ($_POST['mecanicienList'] == "chef mecanicien") {
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
     $resultChefMechElec = mysql_query($queryChefMechElec, $link);
 
-    if (!$resultChefMechElec) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' .  $$queryChefMechElec;
-        die($message);
-    }
+    // if (!$resultChefMechElec) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' .  $$queryChefMechElec;
+    //     die($message);
+    // }
 
     $rowChefMechElec = mysql_fetch_assoc($resultChefMechElec);
 
@@ -34,11 +34,11 @@ if ($_POST['mecanicienList'] == "chef electricien") {
     // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
     $resultChefMechElec = mysql_query($queryChefMechElec, $link);
 
-    if (!$resultChefMechElec) {
-        $message  = 'Invalid query: ' . mysql_error() . "\n";
-        $message .= 'Whole query: ' .  $$queryChefMechElec;
-        die($message);
-    }
+    // if (!$resultChefMechElec) {
+    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
+    //     $message .= 'Whole query: ' .  $$queryChefMechElec;
+    //     die($message);
+    // }
 
     $rowChefMechElec = mysql_fetch_assoc($resultChefMechElec);
 
