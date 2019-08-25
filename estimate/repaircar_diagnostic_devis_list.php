@@ -60,6 +60,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                 <th>Date du devis</th>
                                 <th>Date exp. assur</th>
                                 <th>Date exp. vis. tech.</th>
+                                <th>Type de diagnostic</th>
                                 <!-- <th>Attribué à</th> -->
                                 <th>Action</th>
                             </tr>
@@ -90,9 +91,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                     <td><?php echo date_format(date_create($row['date_devis']), 'd/m/Y'); ?></td>
                                     <td><?php echo $row['add_date_assurance']; ?></td>
                                     <td><?php echo $row['add_date_visitetech']; ?></td>
+                                    <td><?php echo $row['type_diagnostic']; ?></td>
                                     <td>
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du véhicule"><i class="fa fa-file-text-o"></i></a>
-                                        <a class="btn btn-info" style="background-color:gray;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture"><i class="fa fa-plus"></i></a>
+                                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du véhicule"><i class="fa fa-file-text-o"></i></a>
+                                        <a class="btn btn-info" style="background-color:gray;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture"><i class="fa fa-plus"></i></a>
                                     </td>
                                 </tr>
                             <?php }

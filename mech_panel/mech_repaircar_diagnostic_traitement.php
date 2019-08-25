@@ -8,18 +8,6 @@ require_once(ROOT_PATH . '/SmsApi.php');
 // var_dump($_POST);
 // die();
 
-// function NewGuid()
-// {
-//     $s = strtoupper(md5(uniqid(rand(), true)));
-//     $guidText =
-//         substr($s, 0, 8) . '-' .
-//         substr($s, 8, 4) . '-' .
-//         substr($s, 12, 4) . '-' .
-//         substr($s, 16, 4) . '-' .
-//         substr($s, 20);
-//     return $guidText;
-// }
-
 function uploadPJ_scanner()
 {
     if ((!empty($_FILES["pj_scanner"])) && ($_FILES['pj_scanner']['error'] == 0)) {
@@ -153,13 +141,13 @@ $admin_ges_tel = $_POST['admin_ges_tel'];
 if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
     // Message d'alerte
     // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
-    $content_msg = 'Le chef mécanicien' . $_SESSION['objMech']['name'] . ', a fait le diagnostic mécanique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    $content_msg = 'Le chef mécanicien ' . $_SESSION['objMech']['name'] . ', a fait le diagnostic mécanique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 }
 
 if ($_POST['chef_mech_elec_type'] == "chef electricien") {
     // Message d'alerte
     // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
-    $content_msg = 'Le chef électricien' . $_SESSION['objMech']['name'] . ', a fait le diagnostic électrique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    $content_msg = 'Le chef électricien ' . $_SESSION['objMech']['name'] . ', a fait le diagnostic électrique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 }
 
 // Exécution de la méthode d'envoi 
@@ -176,13 +164,13 @@ $recep_tel = $_POST['recep_tel'];
 if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
     // Message d'alerte
     // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
-    $content_msg = 'Le chef mécanicien' . $_SESSION['objMech']['name'] . ', a fait le diagnostic mécanique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    $content_msg = 'Le chef mécanicien ' . $_SESSION['objMech']['name'] . ', a fait le diagnostic mécanique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 }
 
 if ($_POST['chef_mech_elec_type'] == "chef electricien") {
     // Message d'alerte
     // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
-    $content_msg = 'Le chef électricien' . $_SESSION['objMech']['name'] . ', a fait le diagnostic électrique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+    $content_msg = 'Le chef électricien ' . $_SESSION['objMech']['name'] . ', a fait le diagnostic électrique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 }
 
 // Exécution de la méthode d'envoi 

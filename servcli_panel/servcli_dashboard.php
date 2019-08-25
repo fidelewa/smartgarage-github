@@ -83,7 +83,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                       }
                       ?></td>
                 <td>
-                  <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?vehicule_scanning_id=<?php echo $row['id']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer reçu de paiement du scanner</a>
+                  <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer reçu de paiement du scanner</a>
                 </td>
               </tr>
               <?php
@@ -170,10 +170,10 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                           </div>
 
                           <div class="form-group" style="margin-bottom:50px">
-                            <label>Client :</label>
+                            <label>Client :</label><span style="color:red">Le nom du client à saisir doit être au format "nom_client//numero_téléphone". Exemple "roger//0101010101"</span>
                             <div class="row col-md-12">
                               <div class="col-md-11" style="padding-left:0px">
-                                <input onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span>
+                                <input onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja au format nom//numéro de téléphone" onfocus=""><span id="clientbox"></span>
                               </div>
                               <div class="col-md-1" id="client">
                                 <a class="btn btn-success" data-toggle="modal" href="<?php echo WEB_URL; ?>customer/addcustomer.php" data-original-title="Ajouter un nouveau client"><i class="fa fa-plus"></i></a>
@@ -213,7 +213,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
 
                           <div class="form-group">
                             <label>Montant des frais du scanner :</label>
-                            <input required type="number" class='form-control' name="frais_scanner" id="frais_scanner" placeholder="Saisissez le montant du scanner">
+                            <input required type="number" maxlength="6" class='form-control montant_scanner' name="frais_scanner" id="frais_scanner" placeholder="Saisissez le montant du scanner">
                           </div>
 
                         </fieldset>
@@ -245,7 +245,9 @@ $settings = $wms->getWebsiteSettingsInformation($link);
   </div>
 </section>
 <!-- /.content -->
+
 <script type="text/javascript">
+
   // Définition de la locale en français
   numeral.register('locale', 'fr', {
     delimiters: {
@@ -349,46 +351,46 @@ $settings = $wms->getWebsiteSettingsInformation($link);
 
   });
 
-  $("#submit").click(function(e) {
+  // $("#submit").click(function(e) {
 
-    // On récupère la valeur des frais de scanner
-    // Si le montant a été saisi
-    if ($("#frais_scanner").val() != '') {
+  //   // On récupère la valeur des frais de scanner
+  //   // Si le montant a été saisi
+  //   if ($("#frais_scanner").val() != '') {
 
-      frais_scanner = $("#frais_scanner").val();
+  //     frais_scanner = $("#frais_scanner").val();
 
-      // Si le montant des frais de scanner est
-      // supérieur ou égale à 100 000 FCFA
-      if (frais_scanner >= 100000) {
+  //     // Si le montant des frais de scanner est
+  //     // supérieur ou égale à 100 000 FCFA
+  //     if (frais_scanner >= 100000) {
 
-        const elt_scanner_electrique = document.getElementById('scanner_electrique');
-        const elt_scanner_mecanique = document.getElementById('scanner_mecanique');
+  //       const elt_scanner_electrique = document.getElementById('scanner_electrique');
+  //       const elt_scanner_mecanique = document.getElementById('scanner_mecanique');
 
-        // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
+  //       // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
 
-        if (elt_scanner_electrique.checked == false || elt_scanner_mecanique.checked == false) {
-          alert("Veuillez cocher les deux types de scanner SVP !!!");
-        }
+  //       if (elt_scanner_electrique.checked == false || elt_scanner_mecanique.checked == false) {
+  //         alert("Veuillez cocher les deux types de scanner SVP !!!");
+  //       }
 
-      } else if (frais_scanner >= 50000 && frais_scanner < 100000) {
+  //     } else if (frais_scanner >= 50000 && frais_scanner < 100000) {
 
-        const elt_scanner_electrique = document.getElementById('scanner_electrique');
-        const elt_scanner_mecanique = document.getElementById('scanner_mecanique');
+  //       const elt_scanner_electrique = document.getElementById('scanner_electrique');
+  //       const elt_scanner_mecanique = document.getElementById('scanner_mecanique');
 
-        // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
-        if (elt_scanner_electrique.checked == false && elt_scanner_mecanique.checked == false) {
-          alert("Veuillez cocher un seul type de scanner SVP !!!");
-        }
+  //       // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
+  //       if (elt_scanner_electrique.checked == false && elt_scanner_mecanique.checked == false) {
+  //         alert("Veuillez cocher un seul type de scanner SVP !!!");
+  //       }
 
-        if (elt_scanner_electrique.checked == true && elt_scanner_mecanique.checked == true) {
-          alert("Veuillez cocher un seul type de scanner SVP !!!");
-        }
+  //       if (elt_scanner_electrique.checked == true && elt_scanner_mecanique.checked == true) {
+  //         alert("Veuillez cocher un seul type de scanner SVP !!!");
+  //       }
 
-      } else {
-        alert("Veuillez saisir un montant supérieur ou égal à 50 000 FCFA SVP !!!");
-      }
-    }
+  //     } else {
+  //       alert("Veuillez saisir un montant supérieur ou égal à 50 000 FCFA SVP !!!");
+  //     }
+  //   }
 
-  });
+  // });
 </script>
 <?php include('../footer.php'); ?>

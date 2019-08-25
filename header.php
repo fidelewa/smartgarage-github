@@ -134,8 +134,12 @@ if (!empty($_SESSION['objCust']['image'])) {
   <!-- <script src="<?php echo WEB_URL; ?>dist/js/adddevis.js"></script> -->
   <script type="text/javascript" src="<?php echo WEB_URL; ?>dist/js/typeahead.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  
   <script src="https://cdn.lr-ingest.io/LogRocket.min.js" crossorigin="anonymous"></script>
   <script>window.LogRocket && window.LogRocket.init('0a2c67/smartgarage');</script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.3/cleave.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.1/parsley.min.js"></script>
+  
   <style>
     .typeahead {
       border: 2px solid #FFF;

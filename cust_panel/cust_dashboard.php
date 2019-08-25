@@ -129,13 +129,19 @@ function arrayValueExist($array, $value)
             <td>
               <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a> -->
               <?php if ($row['type_diagnostic'] == "électrique") { ?>
-              <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du diagnostic électrique du véhicule"><i class="fa fa-file-text-o"></i></a>
+              <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du diagnostic électrique du véhicule"><i class="fa fa-file-text-o"></i></a>
+              <?php
+                  if ($row['statut_validation_devis_electrique'] == null) { ?>
               <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/devis_client_validation.php?type_diagnostic=<?php echo $row['type_diagnostic']; ?>&vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="valider le devis du diagnostic électrique"><i class="fa fa-check"></i></a>
-              <?php } ?>
+              <?php }
+                } ?>
               <?php if ($row['type_diagnostic'] == "mécanique") { ?>
-              <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du diagnostic mécanique du véhicule"><i class="fa fa-file-text-o"></i></a>
+              <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du diagnostic mécanique du véhicule"><i class="fa fa-file-text-o"></i></a>
+              <?php
+                  if ($row['statut_validation_devis_mecanique'] == null) { ?>
               <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/devis_client_validation.php?type_diagnostic=<?php echo $row['type_diagnostic']; ?>&vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="valider le devis du diagnostic mécanique"><i class="fa fa-check"></i></a>
-              <?php } ?>
+              <?php }
+                } ?>
               </a>
             </td>
           </tr>
@@ -330,7 +336,7 @@ function arrayValueExist($array, $value)
                   <td><?php echo $row['add_date_assurance']; ?></td>
                   <td><?php echo $row['add_date_visitetech']; ?></td>
                   <td>
-                    <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_facture_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la facture du devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
+                    <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_facture_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la facture du devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
                   </td>
                 </tr>
                 <?php }

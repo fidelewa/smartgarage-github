@@ -103,8 +103,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                 <th>Téléphone</th>
                 <th>Marque</th>
                 <th>Modèle</th>
-                <th>Statut diagnostic</th>
-                <th>Statut emplacement véhicule</th>
+                <!-- <th>Statut diagnostic</th>
+                <th>Statut emplacement véhicule</th> -->
                 <th>Action</th>
               </tr>
             </thead>
@@ -139,22 +139,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                   <td><?php echo $row['princ_tel']; ?></td>
                   <td><?php echo $row['make_name']; ?></td>
                   <td><?php echo $row['model_name']; ?></td>
-                  <td><?php
-                      if ($row['status_diagnostic_vehicule'] == null) {
-                        echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
-                      } else if ($row['status_diagnostic_vehicule'] == 1) {
-                        echo "<span class='label label-success'>Diagnostiqué</span> <br/>";
-                      }
-                      ?></td>
-                  <td><?php
-                      if ($row['statut_emplacement_vehicule'] == NULL) {
-                        echo "<span class='label label-default'>Pas encore au garage</span> <br/>";
-                      } else if ($row['statut_emplacement_vehicule'] == 0) {
-                        echo "<span class='label label-default'>Sortie du garage</span> <br/>";
-                      } else if ($row['statut_emplacement_vehicule'] == 1) {
-                        echo "<span class='label label-success'>Rentré au garage</span> <br/>";
-                      }
-                      ?></td>
                   <!-- <td><?php echo $row['year']; ?></td> -->
                   <td>
 
@@ -194,23 +178,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                                 <b>Chasis No :</b> <?php echo $row['chasis_no']; ?><br />
                                 <!-- <b>Enregistrement No :</b> <?php echo $row['car_reg_no']; ?><br /> -->
                                 <b>VIN No :</b> <?php echo $row['VIN']; ?><br />
-
-                                <?php
-                                if ($row['status_diagnostic_vehicule'] == null) {
-                                  echo "<b> Statut diagnostic du véhicule </b> : <span class='label label-default'>En attente de diagnostic</span> <br/>";
-                                } else if ($row['status_diagnostic_vehicule'] == 1) {
-                                  echo "<b> Statut diagnostic du véhicule </b> : <span class='label label-success'>Diagnostiqué</span> <br/>";
-                                }
-                                ?>
-
-                                <?php
-                                if ($row['statut_emplacement_vehicule'] == NULL) {
-                                  echo "<b> Statut emplacement du véhicule </b> : <span class='label label-default'>Pas encore au garage</span> <br/>";
-                                } else if ($row['statut_emplacement_vehicule'] == 0) {
-                                  echo "<b> Statut emplacement du véhicule </b> : <span class='label label-default'>Sortie du garage</span> <br/>";
-                                } else if ($row['statut_emplacement_vehicule'] == 1) {
-                                  echo "<b> Statut emplacement du véhicule </b> : <span class='label label-success'>Rentré au garage</span> <br/>";
-                                }
                                 ?>
                                 <?php
 

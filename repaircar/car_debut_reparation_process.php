@@ -9,7 +9,7 @@ if ($_GET['type_diagnostic'] == 'électrique') {
     // Enregistrement de l'identifiant du mécanicien à qui à été attribué la fiche de réception du véhicule
     $query = "UPDATE tbl_recep_vehi_repar
 SET statut_autorisation_reparation_electrique=1, 
-statut_emplacement_vehicule=1
+statut_emplacement_vehicule_electrique=1
 WHERE car_id='" . $_GET['recep_car_id'] . "'";
 
     // On teste le résultat de la requête pour savoir si elle n'a pas déclenché des erreurs
@@ -26,7 +26,7 @@ if ($_GET['type_diagnostic'] == 'mécanique') {
     // Enregistrement de l'identifiant du mécanicien à qui à été attribué la fiche de réception du véhicule
     $query = "UPDATE tbl_recep_vehi_repar
 SET statut_autorisation_reparation_mecanique=1, 
-statut_emplacement_vehicule=1
+statut_emplacement_vehicule_mecanique=1
 WHERE car_id='" . $_GET['recep_car_id'] . "'";
 
     // On teste le résultat de la requête pour savoir si elle n'a pas déclenché des erreurs
@@ -57,7 +57,7 @@ if ($_GET['attribution_mecanicien'] == "chef mecanicien") {
     $content_msg = ' La réparation mécanique du véhicule ' . $_GET['make_name'] . ' ' . $_GET['model_name'] . ' ' . $_GET['VIN'] . ' a commencé ';
 }
 
-if ($_GET['attribution_mecanicien'] == "chef electricien") {
+if ($_GET['attribution_electricien'] == "chef electricien") {
 
     // Message d'alerte
     $content_msg = ' La réparation électrique du véhicule ' . $_GET['make_name'] . ' ' . $_GET['model_name'] . ' ' . $_GET['VIN'] . ' a commencé ';

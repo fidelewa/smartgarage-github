@@ -82,11 +82,10 @@ class wms_core
 		return $data;
 	}
 
-	
 	/*
 	* @get all Voiture de réparation list
 	*/
-	public function getAllRepairCarListAtGarage($con)
+	public function getAllRepairCarListAtGarage_2_bis($con)
 	{
 		$data = array();
 
@@ -101,6 +100,43 @@ class wms_core
 		LEFT JOIN tbl_recep_vehi_repar rvr on rvr.add_car_id = ac.car_id
 		LEFT join tbl_repaircar_diagnostic diag on diag.recep_car_id = rvr.car_id
 		WHERE (ac.add_date_visitetech IS NOT NULL OR ac.add_date_assurance_fin IS NOT NULL) AND statut_emplacement_vehicule = 1
+		order by ac.car_id DESC
+		";
+
+		$result = mysql_query($query, $con);
+
+		// if (!$result) {
+		// 	// var_dump($data);
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
+
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	
+	/*
+	* @get all Voiture de réparation list
+	*/
+	public function getAllRepairCarListAtGarage($con)
+	{
+		$data = array();
+
+		$query = "SELECT DISTINCT ac.added_date, VIN, note, chasis_no, car_name, ac.image as car_image,
+		c.c_name,c.image as customer_image,c.c_email,c.c_mobile,m.make_name,mo.model_name,ac.repair_car_id, ac.year, ac.add_date_visitetech, 
+		ac.add_date_assurance, ac.add_date_assurance_fin, princ_tel, m.*, mo.*, VIN, c_name, princ_tel, status_diagnostic_vehicule,
+		ac.car_id, statut_emplacement_vehicule_electrique, statut_emplacement_vehicule_mecanique
+		FROM tbl_add_car ac 
+		JOIN tbl_add_customer c on c.customer_id = ac.customer_id 
+		JOIN tbl_make m on m.make_id = ac.car_make 
+		JOIN tbl_model mo on mo.model_id = ac.car_model 
+		LEFT JOIN tbl_recep_vehi_repar rvr on rvr.add_car_id = ac.car_id
+		LEFT join tbl_repaircar_diagnostic diag on diag.recep_car_id = rvr.car_id
+		WHERE statut_emplacement_vehicule_mecanique = 1 OR statut_emplacement_vehicule_electrique = 1
 		order by ac.car_id DESC
 		";
 
@@ -603,6 +639,43 @@ class wms_core
 		JOIN tbl_repaircar_diagnostic rd on rd.recep_car_id = rvr.car_id
 		JOIN tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
 		JOIN tbl_add_customer c on cr.customer_id = c.customer_id
+		WHERE statut_reparation_mecanique = 0 OR statut_reparation_electrique = 0
+		";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
+		// if (!$result) {
+		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
+		// 	$message .= 'Whole query: ' . $query;
+		// 	die($message);
+		// }
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getRecepCarListRepar_2($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT DISTINCT
+		rvr.car_id, num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, make_name, model_name, VIN,
+		rvr.statut_reparation, princ_tel, statut_reparation_mecanique, statut_reparation_electrique
+		FROM tbl_recep_vehi_repar rvr
+		JOIN tbl_add_car cr on cr.car_id = rvr.add_car_id
+		JOIN tbl_model mo on mo.model_id = cr.car_model
+		JOIN tbl_make m on m.make_id = cr.car_make 
+		JOIN tbl_repaircar_diagnostic rd on rd.recep_car_id = rvr.car_id
+		JOIN tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
+		JOIN tbl_add_customer c on cr.customer_id = c.customer_id
 		WHERE statut_validation_devis_mecanique = 1 OR statut_validation_devis_electrique = 1
 		";
 
@@ -777,7 +850,7 @@ class wms_core
 		left join tbl_add_mech mech on (rvr.chef_mech_elec_id = mech.usr_id)
 		-- left join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
 		left JOIN tbl_repaircar_diagnostic diag on diag.recep_car_id = rvr.car_id
-		WHERE rvr.attribution_mecanicien IN ('chef mecanicien') 
+		WHERE rvr.attribution_mecanicien = 'chef mecanicien'
 		ORDER BY rvr.car_id DESC
 		";
 
@@ -804,7 +877,7 @@ class wms_core
 	{
 		$data = array();
 		$result = mysql_query('SELECT * FROM tbl_add_personnel 
-		WHERE per_fonction IN ("mécanicien","mécanicienne")', $con);
+		WHERE per_fonction IN ("mécanicien","mécanicienne","mecanicien","mecanicienne")', $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -815,7 +888,7 @@ class wms_core
 	{
 		$data = array();
 		$result = mysql_query('SELECT * FROM tbl_add_personnel
-		WHERE per_fonction IN ("électricien","électricienne")', $con);
+		WHERE per_fonction IN ("électricien","électricienne","electricien","electricienne")', $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -2514,7 +2587,7 @@ class wms_core
 		// On récupère les infos du devis de réparation d'un véhicule en les regroupant par 
 		// identifiants de diagnostic
 		$query = "SELECT rd.id as vehi_diag_id, devis_id, VIN, c_name, date_devis, cr.add_date_assurance, cr.add_date_visitetech, 
-		rd.car_id
+		rd.car_id, type_diagnostic
 		FROM tbl_add_car cr
 		JOIN tbl_repaircar_diagnostic rd on rd.car_id = cr.car_id	
 		JOIN tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
@@ -4432,7 +4505,7 @@ GROUP BY pp.per_id";
 	{
 
 		$query = "SELECT car_make, car_model, chasis_no, devis_data, c_name, c_email, c_mobile,
-		c_address, VIN, add_date_mise_circu, dev.*, nom_client, princ_tel, add_date_visitetech, ma.*, mo.*
+		c_address, VIN, add_date_mise_circu, dev.*, nom_client, princ_tel, add_date_visitetech, ma.*, mo.*, rd.*
 			from tbl_repaircar_diagnostic rd
 			inner join tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
 			inner join tbl_add_car cr on rd.car_id = cr.car_id

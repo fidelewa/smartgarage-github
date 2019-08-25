@@ -12,7 +12,7 @@
     <div class="row" id="signature">
         <div class="col-sm-3" style="height:150px;">
             <p class="signature">Nom et signature du client</p>
-            <p style="font-family:'Roboto Mono',monospace,serif;font-weight:bold;font-style:italic;text-align:center">Contrat au verso lu et approuvé</p>
+            <p style="font-family:'Roboto Mono',monospace,serif;font-weight:bold;font-style:italic;text-align:center">Contrat lu et approuvé</p>
             <?php if (isset($_GET['login_type']) && $_GET['login_type'] != "mechanics") { ?>
 
                 <button id="signature_client_depot"><a href="<?php echo WEB_URL ?>signature/my_sign.php?etat=depot&sign=client&car_id=<?php echo $row['car_id'] ?>&contact=<?php echo $row['princ_tel'] ?>&immavehi=<?php echo $row['num_matricule'] ?>&add_car_id=<?php echo $row['add_car_id'] ?>&login_type=<?php echo $_GET['login_type'] ?>">Signer au dépot</a></button>

@@ -7,7 +7,8 @@ if ($_GET['chef_mech_elec_type'] == "chef mecanicien") {
     $query = "UPDATE tbl_recep_vehi_repar
         SET statut_reparation_mecanique=1,
         mecano_action_reparation = 0,
-        electro_action_reparation = null
+        electro_action_reparation = null,
+        statut_emplacement_vehicule_mecanique = 0
         WHERE car_id='" . (int) $_GET['recep_car_id'] . "'";
 
     $result = mysql_query($query, $link);
@@ -26,7 +27,8 @@ if ($_GET['chef_mech_elec_type'] == "chef electricien") {
     $query = "UPDATE tbl_recep_vehi_repar
         SET statut_reparation_electrique=1,
         mecano_action_reparation = null,
-        electro_action_reparation = 0
+        electro_action_reparation = 0,
+        statut_emplacement_vehicule_electrique = 0
         WHERE car_id='" . (int) $_GET['recep_car_id'] . "'";
 
     $result = mysql_query($query, $link);

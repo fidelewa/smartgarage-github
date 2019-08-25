@@ -11,8 +11,15 @@ $email_customer = $_GET['email_customer'];
 // Lien de confirmation du devis envoyé par e-mail
 $url_devis = '<a href='.WEB_URL.'confirmDevisTraitement.php?confirm_devis=1&vehi_diag_id='.$_GET['vehi_diag_id'].'&devis_id='.$_GET['devis_id'].'>cliquer sur ce lien</a>';
 
-// Message de confirmation du devis
-$content_msg = 'Pour voir votre devis, vous pouvez '.$url_devis;
+if ($_GET['type_diagnostic'] == 'mécanique') {
+    // Message de confirmation du devis
+    $content_msg = 'Un devis électrique vous a été envoyé pour validation. Pour voir ce devis, vous pouvez ' . $url_devis;
+}
+
+if ($_GET['type_diagnostic'] == 'électrique') {
+    // Message de confirmation du devis
+    $content_msg = 'Un devis électrique vous a été envoyé pour validation. Pour voir ce devis, vous pouvez ' . $url_devis;
+}
 
 $title = "Nouveau devis à confirmer";
 

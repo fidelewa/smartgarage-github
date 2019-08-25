@@ -21,7 +21,7 @@ class SmsApi
 
         // $to = '02280768';
 
-        $datetime = urlencode(date('Y-m-d H:i:s'));
+        // $datetime = urlencode(date('Y-m-d H:i:s'));
         //$destinataire = ;
 
         /*http://africasmshub.mondialsms.net/api/api_http.php?username=emitic&password=007Jockers%40&sender=AFRIKHOTEL&to=22508710358&text=Hello%20world
@@ -35,15 +35,10 @@ class SmsApi
         //dump($smsapiUrl);die();
         //return file_get_contents($smsapiUrl);
 
-        // $curl = curl_init();
-        // curl_setopt($curl, CURLOPT_URL, $smsapiUrl);
-        // curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        // curl_setopt($curl, CURLOPT_POST, true);
-        // curl_exec($curl);
-        // curl_close($curl);
         $reste_sms = file_get_contents($smsapiUrl);
         $reste_sms_list = json_decode($reste_sms,true);
-        return $reste_sms_list['code'];
+        return $reste_sms_list['0']['code'];
+        // return 'KO';
         //return file_get_contents($smsapiUrl);
     }
 

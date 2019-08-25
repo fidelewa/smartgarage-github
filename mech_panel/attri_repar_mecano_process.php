@@ -60,12 +60,12 @@ foreach ($mecano as $mrow) {
 
     if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
         // Message d'alerte
-        $content_msg = 'Le mécanicien' . $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+        $content_msg = 'Le mécanicien ' . $mrow['nom_mecano'] . ', est en train de réparer le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
     }
 
-    if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+    if ($_POST['chef_mech_elec_type'] == "chef electricien") {
         // Message d'alerte
-        $content_msg = 'l\'électricien' . $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+        $content_msg = 'l\'électricien ' . $mrow['nom_mecano'] . ', est en train de réparer le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
     }
 
 
@@ -85,12 +85,12 @@ foreach ($mecano as $mrow) {
 
     if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
         // Message d'alerte
-        $content_msg = 'Le mécanicien' . $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+        $content_msg = 'Le mécanicien ' . $mrow['nom_mecano'] . ', est en train de réparer le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
     }
 
-    if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+    if ($_POST['chef_mech_elec_type'] == "chef electricien") {
         // Message d'alerte
-        $content_msg = 'l\'électricien' . $mrow['nom_mecano'] . ', est entrain de travailler sur le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+        $content_msg = 'l\'électricien ' . $mrow['nom_mecano'] . ', est en train de réparer le véhicule ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
     }
 
     // Exécution de la méthode d'envoi 

@@ -798,6 +798,10 @@ if (empty($_POST['sortie_remarq_recep_vehi'])) {
 
 // Echappement des caractères spéciaux
 
+if (!empty($_POST['dim_pneu'])) {
+	$_POST['dim_pneu'] = mysql_real_escape_string($_POST['dim_pneu']);
+}
+
 if (!empty($_POST['remarque_access_vehi'])) {
 	$_POST['remarque_access_vehi'] = mysql_real_escape_string($_POST['remarque_access_vehi']);
 }

@@ -92,8 +92,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                     <!-- <td><?php echo $row['m_name']; ?></td> -->
                                     <td>
 
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_piecechange_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Consulter la fiche des pièces de rechange requis" style="background-color:#0273B5;color:#ffffff"><i class="fa fa-file-text-o"></i></a>
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule" style="background-color:#B5027F;color:#ffffff"><i class="fa fa-file-text-o"></i></a>
+                                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_piecechange_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Consulter la fiche des pièces de rechange requis" style="background-color:#0273B5;color:#ffffff"><i class="fa fa-file-text-o"></i></a>
+                                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule" style="background-color:#B5027F;color:#ffffff"><i class="fa fa-file-text-o"></i></a>
                                         <?php
 
                                         // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
@@ -102,16 +102,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                         // S'il y a des enregistrements correspondant à cet id existant déja en BDD
                                         // On affiche l'icone de la fiche
                                         if (!empty($rows)) { ?>
-                                            <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/compar_prix_piece_rechange_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de comparaison des prix des pièces de rechange par fournisseur" style="background-color:#02B56D;color:#ffffff"><i class="fa fa-file-text-o"></i></a>
-                                            <!-- <a class="btn btn-info" style="background-color:orange;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un devis"><i class="fa fa-plus"></i></a> -->
-                                            <a class="btn btn-info" style="background-color:orange;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un devis"><i class="fa fa-plus"></i></a>
+                                            <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/compar_prix_piece_rechange_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de comparaison des prix des pièces de rechange par fournisseur" style="background-color:#02B56D;color:#ffffff"><i class="fa fa-file-text-o"></i></a>
+                                            <!-- <a class="btn btn-info" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un devis"><i class="fa fa-plus"></i></a> -->
+                                            <a class="btn btn-info" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un devis"><i class="fa fa-plus"></i></a>
                                         <?php } else { ?>
 
-                                            <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_comparaison_piece.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un formulaire de comparaison des prix des pièces de rechange par fournisseur"><i class="fa fa-plus"></i></a>
+                                            <a class="btn btn-info" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_comparaison_piece.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un formulaire de comparaison des prix des pièces de rechange par fournisseur"><i class="fa fa-plus"></i></a>
 
                                         <?php } ?>
 
-                                        <!-- <a class="btn btn-info" style="background-color:orange;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un devis"><i class="fa fa-plus"></i></a> -->
+                                        <!-- <a class="btn btn-info" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Créer un devis"><i class="fa fa-plus"></i></a> -->
 
                                     </td>
                                 </tr>

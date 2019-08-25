@@ -59,6 +59,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                 <th>Immatriculation</th>
                 <th>Chasis No</th>
                 <th>Emplacement du véhicule</th>
+                <th>Motif</th>
                 <!-- <th>Date d'entrée au garage</th> -->
                 <th>Nom du client</th>
                 <!-- <th>Marque</th>
@@ -93,8 +94,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                 <td><span class="label label-danger"><?php echo $row['chasis_no']; ?></span></td>
                 <td>
                   <?php
-                    if ($row['statut_emplacement_vehicule'] == 1) {
+                    if ($row['statut_emplacement_vehicule_mecanique'] == 1 || $row['statut_emplacement_vehicule_electrique'] == 1) {
                       echo "<span class='label label-success'>Au garage</span> <br/>";
+                    }
+                    ?></td>
+                <td>
+                  <?php
+                    if ($row['statut_emplacement_vehicule_mecanique'] == 1) {
+                      echo "<span class='label label-success'>Réparation mécanique</span> <br/>";
+                    }
+                    if ($row['statut_emplacement_vehicule_electrique'] == 1) {
+                      echo "<span class='label label-success'>Réparation électrique</span> <br/>";
                     }
                     ?></td>
                 <!-- <td><?php echo $row['date_emplacement']; ?></td> -->

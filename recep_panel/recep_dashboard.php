@@ -324,9 +324,6 @@ function arrayValueExist($array, $value)
                 <td>
                   <?php if ($row['statut_reception'] == null) { ?>
                   <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar_reception.php?immat=<?php echo $row['imma_vehi_client']; ?>&vehicule_scanner_id=<?php echo $row['id']; ?>" data-original-title="Receptionner ce véhicule"><i class="fa fa-user"></i></a>
-                  <?php } else {
-                      ?>
-                  <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_reception.php?immat=<?php echo $row['imma_vehi_client']; ?>" data-original-title="Receptionner ce véhicule"><i class="fa fa-user"></i></a>
                   <?php }
                     ?>
 

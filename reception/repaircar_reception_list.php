@@ -279,7 +279,7 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                                         /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
                                         mécanicien et n'a pas encore fait l'objet de diagnostic électrique, ni mécanique
                                         */
-                                        if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
+                                        if (isset($row['attribution_electricien']) && isset($row['attribution_mecanicien'])) {
 
                                             if (!isset($row['statut_diagnostic_electrique']) && !isset($row['statut_diagnostic_mecanique'])) {
                                                 echo "<span class='label label-default'>En cours d'attribution aux chefs mécaniciens et électriciens</span> <br/>";
