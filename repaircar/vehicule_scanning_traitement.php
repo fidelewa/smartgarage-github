@@ -9,6 +9,16 @@ $wms = new wms_core();
 // var_dump($_POST);
 // die();
 
+// Si la valeur de la marque dans le champs de saisie n'est pas connu
+if(!isset($_POST['ddlMake']) || $_POST['ddlMake'] == ""){
+    $_POST['ddlMake'] = $_POST['marque_hd'];
+}
+
+// Si la valeur du modèle dans le champs de saisie n'est pas connu
+if(!isset($_POST['ddlModel']) || $_POST['ddlModel'] == ""){
+    $_POST['ddlModel'] = $_POST['model_hd'];
+}
+
 $clientData = explode("//", $_POST['ddlCustomerList']);
 
 $client_nom = $clientData[0];
@@ -397,10 +407,10 @@ $result = mysql_query($query, $link);
 // }
 // Redirection vers la liste des devis
 // $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=add";
-echo "<script type='text/javascript'> document.location.href='" . WEB_URL . "servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=" . $nbr_aleatoire . "'</script>";
+// echo "<script type='text/javascript'> document.location.href='" . WEB_URL . "compta_panel/recu_paiement_scanner.php?nbr_aleatoire=" . $nbr_aleatoire . "'</script>";
 
-    // $url = WEB_URL . "servcli_panel/recu_paiement_scanner.php?nb_aleatoire=" . $nbr_aleatoire;
-    // header("Location: $url");
+    $url = WEB_URL . "servcli_panel/servcli_dashboard.php";
+    header("Location: $url");
     // }
 
 // }

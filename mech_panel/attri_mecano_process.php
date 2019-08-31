@@ -69,12 +69,12 @@ $admin_ges_tel = $_POST['admin_ges_tel'];
 
 if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
     // Message d'alerte
-    $content_msg = 'Le mécanicien' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic mécanique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée';
+    $content_msg = 'Le mécanicien ' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic mécanique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée';
 }
 
 if ($_POST['chef_mech_elec_type'] == "chef electricien") {
     // Message d'alerte
-    $content_msg = 'L\'électricien' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic électrique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée';
+    $content_msg = 'L\'électricien ' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic électrique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée';
 }
 
 // Exécution de la méthode d'envoi 
@@ -92,12 +92,12 @@ $recep_tel = $_POST['recep_tel'];
 
 if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
     // Message d'alerte
-    $content_msg = 'Le mécanicien' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic mécanique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée';
+    $content_msg = 'Le mécanicien ' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic mécanique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée';
 }
 
 if ($_POST['chef_mech_elec_type'] == "chef electricien") {
     // Message d'alerte
-    $content_msg = 'L\'électricien' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic électrique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée';
+    $content_msg = 'L\'électricien ' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic électrique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée';
 }
 
 // Exécution de la méthode d'envoi 
@@ -111,7 +111,8 @@ $resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);
 // alors on envoi le SMS au chef électricien
 
 // if ($_POST['att_mecano_id'] == $_POST['chef_mec_elec_id']) {
-if ($_POST['statut_acceptation_mecanicien'] == 1) {
+// if ($_POST['statut_acceptation_mecanicien'] == 1) {
+if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
 
     // On récupère le numéro de téléphone du chef électricien
     $queryChefElec = "SELECT usr_tel FROM tbl_add_mech WHERE usr_type = 'chef electricien'";
@@ -131,7 +132,7 @@ if ($_POST['statut_acceptation_mecanicien'] == 1) {
 
     // Message d'alerte
     // $content_msg = $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic de la voiture réceptionnée ';
-    $content_msg = 'Le mécanicien' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic mécanique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée, le chef électricien est donc prié de patienter';
+    $content_msg = 'Le mécanicien ' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic mécanique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée, le chef électricien est donc prié de patienter';
 
     // Exécution de la méthode d'envoi 
     $resultSmsSent = $smsApi->isSmsapi($elec_tel, $content_msg);
@@ -144,7 +145,8 @@ if ($_POST['statut_acceptation_mecanicien'] == 1) {
 // Si c'est le chef électricien qui est prêt à faire le diagnostic
 // alors on envoi le SMS au chef mécanicien
 // if ($_POST['att_electro_id'] == $_POST['chef_mec_elec_id']) {
-if ($_POST['statut_acceptation_electricien'] == 1) {
+// if ($_POST['statut_acceptation_electricien'] == 1) {
+if ($_POST['chef_mech_elec_type'] == "chef electricien") {
 
     // On récupère le numéro de téléphone du chef mécanicien
     $queryChefMecano = "SELECT usr_tel FROM tbl_add_mech WHERE usr_type = 'chef mecanicien'";
@@ -165,7 +167,7 @@ if ($_POST['statut_acceptation_electricien'] == 1) {
     // $elec_tel = "02280768";
 
     // Message d'alerte
-    $content_msg = 'L\'électricien' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic électrique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée, le chef mécanicien est donc prié de patienter';
+    $content_msg = 'L\'électricien ' . $_POST['chef_mech_elec_name'] . ', est prêt à faire le diagnostic électrique de la voiture ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'] . ' nouvellement réceptionnée, le chef mécanicien est donc prié de patienter';
 
     // Exécution de la méthode d'envoi 
     $resultSmsSent = $smsApi->isSmsapi($mech_tel, $content_msg);

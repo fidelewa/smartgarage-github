@@ -93,7 +93,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <!-- <th>Marque</th> -->
                                                         <th>Quantité</th>
                                                         <th>Tarif HT</th>
-                                                        <th>Taux Remise</th>
+                                                        <!-- <th>Taux Remise</th> -->
                                                         <th>Total HT</th>
                                                         <th>Total TTC</th>
                                                         <th></th>
@@ -142,27 +142,27 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <td class="text-left"><button type="button" onclick="addEstimate();" data-toggle="tooltip" title="Ajouter une estimation" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="6" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
+                                                        <td colspan="5" class="text-right">Main d'oeuvre (<?php echo $currency; ?>):</td>
                                                         <td><input required id="labour" type="text" value="<?php echo $row['main_oeuvre_piece_rechange_devis']; ?>" name="montant_main_oeuvre_facture" class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="6" class="text-right">Total HT:</td>
+                                                        <td colspan="5" class="text-right">Total HT:</td>
                                                         <td><input id="total_ht_gene" type="text" value="<?php echo $row['total_ht_gene_piece_rechange_devis']; ?>" name="total_ht_gene_piece_rechange_facture" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="6" class="text-right">Total TVA (<?php echo $currency; ?>):</td>
+                                                        <td colspan="5" class="text-right">Total TVA (<?php echo $currency; ?>):</td>
                                                         <td><input id="total_tva" type="text" value="<?php echo $row['total_tva']; ?>" name="total_tva_facture" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="6" class="text-right">Total TTC (<?php echo $currency; ?>):</td>
+                                                        <td colspan="5" class="text-right">Total TTC (<?php echo $currency; ?>):</td>
                                                         <td><input id="total_ttc_gene" type="text" value="<?php echo $row['total_ttc_gene_piece_rechange_devis']; ?>" name="total_ttc_gene_piece_rechange_facture" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="6" class="text-right">Montant dû (<?php echo $currency; ?>):</td>
+                                                        <td colspan="5" class="text-right">Montant dû (<?php echo $currency; ?>):</td>
                                                         <td><input id="total_due" type="text" value="<?php echo $row['montant_du_piece_rechange_devis']; ?>" name="montant_du_piece_rechange_facture" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="6" class="text-right">Montant payé (<?php echo $currency; ?>):</td>
+                                                        <td colspan="5" class="text-right">Montant payé (<?php echo $currency; ?>):</td>
                                                         <td><input id="total_paid" type="text" value="<?php echo $row['montant_paye_piece_rechange_devis']; ?>" name="montant_paye_piece_rechange_facture" class="form-control" /></td>
                                                     </tr>
 
@@ -197,7 +197,7 @@ if (isset($_POST) && !empty($_POST)) {
             // html += '  <td class="text-right"><input type="text" id="marque_' + row + '" name="facture_data[' + row + '][marque_piece_rechange_facture]" value="" class="form-control" /></td>';
             html += '  <td class="text-right"><input id="qty_' + row + '" type="text" name="facture_data[' + row + '][qte_piece_rechange_facture]" value="0" class="form-control eFire allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="price_' + row + '" name="facture_data[' + row + '][prix_piece_rechange_min_facture]" value="0.00" class="form-control eFirePrice" /></td>';
-            html += '  <td class="text-right"><input type="text" id="remise_' + row + '" name="facture_data[' + row + '][remise_piece_rechange_facture]" value="0.00" class="form-control eFireRemise allownumberonly" /></td>';
+            // html += '  <td class="text-right"><input type="text" id="remise_' + row + '" name="facture_data[' + row + '][remise_piece_rechange_facture]" value="0.00" class="form-control eFireRemise allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="totalht_' + row + '" name="facture_data[' + row + '][total_prix_piece_rechange_facture_ht]" value="0.00" class="form-control allownumberonly" /></td>';
             html += '  <td class="text-right"><input type="text" id="totalttc_' + row + '" name="facture_data[' + row + '][total_prix_piece_rechange_facture_ttc]" value="0.00" class="form-control allownumberonly etotal" /></td>';
             html += '  <td class="text-left"><button type="button" onclick="$(\'#estimate-row' + row + '\').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';

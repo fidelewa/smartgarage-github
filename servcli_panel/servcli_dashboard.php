@@ -83,7 +83,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                       }
                       ?></td>
                 <td>
-                  <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer reçu de paiement du scanner</a>
+                  <!-- <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>compta_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer reçu de paiement du scanner</a> -->
                 </td>
               </tr>
               <?php
@@ -161,12 +161,12 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                           <!-- <div id="marque_modele_box"> -->
                           <div class="form-group">
                             <label>Marque du véhicule :</label>
-                            <input require type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque du véhicule" value="">
+                            <input require type="text" class='form-control' name="ddlMake" id="ddlMake" placeholder="Saisissez la marque du véhicule">
                           </div>
 
                           <div class="form-group">
                             <label>Modèle du véhicule :</label>
-                            <input required type="text" class='form-control' name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle du véhicule" value="">
+                            <input required type="text" class='form-control' name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle du véhicule">
                           </div>
 
                           <div class="form-group" style="margin-bottom:50px">
@@ -219,6 +219,9 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                         </fieldset>
 
                         <!-- <input type="hidden" value="<?php echo $row['customer_id']; ?>" name="customer_id" /> -->
+
+                        <input type="hidden" value="" name="model_hd" id="model_hd"/>
+                        <input type="hidden" value="" name="marque_hd" id="marque_hd"/>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>

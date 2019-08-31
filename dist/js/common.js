@@ -1075,6 +1075,8 @@ function loadMarqueModeleVoiture_2(immavehi) {
 
 				// On affiche le nom de la marque dans le champs texte
 				$("#ddlMake").val(data.make_name);
+				// On affiche le nom de la marque dans le champs texte
+				$("#marque_hd").val(data.make_name);
 				// On désactive le champ texte
 				$("#ddlMake").prop('disabled', true);
 			}
@@ -1084,6 +1086,7 @@ function loadMarqueModeleVoiture_2(immavehi) {
 
 				// On affiche le nom du modèle dans le champs texte
 				$("#ddl_model").val(data.model_name);
+				$("#model_hd").val(data.model_name);
 				// On désactive le champ texte
 				$("#ddl_model").prop('disabled', true);
 			}

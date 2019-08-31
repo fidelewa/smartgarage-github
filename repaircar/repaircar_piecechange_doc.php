@@ -1,6 +1,7 @@
 <?php
 include('../helper/common.php');
 include_once('../config.php');
+include_once('../session.php');
 
 $wms = new wms_core();
 $row = $wms->getRepairCarDiagnosticInfoByDiagId($link, $_GET['vehi_diag_id']);

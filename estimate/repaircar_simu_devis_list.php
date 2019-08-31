@@ -108,8 +108,8 @@ $model_post_token = 0;
                                         // Si le devis à déja été attribué à un véhicule,
                                         // On fait apparaitre les autres boutons
                                         if (!empty($ligne)) { ?>
-                                            <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_doc.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
-                                            <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_simu_update.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Editer le devis"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_doc.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
+                                            <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_simu_update.php?devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Editer le devis"><i class="fa fa-edit"></i></a>
                                             <!-- Si le devis n'est lié à aucune facture, on fait apparaitre le bouton
                                                                 d'association d'un devis à une facture
                                                                 -->
@@ -118,7 +118,7 @@ $model_post_token = 0;
                                                 if ($_SESSION['login_type'] != "service client") {
                                                     // Le service client n'est pas sensé créer les factures
                                                     ?>
-                                                    <a class="btn btn-info" style="background-color:gray;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_simu.php?devis_simu_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture à partir de ce devis"><i class="fa fa-plus"></i></a>
+                                                    <a class="btn btn-info" style="background-color:gray;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_simu.php?devis_simu_id=<?php echo $row['devis_id']; ?>" data-original-title="Créer une facture à partir de ce devis"><i class="fa fa-plus"></i></a>
                                                 <?php }
                                             } ?>
 

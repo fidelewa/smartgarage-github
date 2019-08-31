@@ -1,6 +1,7 @@
 <?php
 include('../helper/common.php');
 include_once('../config.php');
+include_once('../session.php');
 
 $wms = new wms_core();
 
@@ -20,6 +21,8 @@ $row = $wms->getRepairCarDiagnosticDevisInfoByDiagId($link, $_GET['vehi_diag_id'
 // var_dump($row);
 
 $i = 1;
+
+// var_dump($_SESSION);
 
 if (!empty($row) && count($row) > 0) { ?>
 <!DOCTYPE html>
@@ -457,16 +460,20 @@ if (!empty($row) && count($row) > 0) { ?>
     <div id="mobile-preview-close">
         <a style="" href="javascript:window.print();"><img src="<?php echo WEB_URL; ?>img/print.png" style="float:left; margin:0 10px 0 0;"> Imprimer </a>
         <!-- <a style="" href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a> -->
+
+        <?php if ($_SESSION['login_type'] == 'customer') { ?>
+        <a style="" href="<?php echo WEB_URL; ?>cust_panel/cust_dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
+        <?php } ?>
     </div>
     <div id="mobile-preview-close_2">
 
-        <?php if ($row['type_diagnostic'] == "électrique") { ?>
+        <?php if ($row['type_diagnostic'] == "électrique" && $_SESSION['login_type'] != 'customer') { ?>
         <!-- <a href="edition.php?devis_id=<?php echo $_GET['devis_id']; ?>" onClick="edition();return false;">Imprimer</a> -->
         <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>&devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>&type_diagnostic=<?php echo $row['type_diagnostic']; ?>"> Envoyer au client par e-mail</a>
         <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>&devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&type_diagnostic=<?php echo $row['type_diagnostic']; ?>"> Envoyer au client par SMS</a>
         <?php } ?>
 
-        <?php if ($row['type_diagnostic'] == "mécanique") { ?>
+        <?php if ($row['type_diagnostic'] == "mécanique" && $_SESSION['login_type'] != 'customer') { ?>
         <!-- <a href="edition.php?devis_id=<?php echo $_GET['devis_id']; ?>" onClick="edition();return false;">Imprimer</a> -->
         <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisEmail.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>&devis_id=<?php echo $_GET['devis_id']; ?>&email_customer=<?php echo $row['c_email']; ?>&type_diagnostic=<?php echo $row['type_diagnostic']; ?>"> Envoyer au client par e-mail</a>
         <a style="" href="<?php echo WEB_URL; ?>sendCustomerDevisSms.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>&devis_id=<?php echo $_GET['devis_id']; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&type_diagnostic=<?php echo $row['type_diagnostic']; ?>"> Envoyer au client par SMS</a>

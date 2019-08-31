@@ -100,7 +100,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                         }
                                         ?></td>
                                     <td>
-                                        <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
+                                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a>
                                     </td>
                                 </tr>
                             <?php }

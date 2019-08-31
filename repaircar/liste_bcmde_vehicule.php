@@ -104,9 +104,9 @@ $results = $wms->getAllBonCmdeDataByCarId($link, $_GET['car_id']);
                   <td><?php echo $row['s_name']; ?></td>
                   <td>
                     <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="javascript:;" onClick="$('#bcmd_article_modal_<?php echo $row['boncmde_id']; ?>').modal('show');" data-original-title="Voir la liste des articles commandés"><i class="fa fa-eye"></i></a>
-                    <a class="btn btn-primary" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/bon_cmde_car.php?boncmde_id=<?php echo $row['boncmde_id']; ?>" data-original-title="Modifier le bon de commande"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/bon_cmde_car.php?boncmde_id=<?php echo $row['boncmde_id']; ?>" data-original-title="Modifier le bon de commande"><i class="fa fa-pencil"></i></a>
                     <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a>  -->
-                    <a class="btn btn-primary" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>bon_cmde/bon_cmde_doc.php?boncmde_id=<?php echo $row['boncmde_id']; ?>" data-original-title="Consulter le bon de commande"><i class="fa fa-file-text-o"></i></a>
+                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>bon_cmde/bon_cmde_doc.php?boncmde_id=<?php echo $row['boncmde_id']; ?>" data-original-title="Consulter le bon de commande"><i class="fa fa-file-text-o"></i></a>
                     <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['boncmde_id']; ?>,<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Supprimer le bon de commande"><i class="fa fa-trash-o"></i></a>
                     <div id="bcmd_article_modal_<?php echo $row['boncmde_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">

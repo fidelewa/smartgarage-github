@@ -91,7 +91,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'up') {
                                     <td><?php echo $row['add_date_assurance']; ?></td>
                                     <td><?php echo $row['add_date_visitetech']; ?></td>
                                     <td>
-                                    <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_devis_facture_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la facture"><i class="fa fa-file-text-o"></i></a>
+                                    <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_devis_facture_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la facture"><i class="fa fa-file-text-o"></i></a>
                                     </td>
                                 </tr>
                             <?php }

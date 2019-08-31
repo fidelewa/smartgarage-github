@@ -106,6 +106,30 @@ if (empty($_POST['sortie_remarq_recep_vehi'])) {
 
 // Echappement des caractères spéciaux
 
+if (!empty($_POST['dim_pneu'])) {
+	$_POST['dim_pneu'] = mysql_real_escape_string($_POST['dim_pneu']);
+}
+
+if (!empty($_POST['remarque_access_vehi'])) {
+	$_POST['remarque_access_vehi'] = mysql_real_escape_string($_POST['remarque_access_vehi']);
+}
+
+if (!empty($_POST['remarque_motif_depot'])) {
+	$_POST['remarque_motif_depot'] = mysql_real_escape_string($_POST['remarque_motif_depot']);
+}
+
+if (!empty($_POST['remarque_etat_vehi_arrive'])) {
+	$_POST['remarque_etat_vehi_arrive'] = mysql_real_escape_string($_POST['remarque_etat_vehi_arrive']);
+}
+
+if (!empty($_POST['remarque_aspect_ext'])) {
+	$_POST['remarque_aspect_ext'] = mysql_real_escape_string($_POST['remarque_aspect_ext']);
+}
+
+if (!empty($_POST['remarque_aspect_int'])) {
+	$_POST['remarque_aspect_int'] = mysql_real_escape_string($_POST['remarque_aspect_int']);
+}
+
 // Remarque sur la voiture à son arrivée
 if (!empty($_POST['arriv_remarq_recep_vehi_text'])) {
 	$_POST['arriv_remarq_recep_vehi_text'] = mysql_real_escape_string($_POST['arriv_remarq_recep_vehi_text']);
@@ -481,12 +505,15 @@ if (empty($image_url)) {
 	$image_url = $_POST['img_exist'];
 }
 
-// var_dump($_POST);
-// die();
+
 
 // Exécution de la réquête et redirection vers la liste des voitures à faire réparer
 $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
 
+// On défini le statut de réception du véhicule
+$queryScanner = "UPDATE tbl_vehicule_scanning SET statut_reception=1 WHERE id='" . (int) $_POST['vehicule_scanner_id'] . "'";
+// Exécution de la requête
+$resultScanner = mysql_query($queryScanner, $link);
 // Envoi du SMS au client
 include(ROOT_PATH.'/sendSmsToClient.php');
 

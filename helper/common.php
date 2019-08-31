@@ -46,6 +46,24 @@ class wms_core
 	// 	return $row;
 	// }
 
+	// On compte le nombre de fois qu'un véhicule à été réceptionné
+	public function getNbReceptionByCarImma($con, $imma)
+	{
+
+		$rowCptReception = array();
+
+		$query = "SELECT count(*) nb_reception 
+		FROM tbl_recep_vehi_repar 
+		WHERE num_matricule='" . $imma . "'";
+	
+		// On teste le résultat de la requête pour savoir si elle n'a pas déclenché des erreurs
+		$result = mysql_query($query, $con);
+	
+		$rowCptReception = mysql_fetch_array($result);
+
+		return $rowCptReception ;
+	}
+
 	/*
 	* @get all Voiture de réparation list
 	*/
@@ -63,9 +81,9 @@ class wms_core
 		JOIN tbl_model mo on mo.model_id = ac.car_model 
 		LEFT JOIN tbl_recep_vehi_repar rvr on rvr.add_car_id = ac.car_id
 		LEFT join tbl_repaircar_diagnostic diag on diag.recep_car_id = rvr.car_id
-		WHERE ac.add_date_visitetech IS NOT NULL OR ac.add_date_assurance_fin IS NOT NULL
+		-- WHERE ac.add_date_visitetech IS NOT NULL OR ac.add_date_assurance_fin IS NOT NULL
 		order by ac.car_id DESC
-		LIMIT 5";
+		";
 
 		$result = mysql_query($query, $con);
 
@@ -661,7 +679,7 @@ class wms_core
 		return $data;
 	}
 
-	public function getRecepCarListRepar_2($con)
+	public function getRecepCarListRepared($con)
 	{
 		// Déclaration et initialisation d'un array vide
 		$data = array();
@@ -676,7 +694,7 @@ class wms_core
 		JOIN tbl_repaircar_diagnostic rd on rd.recep_car_id = rvr.car_id
 		JOIN tbl_add_devis dev on dev.repaircar_diagnostic_id = rd.id
 		JOIN tbl_add_customer c on cr.customer_id = c.customer_id
-		WHERE statut_validation_devis_mecanique = 1 OR statut_validation_devis_electrique = 1
+		WHERE statut_reparation_mecanique = 1 OR statut_reparation_electrique = 1
 		";
 
 		// Exécution et stockage du résultat de la requête
@@ -759,13 +777,13 @@ class wms_core
 		// Déclaration et initialisation d'un array vide
 		$data = array();
 
-		$query = "SELECT DISTINCT rd.id as vehi_diag_id, dev.devis_id, num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, 
+		$query = "SELECT DISTINCT rd.id as vehi_diag_id, dev.devis_id, c_name, cr.add_date_assurance, cr.add_date_visitetech, 
 		rd.car_id, dev.confirm_devis, VIN, statut_validation_devis_mecanique, type_diagnostic, statut_validation_devis_electrique
 		FROM tbl_add_devis dev 
 		JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
 		JOIN tbl_add_car cr ON cr.car_id = rd.car_id
 		JOIN tbl_add_customer cus on cus.customer_id = cr.customer_id
-		LEFT JOIN tbl_recep_vehi_repar rvr ON cr.car_id = rvr.add_car_id
+		-- LEFT JOIN tbl_recep_vehi_repar rvr ON cr.car_id = rvr.add_car_id
 		WHERE cus.customer_id ='" . (int) $cusId . "' LIMIT 10";
 
 		// Exécution et stockage du résultat de la requête
@@ -785,14 +803,14 @@ class wms_core
 		// Déclaration et initialisation d'un array vide
 		$data = array();
 
-		$query = "SELECT rd.id as vehi_diag_id, dev.devis_id, facture_id, num_matricule, c_name, add_date_recep_vehi, cr.add_date_assurance, cr.add_date_visitetech, 
+		$query = "SELECT DISTINCT rd.id as vehi_diag_id, dev.devis_id, facture_id, c_name, cr.add_date_assurance, cr.add_date_visitetech, 
 		rd.car_id, dev.confirm_devis, confirm_facture, VIN
 		FROM tbl_add_devis dev 
 		JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
 		JOIN tbl_add_car cr ON cr.car_id = rd.car_id
 		JOIN tbl_add_customer cus on cus.customer_id = cr.customer_id
 		JOIN tbl_add_facture fac ON fac.devis_id = dev.devis_id
-		LEFT JOIN tbl_recep_vehi_repar rvr ON cr.car_id = rvr.add_car_id
+		-- LEFT JOIN tbl_recep_vehi_repar rvr ON cr.car_id = rvr.add_car_id
 			WHERE cus.customer_id ='" . (int) $cusId . "' LIMIT 10";
 
 		$result = mysql_query($query, $con);
@@ -1069,7 +1087,7 @@ class wms_core
 	public function getCarScanningTen($con)
 	{
 		$data = array();
-		$result = mysql_query("SELECT * FROM tbl_vehicule_scanning ORDER BY id DESC LIMIT 10", $con);
+		$result = mysql_query("SELECT * FROM tbl_vehicule_scanning WHERE validation_recu_scanning = 1 ORDER BY id DESC LIMIT 10", $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -2713,7 +2731,8 @@ class wms_core
 		$data = array();
 
 		$query = "SELECT DISTINCT num_matricule, c_name, add_date_recep_vehi, add_date_assurance, add_date_visitetech, rvr.car_id, sign_cli_depot, sign_recep_depot, sign_cli_sortie, sign_recep_sortie,
-		add_car_id, diag.id as vehi_diag_id
+		add_car_id
+		-- ,diag.id as vehi_diag_id
 			from tbl_recep_vehi_repar rvr
 			-- left join tbl_add_mechanics me on (rvr.attribution_mecanicien = me.mechanics_id) 
 			left join tbl_add_customer cus on rvr.customer_name = cus.customer_id
