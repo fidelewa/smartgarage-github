@@ -163,6 +163,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     $msg = "Ajout du véhicule réussi";
 }
 
+// Récupération de l'identifiant du scanner du véhicule
+$vehicule_scanner_id = $_GET['vehicule_scanner_id'];
+
+// var_dump($vehicule_scanner_id);
 ?>
 <!-- Content Header (Page header) -->
 
@@ -305,6 +309,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         </div>
                     </div>
 
+                    <input type="hidden" name="vehicule_scanner_id" value="<?php echo $vehicule_scanner_id; ?>" />
+
                     <!-- <div class="form-group" id="marque_modele_vehi_box">
                         <input readonly onfocus="loadVehiData();" type="text" name="modeleMarqueVehi" id="marque_modele_vehi" class="form-control" value="">
                     </div> -->
@@ -421,6 +427,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                         </div>
 
                     </div>
+
+                    <input type="hidden" name="vehicule_scanner_id" value="<?php echo $vehicule_scanner_id; ?>" />
 
                     <!-- <div class="container" id="date_assurance_visitetech" style="width:auto;">
                         <div class="form-group row">
@@ -1657,16 +1665,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                     <span class="step"></span>
                     <span class="step"></span>
                     <span class="step"></span> -->
-    </div>
-    <input type="hidden" value="<?php echo $hdnid; ?>" name="repair_car" />
-    <input type="hidden" name="hfInvoiceId" value="<?php echo $invoice_id; ?>" />
-    <input type="hidden" name="img_exist" value="<?php echo $img_track; ?>" />
-    <input type="hidden" name="ddlMake" value="" />
-    <input type="hidden" name="ddlModel" value="" />
-    <input type="hidden" name="ddlImma" value="" />
-    <input type="hidden" name="recep_id" value="<?php echo $recep_id; ?>" />
+        </div>
+        <input type="hidden" value="<?php echo $hdnid; ?>" name="repair_car" />
+        <input type="hidden" name="hfInvoiceId" value="<?php echo $invoice_id; ?>" />
+        <input type="hidden" name="img_exist" value="<?php echo $img_track; ?>" />
+        <input type="hidden" name="ddlMake" value="" />
+        <input type="hidden" name="ddlModel" value="" />
+        <input type="hidden" name="ddlImma" value="" />
+        <input type="hidden" name="recep_id" value="<?php echo $recep_id; ?>" />
 
-    </section>
+        </section>
     </form>
     </div>
     <script type="text/javascript">

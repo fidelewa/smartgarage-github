@@ -141,13 +141,14 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                   <td><?php echo $row['model_name']; ?></td>
                   <!-- <td><?php echo $row['year']; ?></td> -->
                   <td>
-
-                    <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/pj_car_list.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la voiture"><i class="fa fa-paperclip"></i></a>
-                    <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_devis_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des devis du véhicule"><i class="fa fa-eye"></i></a>
-                    <a class="btn btn-success" style="background-color:gray;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_assur_vistech.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des assurances et des visites techniques du véhicule"><i class="fa fa-eye"></i></a>
-                    <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Voir le détail des informations du véhicule"><i class="fa fa-eye"></i></a>
-                    <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Modifier"><i class="fa fa-pencil"></i></a>
-                    <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
+                    <?php if ($_SESSION['login_type'] == 'admin') { ?>
+                      <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/pj_car_list.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la voiture"><i class="fa fa-paperclip"></i></a>
+                      <a class="btn btn-success" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_devis_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des devis du véhicule"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-success" style="background-color:gray;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/histo_assur_vistech.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Voir l'historique des assurances et des visites techniques du véhicule"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Voir le détail des informations du véhicule"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Modifier"><i class="fa fa-pencil"></i></a>
+                      <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Supprimer"><i class="fa fa-trash-o"></i></a>
+                    <?php } ?>
                     <a class="btn btn-info" style="background-color:orange;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/bon_cmde_car.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer un bon de commande pour ce véhicule"><i class="fa fa-plus"></i></a>
                     <a class="btn btn-success" style="background-color:#CF7B00;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/liste_bcmde_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des bons de commande du véhicule"><i class="fa fa-list"></i></a>
                     <!-- <a class="btn btn-success" style="background-color:#CFA;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/liste_bcmde_vehicule.php?car_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des devis du véhicule"><i class="fa fa-list"></i></a> -->
@@ -181,68 +182,68 @@ if (isset($_GET['m']) && $_GET['m'] == 'av_exp_vistech_sms_failed') {
                                 ?>
                                 <?php
 
-                                // Visite technique (par ans)
+                                  // Visite technique (par ans)
 
-                                if (isset($row['add_date_visitetech'])) {
+                                  if (isset($row['add_date_visitetech'])) {
 
-                                  $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
-                                  if ($dateprochvistech instanceof DateTime) {
-                                    echo '<b> Date de la prochaine visite technique </b> : ' . ($dateprochvistech->format('d/m/Y')) . '<br/>';
-                                    // $dateprochvistech = $datetech->add(new \DateInterval("P1Y")); // La visite technique se fait chaque année
-                                    // echo '<b> Date de la prochaine visite technique </b> : ' . ($dateprochvistech->format('d/m/Y')) . '<br/>';
-                                    // $remainingDaysVistech = $dateprochvistech->diff(new \DateTime())->format('j %R%a jours');
-                                    // echo '<b> Nombre de jours restants avant la prochaine visite technique </b> : ' . $remainingDaysVistech . '<br/>';
+                                    $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
+                                    if ($dateprochvistech instanceof DateTime) {
+                                      echo '<b> Date de la prochaine visite technique </b> : ' . ($dateprochvistech->format('d/m/Y')) . '<br/>';
+                                      // $dateprochvistech = $datetech->add(new \DateInterval("P1Y")); // La visite technique se fait chaque année
+                                      // echo '<b> Date de la prochaine visite technique </b> : ' . ($dateprochvistech->format('d/m/Y')) . '<br/>';
+                                      // $remainingDaysVistech = $dateprochvistech->diff(new \DateTime())->format('j %R%a jours');
+                                      // echo '<b> Nombre de jours restants avant la prochaine visite technique </b> : ' . $remainingDaysVistech . '<br/>';
 
-                                    // Définition du statut de la visite technique
-                                    $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
+                                      // Définition du statut de la visite technique
+                                      $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
 
-                                    $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
+                                      $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
 
-                                    // conversion en entier
-                                    $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
+                                      // conversion en entier
+                                      $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
 
-                                    if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) {
-                                      echo "<b> Statut de la visite technique </b> : <span class='label label-warning'>
+                                      if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) {
+                                        echo "<b> Statut de la visite technique </b> : <span class='label label-warning'>
                                       Votre visite technique expire dans" . $diffTodayDateprochvistechStr . " !</span><br/>";
-                                    } elseif ($diffTodayDateprochvistech >= 0) {
-                                      echo "<b> Statut de la visite technique </b> : <span class='label label-danger'>Expirée ! Veuillez repasser la visite technique !</span><br/>";
-                                    } else {
-                                      echo "<b> Statut de la visite technique </b> : <span class='label label-success'>En cours de validité </span><br/>";
+                                      } elseif ($diffTodayDateprochvistech >= 0) {
+                                        echo "<b> Statut de la visite technique </b> : <span class='label label-danger'>Expirée ! Veuillez repasser la visite technique !</span><br/>";
+                                      } else {
+                                        echo "<b> Statut de la visite technique </b> : <span class='label label-success'>En cours de validité </span><br/>";
+                                      }
                                     }
                                   }
-                                }
 
-                                // Assurance (par délai prédéfini)
+                                  // Assurance (par délai prédéfini)
 
-                                // Traitement de l'assurance
-                                if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
+                                  // Traitement de l'assurance
+                                  if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
 
-                                  $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
+                                    $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
 
-                                  if ($dateFinAssur instanceof DateTime) {
-                                    echo '<b> Date de la prochaine assurance </b> : ' . ($dateFinAssur->format('d/m/Y')) . '<br/>';
-                                    $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
-                                    $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
+                                    if ($dateFinAssur instanceof DateTime) {
+                                      echo '<b> Date de la prochaine assurance </b> : ' . ($dateFinAssur->format('d/m/Y')) . '<br/>';
+                                      $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+                                      $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
 
-                                    // $remainingDaysFinAssur = $dateFinAssur->diff(new \DateTime())->format('j %R%a jours');
-                                    // echo '<b> Nombre de jours restants avant la prochaine assurance </b> : ' . $remainingDaysFinAssur . '<br/>';
+                                      // $remainingDaysFinAssur = $dateFinAssur->diff(new \DateTime())->format('j %R%a jours');
+                                      // echo '<b> Nombre de jours restants avant la prochaine assurance </b> : ' . $remainingDaysFinAssur . '<br/>';
 
-                                    // conversion en entier
-                                    $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
+                                      // conversion en entier
+                                      $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
 
-                                    if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) {
-                                      echo "<b> Statut de l'assurance </b> : <span class='label label-warning'>
+                                      if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) {
+                                        echo "<b> Statut de l'assurance </b> : <span class='label label-warning'>
                                       Votre assurance expire dans" . $diffDateDebutFinAssurStr . " !</span> <br/>";
-                                    } elseif ($diffDateDebutFinAssur >= 0) {
+                                      } elseif ($diffDateDebutFinAssur >= 0) {
 
-                                      echo "<b> Statut de l'assurance </b> : <span class='label label-danger'>Expirée ! Veuillez renouveler votre assurance !</span>";
-                                    } else {
-                                      echo "<b> Statut de l'assurance </b> : <span class='label label-success'>En cours de validité</span> <br/>";
+                                        echo "<b> Statut de l'assurance </b> : <span class='label label-danger'>Expirée ! Veuillez renouveler votre assurance !</span>";
+                                      } else {
+                                        echo "<b> Statut de l'assurance </b> : <span class='label label-success'>En cours de validité</span> <br/>";
+                                      }
                                     }
                                   }
-                                }
 
-                                ?>
+                                  ?>
                               </div>
                             </div>
                           </div>

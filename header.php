@@ -134,12 +134,14 @@ if (!empty($_SESSION['objCust']['image'])) {
   <!-- <script src="<?php echo WEB_URL; ?>dist/js/adddevis.js"></script> -->
   <script type="text/javascript" src="<?php echo WEB_URL; ?>dist/js/typeahead.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-  
+
   <script src="https://cdn.lr-ingest.io/LogRocket.min.js" crossorigin="anonymous"></script>
-  <script>window.LogRocket && window.LogRocket.init('0a2c67/smartgarage');</script>
+  <script>
+    window.LogRocket && window.LogRocket.init('0a2c67/smartgarage');
+  </script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.3/cleave.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.1/parsley.min.js"></script>
-  
+
   <style>
     .typeahead {
       border: 2px solid #FFF;
@@ -496,37 +498,37 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="header">Menus</li>
             <li class="tm10 <?php if ($page_name != '' && $page_name == 'mech_dashboard') {
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>mech_panel/mech_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>mech_panel/mech_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
 
             <?php if (isset($resultDroitMenuMechElec) || !empty($resultDroitMenuMechElec)) {
-              // Si le droit du role du service client existe déja en BDD, on récupère les données du droit en BDD
-              if ($resultDroitMenuMechElec['menu_client'] == 'O') { ?>
+                // Si le droit du role du service client existe déja en BDD, on récupère les données du droit en BDD
+                if ($resultDroitMenuMechElec['menu_client'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'customerlist') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>customer/customerlist.php"> <i class="fa fa-user"></i> <span>Client</span></a></li>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>customer/customerlist.php"> <i class="fa fa-user"></i> <span>Client</span></a></li>
               <?php }
-              if ($resultDroitMenuMechElec['menu_recep_vehi'] == 'O') { ?>
+                  if ($resultDroitMenuMechElec['menu_recep_vehi'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'reception_vehicule') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"> <i class="fa fa-user"></i> <span>Réception de véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
                     </li>
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                                                                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
                                                                     </li>
                                                                     <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
-                                                                                  echo 'active';
-                                                                                } ?>">
+                                                                                        echo 'active';
+                                                                                      } ?>">
                                                                       <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
                                                                     </li> -->
 
@@ -534,186 +536,186 @@ if (!empty($_SESSION['objCust']['image'])) {
                 </li>
               <?php }
 
-              if ($resultDroitMenuMechElec['menu_vehi'] == 'O') { ?>
+                  if ($resultDroitMenuMechElec['menu_vehi'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addcar' || $page_name == 'carlist') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>repaircar/addcar.php"> <i class="fa fa-car"></i> <span>Véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_client') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>repaircar/carlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules des clients</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_garage') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>repaircar/carlist_garage.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules au garage</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuMechElec['menu_devis'] == 'O') { ?>
+                  if ($resultDroitMenuMechElec['menu_devis'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'findcar' || $page_name == 'estimate_form') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"> <i class="fa fa-calculator"></i> <span>Devis</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'ajout_devis') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"><i class="fa fa-arrow-circle-right"></i>Créer un devis de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_diagnostic_devis_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_diagnostic_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuMechElec['menu_facture'] == 'O') { ?>
+                  if ($resultDroitMenuMechElec['menu_facture'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list' || $page_name == 'repaircar_simu_devis_facture_list') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuMechElec['menu_stock_piece'] == 'O') { ?>
+                  if ($resultDroitMenuMechElec['menu_stock_piece'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'buyparts' || $page_name == 'partsstocklist' || $page_name == 'mouvstock') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
 
                     <li class="<?php if ($page_name != '' && $page_name == 'buyparts') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
                     <li class="<?php if ($page_name != '' && $page_name == 'partsstocklist') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
                     <li class="<?php if ($page_name != '' && $page_name == 'mouvstock') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuMechElec['menu_four'] == 'O') { ?>
+                  if ($resultDroitMenuMechElec['menu_four'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addsupplier' || $page_name == 'supplierlist' || $page_name == 'boncmdeList' || $page_name == 'supplierManage' || $page_name == 'addBonCmde') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'addsupplier') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"><i class="fa fa-arrow-circle-right"></i>Créer un fournisseur</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'supplierlist') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
                     </li>
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                                                     <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
                                                   </li>
                                                   <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
-                                                                        echo 'active';
-                                                                      } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
+                                                                              echo 'active';
+                                                                            } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
                                                   </li> -->
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuMechElec['menu_ges_personnel'] == 'O') { ?>
+                  if ($resultDroitMenuMechElec['menu_ges_personnel'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'personnelist' || $page_name == 'personnel') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'addPersonnel' || $page_name == 'personnellist') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
                     </li>
                     <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
-                                                echo 'active';
-                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
+                                                      echo 'active';
+                                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
                                                               </li> -->
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuMechElec['menu_ges_user'] == 'O') { ?>
+                  if ($resultDroitMenuMechElec['menu_ges_user'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'gesuser' || $page_name == 'gesusers') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>gesuser.php"> <i class="fa fa-users"></i> <span>Utilisateurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'adduser') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>user/adduser.php"><i class="fa fa-arrow-circle-right"></i>Créer un utilisateur</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'userlist') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>user/userlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des utilisateurs</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuMechElec['menu_rapport'] == 'O') { ?>
+                  if ($resultDroitMenuMechElec['menu_rapport'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'reprepairdelivery' || $page_name == 'rptcarbuy' || $page_name == 'rptcarsell' || $page_name == 'rptpartsbuy' || $page_name == 'rptpartssell' || $page_name == 'rptmsalary' || $page_name == 'synthActivity') {
-                                      echo 'active';
-                                    } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'synthActivity') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
                   </ul>
                 </li>
               <?php }
-              ?>
+                  ?>
 
             <?php } ?>
 
@@ -757,37 +759,37 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="header">Menus</li>
             <li class="tm10 <?php if ($page_name != '' && $page_name == 'recep_dashboard') {
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>recep_panel/recep_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>recep_panel/recep_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
 
             <?php if (isset($resultDroitMenuRecep) || !empty($resultDroitMenuRecep)) {
-              // Si le droit du role du service client existe déja en BDD, on récupère les données du droit en BDD
-              if ($resultDroitMenuRecep['menu_client'] == 'O') { ?>
+                // Si le droit du role du service client existe déja en BDD, on récupère les données du droit en BDD
+                if ($resultDroitMenuRecep['menu_client'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'customerlist') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>customer/customerlist.php"> <i class="fa fa-user"></i> <span>Client</span></a></li>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>customer/customerlist.php"> <i class="fa fa-user"></i> <span>Client</span></a></li>
               <?php }
-              if ($resultDroitMenuRecep['menu_recep_vehi'] == 'O') { ?>
+                  if ($resultDroitMenuRecep['menu_recep_vehi'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'reception_vehicule') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"> <i class="fa fa-user"></i> <span>Réception de véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
                     </li>
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                                                                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
                                                                     </li>
                                                                     <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
-                                                                                  echo 'active';
-                                                                                } ?>">
+                                                                                        echo 'active';
+                                                                                      } ?>">
                                                                       <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
                                                                     </li> -->
 
@@ -795,186 +797,186 @@ if (!empty($_SESSION['objCust']['image'])) {
                 </li>
               <?php }
 
-              if ($resultDroitMenuRecep['menu_vehi'] == 'O') { ?>
+                  if ($resultDroitMenuRecep['menu_vehi'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addcar' || $page_name == 'carlist') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>repaircar/addcar.php"> <i class="fa fa-car"></i> <span>Véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_client') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>repaircar/carlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules des clients</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_garage') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>repaircar/carlist_garage.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules au garage</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuRecep['menu_devis'] == 'O') { ?>
+                  if ($resultDroitMenuRecep['menu_devis'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'findcar' || $page_name == 'estimate_form') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"> <i class="fa fa-calculator"></i> <span>Devis</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'ajout_devis') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"><i class="fa fa-arrow-circle-right"></i>Créer un devis de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_diagnostic_devis_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_diagnostic_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuRecep['menu_facture'] == 'O') { ?>
+                  if ($resultDroitMenuRecep['menu_facture'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list' || $page_name == 'repaircar_simu_devis_facture_list') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuRecep['menu_stock_piece'] == 'O') { ?>
+                  if ($resultDroitMenuRecep['menu_stock_piece'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'buyparts' || $page_name == 'partsstocklist' || $page_name == 'mouvstock') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
 
                     <li class="<?php if ($page_name != '' && $page_name == 'buyparts') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
                     <li class="<?php if ($page_name != '' && $page_name == 'partsstocklist') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
                     <li class="<?php if ($page_name != '' && $page_name == 'mouvstock') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuRecep['menu_four'] == 'O') { ?>
+                  if ($resultDroitMenuRecep['menu_four'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addsupplier' || $page_name == 'supplierlist' || $page_name == 'boncmdeList' || $page_name == 'supplierManage' || $page_name == 'addBonCmde') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'addsupplier') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"><i class="fa fa-arrow-circle-right"></i>Créer un fournisseur</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'supplierlist') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
                     </li>
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                                                     <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
                                                   </li>
                                                   <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
-                                                                        echo 'active';
-                                                                      } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
+                                                                              echo 'active';
+                                                                            } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
                                                   </li> -->
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuRecep['menu_ges_personnel'] == 'O') { ?>
+                  if ($resultDroitMenuRecep['menu_ges_personnel'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'personnelist' || $page_name == 'personnel') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'addPersonnel' || $page_name == 'personnellist') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
                     </li>
                     <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
-                                                echo 'active';
-                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
+                                                      echo 'active';
+                                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
                                                               </li> -->
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuRecep['menu_ges_user'] == 'O') { ?>
+                  if ($resultDroitMenuRecep['menu_ges_user'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'gesuser' || $page_name == 'gesusers') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>gesuser.php"> <i class="fa fa-users"></i> <span>Utilisateurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'adduser') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>user/adduser.php"><i class="fa fa-arrow-circle-right"></i>Créer un utilisateur</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'userlist') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>user/userlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des utilisateurs</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuRecep['menu_rapport'] == 'O') { ?>
+                  if ($resultDroitMenuRecep['menu_rapport'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'reprepairdelivery' || $page_name == 'rptcarbuy' || $page_name == 'rptcarsell' || $page_name == 'rptpartsbuy' || $page_name == 'rptpartssell' || $page_name == 'rptmsalary' || $page_name == 'synthActivity') {
-                                      echo 'active';
-                                    } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'synthActivity') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
                   </ul>
                 </li>
               <?php }
-              ?>
+                  ?>
 
             <?php } ?>
 
@@ -1018,38 +1020,38 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="header">Menus</li>
             <li class="tm10 <?php if ($page_name != '' && $page_name == 'compta_dashboard') {
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>compta_panel/compta_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>compta_panel/compta_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
 
             <?php if (isset($resultDroitMenuCompta) || !empty($resultDroitMenuCompta)) {
-              // Si le droit du role du service client existe déja en BDD, on récupère les données du droit en BDD
-              if ($resultDroitMenuCompta['menu_client'] == 'O') { ?>
+                // Si le droit du role du service client existe déja en BDD, on récupère les données du droit en BDD
+                if ($resultDroitMenuCompta['menu_client'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'customerlist') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>customer/customerlist.php"> <i class="fa fa-user"></i> <span>Client</span></a></li>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>customer/customerlist.php"> <i class="fa fa-user"></i> <span>Client</span></a></li>
               <?php }
 
-              if ($resultDroitMenuCompta['menu_recep_vehi'] == 'O') { ?>
+                  if ($resultDroitMenuCompta['menu_recep_vehi'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'reception_vehicule') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"> <i class="fa fa-user"></i> <span>Réception de véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
                     </li>
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                                                                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
                                                                     </li>
                                                                     <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
-                                                                                  echo 'active';
-                                                                                } ?>">
+                                                                                        echo 'active';
+                                                                                      } ?>">
                                                                       <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Diagnostics des véhicules</a>
                                                                     </li> -->
 
@@ -1057,186 +1059,186 @@ if (!empty($_SESSION['objCust']['image'])) {
                 </li>
               <?php }
 
-              if ($resultDroitMenuCompta['menu_vehi'] == 'O') { ?>
+                  if ($resultDroitMenuCompta['menu_vehi'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addcar' || $page_name == 'carlist') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>repaircar/addcar.php"> <i class="fa fa-car"></i> <span>Véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_client') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>repaircar/carlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules des clients</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_garage') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>repaircar/carlist_garage.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules au garage</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuCompta['menu_devis'] == 'O') { ?>
+                  if ($resultDroitMenuCompta['menu_devis'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'findcar' || $page_name == 'estimate_form') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"> <i class="fa fa-calculator"></i> <span>Devis</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'ajout_devis') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"><i class="fa fa-arrow-circle-right"></i>Créer un devis de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_diagnostic_devis_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_diagnostic_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuCompta['menu_facture'] == 'O') { ?>
+                  if ($resultDroitMenuCompta['menu_facture'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list' || $page_name == 'repaircar_simu_devis_facture_list') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuCompta['menu_stock_piece'] == 'O') { ?>
+                  if ($resultDroitMenuCompta['menu_stock_piece'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'buyparts' || $page_name == 'partsstocklist' || $page_name == 'mouvstock') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
 
                     <li class="<?php if ($page_name != '' && $page_name == 'buyparts') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
                     <li class="<?php if ($page_name != '' && $page_name == 'partsstocklist') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
                     <li class="<?php if ($page_name != '' && $page_name == 'mouvstock') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuCompta['menu_four'] == 'O') { ?>
+                  if ($resultDroitMenuCompta['menu_four'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addsupplier' || $page_name == 'supplierlist' || $page_name == 'boncmdeList' || $page_name == 'supplierManage' || $page_name == 'addBonCmde') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'addsupplier') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"><i class="fa fa-arrow-circle-right"></i>Créer un fournisseur</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'supplierlist') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
                     </li>
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                                                     <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
                                                   </li>
                                                   <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
-                                                                        echo 'active';
-                                                                      } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
+                                                                              echo 'active';
+                                                                            } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
                                                   </li> -->
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuCompta['menu_ges_personnel'] == 'O') { ?>
+                  if ($resultDroitMenuCompta['menu_ges_personnel'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'personnelist' || $page_name == 'personnel') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'addPersonnel' || $page_name == 'personnellist') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
                     </li>
                     <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
-                                                echo 'active';
-                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
+                                                      echo 'active';
+                                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
                                                               </li> -->
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuCompta['menu_ges_user'] == 'O') { ?>
+                  if ($resultDroitMenuCompta['menu_ges_user'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'gesuser' || $page_name == 'gesusers') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>gesuser.php"> <i class="fa fa-users"></i> <span>Utilisateurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'adduser') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>user/adduser.php"><i class="fa fa-arrow-circle-right"></i>Créer un utilisateur</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'userlist') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>user/userlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des utilisateurs</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuCompta['menu_rapport'] == 'O') { ?>
+                  if ($resultDroitMenuCompta['menu_rapport'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'reprepairdelivery' || $page_name == 'rptcarbuy' || $page_name == 'rptcarsell' || $page_name == 'rptpartsbuy' || $page_name == 'rptpartssell' || $page_name == 'rptmsalary' || $page_name == 'synthActivity') {
-                                      echo 'active';
-                                    } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'synthActivity') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
                   </ul>
                 </li>
               <?php }
-              ?>
+                  ?>
 
             <?php } ?>
 
@@ -1279,25 +1281,25 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="header">Menus</li>
             <li class="tm10 <?php if ($page_name != '' && $page_name == 'servcli_dashboard') {
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>servcli_panel/servcli_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>servcli_panel/servcli_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
 
             <?php if (isset($resultDroitMenuClient) || !empty($resultDroitMenuClient)) {
-              // Si le droit du role du service client existe déja en BDD, on récupère les données du droit en BDD
-              if ($resultDroitMenuClient['menu_client'] == 'O') { ?>
+                // Si le droit du role du service client existe déja en BDD, on récupère les données du droit en BDD
+                if ($resultDroitMenuClient['menu_client'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'add_client' || $page_name == 'list_client') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>customer/addcustomer.php"> <i class="fa fa-user"></i> <span>Client</span><i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>customer/addcustomer.php"> <i class="fa fa-user"></i> <span>Client</span><i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'add_client') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>customer/addcustomer.php"><i class="fa fa-arrow-circle-right"></i>Enregistrer un client</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'list_client') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>customer/customerlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des clients</a>
                     </li>
 
@@ -1305,21 +1307,21 @@ if (!empty($_SESSION['objCust']['image'])) {
                 </li>
               <?php }
 
-              if ($resultDroitMenuClient['menu_recep_vehi'] == 'O') { ?>
+                  if ($resultDroitMenuClient['menu_recep_vehi'] == 'O') { ?>
 
                 <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'reception_vehicule') {
-                                            echo 'active';
-                                          } ?>">
+                                                  echo 'active';
+                                                } ?>">
                               <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"> <i class="fa fa-user"></i> <span>Réception de véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
                               <ul class="treeview-menu">
                                 <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule') {
-                                              echo 'active';
-                                            } ?>">
+                                                    echo 'active';
+                                                  } ?>">
                                   <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
                                 </li>
                                 <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
-                                              echo 'active';
-                                            } ?>">
+                                                    echo 'active';
+                                                  } ?>">
                                   <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
                                 </li>
 
@@ -1327,206 +1329,214 @@ if (!empty($_SESSION['objCust']['image'])) {
                             </li> -->
               <?php }
 
-              if ($resultDroitMenuClient['menu_vehi'] == 'O') { ?>
+                  if ($resultDroitMenuClient['menu_vehi'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addcar' || $page_name == 'liste_vehicule_scanning') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>repaircar/addcar.php"> <i class="fa fa-car"></i> <span>Véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
+                    <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_client') {
+
+                                        echo 'active';
+                                      } ?>">
+
+                      <a href="<?php echo WEB_URL; ?>repaircar/carlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules des clients</a>
+
+                    </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_scanning') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>repaircar/vehicule_scanning_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules à scanner</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
                     </li>
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                                   <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
                                 </li> -->
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_client') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                                         <a href="<?php echo WEB_URL; ?>repaircar/carlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules des clients</a>
                                       </li>
                                       <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_garage') {
-                                                    echo 'active';
-                                                  } ?>">
+                                                          echo 'active';
+                                                        } ?>">
                                         <a href="<?php echo WEB_URL; ?>repaircar/carlist_garage.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules au garage</a>
                                       </li>
                                       <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
-                                                    echo 'active';
-                                                  } ?>">
+                                                          echo 'active';
+                                                        } ?>">
                                         <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules diagnostiqués</a>
                                       </li> -->
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuClient['menu_devis'] == 'O') { ?>
+                  if ($resultDroitMenuClient['menu_devis'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'findcar' || $page_name == 'estimate_form') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"> <i class="fa fa-calculator"></i> <span>Devis</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'ajout_devis') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"><i class="fa fa-arrow-circle-right"></i>Créer un devis de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_diagnostic_devis_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_diagnostic_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuClient['menu_facture'] == 'O') { ?>
+                  if ($resultDroitMenuClient['menu_facture'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list' || $page_name == 'repaircar_simu_devis_facture_list') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de réparation</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuClient['menu_stock_piece'] == 'O') { ?>
+                  if ($resultDroitMenuClient['menu_stock_piece'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'buyparts' || $page_name == 'partsstocklist' || $page_name == 'mouvstock') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
 
                     <li class="<?php if ($page_name != '' && $page_name == 'buyparts') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
                     <li class="<?php if ($page_name != '' && $page_name == 'partsstocklist') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
                     <li class="<?php if ($page_name != '' && $page_name == 'mouvstock') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuClient['menu_four'] == 'O') { ?>
+                  if ($resultDroitMenuClient['menu_four'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addsupplier' || $page_name == 'supplierlist' || $page_name == 'boncmdeList' || $page_name == 'supplierManage' || $page_name == 'addBonCmde') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'addsupplier') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"><i class="fa fa-arrow-circle-right"></i>Créer un fournisseur</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'supplierlist') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
                     </li>
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                                                     <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
                                                   </li>
                                                   <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
-                                                                        echo 'active';
-                                                                      } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
+                                                                              echo 'active';
+                                                                            } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
                                                   </li> -->
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuClient['menu_ges_personnel'] == 'O') { ?>
+                  if ($resultDroitMenuClient['menu_ges_personnel'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'personnelist' || $page_name == 'personnel') {
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'addPersonnel' || $page_name == 'personnellist') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
                     </li>
                     <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
-                                          echo 'active';
-                                        } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
+                                                echo 'active';
+                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
                     </li>
                     <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'salperso') {
-                                                echo 'active';
-                                              } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
+                                                      echo 'active';
+                                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/salperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
                                                               </li> -->
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuClient['menu_ges_user'] == 'O') { ?>
+                  if ($resultDroitMenuClient['menu_ges_user'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'gesuser' || $page_name == 'gesusers') {
-                                      echo 'active';
-                                    } ?>">
+                                            echo 'active';
+                                          } ?>">
                   <a href="<?php echo WEB_URL; ?>gesuser.php"> <i class="fa fa-users"></i> <span>Utilisateurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'adduser') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>user/adduser.php"><i class="fa fa-arrow-circle-right"></i>Créer un utilisateur</a>
                     </li>
                     <li class="<?php if ($page_name != '' && $page_name == 'userlist') {
-                                  echo 'active';
-                                } ?>">
+                                        echo 'active';
+                                      } ?>">
                       <a href="<?php echo WEB_URL; ?>user/userlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des utilisateurs</a>
                     </li>
                   </ul>
                 </li>
               <?php }
 
-              if ($resultDroitMenuClient['menu_rapport'] == 'O') { ?>
+                  if ($resultDroitMenuClient['menu_rapport'] == 'O') { ?>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'reprepairdelivery' || $page_name == 'rptcarbuy' || $page_name == 'rptcarsell' || $page_name == 'rptpartsbuy' || $page_name == 'rptpartssell' || $page_name == 'rptmsalary' || $page_name == 'synthActivity') {
-                                      echo 'active';
-                                    } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                            echo 'active';
+                                          } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
                   <ul class="treeview-menu">
                     <li class="<?php if ($page_name != '' && $page_name == 'synthActivity') {
-                                  echo 'active';
-                                } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
+                                        echo 'active';
+                                      } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
                   </ul>
                 </li>
               <?php }
-              ?>
+                  ?>
 
             <?php } ?>
 
@@ -1542,25 +1552,25 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="tm10 <?php if ($page_name != '' && $page_name == 'dashboard') {
 
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'customerlist' || $page_name == 'addcustomer') {
 
-                                  echo 'active';
-                                } ?>"> <a href="<?php echo WEB_URL; ?>customer/customerlist.php"> <i class="fa fa-user"></i> <span>Client</span></a></li>
+                                    echo 'active';
+                                  } ?>"> <a href="<?php echo WEB_URL; ?>customer/customerlist.php"> <i class="fa fa-user"></i> <span>Client</span></a></li>
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'reception_vehicule') {
 
-                                  echo 'active';
-                                } ?>">
+                                    echo 'active';
+                                  } ?>">
 
 
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'reception_vehicule') {
 
-                                  echo 'active';
-                                } ?>">
+                                    echo 'active';
+                                  } ?>">
 
               <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"> <i class="fa fa-user"></i> <span>Réception de véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
@@ -1568,8 +1578,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
 
@@ -1577,8 +1587,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>reception/repaircar_reception_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules réceptionnés</a>
 
@@ -1594,8 +1604,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'addcar' || $page_name == 'carlist') {
 
-                                  echo 'active';
-                                } ?>">
+                                    echo 'active';
+                                  } ?>">
 
               <a href="<?php echo WEB_URL; ?>repaircar/addcar.php"> <i class="fa fa-car"></i> <span>Véhicules</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
@@ -1603,8 +1613,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_client') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>repaircar/carlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules des clients</a>
 
@@ -1612,8 +1622,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'liste_vehicule_garage') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>repaircar/carlist_garage.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules au garage</a>
 
@@ -1621,8 +1631,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules diagnostiqués</a>
 
@@ -1636,8 +1646,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'findcar' || $page_name == 'estimate_form') {
 
-                                  echo 'active';
-                                } ?>">
+                                    echo 'active';
+                                  } ?>">
 
               <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"> <i class="fa fa-calculator"></i> <span>Devis</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
@@ -1645,8 +1655,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'ajout_devis') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>estimate/adddevis.php"><i class="fa fa-arrow-circle-right"></i>Créer un devis de réparation</a>
 
@@ -1654,8 +1664,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'repair_diagnostic_devis_list') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>estimate/repaircar_diagnostic_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des devis de réparation</a>
 
@@ -1663,8 +1673,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'repair_simulation_devis_list') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres devis</a>
 
@@ -1678,15 +1688,15 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list' || $page_name == 'repaircar_simu_devis_facture_list') {
 
-                                  echo 'active';
-                                } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                    echo 'active';
+                                  } ?>"> <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"> <i class="fa fa-files-o"></i> <span>Factures</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
               <ul class="treeview-menu">
 
                 <li class="<?php if ($page_name != '' && $page_name == 'repaircar_devis_facture_list') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>estimate/repaircar_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des factures de réparation</a>
 
@@ -1694,8 +1704,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'repaircar_simu_devis_facture_list') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>estimate/repaircar_simu_devis_facture_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des autres factures</a>
 
@@ -1707,8 +1717,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'buyparts' || $page_name == 'partsstocklist' || $page_name == 'mouvstock') {
 
-                                  echo 'active';
-                                } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                    echo 'active';
+                                  } ?>"> <a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"> <i class="fa fa-truck"></i> <span>Stock de pièces</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
               <ul class="treeview-menu">
 
@@ -1716,18 +1726,18 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'buyparts') {
 
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/buyparts.php"><i class="fa fa-arrow-circle-right"></i>Créer article</a></li>
 
                 <li class="<?php if ($page_name != '' && $page_name == 'partsstocklist') {
 
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/partsstocklist.php"><i class="fa fa-arrow-circle-right"></i>Liste des articles</a></li>
 
                 <li class="<?php if ($page_name != '' && $page_name == 'mouvstock') {
 
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>parts_stock/mouvstock.php"><i class="fa fa-arrow-circle-right"></i>Mouvements de stock</a></li>
 
               </ul>
 
@@ -1735,15 +1745,15 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'addsupplier' || $page_name == 'supplierlist' || $page_name == 'boncmdeList' || $page_name == 'supplierManage' || $page_name == 'addBonCmde') {
 
-                                  echo 'active';
-                                } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                    echo 'active';
+                                  } ?>"> <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"> <i class="fa fa-user"></i> <span>Fournisseurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
               <ul class="treeview-menu">
 
                 <li class="<?php if ($page_name != '' && $page_name == 'addsupplier') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>supplier/addsupplier.php"><i class="fa fa-arrow-circle-right"></i>Créer un fournisseur</a>
 
@@ -1751,8 +1761,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'supplierlist') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>supplier/supplierlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des fournisseurs</a>
 
@@ -1760,8 +1770,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <!-- <li class="<?php if ($page_name != '' && $page_name == 'addBonCmde') {
 
-                                  echo 'active';
-                                } ?>">
+                                    echo 'active';
+                                  } ?>">
 
                         <a href="<?php echo WEB_URL; ?>bon_cmde/addBonCmde.php"><i class="fa fa-arrow-circle-right"></i>Créer un bon de commande</a>
 
@@ -1769,15 +1779,15 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                       <li class="treeview <?php if ($page_name != '' && $page_name == 'boncmdeList') {
 
-                                            echo 'active';
-                                          } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
+                                              echo 'active';
+                                            } ?>"> <a href="<?php echo WEB_URL; ?>bon_cmde/boncmdeList.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste des bons de commande</span> </a>
 
                       </li> -->
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'supplierManage') {
 
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
+                                        echo 'active';
+                                      } ?>"> <a href="<?php echo WEB_URL; ?>supplier/supplierManage.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gestion des fournisseurs</span> </a>
 
                 </li>
 
@@ -1789,36 +1799,36 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'personnelist' || $page_name == 'personnel') {
 
-                                  echo 'active';
-                                } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                    echo 'active';
+                                  } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-users"></i> <span>Personnel</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
               <ul class="treeview-menu">
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'addPersonnel' || $page_name == 'personnellist') {
 
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
+                                        echo 'active';
+                                      } ?>"> <a href="<?php echo WEB_URL; ?>user/addpersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Ajouter personnel</span> </a>
 
                 </li>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'listepersonnel') {
 
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
+                                        echo 'active';
+                                      } ?>"> <a href="<?php echo WEB_URL; ?>user/listepersonnel.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste du personnel</span> </a>
 
                 </li>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'presenceperso') {
 
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
+                                        echo 'active';
+                                      } ?>"> <a href="<?php echo WEB_URL; ?>user/presenceperso.php"> <i class="fa fa-arrow-circle-right"></i> <span>Liste de présences</span> </a>
 
                 </li>
 
                 <li class="treeview <?php if ($page_name != '' && $page_name == 'salpersolist') {
 
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/salpersolist.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
+                                        echo 'active';
+                                      } ?>"> <a href="<?php echo WEB_URL; ?>user/salpersolist.php"> <i class="fa fa-arrow-circle-right"></i> <span>Salaires</span> </a>
 
                 </li>
 
@@ -1830,8 +1840,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'gesuser' || $page_name == 'gesusers') {
 
-                                  echo 'active';
-                                } ?>">
+                                    echo 'active';
+                                  } ?>">
 
               <a href="<?php echo WEB_URL; ?>gesuser.php"> <i class="fa fa-users"></i> <span>Utilisateurs</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
@@ -1839,8 +1849,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'adduser') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>user/adduser.php"><i class="fa fa-arrow-circle-right"></i>Créer un utilisateur</a>
 
@@ -1848,8 +1858,8 @@ if (!empty($_SESSION['objCust']['image'])) {
 
                 <li class="<?php if ($page_name != '' && $page_name == 'userlist') {
 
-                              echo 'active';
-                            } ?>">
+                                echo 'active';
+                              } ?>">
 
                   <a href="<?php echo WEB_URL; ?>user/userlist.php"><i class="fa fa-arrow-circle-right"></i>Liste des utilisateurs</a>
 
@@ -1863,15 +1873,15 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'gestionRole') {
 
-                                  echo 'active';
-                                } ?>"> <a href="<?php echo WEB_URL; ?>user/addrole.php"> <i class="fa fa-shield"></i> <span>Droits d'accès</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                    echo 'active';
+                                  } ?>"> <a href="<?php echo WEB_URL; ?>user/addrole.php"> <i class="fa fa-shield"></i> <span>Droits d'accès</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
               <ul class="treeview-menu">
 
                 <li class="treeview <?php if ($page_name != '' || $page_name == 'addrole') {
 
-                                      echo 'active';
-                                    } ?>"> <a href="<?php echo WEB_URL; ?>user/addrole.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gérer les droits d'accès</span> </a>
+                                        echo 'active';
+                                      } ?>"> <a href="<?php echo WEB_URL; ?>user/addrole.php"> <i class="fa fa-arrow-circle-right"></i> <span>Gérer les droits d'accès</span> </a>
 
                 </li>
 
@@ -1883,15 +1893,15 @@ if (!empty($_SESSION['objCust']['image'])) {
 
             <li class="treeview <?php if ($page_name != '' && $page_name == 'reprepairdelivery' || $page_name == 'rptcarbuy' || $page_name == 'rptcarsell' || $page_name == 'rptpartsbuy' || $page_name == 'rptpartssell' || $page_name == 'rptmsalary' || $page_name == 'synthActivity') {
 
-                                  echo 'active';
-                                } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
+                                    echo 'active';
+                                  } ?>"> <a href="#"> <i class="fa fa-bar-chart-o"></i> <span>Statistique</span> <i class="fa fa-angle-left pull-right"></i> </a>
 
               <ul class="treeview-menu">
 
                 <li class="<?php if ($page_name != '' && $page_name == 'synthActivity') {
 
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>report/synthActivity.php"><i class="fa fa-arrow-circle-right"></i> Synthèse d'activités</a></li>
 
               </ul>
 
@@ -1905,24 +1915,24 @@ if (!empty($_SESSION['objCust']['image'])) {
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="tm10 <?php if ($page_name != '' && $page_name == 'mech_dashboard') {
-                              echo 'active';
-                            } ?>"><a href="<?php echo WEB_URL; ?>cust_panel/cust_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
+                                echo 'active';
+                              } ?>"><a href="<?php echo WEB_URL; ?>cust_panel/cust_dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>
             <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'mycar' || $page_name == 'mycar') {
-                                        echo 'active';
-                                      } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/mycar.php"> <i class="fa fa-car"></i> <span>Ma voiture</span></a></li> -->
+                                          echo 'active';
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/mycar.php"> <i class="fa fa-car"></i> <span>Ma voiture</span></a></li> -->
             <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'estimate') {
-                                        echo 'active';
-                                      } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/estimate.php"> <i class="fa fa-calculator"></i> <span>Historique des Devis </span></a></li> -->
+                                          echo 'active';
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/estimate.php"> <i class="fa fa-calculator"></i> <span>Historique des Devis </span></a></li> -->
             </li>
             <li class="treeview <?php if ($page_name != '' && $page_name == 'cust_devis_repaircar_diagnostic_list') {
-                                  echo 'active';
-                                } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des devis de réparation</span></a></li>
+                                    echo 'active';
+                                  } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des devis de réparation</span></a></li>
             <!-- <li class="treeview <?php if ($page_name != '' && $page_name == 'cust_devis_repaircar_diagnostic_list') {
-                                        echo 'active';
-                                      } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_devis_bcmde_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des bons de commande</span></a></li> -->
+                                          echo 'active';
+                                        } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_devis_bcmde_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des bons de commande</span></a></li> -->
             <li class="treeview <?php if ($page_name != '' && $page_name == 'cust_devis_repaircar_diagnostic_list') {
-                                  echo 'active';
-                                } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_devis_facture_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des factures</span></a></li>
+                                    echo 'active';
+                                  } ?>"> <a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_devis_facture_list.php"> <i class="fa fa-file-powerpoint-o"></i> <span>Liste des factures</span></a></li>
           </ul>
         <?php } ?>
 

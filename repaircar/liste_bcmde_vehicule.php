@@ -42,10 +42,10 @@ $results = $wms->getAllBonCmdeDataByCarId($link, $_GET['car_id']);
 
 <section class="content-header">
   <h1><i class="fa fa-list"></i> Liste des bons de commande du véhicule <?php
-        if (isset($results) && !empty($results)) {
-            echo "<br/>".$results[0]['car_name']. ' '. $results[0]['model_name']. ' '. $results[0]['VIN'];
-        }
-        ?></h1>
+                                                                        if (isset($results) && !empty($results)) {
+                                                                          echo "<br/>" . $results[0]['car_name'] . ' ' . $results[0]['model_name'] . ' ' . $results[0]['VIN'];
+                                                                        }
+                                                                        ?></h1>
   <ol class="breadcrumb">
     <li><a href="<?php echo WEB_URL ?>dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active">Liste des bons de commande crées pour ce véhicule</li>
@@ -107,7 +107,11 @@ $results = $wms->getAllBonCmdeDataByCarId($link, $_GET['car_id']);
                     <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/bon_cmde_car.php?boncmde_id=<?php echo $row['boncmde_id']; ?>" data-original-title="Modifier le bon de commande"><i class="fa fa-pencil"></i></a>
                     <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['per_id']; ?>').modal('show');" data-original-title="View"><i class="fa fa-eye"></i></a>  -->
                     <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>bon_cmde/bon_cmde_doc.php?boncmde_id=<?php echo $row['boncmde_id']; ?>" data-original-title="Consulter le bon de commande"><i class="fa fa-file-text-o"></i></a>
-                    <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['boncmde_id']; ?>,<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Supprimer le bon de commande"><i class="fa fa-trash-o"></i></a>
+
+                    <?php if ($_SESSION['login_type'] == 'admin') { ?>
+                      <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteSupplier(<?php echo $row['boncmde_id']; ?>,<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Supprimer le bon de commande"><i class="fa fa-trash-o"></i></a>
+                    <?php } ?>
+
                     <div id="bcmd_article_modal_<?php echo $row['boncmde_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
@@ -128,8 +132,8 @@ $results = $wms->getAllBonCmdeDataByCarId($link, $_GET['car_id']);
                               <tbody>
 
                                 <?php
-                                foreach ($boncmde_data as $boncmde_row_data) {
-                                  ?>
+                                  foreach ($boncmde_data as $boncmde_row_data) {
+                                    ?>
 
                                   <tr>
                                     <td><?php echo str_replace('u0027', "'", $boncmde_row_data['designation']); ?></td>
@@ -164,7 +168,7 @@ $results = $wms->getAllBonCmdeDataByCarId($link, $_GET['car_id']);
     function deleteSupplier(bcmde_id, car_id) {
       var iAnswer = confirm("Êtes-vous sûr de vouloir supprimer ce bon de commande ?");
       if (iAnswer) {
-        window.location = '<?php echo WEB_URL; ?>repaircar/liste_bcmde_vehicule.php?car_id=' + car_id+'&bcmde_id=' + bcmde_id;
+        window.location = '<?php echo WEB_URL; ?>repaircar/liste_bcmde_vehicule.php?car_id=' + car_id + '&bcmde_id=' + bcmde_id;
       }
     }
 

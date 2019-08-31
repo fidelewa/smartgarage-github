@@ -24,6 +24,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add') {
 //   $msg = "Informations client mises à jour avec succès";
 // }
 
+if (isset($_GET['m']) && $_GET['m'] == 'recu_scanning_check') {
+    $addinfo = 'block';
+    $msg = "Le reçu de paiement du scanner à été validé";
+}
+
 if (isset($_GET['m']) && $_GET['m'] == 'scanner_error') {
     $error_info = 'block';
     $msg_error = "Veuillez sélectionner au moin un type de scanner";
@@ -100,9 +105,9 @@ $i = 0;
                 <h4><i class="icon fa fa-check"></i> Erreur!</h4>
                 <?php echo $msg_error_4; ?>
             </div>
-            <div align="right" style="margin-bottom:1%;"> 
+            <div align="right" style="margin-bottom:1%;">
                 <!-- <a class="btn btn-success" data-toggle="tooltip" href="<?php echo WEB_URL; ?>user/adduser.php" data-original-title="Ajouter un utilisateur"><i class="fa fa-plus"></i></a>  -->
-                <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/servcli_dashboard.php" data-original-title="Aller au tableau de bord"><i class="fa fa-dashboard"></i></a> 
+                <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/servcli_dashboard.php" data-original-title="Aller au tableau de bord"><i class="fa fa-dashboard"></i></a>
             </div>
             <div class="box box-success">
                 <!-- <div class="box-header">
@@ -122,6 +127,7 @@ $i = 0;
                                 <th>Scanner mécanique</th>
                                 <th>Scanner électrique</th>
                                 <th>Frais de scanner</th>
+                                <th>Statut reçu scanner</th>
                                 <th>Statut scanner</th>
                                 <th>Statut reception</th>
                                 <th>Action</th>
@@ -147,6 +153,13 @@ $i = 0;
                                 <td><?php echo $row['scanner_electrique']; ?></td>
                                 <td id="frais_scanner_<?php echo $i; ?>"><?php echo $row['frais_scanner']; ?></td>
                                 <td><?php
+                                        if ($row['validation_recu_scanning'] == null) {
+                                            echo "<span class='label label-default'>Non validé</span> <br/>";
+                                        } else if ($row['validation_recu_scanning'] == 1) {
+                                            echo "<span class='label label-success'>validé</span> <br/>";
+                                        }
+                                        ?></td>
+                                <td><?php
                                         if ($row['statut_scannage'] == null) {
                                             echo "<span class='label label-default'>En attente de scan</span> <br/>";
                                         } else if ($row['statut_scannage'] == 1) {
@@ -161,7 +174,10 @@ $i = 0;
                                         }
                                         ?></td>
                                 <td>
-                                    <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nb_aleatoire=<?php echo $row['nbr_aleatoire']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer reçu de paiement du scanner</a>
+                                    <?php if ($_SESSION['login_type'] == 'comptable') { ?>
+                                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer reçu de paiement du scanner</a>
+                                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>compta_panel/validation_recu_scanning.php?recu_scanning_id=<?php echo $row['id']; ?>" data-original-title="valider le reçu de paiement du scanner"><i class="fa fa-check"></i></a>
+                                    <?php } ?>
                                 </td>
                             </tr>
                             <?php

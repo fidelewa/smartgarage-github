@@ -1,4 +1,4 @@
-signature/
+dist/
 img/
 img/upload/docs/
 config.php
@@ -7,3 +7,168 @@ estimate/estimate_form.php
 estimate/devis_prix_piece_rechange_2.php
 estimate/devis_prix_piece_rechange_3.php
 estimate/devis_prix_piece_rechange_4.php
+user/addDroitAccessRoleProcess.2.php
+mech_panel/addworkstatus.php
+mech_panel/header_2.php
+mech_panel/mech_dashboard_2.php
+mech_panel/mech_dashboard_3.php
+mech_panel/mech_repaircar_diagnostic_2.php
+parts_stock/buyparts.1.php
+parts_stock/buypartslist.1.php
+parts_stock/partsstocklist.1.php
+reception/repaircar_reception_2.php
+repaircar/addcar_2.php
+repaircar/addcar_reception.1.php
+repaircar/repaircar_devis_facture_doc_2.php
+repaircar/repaircar_diagnostic_devis_doc_2.php
+repaircar/repaircar_devis_facture_doc_3.php
+supplier/validation.js
+user/addDroitAccessRoleProcess.1.php
+estimate/repaircar_devis_facture_2.php
+mech_panel/addworkstatus.php
+mech_panel/header_2.php
+mech_panel/mech_dashboard_2.php
+mech_panel/mech_dashboard_3.php
+mech_panel/mech_repaircar_diagnostic_2.php
+reception/repaircar_reception_2.php
+repaircar/addcar_2.php
+repaircar/repaircar_devis_facture_doc_2.php
+repaircar/repaircar_devis_facture_doc_3.php
+repaircar/repaircar_diagnostic_devis_doc_2.php
+supplier/validation.js
+estimate/sample_estimate.php
+estimate/repaircar_simu_devis_list.1.php
+estimate/repaircar_diagnostic_devis_list_4.php
+estimate/repaircar_diagnostic_devis_list_3.php
+estimate/repaircar_diagnostic_devis_list_2.php
+estimate/repaircar_devis_facture_4.php
+estimate/repaircar_devis_facture_3.php
+ajax/getpartslist.1.php
+estimate/repaircar_devis_facture_2.php
+estimate/repaircar_devis_facture_3.php
+estimate/repaircar_devis_facture_4.php
+estimate/repaircar_diagnostic_devis_list_2.php
+estimate/repaircar_diagnostic_devis_list_3.php
+estimate/repaircar_diagnostic_devis_list_4.php
+estimate/sample_estimate.php
+mech_panel/addworkstatus.php
+mech_panel/header_2.php
+mech_panel/mech_dashboard_2.php
+mech_panel/mech_dashboard_3.php
+mech_panel/mech_repaircar_diagnostic_2.php
+reception/repaircar_reception_2.php
+repaircar/addcar_2.php
+repaircar/repaircar_devis_facture_doc_2.php
+repaircar/repaircar_devis_facture_doc_3.php
+repaircar/repaircar_diagnostic_devis_doc_2.php
+supplier/validation.js
+estimate/findcar.php
+estimate/estimate_form.php
+estimate/devis_prix_piece_rechange_4.php
+estimate/devis_prix_piece_rechange_3.php
+estimate/devis_prix_piece_rechange_2.php
+estimate/adddevis_traitement.1.php
+customer/vehi_client_list_2.php
+ajax/verif_marque_2.php
+ajax/verif_marque.1.php
+repaircar_3/
+repaircar_2/
+bon_cmde_2/
+dist_2/
+mech_panel_2/
+vendor/*
+user/listepersonnel.1.php
+my_sign_pointage.1.php
+header.1.php
+estimate/repaircar_diagnostic_devis_list_4.php
+estimate/devis_prix_piece_rechange.1.php
+estimate/devis_prix_piece_rechange_2.php
+estimate/devis_prix_piece_rechange_3.php
+estimate/devis_prix_piece_rechange_4.php
+estimate/estimate_form.php
+estimate/estimate_form - Copy.php___
+estimate/findcar.php
+estimate/findcar - Copy.php___
+estimate/findcar - Copy.php_____
+estimate/repaircar_devis_facture_2.php
+estimate/repaircar_devis_facture_3.php
+estimate/repaircar_devis_facture_4.php
+estimate/repaircar_diagnostic_devis_list_2.php
+estimate/repaircar_diagnostic_devis_list_3.php
+estimate/sample_estimate.php
+supplier/validation.js
+reception/common_22.php
+recep_panel/recep_addcar_reception.1.php
+recep_panel/recep_addcar_reception.2.php
+recep_panel/recep_repaircar_reception.1.php
+recep_panel/verif_imma.php
+reception/repaircar_diagnostic_list.1.php
+reception/repaircar_reception_2.php
+repaircar/addcar_reception_3.php
+repaircar/addcar.1.php
+repaircar/addcar.2.php
+repaircar/carlist_garage copy.php
+repaircar/carlist.1.php
+repaircar/carlist.2.php
+.vscode/launch.json
+calculation.php
+reprepairdelivery.php
+dashboard.1.php
+customer/pj_client_list.1.php
+ajax/verif_marque.1.php
+pointage/doc_signs/*
+pointage/js/*
+pointage/css/*
+user/listepersonnel.2.php
+repaircar/repaircar_doc.1.php
+supplier/addsupplier.1.php
+supplier/supplierManage.1.php
+supplier/supplierManageData.1.php
+user/addrole.1.php
+pointage/mac_address.php
+helper/common.1.php
+helper/common_7.php
+parts_stock/partsstocklist.2.php
+pointage/.DS_Store
+.gitignore
+bon_cmde/bon_cmde_doc copy.php
+composer.json
+repaircar/photo_car_piece_change_process copy.php
+user/avance_process.php
+repaircar/photo_car_apres_work copy.php
+repaircar/photo_car_apres_work_process copy.php
+repaircar/photo_car_piece_change copy.php
+helper/common copy.php
+estimate/edition.php
+img_sign/*
+repaircar/repaircar_diagnostic_devis_doc copy.php
+estimate/adddevis copy.php
+estimate/adddevis_6.php
+estimate/devis_prix_piece_rechange copy.php
+helper/common copy 2.php
+helper/common_bis.php
+config_2.php
+config_6.php
+config_3.php
+header_3.php
+SmsApi_2.php
+index.html
+SmsApi copy.php
+repaircar/addcar_reception copy.php
+repaircar/repaircar_doc copy.php
+repaircar/repaircar_doc_verso copy.php
+signature/doc_signs/84545232_cli_24_sortie.png
+.htaccess_2
+mech_panel/Untitled-1.txt
+signature/doc_signs/84545232_cli_24_depot.png
+mech_panel/mech_dashboard_5.php
+mech_panel/mech_dashboard copy.php
+mech_panel/mech_repaircar_diagnostic_traitement_2.php
+repaircar/addcar_reception_2.php
+parts_stock/mouvstock_2.php
+sendSmsToChefMechElec_2.txt
+recep_panel/recep_dashboard copy.php
+repaircar/carlist copy.php
+estimate/repaircar_simu_devis_facture_doc_txt.txt
+repaircar/repaircar_devis_facture_doc_txt.txt
+header_bis.php

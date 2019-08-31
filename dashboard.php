@@ -292,138 +292,138 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
                 //     $image_customer = WEB_URL . 'img/upload/' . $row['customer_image']; //customer iamge
                 // }
                 ?>
-              <tr>
-                <td><?php echo $row['vehi_diag_id']; ?></td>
-                <!-- <td><?php echo $row['car_id']; ?></td> -->
-                <td><?php echo $row['num_matricule']; ?></td>
-                <td><?php echo $row['recep_name']; ?></td>
-                <td><?php
-                      if ($row['status_attribution_vehicule'] == null) {
-                        echo "<span class='label label-default'>En attente d'attribution</span> <br/>";
-                      } else if ($row['status_attribution_vehicule'] == 1) {
-                        echo "<span class='label label-success'>Attribué</span> <br/>";
-                      }
-                      ?></td>
-                <!-- <td><?php echo $row['mech_name']; ?></td> -->
-                <td>
-                  <?php if ($row['statut_diagnostic_mecanique'] == 1) {
-                      echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien'];
-                    } ?>
-                  <?php if ($row['statut_diagnostic_electrique'] == 1) {
-                      echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
-                    } ?>
-                </td>
-                <!-- <td><?php
-                            if ($row['status_diagnostic_vehicule'] == null) {
-                              echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
-                            } else if ($row['status_diagnostic_vehicule'] == 1) {
-                              echo "<span class='label label-success'>Diagnostiqué</span> <br/>";
-                            }
-                            ?>
+                <tr>
+                  <td><?php echo $row['vehi_diag_id']; ?></td>
+                  <!-- <td><?php echo $row['car_id']; ?></td> -->
+                  <td><?php echo $row['num_matricule']; ?></td>
+                  <td><?php echo $row['recep_name']; ?></td>
+                  <td><?php
+                        if ($row['status_attribution_vehicule'] == null) {
+                          echo "<span class='label label-default'>En attente d'attribution</span> <br/>";
+                        } else if ($row['status_attribution_vehicule'] == 1) {
+                          echo "<span class='label label-success'>Attribué</span> <br/>";
+                        }
+                        ?></td>
+                  <!-- <td><?php echo $row['mech_name']; ?></td> -->
+                  <td>
+                    <?php if ($row['statut_diagnostic_mecanique'] == 1) {
+                        echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien'];
+                      } ?>
+                    <?php if ($row['statut_diagnostic_electrique'] == 1) {
+                        echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
+                      } ?>
+                  </td>
+                  <!-- <td><?php
+                              if ($row['status_diagnostic_vehicule'] == null) {
+                                echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
+                              } else if ($row['status_diagnostic_vehicule'] == 1) {
+                                echo "<span class='label label-success'>Diagnostiqué</span> <br/>";
+                              }
+                              ?>
                                 </td> -->
-                <td><?php
+                  <td><?php
 
-                      if (!isset($row['statut_diagnostic_mecanique'])) {
-                        echo "";
-                      } else if ($row['statut_diagnostic_mecanique'] == null) {
-                        echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
-                      } else if ($row['statut_diagnostic_mecanique'] == 1) {
-                        echo "<span class='label label-success'>Diagnostic éffectué</span> <br/>";
-                      }
-                      ?>
-                </td>
-                <td><?php
+                        if (!isset($row['statut_diagnostic_mecanique'])) {
+                          echo "";
+                        } else if ($row['statut_diagnostic_mecanique'] == null) {
+                          echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
+                        } else if ($row['statut_diagnostic_mecanique'] == 1) {
+                          echo "<span class='label label-success'>Diagnostic éffectué</span> <br/>";
+                        }
+                        ?>
+                  </td>
+                  <td><?php
 
-                      if (!isset($row['statut_diagnostic_electrique'])) {
-                        echo "";
-                      } else if ($row['statut_diagnostic_electrique'] == null) {
-                        echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
-                      } else if ($row['statut_diagnostic_electrique'] == 1) {
-                        echo "<span class='label label-success'>Diagnostic éffectué</span> <br/>";
-                      }
-                      ?>
-                </td>
-                <td>
+                        if (!isset($row['statut_diagnostic_electrique'])) {
+                          echo "";
+                        } else if ($row['statut_diagnostic_electrique'] == null) {
+                          echo "<span class='label label-default'>En attente de diagnostic</span> <br/>";
+                        } else if ($row['statut_diagnostic_electrique'] == 1) {
+                          echo "<span class='label label-success'>Diagnostic éffectué</span> <br/>";
+                        }
+                        ?>
+                  </td>
+                  <td>
 
-                  <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/pj_car_recep_list.php?car_recep_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la réception du véhicule"><i class="fa fa-paperclip"></i></a>
-                  <!-- <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a> -->
-                  <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_gene.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
-                  <?php
+                    <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/pj_car_recep_list.php?car_recep_id=<?php echo $row['car_id']; ?>" data-original-title="Afficher la liste des pièces jointes à la réception du véhicule"><i class="fa fa-paperclip"></i></a>
+                    <!-- <a class="btn btn-info" style="background-color:purple;color:#ffffff;" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic.php?add_car_id=<?php echo $row['add_car_id']; ?>&car_id=<?php echo $row['car_id']; ?>" data-original-title="Créer le formulaire de diagnostic du véhicule"><i class="fa fa-plus"></i></a> -->
+                    <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_doc_gene.php?car_id=<?php echo $row['car_id']; ?>&login_type=<?php echo $_SESSION['login_type']; ?>" data-original-title="Fiche de reception du véhicule"><i class="fa fa-file-text-o"></i></a>
+                    <?php
 
-                    // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
-                    $rows = $wms->getComparPrixPieceRechangeInfoByDiagId($link, $row['vehi_diag_id']);
+                      // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
+                      $rows = $wms->getComparPrixPieceRechangeInfoByDiagId($link, $row['vehi_diag_id']);
 
-                    // S'il y a des enregistrements correspondant à cet id existant déja en BDD
-                    // On affiche l'icone de la fiche
-                    if (!empty($rows)) { ?>
-                  <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule"><i class="fa fa-file-text-o"></i></a>
-                  <?php }
+                      // S'il y a des enregistrements correspondant à cet id existant déja en BDD
+                      // On affiche l'icone de la fiche
+                      if (!empty($rows)) { ?>
+                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la fiche de diagnostic du véhicule"><i class="fa fa-file-text-o"></i></a>
+                    <?php }
 
-                    // Si le client et le receptionniste ont signé au dépot la fiche de reception du véhicule
-                    if (isset($row['sign_cli_depot']) && isset($row['sign_recep_depot'])) { ?>
+                      // Si le client et le receptionniste ont signé au dépot la fiche de reception du véhicule
+                      if (isset($row['sign_cli_depot']) && isset($row['sign_recep_depot'])) { ?>
 
-                  <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attribuer le véhicule réceptionné à un mécanicien ou un électricien pour diagnostic"><i class="fa fa-user"></i></a>
+                      <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attribuer le véhicule réceptionné à un mécanicien ou un électricien pour diagnostic"><i class="fa fa-user"></i></a>
 
-                  <?php }
+                    <?php }
 
-                    // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
-                    $rowsGetStatutEtatVehiSortie = $wms->getStatutEtatVehiSortie($link, $row['car_id']);
+                      // On récupère l'id du diagnostic du véhicule réceptionné à faire réparer 
+                      $rowsGetStatutEtatVehiSortie = $wms->getStatutEtatVehiSortie($link, $row['car_id']);
 
-                    if (!empty($rowsGetStatutEtatVehiSortie)) { ?>
-                  <a class="btn btn-primary" style="background-color:#021254;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/etat_vehicule_sortie.php?cid=<?php echo $row['car_id']; ?>" data-original-title="Définir l'état du véhicule à la sortie"><i class="fa fa-car"></i></a>
-                  <?php } ?>
+                      if (!empty($rowsGetStatutEtatVehiSortie)) { ?>
+                      <a class="btn btn-primary" style="background-color:#021254;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>reception/etat_vehicule_sortie.php?cid=<?php echo $row['car_id']; ?>" data-original-title="Définir l'état du véhicule à la sortie"><i class="fa fa-car"></i></a>
+                    <?php } ?>
 
-                  <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien"><i class="fa fa-eye"></i></a> -->
-                  <!-- <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> -->
-                  <!-- <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a> -->
-                </td>
-              </tr>
-              <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <a class="close" data-dismiss="modal">×</a>
-                      <h3>Formulaire d'attribution du véhicule réceptionné</h3>
-                    </div>
+                    <!-- <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#nurse_view_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Attibuer à un mécanicien"><i class="fa fa-eye"></i></a> -->
+                    <!-- <a class="btn btn-primary" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?id=<?php echo $row['car_id']; ?>" data-original-title="Edit"><i class="fa fa-pencil"></i></a> -->
+                    <!-- <a class="btn btn-danger" data-toggle="tooltip" onClick="deleteCustomer(<?php echo $row['car_id']; ?>);" href="javascript:;" data-original-title="Delete"><i class="fa fa-trash-o"></i></a> -->
+                  </td>
+                </tr>
+                <div id="nurse_view_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <a class="close" data-dismiss="modal">×</a>
+                        <h3>Formulaire d'attribution du véhicule réceptionné</h3>
+                      </div>
 
-                    <form id="avanceSalForm" name="avance_sal" role="form" enctype="multipart/form-data" method="POST" action="../diagnostic/attribution_mecanicien_traitement.php">
+                      <form id="avanceSalForm" name="avance_sal" role="form" enctype="multipart/form-data" method="POST" action="../diagnostic/attribution_mecanicien_traitement.php">
 
-                      <div class="modal-body">
+                        <div class="modal-body">
 
-                        <div class="form-group">
-                          <label for="txtCName"> Sélectionner un mécanicien ou un électricien :</label>
-                          <div class="row">
-                            <div class="col-md-12">
-                              <select required class='form-control' id="mecanicienList" name="mecanicienList">
-                                <option selected value="">--Veuillez saisir ou sélectionner un mécanicien ou un électricien--</option>
-                                <?php
-                                  $mecanicien_list = $wms->getAllMechanicsListByTitle($link);
-                                  foreach ($mecanicien_list as $mrow) {
-                                    // if ($cus_id > 0 && $cus_id == $mrow['customer_id']) {
-                                    echo '<option value="' . $mrow['usr_id'] . '">' . $mrow['usr_name'] . ' - ' . $mrow['usr_type'] . '</option>';
-                                    // } else {
-                                    // echo '<option value="' . $mrow['customer_id'] . '">' . $mrow['c_name'] . '</option>';
-                                    // }
-                                  }
-                                  ?>
-                              </select>
+                          <div class="form-group">
+                            <label for="txtCName"> Sélectionner un mécanicien ou un électricien :</label>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <select required class='form-control' id="mecanicienList" name="mecanicienList">
+                                  <option selected value="">--Veuillez saisir ou sélectionner un mécanicien ou un électricien--</option>
+                                  <?php
+                                    $mecanicien_list = $wms->getAllMechanicsListByTitle($link);
+                                    foreach ($mecanicien_list as $mrow) {
+                                      // if ($cus_id > 0 && $cus_id == $mrow['customer_id']) {
+                                      echo '<option value="' . $mrow['usr_id'] . '">' . $mrow['usr_name'] . ' - ' . $mrow['usr_type'] . '</option>';
+                                      // } else {
+                                      // echo '<option value="' . $mrow['customer_id'] . '">' . $mrow['c_name'] . '</option>';
+                                      // }
+                                    }
+                                    ?>
+                                </select>
+                              </div>
                             </div>
                           </div>
+
+                          <input type="hidden" value="<?php echo $row['add_car_id'] ?>" name="car_id" />
+                          <input type="hidden" value="<?php echo $row['car_id'] ?>" name="reception_id" />
+                          <input type="hidden" value="<?php echo $row['num_matricule'] ?>" name="imma_vehi" />
                         </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                          <button type="submit" class="btn btn-success" id="submit">Valider</button>
+                        </div>
+                      </form>
 
-                        <input type="hidden" value="<?php echo $row['add_car_id'] ?>" name="car_id" />
-                        <input type="hidden" value="<?php echo $row['car_id'] ?>" name="reception_id" />
-                        <input type="hidden" value="<?php echo $row['num_matricule'] ?>" name="imma_vehi" />
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-success" id="submit">Valider</button>
-                      </div>
-                    </form>
-
+                    </div>
                   </div>
                 </div>
-              </div>
               <?php }
               ?>
             </tbody>
@@ -460,76 +460,76 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
               $result = $wms->getRecepCarListRepar($link);
 
               foreach ($result as $row) { ?>
-              <tr>
+                <tr>
 
-                <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
-                <td><?php echo $row['num_matricule']; ?></td>
-                <td><?php echo $row['c_name']; ?></td>
-                <td><?php echo $row['add_date_recep_vehi']; ?></td>
-                <td><?php echo $row['add_date_assurance']; ?></td>
-                <td><?php echo $row['add_date_visitetech']; ?></td>
-                <td><?php
-                      if (!isset($row['statut_reparation_mecanique'])) {
-                        echo "";
-                      } else if ($row['statut_reparation_mecanique'] == null) {
-                        echo "<span class='label label-default'>En attente de réparation</span> <br/>";
-                      } else if ($row['statut_reparation_mecanique'] == 0) {
-                        echo "<span class='label label-warning'>En cours de reparation</span> <br/>";
-                      } else if ($row['statut_reparation_mecanique'] == 1) {
-                        echo "<span class='label label-success'>Reparation effectuée</span> <br/>";
-                      }
-                      ?>
-                </td>
-                <td><?php
-                      if (!isset($row['statut_reparation_electrique'])) {
-                        echo "";
-                      } else if ($row['statut_reparation_electrique'] == null) {
-                        echo "<span class='label label-default'>En attente de réparation</span> <br/>";
-                      } else if ($row['statut_reparation_electrique'] == 0) {
-                        echo "<span class='label label-warning'>En cours de reparation</span> <br/>";
-                      } else if ($row['statut_reparation_electrique'] == 1) {
-                        echo "<span class='label label-success'>Reparation effectuée</span> <br/>";
-                      }
-                      ?>
-                </td>
-                <!-- <td>
+                  <td><span class="label label-success"><?php echo $row['car_id']; ?></span></td>
+                  <td><?php echo $row['num_matricule']; ?></td>
+                  <td><?php echo $row['c_name']; ?></td>
+                  <td><?php echo $row['add_date_recep_vehi']; ?></td>
+                  <td><?php echo $row['add_date_assurance']; ?></td>
+                  <td><?php echo $row['add_date_visitetech']; ?></td>
+                  <td><?php
+                        if (!isset($row['statut_reparation_mecanique'])) {
+                          echo "";
+                        } else if ($row['statut_reparation_mecanique'] == null) {
+                          echo "<span class='label label-default'>En attente de réparation</span> <br/>";
+                        } else if ($row['statut_reparation_mecanique'] == 0) {
+                          echo "<span class='label label-warning'>En cours de reparation</span> <br/>";
+                        } else if ($row['statut_reparation_mecanique'] == 1) {
+                          echo "<span class='label label-success'>Reparation effectuée</span> <br/>";
+                        }
+                        ?>
+                  </td>
+                  <td><?php
+                        if (!isset($row['statut_reparation_electrique'])) {
+                          echo "";
+                        } else if ($row['statut_reparation_electrique'] == null) {
+                          echo "<span class='label label-default'>En attente de réparation</span> <br/>";
+                        } else if ($row['statut_reparation_electrique'] == 0) {
+                          echo "<span class='label label-warning'>En cours de reparation</span> <br/>";
+                        } else if ($row['statut_reparation_electrique'] == 1) {
+                          echo "<span class='label label-success'>Reparation effectuée</span> <br/>";
+                        }
+                        ?>
+                  </td>
+                  <!-- <td>
                                                   <a class="btn btn-success" data-toggle="tooltip" href="javascript:;" onClick="$('#infos_vehicule_modal_<?php echo $row['car_id']; ?>').modal('show');" data-original-title="Envoyer un message au client concernant le statut de réparation de son véhicule"><i class="fa fa-envelope-o"></i></a>
                                                 </td> -->
-              </tr>
-              <div id="infos_vehicule_modal_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <a class="close" data-dismiss="modal">×</a>
-                      <h3>Envoyer un SMS à <?php echo $row['c_name']; ?></h3>
-                    </div>
-                    <form id="devisVehiForm" name="devis_vehi" role="form" enctype="multipart/form-data" method="POST" action="sendRepairSmsToClient.php">
-                      <div class="modal-body">
+                </tr>
+                <div id="infos_vehicule_modal_<?php echo $row['car_id']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <a class="close" data-dismiss="modal">×</a>
+                        <h3>Envoyer un SMS à <?php echo $row['c_name']; ?></h3>
+                      </div>
+                      <form id="devisVehiForm" name="devis_vehi" role="form" enctype="multipart/form-data" method="POST" action="sendRepairSmsToClient.php">
+                        <div class="modal-body">
 
-                        <div class="form-group row">
-                          <label for="remarque_mecano" class="col-md-2 col-form-label">Message</label>
-                          <div class="col-md-10" style="padding-left:0px;">
-                            <textarea class="form-control" id="message_status_reparation" rows="4" name="message_status_reparation"></textarea>
+                          <div class="form-group row">
+                            <label for="remarque_mecano" class="col-md-2 col-form-label">Message</label>
+                            <div class="col-md-10" style="padding-left:0px;">
+                              <textarea class="form-control" id="message_status_reparation" rows="4" name="message_status_reparation"></textarea>
+                            </div>
                           </div>
+
+                          <input type="hidden" value="<?php echo $row['car_id']; ?>" name="reception_car_id" />
+                          <input type="hidden" value="<?php echo $row['princ_tel']; ?>" name="client_telephone" />
+
+                          <input type="hidden" value="<?php echo $row['make_name']; ?>" name="make_name" />
+                          <input type="hidden" value="<?php echo $row['model_name']; ?>" name="model_name" />
+                          <input type="hidden" value="<?php echo $row['VIN']; ?>" name="immatri" />
+                          <input type="hidden" value="<?php echo $row['c_name']; ?>" name="client_nom" />
+                          <input type="hidden" value="<?php echo $row['statut_reparation']; ?>" name="statut_reparation" />
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                          <button type="submit" class="btn btn-success" id="submit">Envoyer</button>
                         </div>
 
-                        <input type="hidden" value="<?php echo $row['car_id']; ?>" name="reception_car_id" />
-                        <input type="hidden" value="<?php echo $row['princ_tel']; ?>" name="client_telephone" />
-
-                        <input type="hidden" value="<?php echo $row['make_name']; ?>" name="make_name" />
-                        <input type="hidden" value="<?php echo $row['model_name']; ?>" name="model_name" />
-                        <input type="hidden" value="<?php echo $row['VIN']; ?>" name="immatri" />
-                        <input type="hidden" value="<?php echo $row['c_name']; ?>" name="client_nom" />
-                        <input type="hidden" value="<?php echo $row['statut_reparation']; ?>" name="statut_reparation" />
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-success" id="submit">Envoyer</button>
-                      </div>
-
-                    </form>
+                      </form>
+                    </div>
                   </div>
-                </div>
                 <?php }
                 ?>
             </tbody>
@@ -540,6 +540,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
       </div>
     </div>
   </div>
+
   <div class="row container-fluid">
     <div class="col-lg-6 col-md-6 col-sm-6">
       <div class="box box-success">
@@ -575,65 +576,65 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
 
                 ?>
 
-              <tr>
-                <td><span class="label label-success"><?php echo $row['devis_id']; ?></span></td>
-                <td><?php echo $row['VIN']; ?></td>
-                <td><?php echo $row['c_name']; ?></td>
-                <td><?php echo $row['add_date_recep_vehi']; ?></td>
-                <td><?php echo $row['add_date_assurance']; ?></td>
-                <td><?php echo $row['add_date_visitetech']; ?></td>
-                <td><?php
-                      if (!isset($row['statut_validation_devis_mecanique'])) {
-                        echo "";
-                      } else if ($row['statut_validation_devis_mecanique'] == null) {
-                        echo "<span class='label label-default'>En attente de validation</span> <br/>";
-                      } else if ($row['statut_validation_devis_mecanique'] == 1) {
-                        echo "<span class='label label-success'>Validation effectué par le client</span> <br/>";
-                      }
-                      ?></td>
-                <td><?php
-                      if (!isset($row['statut_validation_devis_electrique'])) {
-                        echo "";
-                      } else if ($row['statut_validation_devis_electrique'] == null) {
-                        echo "<span class='label label-default'>En attente de validation</span> <br/>";
-                      } else if ($row['statut_validation_devis_electrique'] == 1) {
-                        echo "<span class='label label-success'>Validation effectué par le client</span> <br/>";
-                      }
-                      ?></td>
-                <td><?php
-                      if (!isset($row['statut_autorisation_reparation_mecanique'])) {
-                        echo "";
-                      } else if ($row['statut_autorisation_reparation_mecanique'] == null) {
-                        echo "<span class='label label-default'>En attente d'autorisation</span> <br/>";
-                      } else if ($row['statut_autorisation_reparation_mecanique'] == 1) {
-                        echo "<span class='label label-success'>Autorisation accordée</span> <br/>";
-                      }
-                      ?></td>
-                <td><?php
-                      if (!isset($row['statut_autorisation_reparation_electrique'])) {
-                        echo "";
-                      } else if ($row['statut_autorisation_reparation_electrique'] == null) {
-                        echo "<span class='label label-default'>En attente d'autorisation</span> <br/>";
-                      } else if ($row['statut_autorisation_reparation_electrique'] == 1) {
-                        echo "<span class='label label-success'>Autorisation accordée</span> <br/>";
-                      }
-                      ?></td>
-                <td>
-                  <?php
-                    if ($row['statut_autorisation_reparation_mecanique'] == null && $row['type_diagnostic'] == 'mécanique') { ?>
-                  <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a> -->
-                  <a class="btn btn-info" style="background-color:#0029CE;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_debut_reparation_process.php?type_diagnostic=<?php echo $row['type_diagnostic']; ?>&recep_car_id=<?php echo $row['recep_car_id']; ?>&attribution_mecanicien=<?php echo $row['attribution_mecanicien']; ?>&attribution_electricien=<?php echo $row['attribution_electricien']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>" data-original-title="Autoriser la réparation mécanique du véhicule"><i class="fa fa-car"></i></a>
-                  <?php }
-                    ?>
-                  <?php
-                    if ($row['statut_autorisation_reparation_electrique'] == null && $row['type_diagnostic'] == 'électrique') { ?>
-                  <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a> -->
-                  <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_debut_reparation_process.php?type_diagnostic=<?php echo $row['type_diagnostic']; ?>&recep_car_id=<?php echo $row['recep_car_id']; ?>&attribution_mecanicien=<?php echo $row['attribution_mecanicien']; ?>&attribution_electricien=<?php echo $row['attribution_electricien']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>" data-original-title="Autoriser la réparation électrique du véhicule"><i class="fa fa-car"></i></a>
-                  <?php }
-                    ?>
-                </td>
+                <tr>
+                  <td><span class="label label-success"><?php echo $row['devis_id']; ?></span></td>
+                  <td><?php echo $row['VIN']; ?></td>
+                  <td><?php echo $row['c_name']; ?></td>
+                  <td><?php echo $row['add_date_recep_vehi']; ?></td>
+                  <td><?php echo $row['add_date_assurance']; ?></td>
+                  <td><?php echo $row['add_date_visitetech']; ?></td>
+                  <td><?php
+                        if (!isset($row['statut_validation_devis_mecanique'])) {
+                          echo "";
+                        } else if ($row['statut_validation_devis_mecanique'] == null) {
+                          echo "<span class='label label-default'>En attente de validation</span> <br/>";
+                        } else if ($row['statut_validation_devis_mecanique'] == 1) {
+                          echo "<span class='label label-success'>Validation effectué par le client</span> <br/>";
+                        }
+                        ?></td>
+                  <td><?php
+                        if (!isset($row['statut_validation_devis_electrique'])) {
+                          echo "";
+                        } else if ($row['statut_validation_devis_electrique'] == null) {
+                          echo "<span class='label label-default'>En attente de validation</span> <br/>";
+                        } else if ($row['statut_validation_devis_electrique'] == 1) {
+                          echo "<span class='label label-success'>Validation effectué par le client</span> <br/>";
+                        }
+                        ?></td>
+                  <td><?php
+                        if (!isset($row['statut_autorisation_reparation_mecanique'])) {
+                          echo "";
+                        } else if ($row['statut_autorisation_reparation_mecanique'] == null) {
+                          echo "<span class='label label-default'>En attente d'autorisation</span> <br/>";
+                        } else if ($row['statut_autorisation_reparation_mecanique'] == 1) {
+                          echo "<span class='label label-success'>Autorisation accordée</span> <br/>";
+                        }
+                        ?></td>
+                  <td><?php
+                        if (!isset($row['statut_autorisation_reparation_electrique'])) {
+                          echo "";
+                        } else if ($row['statut_autorisation_reparation_electrique'] == null) {
+                          echo "<span class='label label-default'>En attente d'autorisation</span> <br/>";
+                        } else if ($row['statut_autorisation_reparation_electrique'] == 1) {
+                          echo "<span class='label label-success'>Autorisation accordée</span> <br/>";
+                        }
+                        ?></td>
+                  <td>
+                    <?php
+                      if ($row['statut_autorisation_reparation_mecanique'] == null && $row['type_diagnostic'] == 'mécanique') { ?>
+                      <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a> -->
+                      <a class="btn btn-info" style="background-color:#0029CE;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_debut_reparation_process.php?type_diagnostic=<?php echo $row['type_diagnostic']; ?>&recep_car_id=<?php echo $row['recep_car_id']; ?>&attribution_mecanicien=<?php echo $row['attribution_mecanicien']; ?>&attribution_electricien=<?php echo $row['attribution_electricien']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>" data-original-title="Autoriser la réparation mécanique du véhicule"><i class="fa fa-car"></i></a>
+                    <?php }
+                      ?>
+                    <?php
+                      if ($row['statut_autorisation_reparation_electrique'] == null && $row['type_diagnostic'] == 'électrique') { ?>
+                      <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter la devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a> -->
+                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/car_debut_reparation_process.php?type_diagnostic=<?php echo $row['type_diagnostic']; ?>&recep_car_id=<?php echo $row['recep_car_id']; ?>&attribution_mecanicien=<?php echo $row['attribution_mecanicien']; ?>&attribution_electricien=<?php echo $row['attribution_electricien']; ?>&admin_ges_tel=<?php echo $row['admin_ges_tel']; ?>&make_name=<?php echo $row['make_name']; ?>&model_name=<?php echo $row['model_name']; ?>&VIN=<?php echo $row['VIN']; ?>&recep_tel=<?php echo $row['recep_tel']; ?>" data-original-title="Autoriser la réparation électrique du véhicule"><i class="fa fa-car"></i></a>
+                    <?php }
+                      ?>
+                  </td>
 
-              </tr>
+                </tr>
               <?php }
               // mysql_close($link); 
               ?>
@@ -694,137 +695,139 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
                   $image = WEB_URL . 'img/upload/' . $row['car_image']; //car image
                 }
 
-                // On récupère les dates de fin de l'assurance et de la visite technique
+                // On récupère les dates de visite technique
                 if (isset($row['add_date_visitetech'])) {
                   $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
+
+                  // on calcul la période d'échéance en nombre de jour entre les dates de fin de la visite technique 
+                  // et de l'assurance en fonction de la date d'aujourd'hui
+                  $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
+                  $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
                 }
 
+                // On récupère les dates d'assurance
                 if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
                   $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
+
+                  $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+                  $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
                 }
-
-                // on calcul la période d'échéance en nombre de jour entre les dates de fin de la visite technique 
-                // et de l'assurance en fonction de la date d'aujourd'hui
-                $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
-                $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
-
-                $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
-                $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
 
                 // Si la période d'échéance en nombre de jours de la fin de la visite technique et/ou de l'assurance
                 // est dans 14 jours ou moins
-                if (($diffDateDebutFinAssur >= -14) || ($diffTodayDateprochvistech >= -14)) {
+
+                if ((isset($diffDateDebutFinAssur) && $diffDateDebutFinAssur >= -14) || (isset($diffTodayDateprochvistech) && $diffTodayDateprochvistech >= -14)) {
 
                   ?>
-              <tr>
-                <td><span><?php echo $row['VIN']; ?></span></td>
-                <td><img class="photo_img_round" style="width:50px;height:50px;" src="<?php echo $image;  ?>" /></td>
-                <td><?php echo $row['c_name']; ?></td>
-                <td><?php echo $row['add_date_visitetech'] ?></td>
-                <td>
-                  <?php
+                  <tr>
+                    <td><span><?php echo $row['VIN']; ?></span></td>
+                    <td><img class="photo_img_round" style="width:50px;height:50px;" src="<?php echo $image;  ?>" /></td>
+                    <td><?php echo $row['c_name']; ?></td>
+                    <td><?php echo $row['add_date_visitetech'] ?></td>
+                    <td>
+                      <?php
 
-                      // Traitement de la visiste technique
-                      if (isset($row['add_date_visitetech'])) { // Si la date de la visite technique existe
+                          // Traitement de la visiste technique
+                          if (isset($row['add_date_visitetech'])) { // Si la date de la visite technique existe
 
-                        // On crée un objet Datetime à partir du format chaine de caractère de la date de la visite technique
-                        $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
+                            // On crée un objet Datetime à partir du format chaine de caractère de la date de la visite technique
+                            $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
 
-                        if ($dateprochvistech instanceof DateTime) {
+                            if ($dateprochvistech instanceof DateTime) {
 
-                          // Définition du statut de la visite technique
-                          $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
+                              // Définition du statut de la visite technique
+                              $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
 
-                          $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
-
-                          // conversion en entier
-                          $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
-
-                          if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) {
-                            echo "<span class='label label-warning'>Expire dans " . $diffTodayDateprochvistechStr . "</span>";
-                          } elseif ($diffTodayDateprochvistech >= 0) {
-                            echo "<span class='label label-danger'>Expiré</span>";
-                          } else {
-                            echo "<span class='label label-success'>Valide</span>";
-                          }
-                        }
-                      } ?>
-
-                </td>
-                <td><?php echo $row['add_date_assurance_fin'] ?></td>
-                <td><?php
-
-                        // Traitement de l'assurance
-                        if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
-                          $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
-
-                          if ($dateFinAssur instanceof DateTime) {
-
-                            $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
-                            $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
-
-                            // conversion en entier
-                            $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
-
-                            if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) {
-                              echo "<span class='label label-warning'>Expire dans " . $diffDateDebutFinAssurStr . "</span>";
-                            } elseif ($diffDateDebutFinAssur >= 0) {
-                              echo "<span class='label label-danger'>Expiré</span>";
-                            } else {
-                              echo "<span class='label label-success'>Valide</span>";
-                            }
-                          }
-                        } ?></td>
-                <td>
-                  <?php
-
-                      // VISITE TECHNIQUE
-                      if (isset($row['add_date_visitetech'])) { // Si la date de la visite technique existe
-
-                        // On crée un objet Datetime à partir du format chaine de caractère de la date de la visite technique
-                        $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
-
-                        if ($dateprochvistech instanceof DateTime) {
-
-                          // Définition du statut de la visite technique
-                          $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
-                          $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
-                          $diffTodayDateprochvistechStr_2 = $dateprochvistech->diff(new \DateTime())->format('%a');
-
-                          // conversion en entier
-                          $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
-
-                          if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) { ?>
-                  <a class="btn btn-primary" style="background-color:#FFD700;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelAvExpVistechSms.php?remainingDays=<?php echo $diffTodayDateprochvistechStr_2 ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de la visite technique du véhicule"><i class="fa fa-bell"></i>
-                    <?php } elseif ($diffTodayDateprochvistech >= 0) { ?>
-                    <a class="btn btn-primary" style="background-color:#FF4500;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelExpVistechSms.php?mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de la visite technique du véhicule"><i class="fa fa-bell"></i>
-                      <?php }
-                            }
-                          }
-
-                          // ASSURANCE
-                          if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
-                            $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
-
-                            if ($dateFinAssur instanceof DateTime) {
-
-                              $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
-                              $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
-                              $diffDateDebutFinAssurStr_2 = $dateFinAssur->diff(new \DateTime())->format('%a');
+                              $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
 
                               // conversion en entier
-                              $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
+                              $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
 
-                              if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) { ?>
-                      <a class="btn btn-primary" style="background-color:#FFD700;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelAvExpAssurSms.php?remainingDays=<?php echo $diffDateDebutFinAssurStr_2; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de l'assurance du véhicule"><i class="fa fa-bell"></i>
-                        <?php } elseif ($diffDateDebutFinAssur >= 0) { ?>
-                        <a class="btn btn-primary" style="background-color:#FF4500;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelExpAssurSms.php?mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de l'assurance du véhicule"><i class="fa fa-bell"></i>
-                          <?php }
+                              if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) {
+                                echo "<span class='label label-warning'>Expire dans " . $diffTodayDateprochvistechStr . "</span>";
+                              } elseif ($diffTodayDateprochvistech >= 0) {
+                                echo "<span class='label label-danger'>Expiré</span>";
+                              } else {
+                                echo "<span class='label label-success'>Valide</span>";
+                              }
+                            }
+                          } ?>
+
+                    </td>
+                    <td><?php echo $row['add_date_assurance_fin'] ?></td>
+                    <td><?php
+
+                            // Traitement de l'assurance
+                            if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
+                              $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
+
+                              if ($dateFinAssur instanceof DateTime) {
+
+                                $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+                                $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
+
+                                // conversion en entier
+                                $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
+
+                                if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) {
+                                  echo "<span class='label label-warning'>Expire dans " . $diffDateDebutFinAssurStr . "</span>";
+                                } elseif ($diffDateDebutFinAssur >= 0) {
+                                  echo "<span class='label label-danger'>Expiré</span>";
+                                } else {
+                                  echo "<span class='label label-success'>Valide</span>";
                                 }
                               }
-                              ?>
-                </td>
-              </tr>
+                            } ?></td>
+                    <td>
+                      <?php
+
+                          // VISITE TECHNIQUE
+                          if (isset($row['add_date_visitetech'])) { // Si la date de la visite technique existe
+
+                            // On crée un objet Datetime à partir du format chaine de caractère de la date de la visite technique
+                            $dateprochvistech = DateTime::createFromFormat('d/m/Y', $row['add_date_visitetech']);
+
+                            if ($dateprochvistech instanceof DateTime) {
+
+                              // Définition du statut de la visite technique
+                              $diffTodayDateprochvistech = $dateprochvistech->diff(new \DateTime())->format('%R%a');
+                              $diffTodayDateprochvistechStr = $dateprochvistech->diff(new \DateTime())->format(' %a jours');
+                              $diffTodayDateprochvistechStr_2 = $dateprochvistech->diff(new \DateTime())->format('%a');
+
+                              // conversion en entier
+                              $diffTodayDateprochvistech = (int) $diffTodayDateprochvistech;
+
+                              if (($diffTodayDateprochvistech >= -14) && ($diffTodayDateprochvistech < 0)) { ?>
+                            <a class="btn btn-primary" style="background-color:#FFD700;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelAvExpVistechSms.php?remainingDays=<?php echo $diffTodayDateprochvistechStr_2 ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de la visite technique du véhicule"><i class="fa fa-bell"></i>
+                            <?php } elseif ($diffTodayDateprochvistech >= 0) { ?>
+                              <a class="btn btn-primary" style="background-color:#FF4500;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelExpVistechSms.php?mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de la visite technique du véhicule"><i class="fa fa-bell"></i>
+                              <?php }
+                                    }
+                                  }
+
+                                  // ASSURANCE
+                                  if (isset($row['add_date_assurance']) && isset($row['add_date_assurance_fin'])) {
+                                    $dateFinAssur = DateTime::createFromFormat('d/m/Y', $row['add_date_assurance_fin']);
+
+                                    if ($dateFinAssur instanceof DateTime) {
+
+                                      $diffDateDebutFinAssur = $dateFinAssur->diff(new \DateTime())->format('%R%a');
+                                      $diffDateDebutFinAssurStr = $dateFinAssur->diff(new \DateTime())->format(' %a jours');
+                                      $diffDateDebutFinAssurStr_2 = $dateFinAssur->diff(new \DateTime())->format('%a');
+
+                                      // conversion en entier
+                                      $diffDateDebutFinAssur = (int) $diffDateDebutFinAssur;
+
+                                      if (($diffDateDebutFinAssur >= -14) && ($diffDateDebutFinAssur < 0)) { ?>
+                                <a class="btn btn-primary" style="background-color:#FFD700;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelAvExpAssurSms.php?remainingDays=<?php echo $diffDateDebutFinAssurStr_2; ?>&mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de l'assurance du véhicule"><i class="fa fa-bell"></i>
+                                <?php } elseif ($diffDateDebutFinAssur >= 0) { ?>
+                                  <a class="btn btn-primary" style="background-color:#FF4500;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>sendRappelExpAssurSms.php?mobile_customer=<?php echo $row['princ_tel']; ?>&marque=<?php echo $row['make_name']; ?>&modele=<?php echo $row['model_name']; ?>&imma=<?php echo $row['VIN']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="Envoyer un SMS de rappel au client concernant le statut de l'assurance du véhicule"><i class="fa fa-bell"></i>
+                              <?php }
+                                    }
+                                  }
+                                  ?>
+                    </td>
+                  </tr>
               <?php }
                 // mysql_close($link);
               }
@@ -840,155 +843,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
 </section>
 <!-- /.content -->
 <script type="text/javascript">
-  // Get context with jQuery - using jQuery's .get() method.
-  var salesChartCanvas = $('#salesChart').get(0).getContext('2d');
-  // This will get the first returned node in the jQuery collection.
-  var salesChart = new Chart(salesChartCanvas);
-
-  var salesChartData = {
-    //labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July ', 'August', 'September', 'October', 'November', 'December'],
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    datasets: [{
-      label: 'Car Repair',
-      fillColor: 'rgba(0, 166, 90, 1)',
-      strokeColor: 'rgba(0, 166, 90, 1)',
-      pointColor: '#00a65a',
-      pointStrokeColor: 'rgba(0, 166, 90, 1)',
-      pointHighlightFill: '#fff',
-      pointHighlightStroke: 'rgba(0, 166, 90, 1)',
-      data: [ < ? php echo $car_repair_data_default; ? > ]
-    }]
-  };
-
-  var salesChartOptions = {
-    // Boolean - If we should show the scale at all
-    showScale: true,
-    // Boolean - Whether grid lines are shown across the chart
-    scaleShowGridLines: true,
-    // String - Colour of the grid lines
-    scaleGridLineColor: 'rgba(0,0,0,.05)',
-    // Number - Width of the grid lines
-    scaleGridLineWidth: 1,
-    // Boolean - Whether to show horizontal lines (except X axis)
-    scaleShowHorizontalLines: true,
-    // Boolean - Whether to show vertical lines (except Y axis)
-    scaleShowVerticalLines: true,
-    // Boolean - Whether the line is curved between points
-    bezierCurve: true,
-    // Number - Tension of the bezier curve between points
-    bezierCurveTension: 0.3,
-    // Boolean - Whether to show a dot for each point
-    pointDot: true,
-    // Number - Radius of each point dot in pixels
-    pointDotRadius: 4,
-    // Number - Pixel width of point dot stroke
-    pointDotStrokeWidth: 1,
-    // Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-    pointHitDetectionRadius: 20,
-    // Boolean - Whether to show a stroke for datasets
-    datasetStroke: true,
-    // Number - Pixel width of dataset stroke
-    datasetStrokeWidth: 2,
-    // Boolean - Whether to fill the dataset with a color
-    datasetFill: true,
-    // String - A legend template
-    legendTemplate: '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<datasets.length; i++){%><li><span style=\'background-color:<%=datasets[i].lineColor%>\'></span><%=datasets[i].label%></li><%}%></ul>',
-    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-    maintainAspectRatio: true,
-    // Boolean - whether to make the chart responsive to window resizing
-    responsive: true
-  };
-
-  // Create the line chart
-  salesChart.Line(salesChartData, salesChartOptions);
-
-  // ---------------------------
-  // - END MONTHLY SALES CHART -
-  // ---------------------------
-
-
-  // -------------
-  // - PIE CHART -
-  //By E-MITIC
-  // -------------
-  // Get context with jQuery - using jQuery's .get() method.
-  var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
-  var pieChart = new Chart(pieChartCanvas);
-  var PieData = < ? php $parts_sell_report; ? > ;
-  var pieOptions = {
-    // Boolean - Whether we should show a stroke on each segment
-    segmentShowStroke: true,
-    // String - The colour of each segment stroke
-    segmentStrokeColor: '#fff',
-    // Number - The width of each segment stroke
-    segmentStrokeWidth: 1,
-    // Number - The percentage of the chart that we cut out of the middle
-    percentageInnerCutout: 50, // This is 0 for Pie charts
-    // Number - Amount of animation steps
-    animationSteps: 100,
-    // String - Animation easing effect
-    animationEasing: 'easeOutBounce',
-    // Boolean - Whether we animate the rotation of the Doughnut
-    animateRotate: true,
-    // Boolean - Whether we animate scaling the Doughnut from the centre
-    animateScale: false,
-    // Boolean - whether to make the chart responsive to window resizing
-    responsive: true,
-    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-    //maintainAspectRatio  : false,
-    // String - A legend template
-    //legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
-    // String - A tooltip template
-    tooltipTemplate: '<%=value %> <%=label%>'
-  };
-  // Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  pieChart.Doughnut(PieData, pieOptions);
-  // -----------------
-  // - END PIE CHART -
-  // -----------------
-
-
-  // -------------
-  // - PIE CHART -
-  // -------------
-  // Get context with jQuery - using jQuery's .get() method.
-  var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d');
-  var pieChart2 = new Chart(pieChartCanvas2);
-  var PieData2 = < ? php echo $car_sell_report; ? > ;
-
-  var pieOptions2 = {
-    // Boolean - Whether we should show a stroke on each segment
-    segmentShowStroke: true,
-    // String - The colour of each segment stroke
-    segmentStrokeColor: '#fff',
-    // Number - The width of each segment stroke
-    segmentStrokeWidth: 1,
-    // Number - The percentage of the chart that we cut out of the middle
-    percentageInnerCutout: 50, // This is 0 for Pie charts
-    // Number - Amount of animation steps
-    animationSteps: 100,
-    // String - Animation easing effect
-    animationEasing: 'easeOutBounce',
-    // Boolean - Whether we animate the rotation of the Doughnut
-    animateRotate: true,
-    // Boolean - Whether we animate scaling the Doughnut from the centre
-    animateScale: false,
-    // Boolean - whether to make the chart responsive to window resizing
-    responsive: true,
-    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-    //maintainAspectRatio  : false,
-    // String - A legend template
-    //legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
-    // String - A tooltip template
-    tooltipTemplate: '<%=value %> <%=label%>'
-  };
-  // Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  pieChart2.Doughnut(PieData2, pieOptions2);
-  // -----------------
-  // - END PIE CHART -
-  // -----------------
   $(document).ready(function() {
     setTimeout(function() {
       $("#me").hide(300);

@@ -101,8 +101,13 @@ if (isset($_POST['txtCName'])) {
 		$url = WEB_URL . 'customer/customerlist.php?m=up';
 		header("Location: $url");
 	} else {
-		$url = WEB_URL . 'customer/customerlist.php?m=add';
-		header("Location: $url");
+		if ($_SESSION['login_type'] == 'service client') {
+			$url = WEB_URL . 'servcli_panel/servcli_dashboard.php';
+			header("Location: $url");
+		} else {
+			$url = WEB_URL . 'customer/customerlist.php?m=add';
+			header("Location: $url");
+		}
 	}
 	exit();
 	// } else {
