@@ -134,6 +134,10 @@ if (!empty($_SESSION['objCust']['image'])) {
   <!-- <script src="<?php echo WEB_URL; ?>dist/js/adddevis.js"></script> -->
   <script type="text/javascript" src="<?php echo WEB_URL; ?>dist/js/typeahead.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
 
   <script src="https://cdn.lr-ingest.io/LogRocket.min.js" crossorigin="anonymous"></script>
   <script>
@@ -1353,6 +1357,14 @@ if (!empty($_SESSION['objCust']['image'])) {
                                         echo 'active';
                                       } ?>">
                       <a href="<?php echo WEB_URL; ?>reception/repaircar_reception.php"><i class="fa fa-arrow-circle-right"></i>Réception de véhicules</a>
+                    </li>
+                    <li class="<?php if ($page_name != '' && $page_name == 'diagnostic_vehicule_list') {
+
+                                        echo 'active';
+                                      } ?>">
+
+                      <a href="<?php echo WEB_URL; ?>reception/repaircar_diagnostic_list.php"><i class="fa fa-arrow-circle-right"></i>Liste des véhicules diagnostiqués</a>
+
                     </li>
                     <!-- <li class="<?php if ($page_name != '' && $page_name == 'reception_vehicule_list') {
                                             echo 'active';

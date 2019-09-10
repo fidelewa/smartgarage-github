@@ -1,6 +1,7 @@
 <?php
 include('../helper/common.php');
 include_once('../config.php');
+include_once('../session.php');
 
 // var_dump($_POST);
 // die();
@@ -9,6 +10,8 @@ $_POST['remarque_mecano'] = mysql_real_escape_string(trim($_POST['remarque_mecan
 
 if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
 
+    $dateAcceptationDiagnostic = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'Y-m-d H:i:s');
+
     // Enregistrement de l'identifiant du mécanicien à qui à été attribué la fiche de réception du véhicule
     $query = "UPDATE tbl_recep_vehi_repar 
     SET status_attribution_vehicule=1,
@@ -16,7 +19,8 @@ if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
     statut_action_mecanicien=1,
     mecano_name='" . $_POST['chef_mech_elec_name'] . "',
     chef_mech_elec_id='" . $_POST['chef_mec_elec_id'] . "',
-    msg_acceptation = '" . $_POST['remarque_mecano'] . "'
+    msg_acceptation = '" . $_POST['remarque_mecano'] . "',
+    date_acceptation_diagnostic = '" . $dateAcceptationDiagnostic . "'
     WHERE car_id='" . $_POST['reception_id'] . "'";
 
     // On teste le résultat de la requête pour savoir si elle n'a pas déclenché des erreurs
@@ -31,6 +35,8 @@ if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
 
 if ($_POST['chef_mech_elec_type'] == "chef electricien") {
 
+    $dateAcceptationDiagnostic = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'Y-m-d H:i:s');
+
     // Enregistrement de l'identifiant du mécanicien à qui à été attribué la fiche de réception du véhicule
     $query = "UPDATE tbl_recep_vehi_repar 
     SET status_attribution_vehicule=1,
@@ -38,7 +44,8 @@ if ($_POST['chef_mech_elec_type'] == "chef electricien") {
     statut_action_electricien=1,
     electro_name='" . $_POST['chef_mech_elec_name'] . "',
     chef_mech_elec_id='" . $_POST['chef_mec_elec_id'] . "',
-    msg_acceptation = '" . $_POST['remarque_mecano'] . "'
+    msg_acceptation = '" . $_POST['remarque_mecano'] . "',
+    date_acceptation_diagnostic = '" . $dateAcceptationDiagnostic . "'
     WHERE car_id='" . $_POST['reception_id'] . "'";
 
     // On teste le résultat de la requête pour savoir si elle n'a pas déclenché des erreurs
