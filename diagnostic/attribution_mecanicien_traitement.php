@@ -29,32 +29,32 @@ if (isset($_POST['mecanicienList']) && isset($_POST['car_id'])) {
 
     // Un même véhicule peut être attribué à la fois à un mécanicien et à un électricien
 
-    if ($_POST['mecanicienList'] == "chef mecanicien et electricien") {
+    // if ($_POST['mecanicienList'] == "chef mecanicien et electricien") {
 
-        $query = "UPDATE tbl_recep_vehi_repar 
-        SET attribution_mecanicien= 'chef mecanicien',
-        attribution_electricien='chef electricien',
-        admin_ges_tel='" . $_POST['admin_ges_tel'] . "'
-        WHERE car_id='" . $_POST['reception_id'] . "'";
-    }
+    //     $query = "UPDATE tbl_recep_vehi_repar 
+    //     SET attribution_mecanicien= 'chef mecanicien',
+    //     attribution_electricien='chef electricien',
+    //     admin_ges_tel='" . $_POST['admin_ges_tel'] . "'
+    //     WHERE car_id='" . $_POST['reception_id'] . "'";
+    // }
 
-    if ($_POST['mecanicienList'] == "chef mecanicien") {
+    // if ($_POST['mecanicienList'] == "chef mecanicien") {
 
-        $query = "UPDATE tbl_recep_vehi_repar 
-        SET attribution_mecanicien='" . $_POST['mecanicienList'] . "',
-        -- status_attribution_vehicule=1,
-        admin_ges_tel='" . $_POST['admin_ges_tel'] . "'
-        WHERE car_id='" . $_POST['reception_id'] . "'";
-    }
+    //     $query = "UPDATE tbl_recep_vehi_repar 
+    //     SET attribution_mecanicien='" . $_POST['mecanicienList'] . "',
+    //     -- status_attribution_vehicule=1,
+    //     admin_ges_tel='" . $_POST['admin_ges_tel'] . "'
+    //     WHERE car_id='" . $_POST['reception_id'] . "'";
+    // }
 
-    if ($_POST['mecanicienList'] == "chef electricien") {
+    // if ($_POST['mecanicienList'] == "chef electricien") {
 
-        $query = "UPDATE tbl_recep_vehi_repar 
-        SET attribution_electricien='" . $_POST['mecanicienList'] . "',
-        -- status_attribution_vehicule=1,
-        admin_ges_tel='" . $_POST['admin_ges_tel'] . "'
-        WHERE car_id='" . $_POST['reception_id'] . "'";
-    }
+    //     $query = "UPDATE tbl_recep_vehi_repar 
+    //     SET attribution_electricien='" . $_POST['mecanicienList'] . "',
+    //     -- status_attribution_vehicule=1,
+    //     admin_ges_tel='" . $_POST['admin_ges_tel'] . "'
+    //     WHERE car_id='" . $_POST['reception_id'] . "'";
+    // }
 
     // // Enregistrement de l'historique des attributions des véhicules aux mécaniciens
     // $query_insert_attrib = "INSERT INTO tbl_histo_attribution (meca_elec_id, car_id, date_attr) 

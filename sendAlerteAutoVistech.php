@@ -30,7 +30,7 @@ foreach ($result as $row) {
       $mobile_customer = $row['princ_tel'];
 
       // Message de confirmation du devis
-      $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc a la repasser merci !';
+      $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc à la repasser merci !';
 
       // importation du fichier
       require_once(ROOT_PATH . '/SmsApi.php');
@@ -55,7 +55,7 @@ foreach ($result as $row) {
       $mobile_customer = $row['princ_tel'];
 
       // Message de confirmation du devis
-      $content_msg = 'Cher  client  ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture' . $marque . ' ' . $modele . ' ' . $imma . ' est depassee ! Pensez donc a la repasser !';
+      $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que la date de la visite technique de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' est depassée ! Pensez donc à la repasser !';
 
       // importation du fichier
       require_once(ROOT_PATH . '/SmsApi.php');

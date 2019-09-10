@@ -199,6 +199,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
   $msg = "Ajout du véhicule réussi";
 }
 
+$resultCarScanning = $wms->getCarScanningById($link, $_GET['vehicule_scanner_id']);
+$etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
+
+// var_dump($etat_vehi_arrive);
+
 ?>
 <!-- Content Header (Page header) -->
 
@@ -292,6 +297,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     .step.finish {
       background-color: #4CAF50;
     }
+
+    /* Echaffaudage #2 */
+    /* [class*="col-"] {
+      border: 1px dotted rgb(0, 0, 0);
+      border-radius: 1px;
+    } */
   </style>
 
 </head>
@@ -325,7 +336,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <div class="box-body">
               <div class="form-group">
                 <label for="vin"><span style="color:red;">*</span> Immatriculation :</label>
-                <input type="text" name="vin" value="<?php echo $vin ?>" id="vin" class="form-control" placeholder="Saisissez l'immatriculation de la voiture" />
+                <input type="text" readonly name="vin" value="<?php echo $vin ?>" id="vin" class="form-control" placeholder="Saisissez l'immatriculation de la voiture" />
               </div>
               <div class="form-group">
                 <label for="ddlMake"><span style="color:red;">*</span> Marque :</label>
@@ -341,11 +352,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                       foreach ($make_list as $make) {
                         if ($c_make == $make['make_id']) { ?>
 
-                          <input type="text" class='form-control' value="<?php echo $make['make_name']; ?>" name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
+                          <input type="text" readonly class='form-control' value="<?php echo $make['make_name']; ?>" name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
 
-                        <?php }
-                      }
-                    } else { ?>
+                      <?php }
+                        }
+                      } else { ?>
                       <input type="text" class='form-control' value="<?php echo $model['model_name']; ?>" name="ddlMake" id="ddlMake" placeholder="Saisissez la marque de la voiture">
                     <?php
                     }
@@ -371,11 +382,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                       foreach ($model_list as $model) {
                         if ($c_model == $model['model_id']) { ?>
 
-                          <input type="text" class='form-control' value="<?php echo $model['model_name']; ?>" name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture">
+                          <input readonly type="text" class='form-control' value="<?php echo $model['model_name']; ?>" name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture">
 
-                        <?php }
-                      }
-                    } else { ?>
+                      <?php }
+                        }
+                      } else { ?>
                       <input type="text" class='form-control' value="<?php echo $model['model_name']; ?>" name="ddlModel" id="ddl_model" placeholder="Saisissez le modèle de la voiture">
                     <?php
                     }
@@ -383,22 +394,22 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   </div>
                 </div>
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="assurance_vehi_recep"><span style="color:red;">*</span> Assurance :</label>
                 <div class="row">
                   <div class="col-md-12">
                     <input type="text" class='form-control' name="assurance_vehi_recep" id="assurance_vehi_recep" placeholder="Saisissez l'assurance de la voiture">
-                    <!-- <select class='form-control' id="assurance_vehi_recep" name="assurance_vehi_recep">
+                    <select class='form-control' id="assurance_vehi_recep" name="assurance_vehi_recep">
                       <option value="">--Sélectionner l'assurance du véhicule--</option>
                       <?php
                       $result = $wms->get_all_assurance_vehicule_list($link);
                       foreach ($result as $row) {
                         echo "<option value='" . $row['assur_vehi_libelle'] . "'>" . $row['assur_vehi_libelle'] . "</option>";
                       } ?>
-                    </select> -->
+                    </select>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="form-group">
                 <label for="assurance_vehi_recep"><span style="color:red;">*</span> Client :<span style="color:red;"> (si le client n'existe pas encore, veuillez cliquer sur le bouton "+" pour l'enregistrer, puis saisissez son nom à nouveau)</span></label>
                 <div class="row">
@@ -413,11 +424,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                       foreach ($customer_list as $customer) {
                         if ($cus_id == $customer['customer_id']) { ?>
 
-                          <input value="<?php echo $customer['c_name']; ?>" onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span>
+                          <input readonly value="<?php echo $customer['c_name']; ?>" onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span>
 
-                        <?php }
-                      }
-                    } else { ?>
+                      <?php }
+                        }
+                      } else { ?>
                       <input value="<?php echo $customer['c_name']; ?>" onkeyup="verifClient(this.value);" type="text" class='form-control' name="ddlCustomerList" id="ddlCustomerList" placeholder="Saisissez le nom du client s'il existe déja" onfocus=""><span id="clientbox"></span>
                     <?php
                     }
@@ -443,7 +454,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               </div> -->
               <div class="form-group">
                 <label for="car_chasis_no"><span style="color:red;">*</span> Chasis No :</label>
-                <input type="text" name="car_chasis_no" value="<?php echo $c_chasis_no; ?>" id="car_chasis_no" class="form-control" placeholder="Saisissez le numéro de chasis de la voiture">
+                <input minlength="14" type="text" name="car_chasis_no" value="<?php echo $c_chasis_no; ?>" id="car_chasis_no" class="form-control" placeholder="Saisissez le numéro de chasis de la voiture">
               </div>
               <!-- <div class="form-group">
                 <label for="car_note">Note :</label>
@@ -461,18 +472,18 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <label for="add_date"><span style="color:red;">*</span> Date d'immatriculation:</label>
                 <input type="text" name="add_date_imma" value="" id="add_date_imma" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="add_date"><span style="color:red;">*</span> Date de début de l'assurance:</label>
                 <input type="text" name="add_date_assurance_car" value="" id="add_date_assurance" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
               </div>
               <div class="form-group">
                 <label for="add_date"><span style="color:red;">*</span> Date de fin de l'assurance:</label>
                 <input type="text" name="add_date_assurance_fin" value="" id="add_date_assurance_fin" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
-              </div>
-              <div class="form-group">
+              </div> -->
+              <!-- <div class="form-group">
                 <label for="add_date"><span style="color:red;">*</span> Date de la prochaine visite technique:</label>
                 <input type="text" name="add_date_visitetech_car" value="" id="add_date_visitetech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
-              </div>
+              </div> -->
               <div class="form-group">
                 <label for="add_date"> Date de dernière vidange:</label>
                 <input type="text" name="add_date_derniere_vidange" value="" id="add_date_derniere_vidange" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
@@ -508,10 +519,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 </select>
               </div> -->
 
-              <div class="form-group">
-                <label for="km_last_vidange"> Kilométrage de dernière vidange :</label>
+              <!-- <div class="form-group">
+                <label for="km_last_vidange"><span style="color:red;">*</span> Kilométrage de dernière vidange :</label>
                 <input type="text" id="km_last_vidange" maxlength="6" name="km_last_vidange" class='form-control' value="<?php echo $km_last_vidange; ?>" placeholder="Veuillez saisir le kilométrage de la dernière vidange" />
-              </div>
+              </div> -->
               <!-- <div class="form-group">
                 <label for="add_date_ctr_tech"><span style="color:red;">*</span> Date du contrôle technique:</label>
                 <input type="text" name="add_date_ctr_tech" value="<?php echo $add_date_ctr_tech; ?>" id="add_date_ctr_tech" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
@@ -684,7 +695,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             </div>
 
             <div class="form-group row">
-              <label for="km_reception_vehi" class="col-md-3 col-form-label"> Kilométrage</label>
+              <label for="km_reception_vehi" class="col-md-3 col-form-label"><span style="color:red;">*</span> Kilométrage</label>
               <div class="col-md-9 input-group" style="padding-left:0px;">
                 <span class="input-group-addon">
                   <select name="type_km">
@@ -697,50 +708,168 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             </div>
 
             <div class="form-group row">
-              <label for="nivo_carbu_recep_vehi" class="col-md-3 col-form-label"><span style="color:red;">*</span> Niveau de carburant</label>
+              <label class="col-md-3 col-form-label"><span style="color:red;">*</span> Niveau de carburant</label>
               <div class="col-md-1 form-check" style="padding-left:0px;">
                 <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_0_4" value="0/4">
-                <label class="form-check-label" for="nivo_carbu_recep_vehi">0/4</label>
+                <label class="form-check-label">0/4</label>
               </div>
               <div class="col-md-1 form-check" style="padding-left:0px;">
-                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_4" value="1/4" checked>
-                <label class="form-check-label" for="nivo_carbu_recep_vehi">1/4</label>
+                <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_4" value="1/4">
+                <label class="form-check-label">1/4</label>
               </div>
               <div class="col-md-1 form-check" style="padding-left:0px;">
                 <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_1_2" value="1/2">
-                <label class="form-check-label" for="nivo_carbu_recep_vehi">1/2</label>
+                <label class="form-check-label">1/2</label>
               </div>
               <div class="col-md-1 form-check" style="padding-left:0px;">
                 <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_3_4" value="3/4">
-                <label class="form-check-label" for="nivo_carbu_recep_vehi">3/4</label>
+                <label class="form-check-label">3/4</label>
               </div>
               <div class="col-md-1 form-check" style="padding-left:0px;">
                 <input class="form-check-input" type="radio" name="nivo_carbu_recep_vehi" id="nivo_carbu_recep_vehi_4_4" value="4/4">
-                <label class="form-check-label" for="nivo_carbu_recep_vehi">4/4</label>
+                <label class="form-check-label">4/4</label>
               </div>
             </div>
+
 
             <hr>
 
             <div class="form-group row">
               <div class="col-md-3">
                 <input type="checkbox" id="cle_recep_vehi" name="cle_recep_vehi" value="Clé du véhicule" class="form-check-input" />
-                <label for="clé du véhicule"> Clé du véhicule</label>
+                <label for="clé du véhicule"><span style="color:red;">*</span> Clé du véhicule</label>
               </div>
               <div class="col-md-9" style="padding-left:0px;">
                 <input type="number" min="0" max="100" name="cle_recep_vehi_text" id="cle_recep_vehi_text" class="form-control" placeholder="Veuillez renseigner le nombre de clé du véhicule" />
               </div>
             </div>
 
+            <!-- CARTE GRISE -->
             <div class="form-group row">
-              <div class="col-md-12">
-                <input type="checkbox" id="carte_grise_recep_vehi" name="carte_grise_recep_vehi" value="Carte grise" class="form-check-input">
-                <label for="carte_grise_recep_vehi">Carte grise</label>
+              <label class="col-md-3 col-form-label"><span style="color:red;">*</span> Carte grise</label>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="carte_grise_recep_vehi" id="carte_grise_recep_vehi_oui" value="Carte grise">
+                <label class="form-check-label">OUI</label>
+              </div>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="carte_grise_recep_vehi" id="carte_grise_recep_vehi_non" value="">
+                <label class="form-check-label">NON</label>
+              </div>
+              <div id="carte_grise_box">
+                <div class="col-md-4 form-check" style="padding-left:0px;">
+                  <input class="form-check-input form-control" type="text" name="carte_grise_numero" id="carte_grise_numero" value="" placeholder="Renseigner le numéro de la carte grise">
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <span class="btn btn-file btn btn-primary">Ajouter la pièce de la carte grise<input type="file" name="pj_carte_grise" id="pj_carte_grise" />
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- VISITE TECHNIQUE -->
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"><span style="color:red;">*</span> Visite technique</label>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="visitetech_recep_vehi" id="visite_tech_recep_vehi_oui" value="Visite technique">
+                <label class="form-check-label">OUI</label>
+              </div>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="visitetech_recep_vehi" id="visite_tech_recep_vehi_non" value="">
+                <label class="form-check-label">NON</label>
+              </div>
+              <div id="visite_tech_box">
+                <div class="col-md-7 form-check" style="padding-left:0px;">
+                  <input style="margin-bottom:5px;" class="form-check-input form-control" type="text" name="visite_tech_numero" id="visite_tech_numero" value="" placeholder="Renseigner le numéro de la visite technique SVP">
+                  <input style="margin-bottom:5px;" class="form-control datepicker" type="text" name="add_date_visitetech_car" id="add_date_visitetech_car" value="" placeholder="Cliquez pour choisir la date d'expiration de la visite technique SVP">
+                  <span style="margin-bottom:5px;" class="btn btn-file btn btn-primary">Ajouter la pièce de la visite technique<input type="file" name="pj_visite_tech" id="pj_visite_tech" />
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ASSURANCE -->
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"><span style="color:red;">*</span> Assurance</label>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="assur_recep_vehi" id="assurance_recep_vehi_oui" value="Assurance">
+                <label class="form-check-label">OUI</label>
+              </div>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="assur_recep_vehi" id="assurance_recep_vehi_non" value="">
+                <label class="form-check-label">NON</label>
+              </div>
+              <div id="assurance_box">
+                <div class="col-md-7 form-check" style="padding-left:0px;">
+                  <input style="margin-bottom:5px;" class="form-check-input form-control" type="text" name="assurance_numero" id="assurance_numero" value="" placeholder="Saisissez le numéro de l'assurance du véhicule SVP">
+                  <input style="margin-bottom:5px;" type="text" class='form-control' name="assurance_vehi_recep" id="assurance_vehi_recep" placeholder="Saisissez le nom de l'assurance du véhicule">
+                  <input style="margin-bottom:5px;" type="text" name="add_date_assurance_car" value="" id="add_date_assurance" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+                  <input style="margin-bottom:5px;" type="text" name="add_date_assurance_fin" value="" id="add_date_assurance_fin" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+                  <span style="margin-bottom:5px;" class="btn btn-file btn btn-primary">Ajouter la pièce de l'assurance<input type="file" name="pj_assurance" id="pj_assurance" />
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ASSURANCE CEDEAO -->
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"><span style="color:red;">*</span> Assurance CEDEAO</label>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="assurance_cedeao_recep_vehi" id="assurance_cedeao_recep_vehi_oui" value="Assurance CEDEAO">
+                <label class="form-check-label">OUI</label>
+              </div>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="assurance_cedeao_recep_vehi" id="assurance_cedeao_recep_vehi_non" value="">
+                <label class="form-check-label">NON</label>
+              </div>
+              <div id="assurance_cedeao_box">
+                <div class="col-md-6 form-check" style="padding-left:0px;">
+                  <span class="btn btn-file btn btn-primary">Ajouter la pièce de l'assurance CEDEAO<input type="file" name="pj_assurance_cedeao" id="pj_assurance_cedeao" />
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CONTRAT ASSURANCE -->
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"><span style="color:red;">*</span> Contrat d'assurance</label>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="contrat_assurance_recep_vehi" id="contrat_assurance_recep_vehi_oui" value="Contrat asurance">
+                <label class="form-check-label">OUI</label>
+              </div>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="contrat_assurance_recep_vehi" id="contrat_assurance_recep_vehi_non" value="">
+                <label class="form-check-label">NON</label>
+              </div>
+              <div id="contrat_assurance_box">
+                <div class="col-md-6 form-check" style="padding-left:0px;">
+                  <span class="btn btn-file btn btn-primary">Ajouter la pièce du contrat d'assurance<input type="file" name="pj_contrat_assurance" id="pj_contrat_assurance" />
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- AUTRES PIECES -->
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"><span style="color:red;">*</span> Autres pièces</label>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="otre_piece_recep_vehi" id="otre_piece_recep_vehi_oui" value="Autres pièces">
+                <label class="form-check-label">OUI</label>
+              </div>
+              <div class="col-md-1 form-check" style="padding-left:0px;">
+                <input class="form-check-input" type="radio" name="otre_piece_recep_vehi" id="otre_piece_recep_vehi_non" value="">
+                <label class="form-check-label">NON</label>
+              </div>
+              <div id="otre_piece_box">
+                <div class="col-md-7 form-check" style="padding-left:0px;">
+                  <input style="margin-bottom:5px;" class="form-check-input form-control" type="text" name="otre_piece_numero" id="otre_piece_numero" value="" placeholder="Renseigner le numéro de la pièce SVP">
+                  <input style="margin-bottom:5px;" class="form-control datepicker" type="text" name="date_otre_piece_recep_vehi" id="date_otre_piece_recep_vehir" value="" placeholder="Cliquez pour sélectionner la date d'expiration de la pièce SVP">
+                  <span style="margin-bottom:5px;" class="btn btn-file btn btn-primary">Ajouter la pièce<input type="file" name="pj_otre_piece" id="pj_otre_piece" />
+                  </span>
+                </div>
               </div>
             </div>
 
           </div>
-
 
           <input type="hidden" name="add_date_assurance" value="<?php echo $add_date_assurance; ?>" id="add_date_assurance" class="datepicker form-control" />
           <input type="hidden" name="add_date_visitetech" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="datepicker form-control" />
@@ -760,7 +889,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
             <div class="form-group row">
               <div class="col-md-3">
                 <input type="checkbox" id="visitetech_recep_vehi" name="visitetech_recep_vehi" value="Visite technique">
-                <label for="visite technique"><span style="color:red;">*</span> Visite technique</label>
+                <label for="visite technique"><span pstyle="color:red;">*</span> Visite technique</label>
               </div>
               <div class="col-md-9" style="padding-left:0px;" id="date_visitetech">
                 <input type="hidden" name="add_date_visitetech" value="<?php echo $add_date_visitetech; ?>" id="add_date_visitetech" class="datepicker form-control" />
@@ -773,57 +902,169 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
           <div class="form-group row">
             <div class="col-md-3">
-              <input type="checkbox" id="cric_levage_recep_vehi" name="cric_levage_recep_vehi" value="Cric de levage">
-              <label for="cric_levage_recep_vehi">Cric de levage</label>
+
+              <label for="cric_levage_recep_vehi"><span style="color:red;">*</span> Cric de levage</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="cric_levage_recep_vehi" id="cric_levage_recep_vehi_oui" value="Cric de levage">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="cric_levage_recep_vehi" id="cric_levage_recep_vehi_non" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-3">
-              <input type="checkbox" id="cle_roue" name="cle_roue" value="Clé de roue">
-              <label for="cle_roue">Clé de roue</label>
+              <!-- <input type="checkbox" id="cle_roue" name="cle_roue" value="Clé de roue"> -->
+              <label for="cle_roue"><span style="color:red;">*</span> Clé de roue</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="cle_roue" value="Clé de roue">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-4 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="cle_roue" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-3">
-              <input type="checkbox" id="rallonge_roue_recep_vehi" name="rallonge_roue_recep_vehi" value="Rallonge de la roue">
-              <label for="rallonge_roue_recep_vehi">Rallonge de la roue</label>
+              <!-- <input type="checkbox" id="rallonge_roue_recep_vehi" name="rallonge_roue_recep_vehi" value="Rallonge de la roue"> -->
+              <label for="rallonge_roue_recep_vehi"><span style="color:red;">*</span> Rallonge de la roue</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="rallonge_roue_recep_vehi" value="Rallonge de la roue">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="rallonge_roue_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-3">
-              <input type="checkbox" id="pneu_secours" name="pneu_secours" value="Pneu secours">
-              <label for="pneu_secours">Pneu secours</label>
+              <!-- <input type="checkbox" id="pneu_secours" name="pneu_secours" value="Pneu secours"> -->
+              <label for="pneu_secours"><span style="color:red;">*</span> Pneu secours</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pneu_secours" value="Pneu secours">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pneu_secours" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
           </div>
 
           <div class="form-group row">
             <div class="col-md-3">
-              <input type="checkbox" id="anneau_remorquage_recep_vehi" name="anneau_remorquage_recep_vehi" value="Anneau de remorquage">
-              <label for="anneau_remorquage_recep_vehi">Anneau de remorquage</label>
+              <!-- <input type="checkbox" id="anneau_remorquage_recep_vehi" name="anneau_remorquage_recep_vehi" value="Anneau de remorquage"> -->
+              <label for="anneau_remorquage_recep_vehi"><span style="color:red;">*</span> Anneau de remorquage</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="anneau_remorquage_recep_vehi" value="Anneau de remorquage">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="anneau_remorquage_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-3">
-              <input type="checkbox" id="triangle" name="triangle" value="Triangle">
-              <label for="triangle">Triangle</label>
+              <!-- <input type="checkbox" id="triangle" name="triangle" value="Triangle"> -->
+              <label for="triangle"><span style="color:red;">*</span> Triangle</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="triangle" value="Triangle">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="triangle" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-3">
-              <input type="checkbox" id="boite_pharma" name="boite_pharma" value="Boite pharmaceutique">
-              <label for="boite_pharma">Boite pharmaceutique</label>
+              <!-- <input type="checkbox" id="boite_pharma" name="boite_pharma" value="Boite pharmaceutique"> -->
+              <label for="boite_pharma"><span style="color:red;">*</span> Boite pharmaceutique</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="boite_pharma" value="Boite pharmaceutique">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="boite_pharma" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-3">
-              <input type="checkbox" id="extincteur" name="extincteur" value="Extincteur">
-              <label for="extincteur">Extincteur</label>
+              <!-- <input type="checkbox" id="extincteur" name="extincteur" value="Extincteur"> -->
+              <label for="extincteur"><span style="color:red;">*</span> Extincteur</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="extincteur" value="Extincteur">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="extincteur" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
           </div>
           <div class="form-group row">
-            <label for="remarque_access_vehi" class="col-md-2 col-form-label">Remarque :</label>
+            <label for="remarque_access_vehi" class="col-md-2 col-form-label"><span style="color:red;">*</span> Remarque du réceptionniste sur le véhicule :</label>
             <div class="col-md-10" style="padding-left:0px;">
-              <textarea class="form-control" id="remarque_access_vehi" rows="4" name="remarque_access_vehi"></textarea>
+              <textarea class="form-control" rows="4" name="remarque_access_vehi" id="remarque_access_vehi"></textarea>
             </div>
           </div>
 
           <fieldset>
-            <legend>Ajouter des fichiers joints</legend>
+            <legend>Ajouter les photos des accessoires du véhicule en pièces jointes</legend>
             <div class="row">
-              <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_1_recep" />
+              <div class="col-md-2">
+                <span class="btn btn-file btn btn-primary">Accessoire 1<input type="file" name="pj_access_1" />
                 </span>
               </div>
-              <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_2_recep" />
+              <div class="col-md-2">
+                <span class="btn btn-file btn btn-primary">Accessoire 2<input type="file" name="pj_access_2" />
+                </span>
+              </div>
+              <div class="col-md-2">
+                <span class="btn btn-file btn btn-primary">Accessoire 3<input type="file" name="pj_access_3" />
+                </span>
+              </div>
+              <div class="col-md-2">
+                <span class="btn btn-file btn btn-primary">Accessoire 4<input type="file" name="pj_access_4" />
+                </span>
+              </div>
+              <div class="col-md-2">
+                <span class="btn btn-file btn btn-primary">Accessoire 5<input type="file" name="pj_access_5" />
+                </span>
+              </div>
+              <div class="col-md-2">
+                <span class="btn btn-file btn btn-primary">Accessoire 6<input type="file" name="pj_access_6" />
                 </span>
               </div>
             </div>
@@ -835,189 +1076,783 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           <p style="color:red; font-style:italic">NB: Veuillez sélectionner le ou les motifs de dépots</p>
           <div class="form-group row">
             <div class="col-md-4">
-              <input type="checkbox" id="scanner_recep_vehi" name="scanner_recep_vehi" value="Scanner" checked>
+              <input type="checkbox" id="scanner_recep_vehi" name="scanner_recep_vehi" value="Scanner">
               <label for="scanner_recep_vehi">Scanner</label>
             </div>
             <div class="col-md-4">
-              <input type="checkbox" id="elec_recep_vehi" name="elec_recep_vehi" value="Electrique">
-              <label for="elec_recep_vehi">Electrique</label>
+              <!-- <input type="checkbox" id="elec_recep_vehi" name="elec_recep_vehi" value="Electrique"> -->
+              <label for="elec_recep_vehi"><span style="color:red;">*</span> Electrique</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="elec_recep_vehi" value="Electrique">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="elec_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-4">
-              <input type="checkbox" id="meca_recep_vehi" name="meca_recep_vehi" value="Mecanique">
-              <label for="mecanique">Mécanique</label>
+              <!-- <input type="checkbox" id="meca_recep_vehi" name="meca_recep_vehi" value="Mecanique"> -->
+              <label for="mecanique"><span style="color:red;">*</span> Mécanique</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="meca_recep_vehi" value="Mecanique">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="meca_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
           </div>
           <div class="form-group row">
             <div class="col-md-4">
-              <input type="checkbox" id="pb_electro_recep_vehi" name="pb_electro_recep_vehi" value="Problèmes électroniques">
-              <label for="problèmes électroniques">Problèmes électroniques</label>
+              <!-- <input type="checkbox" id="pb_electro_recep_vehi" name="pb_electro_recep_vehi" value="Problèmes électroniques"> -->
+              <label for="problèmes électroniques"><span style="color:red;">*</span> Problèmes électroniques</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pb_electro_recep_vehi" value="Problèmes électroniques">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pb_electro_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-4">
-              <input type="checkbox" id="pb_demar_recep_vehi" name="pb_demar_recep_vehi" value="Problèmes de démarrage">
-              <label for="problèmes de démarrage">Problèmes de démarrage</label>
+              <!-- <input type="checkbox" id="pb_demar_recep_vehi" name="pb_demar_recep_vehi" value="Problèmes de démarrage"> -->
+              <label for="problèmes de démarrage"><span style="color:red;">*</span> Problèmes de démarrage</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pb_demar_recep_vehi" value="Problèmes de démarrage">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pb_demar_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-4">
-              <input type="checkbox" id="pb_meca_recep_vehi" name="pb_meca_recep_vehi" value="Problèmes mécaniques">
-              <label for="problèmes mécaniques">Problèmes mécaniques</label>
+              <!-- <input type="checkbox" id="pb_meca_recep_vehi" name="pb_meca_recep_vehi" value="Problèmes mécaniques"> -->
+              <label for="problèmes mécaniques"><span style="color:red;">*</span> Problèmes mécaniques</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pb_meca_recep_vehi" value="Problèmes mécaniques">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pb_meca_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
           </div>
 
           <div class="form-group row">
             <div class="col-md-4">
-              <input type="checkbox" id="conf_cle_recep_vehi" name="conf_cle_recep_vehi" value="Confection de clé">
-              <label for="confection de clé">Confection de clé</label>
+              <!-- <input type="checkbox" id="conf_cle_recep_vehi" name="conf_cle_recep_vehi" value="Confection de clé"> -->
+              <label for="confection de clé"><span style="color:red;">*</span> Confection de clé</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="conf_cle_recep_vehi" value="Confection de clé">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="conf_cle_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-4">
-              <input type="checkbox" id="sup_adblue_recep_vehi" name="sup_adblue_recep_vehi" value="Suppression adblue">
-              <label for="suppression adblue">Suppression adblue</label>
+              <!-- <input type="checkbox" id="sup_adblue_recep_vehi" name="sup_adblue_recep_vehi" value="Suppression adblue"> -->
+
+              <label for="suppression adblue"><span style="color:red;">*</span> Suppression adblue</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="sup_adblue_recep_vehi" value="Suppression adblue">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="sup_adblue_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-4">
-              <input type="checkbox" id="sup_fil_parti_recep_vehi" name="sup_fil_parti_recep_vehi" value="Suppression filtre à particule">
-              <label for="suppression filtre à particule">Suppression filtre à particule</label>
+              <!-- <input type="checkbox" id="sup_fil_parti_recep_vehi" name="sup_fil_parti_recep_vehi" value="Suppression filtre à particule"> -->
+              <label for="suppression filtre à particule"><span style="color:red;">*</span> Suppression filtre à particule</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="sup_fil_parti_recep_vehi" value="Suppression filtre à particule">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="sup_fil_parti_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
           </div>
           <div class="form-group row">
             <div class="col-md-4">
-              <input type="checkbox" id="dupli_cle_recep_vehi" name="dupli_cle_recep_vehi" value="Duplication de clé">
-              <label for="duplication de clé">Duplication de clé</label>
+              <!-- <input type="checkbox" id="dupli_cle_recep_vehi" name="dupli_cle_recep_vehi" value="Duplication de clé"> -->
+              <label for="duplication de clé"><span style="color:red;">*</span> Duplication de clé</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="dupli_cle_recep_vehi" value="Duplication de clé">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="dupli_cle_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-4">
-              <input type="checkbox" id="sup_vanne_egr_recep_vehi" name="sup_vanne_egr_recep_vehi" value="Suppression de vanne EGR">
-              <label for="Suppression de vanne EGR">Suppression de vanne EGR</label>
+              <!-- <input type="checkbox" id="sup_vanne_egr_recep_vehi" name="sup_vanne_egr_recep_vehi" value="Suppression de vanne EGR"> -->
+              <label for="Suppression de vanne EGR"><span style="color:red;">*</span> Suppression de vanne EGR</label>
+
+              <div class="form-group row">
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="sup_vanne_egr_recep_vehi" value="Suppression de vanne EGR">
+                  <label class="form-check-label">OUI</label>
+                </div>
+                <div class="col-md-3 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="sup_vanne_egr_recep_vehi" value="">
+                  <label class="form-check-label">NON</label>
+                </div>
+              </div>
+
             </div>
           </div>
-          <div class="form-group row">
-            <div class="col-md-8">
+
+          <div class="form-group row" id="voyant_box">
+            <div class="col-md-12">
               <div class="row">
                 <label for="voyants allumés">Voyants allumés</label>
                 <p style="color:red; font-style:italic">NB: Veuillez sélectionner le ou les voyants allumés</p>
               </div>
               <div class="row">
-                <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_1.png" alt="" height="44" width="46">
+                <div class="col-md-2" style="display:flex;flex-direction:row">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_1.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_1" value="img/voyants_auto/voyant_1.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_1" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_2" name="voyant_2" value="img/voyants_auto/voyant_2.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_2.png" alt="" height="44" width="46">
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_2.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_2" value="img/voyants_auto/voyant_2.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_2" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_3" name="voyant_3" value="img/voyants_auto/voyant_3.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_3.png" alt="" height="44" width="46">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_3.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_3" value="img/voyants_auto/voyant_3.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_3" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <input type="checkbox" id="voyant_3" name="voyant_3" value="img/voyants_auto/voyant_3.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_3.png" alt="" height="44" width="46"> -->
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_4" name="voyant_4" value="img/voyants_auto/voyant_4.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_4.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_4" name="voyant_4" value="img/voyants_auto/voyant_4.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_4.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_4.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_4" value="img/voyants_auto/voyant_4.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_4" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_5" name="voyant_5" value="img/voyants_auto/voyant_5.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_5.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_5" name="voyant_5" value="img/voyants_auto/voyant_5.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_5.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_5.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_5" value="img/voyants_auto/voyant_5.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_5" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_6" name="voyant_6" value="img/voyants_auto/voyant_6.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_6.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_6" name="voyant_6" value="img/voyants_auto/voyant_6.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_6.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_6.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_6" value="img/voyants_auto/voyant_6.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_6" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_7" name="voyant_7" value="img/voyants_auto/voyant_7.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_7.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_7" name="voyant_7" value="img/voyants_auto/voyant_7.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_7.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_7.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_7" value="img/voyants_auto/voyant_7.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_7" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_8" name="voyant_8" value="img/voyants_auto/voyant_8.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_8.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_8" name="voyant_8" value="img/voyants_auto/voyant_8.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_8.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_8.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_8" value="img/voyants_auto/voyant_8.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_8" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_9" name="voyant_9" value="img/voyants_auto/voyant_9.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_9.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_9" name="voyant_9" value="img/voyants_auto/voyant_9.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_9.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_9.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_9" value="img/voyants_auto/voyant_9.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_9" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_10" name="voyant_10" value="img/voyants_auto/voyant_10.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_10.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_10" name="voyant_10" value="img/voyants_auto/voyant_10.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_10.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_10.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_10" value="img/voyants_auto/voyant_10.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_10" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_11" name="voyant_11" value="img/voyants_auto/voyant_11.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_11.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_11" name="voyant_11" value="img/voyants_auto/voyant_11.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_11.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_11.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_11" value="img/voyants_auto/voyant_11.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_11" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_12" name="voyant_12" value="img/voyants_auto/voyant_12.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_12.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_12" name="voyant_12" value="img/voyants_auto/voyant_12.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_12.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_12.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_12" value="img/voyants_auto/voyant_12.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_12" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_13" name="voyant_13" value="img/voyants_auto/voyant_13.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_13.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_13" name="voyant_13" value="img/voyants_auto/voyant_13.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_13.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_13.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_13" value="img/voyants_auto/voyant_13.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_13" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_14" name="voyant_14" value="img/voyants_auto/voyant_14.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_14.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_14" name="voyant_14" value="img/voyants_auto/voyant_14.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_14.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_14.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_14" value="img/voyants_auto/voyant_14.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_14" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_15" name="voyant_15" value="img/voyants_auto/voyant_15.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_15.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_15" name="voyant_15" value="img/voyants_auto/voyant_15.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_15.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_15.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_15" value="img/voyants_auto/voyant_15.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_15" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_16" name="voyant_16" value="img/voyants_auto/voyant_16.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_16.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_16" name="voyant_16" value="img/voyants_auto/voyant_16.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_16.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_16.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_16" value="img/voyants_auto/voyant_16.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_16" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_17" name="voyant_17" value="img/voyants_auto/voyant_17.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_17.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_17" name="voyant_17" value="img/voyants_auto/voyant_17.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_17.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_17.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_17" value="img/voyants_auto/voyant_17.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_17" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_18" name="voyant_18" value="img/voyants_auto/voyant_18.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_18.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_18" name="voyant_18" value="img/voyants_auto/voyant_18.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_18.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_18.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_18" value="img/voyants_auto/voyant_18.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_18" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_19" name="voyant_19" value="img/voyants_auto/voyant_19.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_19.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_19" name="voyant_19" value="img/voyants_auto/voyant_19.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_19.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_19.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_19" value="img/voyants_auto/voyant_19.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_19" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_20" name="voyant_20" value="img/voyants_auto/voyant_20.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_20.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_20" name="voyant_20" value="img/voyants_auto/voyant_20.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_20.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_20.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_20" value="img/voyants_auto/voyant_20.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_20" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_21" name="voyant_21" value="img/voyants_auto/voyant_21.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_21.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_21" name="voyant_21" value="img/voyants_auto/voyant_21.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_21.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_21.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_21" value="img/voyants_auto/voyant_21.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_21" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_22" name="voyant_22" value="img/voyants_auto/voyant_22.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_22.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_22" name="voyant_22" value="img/voyants_auto/voyant_22.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_22.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_22.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_22" value="img/voyants_auto/voyant_22.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_22" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_23" name="voyant_23" value="img/voyants_auto/voyant_23.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_23.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_23" name="voyant_23" value="img/voyants_auto/voyant_23.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_23.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_23.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_23" value="img/voyants_auto/voyant_23.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_23" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-2" style="display:flex;flex-direction:row;">
-                  <input type="checkbox" id="voyant_24" name="voyant_24" value="img/voyants_auto/voyant_24.png">
-                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_24.png" alt="" height="44" width="46">
+                  <!-- <input type="checkbox" id="voyant_24" name="voyant_24" value="img/voyants_auto/voyant_24.png">
+                  <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_24.png" alt="" height="44" width="46"> -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- <input type="checkbox" id="voyant_1" name="voyant_1" value="img/voyants_auto/voyant_1.png"> -->
+                      <img src="<?php echo WEB_URL ?>img/voyants_auto/voyant_24.png" alt="" height="44" width="46">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_24" value="img/voyants_auto/voyant_24.png">
+                          <label class="form-check-label">OUI</label>
+                        </div>
+                        <div class="col-md-6 form-check" style="padding-left:0px;">
+                          <input class="form-check-input" type="radio" name="voyant_24" value="">
+                          <label class="form-check-label">NON</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="remarque_motif_depot" class="col-md-2 col-form-label">Remarque :</label>
+            <label for="remarque_motif_depot" class="col-md-2 col-form-label"><span style="color:red;">*</span> Remarque autres voyants allumés :</label>
             <div class="col-md-10" style="padding-left:0px;">
-              <textarea class="form-control" id="remarque_motif_depot" rows="4" name="remarque_motif_depot"></textarea>
+              <textarea class="form-control" id="remarque_motif_depot" rows="4" name="remarque_motif_depot" id="remarque_motif_depot"></textarea>
             </div>
           </div>
 
           <fieldset>
-            <legend>Ajouter des fichiers joints</legend>
+            <legend>Ajouter des photos du tableau de bord en pièces jointes</legend>
             <div class="row">
               <div class="col-md-1">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_3_recep" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_voyants_1" />
                 </span>
               </div>
               <div class="col-md-1 col-md-onset-10">
-                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_4_recep" />
+                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_voyants_2" />
                 </span>
               </div>
             </div>
@@ -1030,7 +1865,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
           <div class="form-group row">
             <div class="col-md-6">
-              <input type="radio" id="etat_proprete_arrivee_1" name="etat_proprete_arrivee" value="Propre" checked>
+              <input type="radio" id="etat_proprete_arrivee_1" name="etat_proprete_arrivee" value="Propre">
               <label for="propre">Propre</label>
             </div>
             <div class="col-md-6">
@@ -1041,7 +1876,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
           <div class="form-group row">
             <div class="col-md-6">
-              <input type="radio" id="etat_vehi_arrive_conduit" name="etat_vehi_arrive" value="Conduit" checked>
+              <input type="radio" id="etat_vehi_arrive_conduit" name="etat_vehi_arrive" value="Conduit">
               <label for="conduit">Conduit</label>
             </div>
             <div class="col-md-6" style="padding:0px;">
@@ -1063,7 +1898,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           </div>
 
           <div class="form-group row">
-            <label for="remarque_etat_vehi_arrive" class="col-md-2 col-form-label">Remarque :</label>
+            <label for="remarque_etat_vehi_arrive" class="col-md-2 col-form-label"><span style="color:red;">*</span> Remarque du réceptionniste sur le véhicule :</label>
             <div class="col-md-10" style="padding-left:0px;">
               <textarea class="form-control" id="remarque_etat_vehi_arrive" rows="4" name="remarque_etat_vehi_arrive"></textarea>
             </div>
@@ -1072,7 +1907,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           <!-- </div> -->
           <!-- <div class="tab"> -->
           <h1 style="text-align:center;">Aspect extérieur</h1>
-          <h6>B:bon, M:mauvais, A:absent</h6>
+          <h6>B:bon, M:mauvais, A:absent, R:remorquage</h6>
           <p style="color:red; font-style:italic">NB: Veuillez sélectionner l'état correspondant à votre composant</p>
           <div class="row">
             <!-- debut row -->
@@ -1082,60 +1917,72 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
               <!-- Pare brise avant -->
               <div class="form-group row">
-                <label for="pare_brise_avant" class="col-md-6 col-form-label">Pare brise avant</label>
+                <label for="pare_brise_avant" class="col-md-4 col-form-label">Pare brise avant</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="pare_brise_avant" id="pare_brise_avant" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="pare_brise_avant" id="pare_brise_avant_b" value="Bon">
                   <label class="form-check-label" for="pare_brise_avant">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="pare_brise_avant" id="pare_brise_avant" value="Mauvais">
+                  <input class="form-check-input" type="radio" name="pare_brise_avant" id="pare_brise_avant_m" value="Mauvais">
                   <label class="form-check-label" for="pare_brise_avant">M</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="pare_brise_avant" id="pare_brise_avant" value="Absent">
+                  <input class="form-check-input" type="radio" name="pare_brise_avant" id="pare_brise_avant_a" value="Absent">
                   <label class="form-check-label" for="pare_brise_avant">A</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pare_brise_avant" id="pare_brise_avant_r" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
                 </div>
               </div>
 
               <!-- Phare gauche -->
               <div class="form-group row">
-                <label for="phare_gauche" class="col-md-6 col-form-label">Phare gauche</label>
+                <label for="phare_gauche" class="col-md-4 col-form-label">Phare gauche</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="phare_gauche" id="phare_gauche" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="phare_gauche" id="phare_gauche_b" value="Bon">
                   <label class="form-check-label" for="phare_gauche">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="phare_gauche" id="phare_gauche" value="Mauvais">
+                  <input class="form-check-input" type="radio" name="phare_gauche" id="phare_gauche_m" value="Mauvais">
                   <label class="form-check-label" for="phare_gauche">M</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="phare_gauche" id="phare_gauche" value="Absent">
+                  <input class="form-check-input" type="radio" name="phare_gauche" id="phare_gauche_a" value="Absent">
                   <label class="form-check-label" for="phare_gauche">A</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="phare_gauche" id="phare_gauche" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
                 </div>
               </div>
 
               <!-- Clignotant droit -->
               <div class="form-group row">
-                <label for="clignotant_droit" class="col-md-6 col-form-label">Clignotant droit</label>
+                <label for="clignotant_droit" class="col-md-4 col-form-label">Clignotant droit</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="clignotant_droit" id="clignotant_droit" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="clignotant_droit" id="clignotant_droit_b" value="Bon">
                   <label class="form-check-label" for="clignotant_droit">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="clignotant_droit" id="clignotant_droit" value="Mauvais">
+                  <input class="form-check-input" type="radio" name="clignotant_droit" id="clignotant_droit_m" value="Mauvais">
                   <label class="form-check-label" for="clignotant_droit">M</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="clignotant_droit" id="clignotant_droit" value="Absent">
+                  <input class="form-check-input" type="radio" name="clignotant_droit" id="clignotant_droit_a" value="Absent">
                   <label class="form-check-label" for="clignotant_droit">A</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="clignotant_droit" id="clignotant_droit_r" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
                 </div>
               </div>
 
               <!-- Pare choc avant -->
               <div class="form-group row">
-                <label for="pare_choc_avant" class="col-md-6 col-form-label">Pare choc avant</label>
+                <label for="pare_choc_avant" class="col-md-4 col-form-label">Pare choc avant</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="pare_choc_avant" id="pare_choc_avant" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="pare_choc_avant" id="pare_choc_avant" value="Bon">
                   <label class="form-check-label" for="pare_choc_avant">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1146,13 +1993,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="pare_choc_avant" id="pare_choc_avant" value="Absent">
                   <label class="form-check-label" for="pare_choc_avant">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pare_choc_avant" id="pare_choc_avant" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Feu avant -->
               <div class="form-group row">
-                <label for="feu_avant" class="col-md-6 col-form-label">Feu avant</label>
+                <label for="feu_avant" class="col-md-4 col-form-label">Feu avant</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="feu_avant" id="feu_avant" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="feu_avant" id="feu_avant" value="Bon">
                   <label class="form-check-label" for="feu_avant">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1163,13 +2014,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="feu_avant" id="feu_avant" value="Absent">
                   <label class="form-check-label" for="feu_avant">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="feu_avant" id="feu_avant" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Vitres avant -->
               <div class="form-group row">
-                <label for="vitre_avant" class="col-md-6 col-form-label">Vitres avant</label>
+                <label for="vitre_avant" class="col-md-4 col-form-label">Vitres avant</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="vitre_avant" id="vitre_avant" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="vitre_avant" id="vitre_avant" value="Bon">
                   <label class="form-check-label" for="vitre_avant">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1180,13 +2035,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="vitre_avant" id="vitre_avant" value="Absent">
                   <label class="form-check-label" for="vitre_avant">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="vitre_avant" id="vitre_avant" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Poignet avant -->
               <div class="form-group row">
-                <label for="poignet_avant" class="col-md-6 col-form-label">Poignet avant</label>
+                <label for="poignet_avant" class="col-md-4 col-form-label">Poignet avant</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="poignet_avant" id="poignet_avant" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="poignet_avant" id="poignet_avant" value="Bon">
                   <label class="form-check-label" for="poignet_avant">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1197,13 +2056,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="poignet_avant" id="poignet_avant" value="Absent">
                   <label class="form-check-label" for="poignet_avant">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="poignet_avant" id="poignet_avant" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Plaque avant -->
               <div class="form-group row">
-                <label for="plaque_avant" class="col-md-6 col-form-label">Plaque avant</label>
+                <label for="plaque_avant" class="col-md-4 col-form-label">Plaque avant</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="plaque_avant" id="plaque_avant" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="plaque_avant" id="plaque_avant" value="Bon">
                   <label class="form-check-label" for="plaque_avant">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1214,13 +2077,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="plaque_avant" id="plaque_avant" value="Absent">
                   <label class="form-check-label" for="plaque_avant">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="plaque_avant" id="plaque_avant" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Feu de brouillard -->
               <div class="form-group row">
-                <label for="feu_brouillard" class="col-md-6 col-form-label">Feu de brouillard</label>
+                <label for="feu_brouillard" class="col-md-4 col-form-label">Feu de brouillard</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="feu_brouillard" id="feu_brouillard" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="feu_brouillard" id="feu_brouillard" value="Bon">
                   <label class="form-check-label" for="feu_brouillard">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1231,13 +2098,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="feu_brouillard" id="feu_brouillard" value="Absent">
                   <label class="form-check-label" for="feu_brouillard">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="feu_brouillard" id="feu_brouillard" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Balai essuie glace -->
               <div class="form-group row">
-                <label for="balai_essuie_glace" class="col-md-6 col-form-label">Balai essuie glace</label>
+                <label for="balai_essuie_glace" class="col-md-4 col-form-label">Balai essuie glace</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="balai_essuie_glace" id="balai_essuie_glace" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="balai_essuie_glace" id="balai_essuie_glace" value="Bon">
                   <label class="form-check-label" for="balai_essuie_glace">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1248,13 +2119,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="balai_essuie_glace" id="balai_essuie_glace" value="Absent">
                   <label class="form-check-label" for="balai_essuie_glace">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="balai_essuie_glace" id="balai_essuie_glace" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Rétroviseur gauche -->
               <div class="form-group row">
-                <label for="retroviseur_gauche" class="col-md-6 col-form-label">Rétroviseur gauche</label>
+                <label for="retroviseur_gauche" class="col-md-4 col-form-label">Rétroviseur gauche</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="retroviseur_gauche" id="retroviseur_gauche" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="retroviseur_gauche" id="retroviseur_gauche" value="Bon">
                   <label class="form-check-label" for="retroviseur_gauche">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1265,13 +2140,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="retroviseur_gauche" id="retroviseur_gauche" value="Absent">
                   <label class="form-check-label" for="retroviseur_gauche">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="retroviseur_gauche" id="retroviseur_gauche" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Symbole avant -->
               <div class="form-group row">
-                <label for="symbole_avant" class="col-md-6 col-form-label">Symbole avant</label>
+                <label for="symbole_avant" class="col-md-4 col-form-label">Symbole avant</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="symbole_avant" id="symbole_avant" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="symbole_avant" id="symbole_avant" value="Bon">
                   <label class="form-check-label" for="symbole_avant">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1282,13 +2161,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="symbole_avant" id="symbole_avant" value="Absent">
                   <label class="form-check-label" for="symbole_avant">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="symbole_avant" id="symbole_avant" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Poignet de capot -->
               <div class="form-group row">
-                <label for="poignet_capot" class="col-md-6 col-form-label">Poignet de capot</label>
+                <label for="poignet_capot" class="col-md-4 col-form-label">Poignet de capot</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="poignet_capot" id="poignet_capot" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="poignet_capot" id="poignet_capot" value="Bon">
                   <label class="form-check-label" for="poignet_capot">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1299,13 +2182,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="poignet_capot" id="poignet_capot" value="Absent">
                   <label class="form-check-label" for="poignet_capot">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="poignet_capot" id="poignet_capot" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Alternateur -->
               <div class="form-group row">
-                <label for="alternateur" class="col-md-6 col-form-label">Alternateur</label>
+                <label for="alternateur" class="col-md-4 col-form-label">Alternateur</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="alternateur" id="alternateur" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="alternateur" id="alternateur" value="Bon">
                   <label class="form-check-label" for="alternateur">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1316,13 +2203,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="alternateur" id="alternateur" value="Absent">
                   <label class="form-check-label" for="alternateur">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="alternateur" id="alternateur" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Climatisation -->
               <div class="form-group row">
-                <label for="climatisation" class="col-md-6 col-form-label">Climatisation</label>
+                <label for="climatisation" class="col-md-4 col-form-label">Climatisation</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Bon">
                   <label class="form-check-label" for="climatisation">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1333,6 +2224,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Absent">
                   <label class="form-check-label" for="climatisation">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="climatisation" id="climatisation" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
             </div> <!-- fin gauche -->
@@ -1342,9 +2237,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
               <!-- Pare brise arrière -->
               <div class="form-group row">
-                <label for="pare_brise_arriere" class="col-md-6 col-form-label">Pare brise arrière</label>
+                <label for="pare_brise_arriere" class="col-md-4 col-form-label">Pare brise arrière</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="pare_brise_arriere" id="pare_brise_arriere" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="pare_brise_arriere" id="pare_brise_arriere" value="Bon">
                   <label class="form-check-label" for="pare_brise_arriere">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1355,13 +2250,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="pare_brise_arriere" id="pare_brise_arriere" value="Absent">
                   <label class="form-check-label" for="pare_brise_arriere">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pare_brise_arriere" id="pare_brise_arriere" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Phare droit -->
               <div class="form-group row">
-                <label for="phare_droit" class="col-md-6 col-form-label">Phare droit</label>
+                <label for="phare_droit" class="col-md-4 col-form-label">Phare droit</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="phare_droit" id="phare_droit" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="phare_droit" id="phare_droit" value="Bon">
                   <label class="form-check-label" for="phare_droit">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1372,13 +2271,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="phare_droit" id="phare_droit" value="Absent">
                   <label class="form-check-label" for="phare_droit">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="phare_droit" id="phare_droit" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Clignotant gauche -->
               <div class="form-group row">
-                <label for="clignotant_gauche" class="col-md-6 col-form-label">Clignotant gauche</label>
+                <label for="clignotant_gauche" class="col-md-4 col-form-label">Clignotant gauche</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="clignotant_gauche" id="clignotant_gauche" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="clignotant_gauche" id="clignotant_gauche" value="Bon">
                   <label class="form-check-label" for="clignotant_gauche">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1389,13 +2292,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="clignotant_gauche" id="clignotant_gauche" value="Absent">
                   <label class="form-check-label" for="clignotant_gauche">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="clignotant_gauche" id="clignotant_gauche" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Pare choc arrière -->
               <div class="form-group row">
-                <label for="pare_choc_arriere" class="col-md-6 col-form-label">Pare choc arrière</label>
+                <label for="pare_choc_arriere" class="col-md-4 col-form-label">Pare choc arrière</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="pare_choc_arriere" id="pare_choc_arriere" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="pare_choc_arriere" id="pare_choc_arriere" value="Bon">
                   <label class="form-check-label" for="pare_choc_arriere">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1406,13 +2313,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="pare_choc_arriere" id="pare_choc_arriere" value="Absent">
                   <label class="form-check-label" for="pare_choc_arriere">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="pare_choc_arriere" id="pare_choc_arriere" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Feu arrière -->
               <div class="form-group row">
-                <label for="feu_arriere" class="col-md-6 col-form-label">Feu arrière</label>
+                <label for="feu_arriere" class="col-md-4 col-form-label">Feu arrière</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="feu_arriere" id="feu_arriere" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="feu_arriere" id="feu_arriere" value="Bon">
                   <label class="form-check-label" for="feu_arriere">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1423,13 +2334,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="feu_arriere" id="feu_arriere" value="Absent">
                   <label class="form-check-label" for="feu_arriere">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="feu_arriere" id="feu_arriere" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Vitres arrière -->
               <div class="form-group row">
-                <label for="vitre_arriere" class="col-md-6 col-form-label">Vitres arrière</label>
+                <label for="vitre_arriere" class="col-md-4 col-form-label">Vitres arrière</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="vitre_arriere" id="vitre_arriere" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="vitre_arriere" id="vitre_arriere" value="Bon">
                   <label class="form-check-label" for="vitre_arriere">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1440,13 +2355,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="vitre_arriere" id="vitre_arriere" value="Absent">
                   <label class="form-check-label" for="vitre_arriere">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="vitre_arriere" id="vitre_arriere" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Poignet arrière -->
               <div class="form-group row">
-                <label for="poignet_arriere" class="col-md-6 col-form-label">Poignet arrière</label>
+                <label for="poignet_arriere" class="col-md-4 col-form-label">Poignet arrière</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="poignet_arriere" id="poignet_arriere" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="poignet_arriere" id="poignet_arriere" value="Bon">
                   <label class="form-check-label" for="poignet_arriere">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1457,13 +2376,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="poignet_arriere" id="poignet_arriere" value="Absent">
                   <label class="form-check-label" for="poignet_arriere">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="poignet_arriere" id="poignet_arriere" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Plaque arrière -->
               <div class="form-group row">
-                <label for="plaque_arriere" class="col-md-6 col-form-label">Plaque arrière</label>
+                <label for="plaque_arriere" class="col-md-4 col-form-label">Plaque arrière</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="plaque_arriere" id="plaque_arriere" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="plaque_arriere" id="plaque_arriere" value="Bon">
                   <label class="form-check-label" for="plaque_arriere">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1474,13 +2397,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="plaque_arriere" id="plaque_arriere" value="Absent">
                   <label class="form-check-label" for="plaque_arriere">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="plaque_arriere" id="plaque_arriere" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Contrôle pneu -->
               <div class="form-group row">
-                <label for="controle_pneu" class="col-md-6 col-form-label">Contrôle pneu</label>
+                <label for="controle_pneu" class="col-md-4 col-form-label">Contrôle pneu</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="controle_pneu" id="controle_pneu" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="controle_pneu" id="controle_pneu" value="Bon">
                   <label class="form-check-label" for="controle_pneu">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1491,13 +2418,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="controle_pneu" id="controle_pneu" value="Absent">
                   <label class="form-check-label" for="controle_pneu">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="controle_pneu" id="controle_pneu" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Batterie -->
               <div class="form-group row">
-                <label for="batterie" class="col-md-6 col-form-label">Batterie</label>
+                <label for="batterie" class="col-md-4 col-form-label">Batterie</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="batterie" id="batterie" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="batterie" id="batterie" value="Bon">
                   <label class="form-check-label" for="batterie">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1508,13 +2439,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="batterie" id="batterie" value="Absent">
                   <label class="form-check-label" for="batterie">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="batterie" id="batterie" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Rétroviseur droit -->
               <div class="form-group row">
-                <label for="retroviseur_droit" class="col-md-6 col-form-label">Rétroviseur droit</label>
+                <label for="retroviseur_droit" class="col-md-4 col-form-label">Rétroviseur droit</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="retroviseur_droit" id="retroviseur_droit" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="retroviseur_droit" id="retroviseur_droit" value="Bon">
                   <label class="form-check-label" for="retroviseur_droit">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1525,13 +2460,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="retroviseur_droit" id="retroviseur_droit" value="Absent">
                   <label class="form-check-label" for="retroviseur_droit">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="retroviseur_droit" id="retroviseur_droit" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Symbole arrière -->
               <div class="form-group row">
-                <label for="symbole_arriere" class="col-md-6 col-form-label">Symbole arrière</label>
+                <label for="symbole_arriere" class="col-md-4 col-form-label">Symbole arrière</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="symbole_arriere" id="symbole_arriere" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="symbole_arriere" id="symbole_arriere" value="Bon">
                   <label class="form-check-label" for="symbole_arriere">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1542,13 +2481,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="symbole_arriere" id="symbole_arriere" value="Absent">
                   <label class="form-check-label" for="symbole_arriere">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="symbole_arriere" id="symbole_arriere" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Cache moteur -->
               <div class="form-group row">
-                <label for="cache_moteur" class="col-md-6 col-form-label">Cache moteur</label>
+                <label for="cache_moteur" class="col-md-4 col-form-label">Cache moteur</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="cache_moteur" id="cache_moteur" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="cache_moteur" id="cache_moteur" value="Bon">
                   <label class="form-check-label" for="cache_moteur">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1559,13 +2502,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="cache_moteur" id="cache_moteur" value="Absent">
                   <label class="form-check-label" for="cache_moteur">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="cache_moteur" id="cache_moteur" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Suspension -->
               <div class="form-group row">
-                <label for="suspension" class="col-md-6 col-form-label">Suspension</label>
+                <label for="suspension" class="col-md-4 col-form-label">Suspension</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="suspension" id="suspension" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="suspension" id="suspension" value="Bon">
                   <label class="form-check-label" for="suspension">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1576,13 +2523,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="suspension" id="suspension" value="Absent">
                   <label class="form-check-label" for="suspension">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="suspension" id="suspension" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Etat carosserie -->
               <div class="form-group row">
-                <label for="cache_moteur" class="col-md-6 col-form-label">Etat carosserie</label>
+                <label for="cache_moteur" class="col-md-4 col-form-label">Etat carosserie</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="etat_carosserie" id="etat_carosserier" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="etat_carosserie" id="etat_carosserier" value="Bon">
                   <label class="form-check-label" for="etat_carosserie">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1593,6 +2544,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="etat_carosserie" id="etat_carosserie" value="Absent">
                   <label class="form-check-label" for="etat_carosserie">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="etat_carosserie" id="etat_carosserie" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
             </div> <!-- fin droit-->
@@ -1600,16 +2555,16 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           </div> <!-- fin row -->
 
           <div class="form-group row">
-            <label for="remarque_aspect_ext" class="col-md-2 col-form-label">Dimensions du pneu :</label>
+            <label for="remarque_aspect_ext" class="col-md-2 col-form-label"><span style="color:red;">*</span> Dimensions du pneu</label>
             <div class="col-md-10" style="padding-left:0px;">
               <input type="text" name="dim_pneu" id="dim_pneu" class="form-control" />
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="remarque_aspect_ext" class="col-md-2 col-form-label">Remarque :</label>
+            <label for="remarque_aspect_ext" class="col-md-2 col-form-label"><span style="color:red;">*</span> Remarque du réceptionniste sur le véhicule :</label>
             <div class="col-md-10" style="padding-left:0px;">
-              <textarea class="form-control" id="remarque_aspect_ext" rows="4" name="remarque_aspect_ext"></textarea>
+              <textarea class="form-control" id="remarque_aspect_ext" rows="4" name="remarque_aspect_ext" id="remarque_aspect_ext"></textarea>
             </div>
           </div>
 
@@ -1629,7 +2584,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           <!-- </div> -->
           <!-- <div class="tab"> -->
           <h1 style="text-align:center;">Aspect intérieur</h1>
-          <h6>B:bon, M:mauvais, A:absent</h6>
+          <h6>B:bon, M:mauvais, A:absent, R:remorquage</h6>
           <p style="color:red; font-style:italic">NB: Veuillez sélectionner l'état correspondant à votre composant</p>
           <div class="row">
             <!-- debut row -->
@@ -1638,9 +2593,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
               <!-- Poste auto -->
               <div class="form-group row">
-                <label for="poste_auto" class="col-md-6 col-form-label">Poste auto</label>
+                <label for="poste_auto" class="col-md-4 col-form-label">Poste auto</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="poste_auto" id="poste_auto" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="poste_auto" id="poste_auto" value="Bon">
                   <label class="form-check-label" for="poste_auto">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1651,13 +2606,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="poste_auto" id="poste_auto" value="Absent">
                   <label class="form-check-label" for="poste_auto">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="poste_auto" id="poste_auto" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Coffre à gant -->
               <div class="form-group row">
-                <label for="coffre_gant" class="col-md-6 col-form-label">Coffre à gant</label>
+                <label for="coffre_gant" class="col-md-4 col-form-label">Coffre à gant</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="coffre_gant" id="coffre_gant" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="coffre_gant" id="coffre_gant" value="Bon">
                   <label class="form-check-label" for="coffre_gant">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1668,13 +2627,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="coffre_gant" id="coffre_gant" value="Absent">
                   <label class="form-check-label" for="coffre_gant">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="coffre_gant" id="coffre_gant" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Tapis plafond -->
               <div class="form-group row">
-                <label for="tapis_plafond" class="col-md-6 col-form-label">Tapis plafond</label>
+                <label for="tapis_plafond" class="col-md-4 col-form-label">Tapis plafond</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="tapis_plafond" id="tapis_plafond" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="tapis_plafond" id="tapis_plafond" value="Bon">
                   <label class="form-check-label" for="tapis_plafond">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1685,13 +2648,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="tapis_plafond" id="tapis_plafond" value="Absent">
                   <label class="form-check-label" for="tapis_plafond">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="tapis_plafond" id="tapis_plafond" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Ecran de bord -->
               <div class="form-group row">
-                <label for="ecran_bord" class="col-md-6 col-form-label">Ecran de bord</label>
+                <label for="ecran_bord" class="col-md-4 col-form-label">Ecran de bord</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="ecran_bord" id="ecran_bord" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="ecran_bord" id="ecran_bord" value="Bon">
                   <label class="form-check-label" for="ecran_bord">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1702,13 +2669,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="ecran_bord" id="ecran_bord" value="Absent">
                   <label class="form-check-label" for="ecran_bord">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="ecran_bord" id="ecran_bord" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Rétroviseur interne -->
               <div class="form-group row">
-                <label for="retroviseur_interne" class="col-md-6 col-form-label">Rétroviseur interne</label>
+                <label for="retroviseur_interne" class="col-md-4 col-form-label">Rétroviseur interne</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="retroviseur_interne" id="retroviseur_interne" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="retroviseur_interne" id="retroviseur_interne" value="Bon">
                   <label class="form-check-label" for="retroviseur_interne">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1719,13 +2690,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="retroviseur_interne" id="retroviseur_interne" value="Absent">
                   <label class="form-check-label" for="retroviseur_interne">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="retroviseur_interne" id="retroviseur_interne" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Bouton de vitre arriere -->
               <div class="form-group row">
-                <label for="bouton_vitre_arriere" class="col-md-6 col-form-label">Bouton de vitre arrière</label>
+                <label for="bouton_vitre_arriere" class="col-md-4 col-form-label">Bouton de vitre arrière</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="bouton_vitre_arriere" id="bouton_vitre_arriere" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="bouton_vitre_arriere" id="bouton_vitre_arriere" value="Bon">
                   <label class="form-check-label" for="bouton_vitre_arriere">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1736,6 +2711,10 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="bouton_vitre_arriere" id="bouton_vitre_arriere" value="Absent">
                   <label class="form-check-label" for="bouton_vitre_arriere">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="bouton_vitre_arriere" id="bouton_vitre_arriere" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
             </div> <!-- fin gauche -->
@@ -1745,9 +2724,9 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
               <!-- Tableau de bord -->
               <div class="form-group row">
-                <label for="tableau_bord" class="col-md-6 col-form-label">Tableau de bord</label>
+                <label for="tableau_bord" class="col-md-4 col-form-label">Tableau de bord</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="tableau_bord" id="tableau_bord" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="tableau_bord" id="tableau_bord" value="Bon">
                   <label class="form-check-label" for="tableau_bord">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1758,13 +2737,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="tableau_bord" id="tableau_bord" value="Absent">
                   <label class="form-check-label" for="tableau_bord">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="tableau_bord" id="tableau_bord" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Tapis de sol -->
               <div class="form-group row">
-                <label for="tapis_sol" class="col-md-6 col-form-label">Tapis de sol</label>
+                <label for="tapis_sol" class="col-md-4 col-form-label">Tapis de sol</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="tapis_sol" id="tapis_sol" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="tapis_sol" id="tapis_sol" value="Bon">
                   <label class="form-check-label" for="tapis_sol">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1775,13 +2758,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="tapis_sol" id="tapis_sol" value="Absent">
                   <label class="form-check-label" for="tapis_sol">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="tapis_sol" id="tapis_sol" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Commutateur central -->
               <div class="form-group row">
-                <label for="commutateur_central" class="col-md-6 col-form-label">Commutateur central</label>
+                <label for="commutateur_central" class="col-md-4 col-form-label">Commutateur central</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="commutateur_central" id="commutateur_central" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="commutateur_central" id="commutateur_central" value="Bon">
                   <label class="form-check-label" for="commutateur_central">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1792,13 +2779,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="commutateur_central" id="commutateur_central" value="Absent">
                   <label class="form-check-label" for="commutateur_central">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="commutateur_central" id="commutateur_central" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Ampoule intérieure -->
               <div class="form-group row">
-                <label for="ampoule_interieure" class="col-md-6 col-form-label">Ampoule intérieure</label>
+                <label for="ampoule_interieure" class="col-md-4 col-form-label">Ampoule intérieure</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="ampoule_interieure" id="ampoule_interieure" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="ampoule_interieure" id="ampoule_interieure" value="Bon">
                   <label class="form-check-label" for="ampoule_interieure">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1809,13 +2800,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="ampoule_interieure" id="ampoule_interieure" value="Absent">
                   <label class="form-check-label" for="ampoule_interieure">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="ampoule_interieure" id="ampoule_interieure" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Bouton de vitre avant -->
               <div class="form-group row">
-                <label for="bouton_vitre_avant" class="col-md-6 col-form-label">Bouton de vitre avant</label>
+                <label for="bouton_vitre_avant" class="col-md-4 col-form-label">Bouton de vitre avant</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="bouton_vitre_avant" id="bouton_vitre_avant" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="bouton_vitre_avant" id="bouton_vitre_avant" value="Bon">
                   <label class="form-check-label" for="bouton_vitre_avant">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1826,13 +2821,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="bouton_vitre_avant" id="bouton_vitre_avant" value="Absent">
                   <label class="form-check-label" for="bouton_vitre_avant">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="bouton_vitre_avant" id="bouton_vitre_avant" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Bouton de siège -->
               <div class="form-group row">
-                <label for="bouton_siege" class="col-md-6 col-form-label">Bouton de siège</label>
+                <label for="bouton_siege" class="col-md-4 col-form-label">Bouton de siège</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="bouton_siege" id="bouton_siege" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="bouton_siege" id="bouton_siege" value="Bon">
                   <label class="form-check-label" for="bouton_siege">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1843,13 +2842,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="bouton_siege" id="bouton_siege" value="Absent">
                   <label class="form-check-label" for="bouton_siege">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="bouton_siege" id="bouton_siege" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Frein à main -->
               <div class="form-group row">
-                <label for="frein_main" class="col-md-6 col-form-label">Frein à main</label>
+                <label for="frein_main" class="col-md-4 col-form-label">Frein à main</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="frein_main" id="frein_main" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="frein_main" id="frein_main" value="Bon">
                   <label class="form-check-label" for="frein_main">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1860,13 +2863,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <input class="form-check-input" type="radio" name="frein_main" id="frein_main" value="Absent">
                   <label class="form-check-label" for="frein_main">A</label>
                 </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="frein_main" id="frein_main" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
+                </div>
               </div>
 
               <!-- Bouton de detresse -->
               <div class="form-group row">
-                <label for="bouton_siege" class="col-md-6 col-form-label">Bouton de detresse</label>
+                <label for="bouton_siege" class="col-md-4 col-form-label">Bouton de detresse</label>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="bouton_detresse" id="bouton_detresse" value="Bon" checked>
+                  <input class="form-check-input" type="radio" name="bouton_detresse" id="bouton_detresse" value="Bon">
                   <label class="form-check-label" for="bouton_detresse">B</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
@@ -1874,17 +2881,21 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                   <label class="form-check-label" for="bouton_detresse">M</label>
                 </div>
                 <div class="col-md-2 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="bouton_detresse" id="bouton_siege" value="Absent">
+                  <input class="form-check-input" type="radio" name="bouton_detresse" id="bouton_detresse" value="Absent">
                   <label class="form-check-label" for="bouton_siege">A</label>
+                </div>
+                <div class="col-md-2 form-check" style="padding-left:0px;">
+                  <input class="form-check-input" type="radio" name="bouton_detresse" id="bouton_detresse" value="Remorquage">
+                  <label class="form-check-label" for="pare_brise_avant">R</label>
                 </div>
               </div>
 
             </div> <!-- fin droit -->
           </div>
           <div class="form-group row">
-            <label for="remarque_aspect_int" class="col-md-2 col-form-label">Remarque :</label>
+            <label for="remarque_aspect_int" class="col-md-2 col-form-label"><span style="color:red;">*</span> Remarque du réceptionniste sur le véhicule :</label>
             <div class="col-md-10" style="padding-left:0px;">
-              <textarea class="form-control" id="remarque_aspect_int" rows="4" name="remarque_aspect_int"></textarea>
+              <textarea class="form-control" id="remarque_aspect_int" rows="4" name="remarque_aspect_int" id="remarque_aspect_int"></textarea>
             </div>
           </div>
 
@@ -1903,7 +2914,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           </fieldset>
           <!-- </div> -->
           <!-- <div class="tab"> -->
-          <h1 style="text-align:center;">Travaux à effectuer</h1>
+          <h1 style="text-align:center;">Plaintes du client</h1>
           <textarea class="form-control" id="travo_effec" rows="6" name="travo_effec"></textarea>
           <fieldset>
             <legend>Ajouter des fichiers joints</legend>
@@ -1933,6 +2944,20 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
                 <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_6_recep" />
                 </span>
               </div>
+            </div>
+          </fieldset>
+          <br>
+          <fieldset>
+            <legend>Ajouter le résultat du scanner français en fichier joint</legend>
+            <div class="row">
+              <div class="col-md-1">
+                <span class="btn btn-file btn btn-primary">Ajouter fichier de scanner français<input type="file" name="pj_scanner_fr" id="pj_scanner_fr" />
+                </span>
+              </div>
+              <!-- <div class="col-md-1">
+                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_scanner_electrique" />
+                                </span>
+                            </div> -->
             </div>
           </fieldset>
         </div>
@@ -2038,7 +3063,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
           <input type="hidden" value="" name="tel_wa" />
           <input type="hidden" value="<?php echo $cus_id; ?>" name="customer_id" />
           <input type="hidden" value="<?php echo $model_post_token; ?>" name="submit_token" />
-          
+
         </form>
       </div>
     </div>
@@ -2056,40 +3081,41 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
     const elt_nivo_carbu_recep_vehi_3_4 = document.getElementById('nivo_carbu_recep_vehi_3_4');
     const elt_nivo_carbu_recep_vehi_4_4 = document.getElementById('nivo_carbu_recep_vehi_4_4');
 
-    const elt_elec_recep_vehi = document.getElementById('elec_recep_vehi');
-    const elt_meca_recep_vehi = document.getElementById('meca_recep_vehi');
-    const elt_pb_electro_recep_vehi = document.getElementById('pb_electro_recep_vehi');
-    const elt_pb_demar_recep_vehi = document.getElementById('pb_demar_recep_vehi');
-    const elt_pb_meca_recep_vehi = document.getElementById('pb_meca_recep_vehi');
-    const elt_sup_adblue_recep_vehi = document.getElementById('sup_adblue_recep_vehi');
-    const elt_sup_fil_parti_recep_vehi = document.getElementById('sup_fil_parti_recep_vehi');
-    const elt_sup_vanne_egr_recep_vehi = document.getElementById('sup_vanne_egr_recep_vehi');
-    const elt_dupli_cle_recep_vehi = document.getElementById('dupli_cle_recep_vehi');
+    // Récupération des éléments à partir du nom de leur balise
+    const elt_elec_recep_vehi = document.getElementsByTagName('elec_recep_vehi');
+    const elt_meca_recep_vehi = document.getElementsByTagName('meca_recep_vehi');
+    const elt_pb_electro_recep_vehi = document.getElementsByTagName('pb_electro_recep_vehi');
+    const elt_pb_demar_recep_vehi = document.getElementsByTagName('pb_demar_recep_vehi');
+    const elt_pb_meca_recep_vehi = document.getElementsByTagName('pb_meca_recep_vehi');
+    const elt_sup_adblue_recep_vehi = document.getElementsByTagName('sup_adblue_recep_vehi');
+    const elt_sup_fil_parti_recep_vehi = document.getElementsByTagName('sup_fil_parti_recep_vehi');
+    const elt_sup_vanne_egr_recep_vehi = document.getElementsByTagName('sup_vanne_egr_recep_vehi');
+    const elt_dupli_cle_recep_vehi = document.getElementsByTagName('dupli_cle_recep_vehi');
 
-    const elt_voyant_1 = document.getElementById('voyant_1');
-    const elt_voyant_2 = document.getElementById('voyant_2');
-    const elt_voyant_3 = document.getElementById('voyant_3');
-    const elt_voyant_4 = document.getElementById('voyant_4');
-    const elt_voyant_5 = document.getElementById('voyant_5');
-    const elt_voyant_6 = document.getElementById('voyant_6');
-    const elt_voyant_7 = document.getElementById('voyant_7');
-    const elt_voyant_8 = document.getElementById('voyant_8');
-    const elt_voyant_9 = document.getElementById('voyant_9');
-    const elt_voyant_10 = document.getElementById('voyant_10');
-    const elt_voyant_11 = document.getElementById('voyant_11');
-    const elt_voyant_12 = document.getElementById('voyant_12');
-    const elt_voyant_13 = document.getElementById('voyant_13');
-    const elt_voyant_14 = document.getElementById('voyant_14');
-    const elt_voyant_15 = document.getElementById('voyant_15');
-    const elt_voyant_16 = document.getElementById('voyant_16');
-    const elt_voyant_17 = document.getElementById('voyant_17');
-    const elt_voyant_18 = document.getElementById('voyant_18');
-    const elt_voyant_19 = document.getElementById('voyant_19');
-    const elt_voyant_20 = document.getElementById('voyant_20');
-    const elt_voyant_21 = document.getElementById('voyant_21');
-    const elt_voyant_22 = document.getElementById('voyant_22');
-    const elt_voyant_23 = document.getElementById('voyant_23');
-    const elt_voyant_24 = document.getElementById('voyant_24');
+    const elt_voyant_1 = document.getElementsByTagName('voyant_1');
+    const elt_voyant_2 = document.getElementsByTagName('voyant_2');
+    const elt_voyant_3 = document.getElementsByTagName('voyant_3');
+    const elt_voyant_4 = document.getElementsByTagName('voyant_4');
+    const elt_voyant_5 = document.getElementsByTagName('voyant_5');
+    const elt_voyant_6 = document.getElementsByTagName('voyant_6');
+    const elt_voyant_7 = document.getElementsByTagName('voyant_7');
+    const elt_voyant_8 = document.getElementsByTagName('voyant_8');
+    const elt_voyant_9 = document.getElementsByTagName('voyant_9');
+    const elt_voyant_10 = document.getElementsByTagName('voyant_10');
+    const elt_voyant_11 = document.getElementsByTagName('voyant_11');
+    const elt_voyant_12 = document.getElementsByTagName('voyant_12');
+    const elt_voyant_13 = document.getElementsByTagName('voyant_13');
+    const elt_voyant_14 = document.getElementsByTagName('voyant_14');
+    const elt_voyant_15 = document.getElementsByTagName('voyant_15');
+    const elt_voyant_16 = document.getElementsByTagName('voyant_16');
+    const elt_voyant_17 = document.getElementsByTagName('voyant_17');
+    const elt_voyant_18 = document.getElementsByTagName('voyant_18');
+    const elt_voyant_19 = document.getElementsByTagName('voyant_19');
+    const elt_voyant_20 = document.getElementsByTagName('voyant_20');
+    const elt_voyant_21 = document.getElementsByTagName('voyant_21');
+    const elt_voyant_22 = document.getElementsByTagName('voyant_22');
+    const elt_voyant_23 = document.getElementsByTagName('voyant_23');
+    const elt_voyant_24 = document.getElementsByTagName('voyant_24');
 
     function showTab(n) {
       // This function will display the specified tab of the form...
@@ -2115,6 +3141,17 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
       var x = document.getElementsByClassName("tab");
       // Exit the function if any field in the current tab is invalid:
       if (n == 1 && !validateMe()) return false;
+
+      // console.log('currentTab = ' + currentTab);
+      // console.log('n = ' + n);
+      // console.log($('input[name=nivo_carbu_recep_vehi]'));
+
+      // console.log($('#carte_grise_recep_vehi_non').is(':checked'));
+
+      if (n == 1 && currentTab == 1 && !validateMe_2()) return false;
+
+      if (n == 1 && currentTab == 2 && !validateMe_3()) return false;
+
       // Hide the current tab:
       x[currentTab].style.display = "none";
       // Increase or decrease the current tab by 1:
@@ -2205,6 +3242,20 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
               // valid = true;
             }
 
+          }
+
+        } else if (y[i].type == "radio") {
+
+          if (y[i].name == "nivo_carbu_recep_vehi") {
+            if (y[i].checked == false) {
+              valid = false;
+            }
+          }
+
+          if (y[i].name == "etat_proprete_arrivee") {
+            if (y[i].checked == false) {
+              valid = false;
+            }
           }
 
         } else if (y[i].type == "number") {
@@ -3042,7 +4093,736 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
       }, 3000);
     });
 
+    function validateMe_3() {
+      // déclaration des variables
+      var j, z1, z2, z3, z4, z5, z6, z7, z8, z9, z10, z11, z12, z13, z14, z15, z16, z17, z18, z19,
+        z20, z21, z22, z23, z24, z25, z26, z27, z28, z29, z30, z31, z32, z33, z34, z35, z36, z37, z38,
+        z39, z40, z41, z42, z43, z44, z45, z46;
+
+      // initialisation des variables
+      j = 0;
+      z1 = $('input[name=pare_brise_avant]');
+      z2 = $('input[name=etat_proprete_arrivee]');
+      z3 = $('input[name=etat_vehi_arrive]');
+      z4 = $('input[name=phare_gauche]');
+      z5 = $('input[name=clignotant_droit]');
+      z6 = $('input[name=pare_choc_avant]');
+      z7 = $('input[name=feu_avant]');
+      z8 = $('input[name=vitre_avant]');
+      z9 = $('input[name=poignet_avant]');
+      z10 = $('input[name=plaque_avant]');
+      z11 = $('input[name=feu_brouillard]');
+      z12 = $('input[name=balai_essuie_glace]');
+      z13 = $('input[name=retroviseur_gauche]');
+      z14 = $('input[name=symbole_avant]');
+      z15 = $('input[name=poignet_capot]');
+      z16 = $('input[name=alternateur]');
+      z17 = $('input[name=climatisation]');
+      z18 = $('input[name=pare_brise_arriere]');
+      z19 = $('input[name=phare_droit]');
+      z20 = $('input[name=clignotant_gauche]');
+      z21 = $('input[name=pare_choc_arriere]');
+      z22 = $('input[name=feu_arriere]');
+      z23 = $('input[name=vitre_arriere]');
+      z24 = $('input[name=poignet_arriere]');
+      z25 = $('input[name=plaque_arriere]');
+      z26 = $('input[name=controle_pneu]');
+      z27 = $('input[name=batterie]');
+      z28 = $('input[name=retroviseur_droit]');
+      z29 = $('input[name=symbole_arriere]');
+      z30 = $('input[name=cache_moteur]');
+      z31 = $('input[name=suspension]');
+      z32 = $('input[name=etat_carosserie]');
+      z33 = $('input[name=poste_auto]');
+      z34 = $('input[name=coffre_gant]');
+      z35 = $('input[name=tapis_plafond]');
+      z36 = $('input[name=ecran_bord]');
+      z37 = $('input[name=retroviseur_interne]');
+      z38 = $('input[name=bouton_vitre_arriere]');
+      z39 = $('input[name=tableau_bord]');
+      z40 = $('input[name=tapis_sol]');
+      z41 = $('input[name=commutateur_central]');
+      z42 = $('input[name=ampoule_interieure]');
+      z43 = $('input[name=bouton_vitre_avant]');
+      z44 = $('input[name=bouton_siege]');
+      z45 = $('input[name=frein_main]');
+      z46 = $('input[name=bouton_detresse]');
+
+      // console.log(z1);
+
+      if (z2[j].checked == false && z2[j + 1].checked == false) {
+        alert("Veuillez cocher l'état de propreté du véhicule SVP !!!");
+        $('input[name=etat_proprete_arrivee]').focus();
+        return false;
+      } else if (z3[j].checked == false && z3[j + 1].checked == false) {
+
+        alert("Veuillez cocher l'état du véhicule à l'arrivé SVP !!!");
+        $('input[name=etat_vehi_arrive]').focus();
+        return false;
+
+      } else if ($('textarea#remarque_etat_vehi_arrive').val() == '') {
+        alert("Veuillez saisir une remarque s'il y en a ou NEANT s'il n'y en a pas !!!");
+        $('textarea#remarque_etat_vehi_arrive').focus();
+        return false;
+      } else if (z1[j].checked == false && z1[j + 1].checked == false && z1[j + 2].checked == false && z1[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du pare brise avant SVP !!!");
+        $('input[name=pare_brise_avant]').focus();
+        return false;
+      } else if (z4[j].checked == false && z4[j + 1].checked == false && z4[j + 2].checked == false && z4[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du phare gauche SVP !!!");
+        $('input[name=phare_gauche]').focus();
+        return false;
+      } else if (z5[j].checked == false && z5[j + 1].checked == false && z5[j + 2].checked == false && z5[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du clignotant droit SVP !!!");
+        $('input[name=clignotant_droit]').focus();
+        return false;
+      } else if (z6[j].checked == false && z6[j + 1].checked == false && z6[j + 2].checked == false && z6[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du pare choc avant SVP !!!");
+        $('input[name=pare_choc_avant]').focus();
+        return false;
+      } else if (z7[j].checked == false && z7[j + 1].checked == false && z7[j + 2].checked == false && z7[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du feu avant SVP !!!");
+        $('input[name=feu_avant]').focus();
+        return false;
+      } else if (z8[j].checked == false && z8[j + 1].checked == false && z8[j + 2].checked == false && z8[j + 3].checked == false) {
+        alert("Veuillez cocher l'état de la vitre avant SVP !!!");
+        $('input[name=vitre_avant]').focus();
+        return false;
+      } else if (z9[j].checked == false && z9[j + 1].checked == false && z9[j + 2].checked == false && z9[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du poignet avant SVP !!!");
+        $('input[name=poignet_avant]').focus();
+        return false;
+      } else if (z10[j].checked == false && z10[j + 1].checked == false && z10[j + 2].checked == false && z10[j + 3].checked == false) {
+        alert("Veuillez cocher l'état de la plaque avant SVP !!!");
+        $('input[name=plaque_avant]').focus();
+        return false;
+      } else if (z11[j].checked == false && z11[j + 1].checked == false && z11[j + 2].checked == false && z11[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du feu brouillard SVP !!!");
+        $('input[name=feu_brouillard]').focus();
+        return false;
+      } else if (z12[j].checked == false && z12[j + 1].checked == false && z12[j + 2].checked == false && z12[j + 3].checked == false) {
+        alert("Veuillez cocher l'état des balaies d'essuie glace SVP !!!");
+        $('input[name=balai_essuie_glace]').focus();
+        return false;
+      } else if (z13[j].checked == false && z13[j + 1].checked == false && z13[j + 2].checked == false && z13[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du rétroviseur gauche SVP !!!");
+        $('input[name=retroviseur_gauche]').focus();
+        return false;
+      } else if (z14[j].checked == false && z14[j + 1].checked == false && z14[j + 2].checked == false && z14[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du symbole avant SVP !!!");
+        $('input[name=symbole_avant]').focus();
+        return false;
+      } else if (z15[j].checked == false && z15[j + 1].checked == false && z15[j + 2].checked == false && z15[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du poignet de capot SVP !!!");
+        $('input[name=poignet_capot]').focus();
+        return false;
+      } else if (z16[j].checked == false && z16[j + 1].checked == false && z16[j + 2].checked == false && z16[j + 3].checked == false) {
+        alert("Veuillez cocher l'état de l'alternateur SVP !!!");
+        $('input[name=alternateur]').focus();
+        return false;
+      } else if (z18[j].checked == false && z18[j + 1].checked == false && z18[j + 2].checked == false && z18[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du pare brise arrière SVP !!!");
+        $('input[name=pare_brise_arriere]').focus();
+        return false;
+      } else if (z17[j].checked == false && z17[j + 1].checked == false && z17[j + 2].checked == false && z17[j + 3].checked == false) {
+        alert("Veuillez cocher l'état de la climatisation SVP !!!");
+        $('input[name=climatisation]').focus();
+        return false;
+      } else if (z19[j].checked == false && z19[j + 1].checked == false && z19[j + 2].checked == false && z19[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du phare droit SVP !!!");
+        $('input[name=phare_droit]').focus();
+        return false;
+      } else if (z20[j].checked == false && z20[j + 1].checked == false && z20[j + 2].checked == false && z20[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du clignotant gauche SVP !!!");
+        $('input[name=clignotant_gauche]').focus();
+        return false;
+      } else if (z21[j].checked == false && z21[j + 1].checked == false && z21[j + 2].checked == false && z21[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du pare choc arrière SVP !!!");
+        $('input[name=pare_choc_arriere]').focus();
+        return false;
+      } else if (z22[j].checked == false && z22[j + 1].checked == false && z22[j + 2].checked == false && z22[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du feu arrière SVP !!!");
+        $('input[name=feu_arriere]').focus();
+        return false;
+      } else if (z23[j].checked == false && z23[j + 1].checked == false && z23[j + 2].checked == false && z23[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état de la vitre arrière SVP !!!");
+        $('input[name=vitre_arriere]').focus();
+        return false;
+
+      } else if (z24[j].checked == false && z24[j + 1].checked == false && z24[j + 2].checked == false && z24[j + 3].checked == false) {
+        alert("Veuillez cocher l'état du poignet arrière SVP !!!");
+        $('input[name=poignet_arriere]').focus();
+        return false;
+
+      } else if (z25[j].checked == false && z25[j + 1].checked == false && z25[j + 2].checked == false && z25[j + 3].checked == false) {
+        alert("Veuillez cocher l'état de la plaque arrière SVP !!!");
+        $('input[name=plaque_arriere]').focus();
+        return false;
+      } else if (z26[j].checked == false && z26[j + 1].checked == false && z26[j + 2].checked == false && z26[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du contrôle pneu SVP !!!");
+        $('input[name=controle_pneu]').focus();
+        return false;
+
+      } else if (z27[j].checked == false && z27[j + 1].checked == false && z27[j + 2].checked == false && z27[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état de la batterie SVP !!!");
+        $('input[name=batterie]').focus();
+        return false;
+      } else if (z28[j].checked == false && z28[j + 1].checked == false && z28[j + 2].checked == false && z28[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du retroviseur droit SVP !!!");
+        $('input[name=retroviseur_droit]').focus();
+        return false;
+
+      } else if (z29[j].checked == false && z29[j + 1].checked == false && z29[j + 2].checked == false && z29[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du symbole arrière SVP !!!");
+        $('input[name=symbole_arriere]').focus();
+        return false;
+
+      } else if (z30[j].checked == false && z30[j + 1].checked == false && z30[j + 2].checked == false && z30[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du cache moteur SVP !!!");
+        $('input[name=cache_moteur]').focus();
+        return false;
+
+      } else if (z31[j].checked == false && z31[j + 1].checked == false && z31[j + 2].checked == false && z31[j + 3].checked == false) {
+        alert("Veuillez cocher l'état de la suspension SVP !!!");
+        $('input[name=suspension]').focus();
+        return false;
+      } else if (z32[j].checked == false && z32[j + 1].checked == false && z32[j + 2].checked == false && z32[j + 3].checked == false) {
+        alert("Veuillez cocher l'état de la carosserie SVP !!!");
+        $('input[name=etat_carosserie]').focus();
+        return false;
+      } else if ($('#dim_pneu').val() == '') {
+        alert("Veuillez saisir la dimension du pneu SVP !!!");
+        $('#dim_pneu').focus();
+        return false;
+      } else if ($('textarea#remarque_aspect_ext').val() == '') {
+        alert("Veuillez saisir une remarque s'il y en a ou NEANT s'il n'y en a pas !!!");
+        $('textarea#remarque_aspect_ext').focus();
+        return false;
+      } else if (z33[j].checked == false && z33[j + 1].checked == false && z33[j + 2].checked == false && z33[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du poste auto SVP !!!");
+        $('input[name=poste_auto]').focus();
+        return false;
+
+      } else if (z34[j].checked == false && z34[j + 1].checked == false && z34[j + 2].checked == false && z34[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du coffre à gant SVP !!!");
+        $('input[name=coffre_gant]').focus();
+        return false;
+
+      } else if (z35[j].checked == false && z35[j + 1].checked == false && z35[j + 2].checked == false && z35[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du tapis de plafond !!!");
+        $('input[name=tapis_plafond]').focus();
+        return false;
+
+      } else if (z36[j].checked == false && z36[j + 1].checked == false && z36[j + 2].checked == false && z36[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état de l'écran de bord !!!");
+        $('input[name=ecran_bord]').focus();
+        return false;
+
+      } else if (z37[j].checked == false && z37[j + 1].checked == false && z37[j + 2].checked == false && z37[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du retroviseur interne SVP !!!");
+        $('input[name=retroviseur_interne]').focus();
+        return false;
+
+      } else if (z38[j].checked == false && z38[j + 1].checked == false && z38[j + 2].checked == false && z38[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du bouton de vitre arrière SVP !!!");
+        $('input[name=bouton_vitre_arriere]').focus();
+        return false;
+
+      } else if (z39[j].checked == false && z39[j + 1].checked == false && z39[j + 2].checked == false && z39[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du tableau de bord SVP !!!");
+        $('input[name=tableau_bord]').focus();
+        return false;
+
+      } else if (z40[j].checked == false && z40[j + 1].checked == false && z40[j + 2].checked == false && z40[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du tapis de sol SVP !!!");
+        $('input[name=tapis_sol]').focus();
+        return false;
+
+      } else if (z41[j].checked == false && z41[j + 1].checked == false && z41[j + 2].checked == false && z41[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du commutateur central SVP !!!");
+        $('input[name=commutateur_central]').focus();
+        return false;
+
+      } else if (z42[j].checked == false && z42[j + 1].checked == false && z42[j + 2].checked == false && z42[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état de l'ampoule intérieure SVP !!!");
+        $('input[name=ampoule_interieure]').focus();
+        return false;
+
+      } else if (z43[j].checked == false && z43[j + 1].checked == false && z43[j + 2].checked == false && z43[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du bouton vitre avant SVP !!!");
+        $('input[name=bouton_vitre_avant]').focus();
+        return false;
+
+      } else if (z44[j].checked == false && z44[j + 1].checked == false && z44[j + 2].checked == false && z44[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du bouton siege SVP !!!");
+        $('input[name=bouton_siege]').focus();
+        return false;
+
+      } else if (z45[j].checked == false && z45[j + 1].checked == false && z45[j + 2].checked == false && z45[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du frein à main SVP !!!");
+        $('input[name=frein_main]').focus();
+        return false;
+
+      } else if (z46[j].checked == false && z46[j + 1].checked == false && z46[j + 2].checked == false && z46[j + 3].checked == false) {
+
+        alert("Veuillez cocher l'état du bouton de détresse SVP !!!");
+        $('input[name=bouton_detresse]').focus();
+        return false;
+
+      } else if ($('textarea#remarque_aspect_int').val() == '') {
+        alert("Veuillez saisir une remarque s'il y en a ou NEANT s'il n'y en a pas !!!");
+        $('textarea#remarque_aspect_int').focus();
+        return false;
+      } else if ($('textarea#travo_effec').val() == '') {
+        alert("Veuillez saisir les plaintes du client s'il y en a ou NEANT s'il n'y en a pas !!!");
+        $('textarea#travo_effec').focus();
+        return false;
+      } else if ($('textarea#autres_obs').val() == '') {
+        alert("Veuillez saisir les autres observations s'il y en a ou NEANT s'il n'y en a pas !!!");
+        $('textarea#autres_obs').focus();
+        return false;
+      } else if ($('input[name="pj_scanner_fr"]').val() == '') {
+        alert("Le fichier du résultat du scanner est obligatoire, veuillez l'ajouter SVP !!!");
+        $($('input[name="pj_scanner_fr"]')).focus();
+        return false;
+      } else {
+        return true;
+      }
+
+    }
+
+    function validateMe_2() {
+
+      // déclaration des variables
+      var i, y, etat_vehi_arrive
+
+      // initialisation des variables
+      i = 0;
+      y = $('input[name=nivo_carbu_recep_vehi]');
+      etat_vehi_arrive = "<?php echo $etat_vehi_arrive ?>";
+
+      y1 = $('input[name=carte_grise_recep_vehi]');
+      y2 = $('input[name=cric_levage_recep_vehi]');
+      y3 = $('input[name=cle_roue]');
+      y4 = $('input[name=rallonge_roue_recep_vehi]');
+      y5 = $('input[name=pneu_secours]');
+      y6 = $('input[name=anneau_remorquage_recep_vehi]');
+      y7 = $('input[name=triangle]');
+      y8 = $('input[name=boite_pharma]');
+      y9 = $('input[name=extincteur]');
+      y10 = $('input[name=remarque_access_vehi]');
+
+      y11 = $('input[name=elec_recep_vehi]');
+      y12 = $('input[name=meca_recep_vehi]');
+      y13 = $('input[name=pb_electro_recep_vehi]');
+      y14 = $('input[name=pb_demar_recep_vehi]');
+      y15 = $('input[name=pb_meca_recep_vehi]');
+      y16 = $('input[name=conf_cle_recep_vehi]');
+      y17 = $('input[name=sup_adblue_recep_vehi]');
+      y18 = $('input[name=sup_fil_parti_recep_vehi]');
+      y19 = $('input[name=dupli_cle_recep_vehi]');
+      y20 = $('input[name=sup_vanne_egr_recep_vehi]');
+
+      // if (etat_vehi_arrive == "conduit") {
+
+      y21 = $('input[name=voyant_1]');
+      y22 = $('input[name=voyant_2]');
+      y23 = $('input[name=voyant_3]');
+      y24 = $('input[name=voyant_4]');
+      y25 = $('input[name=voyant_5]');
+      y26 = $('input[name=voyant_6]');
+      y27 = $('input[name=voyant_7]');
+      y28 = $('input[name=voyant_8]');
+      y29 = $('input[name=voyant_9]');
+      y30 = $('input[name=voyant_10]');
+      y31 = $('input[name=voyant_11]');
+      y32 = $('input[name=voyant_12]');
+      y33 = $('input[name=voyant_13]');
+      y34 = $('input[name=voyant_14]');
+      y35 = $('input[name=voyant_15]');
+      y36 = $('input[name=voyant_16]');
+      y37 = $('input[name=voyant_17]');
+      y38 = $('input[name=voyant_18]');
+      y39 = $('input[name=voyant_19]');
+      y40 = $('input[name=voyant_20]');
+      y41 = $('input[name=voyant_21]');
+      y42 = $('input[name=voyant_22]');
+      y43 = $('input[name=voyant_23]');
+      y44 = $('input[name=voyant_24]');
+
+      // }
+
+      y46 = $('input[name=remarque_motif_depot]');
+      y47 = $('input[name="carte_grise_numero"]');
+      y48 = $('input[name="pj_carte_grise"]');
+
+      y49 = $('input[name="visite_tech_numero"]');
+      y50 = $('input[name="add_date_visitetech_car"]');
+      y51 = $('input[name="pj_visite_tech"]');
+      y52 = $('input[name="visitetech_recep_vehi"]');
+
+      y53 = $('input[name="assur_recep_vehi"]');
+      y54 = $('input[name="assurance_numero"]');
+      y55 = $('input[name="assurance_vehi_recep"]');
+      y56 = $('input[name="add_date_assurance_car"]');
+      y57 = $('input[name="add_date_assurance_fin"]');
+      y58 = $('input[name="pj_assurance"]');
+
+      y59 = $('input[name="pj_assurance_cedeao"]');
+      y60 = $('input[name="pj_contrat_assurance"]');
+
+      y61 = $('input[name="otre_piece_numero"]');
+      y62 = $('input[name="date_otre_piece_recep_vehi"]');
+      y63 = $('input[name="pj_otre_piece"]');
+
+      y64 = $('input[name="assurance_cedeao_recep_vehi"]');
+      y65 = $('input[name="contrat_assurance_recep_vehi"]');
+
+      y66 = $('input[name="otre_piece_recep_vehi"]');
+
+      // console.log(z1);
+
+      if ($("#km_reception_vehi").val() == '' && etat_vehi_arrive == "conduit") {
+        alert("Le kilométrage du véhicule est obligatoire !!!");
+        $("#km_reception_vehi").focus();
+        return false;
+      } else if ((etat_vehi_arrive == "conduit") && (y[i].checked == false) && (y[i + 1].checked == false) && (y[i + 2].checked == false) && (y[i + 3].checked == false) && (y[i + 4].checked == false)) {
+
+        alert("Veuillez cocher le niveau de carburant SVP !!!");
+        $('input[name=nivo_carbu_recep_vehi]').focus();
+        return false;
+
+      } else if ($("#cle_recep_vehi_text").val() == '') {
+        alert("Le nombre de clé du véhicule est obligatoire !!!");
+        $("#cle_recep_vehi_text").focus();
+        return false;
+      } else if ($("#cle_recep_vehi").prop("checked") == false) {
+        alert("Veuillez cocher la case clé du véhicule !!!");
+        $("#cle_recep_vehi").focus();
+        return false;
+      } else if (y1[i].checked == false && y1[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a une carte grise !!!");
+        y1.focus();
+        return false;
+      } else if (y47.val() == '' && $('#carte_grise_recep_vehi_oui').is(':checked')) {
+        y47.focus();
+        alert("Saisissez le numéro de la carte grise SVP !!!");
+        return false;
+      } else if (y48.val() == '' && $('#carte_grise_recep_vehi_oui').is(':checked')) {
+        y48.focus();
+        alert("Ajouter l'image de la carte grise du véhicule !!!");
+        return false;
+      } else if (y52[i].checked == false && y52[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a une visite technique !!!");
+        y52.focus();
+        return false;
+      } else if (y49.val() == '' && $('#visite_tech_recep_vehi_oui').is(':checked')) {
+        y49.focus();
+        alert("Saisissez le numéro de la visite technique SVP !!!");
+        return false;
+      } else if (y50.val() == '' && $('#visite_tech_recep_vehi_oui').is(':checked')) {
+        y50.focus();
+        alert("Ajouter la date de la prochaine visite technique du véhicule !!!");
+        return false;
+      } else if (y51.val() == '' && $('#visite_tech_recep_vehi_oui').is(':checked')) {
+        y51.focus();
+        alert("Ajouter l'image de la visite technique du véhicule !!!");
+        return false;
+      } else if (y53[i].checked == false && y53[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a une assurance !!!");
+        y53.focus();
+        return false;
+      } else if (y54.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
+        y54.focus();
+        alert("Saisissez le numéro de l'assurance SVP !!!");
+        return false;
+      } else if (y55.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
+        y55.focus(); 
+        alert("Saisissez le nom de l'assurance SVP !!!");
+      } else if (y56.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
+        alert("La date de début de l'assurance du véhicule est obligatoire, saisissez la !!!");
+        y56.focus();
+        return false;
+      } else if (y57.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
+        alert("La date de fin de l'assurance du véhicule est obligatoire, saisissez la !!!");
+        y57.focus();
+        return false;
+      } else if (y58.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
+        y58.focus(); 
+        alert("Ajouter l'image de l'assurance du véhicule !!!");
+        return false;
+      } else if (y64[i].checked == false && y64[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a une assurance CEDEAO !!!");
+        y64.focus();
+        return false;
+      } else if (y59.val() == '' && $('#assurance_cedeao_recep_vehi_oui').is(':checked')) {
+        y59.focus();
+        alert("Ajouter l'image de l'assurance CEDEAO du véhicule SVP !!!");
+        return false;
+      } else if (y65[i].checked == false && y65[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a un contrat d'assurance !!!");
+        y65.focus();
+        return false;
+      } else if (y60.val() == '' && $('#contrat_assurance_recep_vehi_oui').is(':checked')) {
+        y60.focus();
+        alert("Ajouter l'image du contrat d'assurance du véhicule SVP !!!");
+        return false;
+      } else if (y66[i].checked == false && y66[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a une autre pièce !!!");
+        y66.focus();
+        return false;
+      } else if (y61.val() == '' && $('#otre_piece_recep_vehi_oui').is(':checked')) {
+        y61.focus();
+        alert("Saisissez le numéro de la pièce SVP !!!");
+        return false;
+      } else if (y62.val() == '' && $('#otre_piece_recep_vehi_oui').is(':checked')) {
+        y62.focus();
+        alert("Sélectionnez la date d'expiration de la pièce !!!");
+        return false;
+      } else if (y63.val() == '' && $('#otre_piece_recep_vehi_oui').is(':checked')) {
+        y63.focus();
+        alert("Ajouter l'image de la pièce du véhicule !!!");
+        return false;
+      }
+      
+      else if (y2[i].checked == false && y2[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a un cric de levage !!!");
+        y2.focus();
+        return false;
+      } else if (y3[i].checked == false && y3[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a une clé de roue !!!");
+        y3.focus();
+        return false;
+      } else if (y4[i].checked == false && y4[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a une rallonge de roue !!!");
+        y4.focus();
+        return false;
+      } else if (y5[i].checked == false && y5[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a un pneu secours !!!");
+        y5.focus();
+        return false;
+      } else if (y6[i].checked == false && y6[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a un anneau de remorquage !!!");
+        y6.focus();
+        return false;
+      } else if (y7[i].checked == false && y7[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a un triangle !!!");
+        y7.focus();
+        return false;
+      } else if (y8[i].checked == false && y8[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a une boite à pharmacie !!!");
+        y8.focus();
+        return false;
+      } else if (y9[i].checked == false && y9[i + 1].checked == false) {
+        alert("Veuillez cocher OUI ou NON s'il y'a un extincteur !!!");
+        y9.focus();
+        return false;
+      } else if ($('textarea#remarque_access_vehi').val() == '') {
+        alert("Veuillez saisir une remarque s'il y en a ou NEANT s'il n'y en a pas !!!");
+        $('textarea#remarque_access_vehi').focus();
+        return false;
+      } else if ($('input[name="pj_access_1"]').val() == '') {
+        alert("Veuillez ajouter la photo du 1er accessoire du véhicule SVP !!!");
+        $($('input[name="pj_access_1"]')).focus();
+        return false;
+      } else if ($('input[name="pj_access_2"]').val() == '') {
+        alert("Veuillez ajouter la photo du 2ème accessoire du véhicule SVP !!!");
+        $($('input[name="pj_access_2"]')).focus();
+        return false;
+      } else if ($('input[name="pj_access_3"]').val() == '') {
+        alert("Veuillez ajouter la photo du 3ème accessoire du véhicule SVP !!!");
+        $($('input[name="pj_access_3"]')).focus();
+        return false;
+      } else if ($('input[name="pj_access_4"]').val() == '') {
+        alert("Veuillez ajouter la photo du 4ème accessoire du véhicule SVP !!!");
+        $($('input[name="pj_access_4"]')).focus();
+        return false;
+      } else if ($('input[name="pj_access_5"]').val() == '') {
+        alert("Veuillez ajouter la photo du 5ème accessoire du véhicule SVP !!!");
+        $($('input[name="pj_access_5"]')).focus();
+        return false;
+      } else if ($('input[name="pj_access_6"]').val() == '') {
+        alert("Veuillez ajouter la photo du 6ème accessoire du véhicule SVP !!!");
+        $($('input[name="pj_access_6"]')).focus();
+        return false;
+      } else if ($("#scanner_recep_vehi").prop("checked") == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher la case du scanner !!!");
+        $("#scanner_recep_vehi").focus();
+        return false;
+      } else if (y11[i].checked == false && y11[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est électrique !!!");
+        y11.focus();
+        return false;
+      } else if (y12[i].checked == false && y12[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est mécanique !!!");
+        y12.focus();
+        return false;
+      } else if (y13[i].checked == false && y13[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est pour un problème électronique !!!");
+        y13.focus();
+        return false;
+      } else if (y14[i].checked == false && y14[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est pour un problème de démarrage !!!");
+        y14.focus();
+        return false;
+      } else if (y15[i].checked == false && y15[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est pour un problème mécanique !!!");
+        y15.focus();
+        return false;
+      } else if (y16[i].checked == false && y16[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est pour une confection de clé !!!");
+        y16.focus();
+        return false;
+      } else if (y17[i].checked == false && y17[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est pour une suppression adblue !!!");
+        y17.focus();
+        return false;
+      } else if (y18[i].checked == false && y18[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est pour une suppression de filtre à particule !!!");
+        y18.focus();
+        return false;
+      } else if (y19[i].checked == false && y19[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est pour une duplication de clé !!!");
+        y19.focus();
+        return false;
+      } else if (y20[i].checked == false && y20[i + 1].checked == false) {
+        alert("Veuillez cocher si OUI ou NON le motif de dépot est pour suppression de vanne EGR !!!");
+        y20.focus();
+        return false;
+      } else if (y21[i].checked == false && y21[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 1 est allumé !!!");
+        y21.focus();
+        return false;
+      } else if (y22[i].checked == false && y22[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 2 est allumé !!!");
+        y22.focus();
+        return false;
+      } else if (y23[i].checked == false && y23[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 3 est allumé !!!");
+        y23.focus();
+        return false;
+      } else if (y24[i].checked == false && y24[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 4 est allumé !!!");
+        y24.focus();
+        return false;
+      } else if (y25[i].checked == false && y25[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 5 est allumé !!!");
+        y25.focus();
+        return false;
+      } else if (y26[i].checked == false && y26[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 6 est allumé !!!");
+        y26.focus();
+        return false;
+      } else if (y27[i].checked == false && y27[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 7 est allumé !!!");
+        y27.focus();
+        return false;
+      } else if (y28[i].checked == false && y28[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 8 est allumé !!!");
+        y28.focus();
+        return false;
+      } else if (y29[i].checked == false && y29[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 9 est allumé !!!");
+        y29.focus();
+        return false;
+      } else if (y30[i].checked == false && y30[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 10 est allumé !!!");
+        y30.focus();
+        return false;
+      } else if (y31[i].checked == false && y31[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 11 est allumé !!!");
+        y31.focus();
+        return false;
+      } else if (y32[i].checked == false && y32[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 12 est allumé !!!");
+        y32.focus();
+        return false;
+      } else if (y33[i].checked == false && y33[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 13 est allumé !!!");
+        y33.focus();
+        return false;
+      } else if (y34[i].checked == false && y34[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 14 est allumé !!!");
+        y34.focus();
+        return false;
+      } else if (y35[i].checked == false && y35[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 15 est allumé !!!");
+        y35.focus();
+        return false;
+      } else if (y36[i].checked == false && y36[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 16 est allumé !!!");
+        y36.focus();
+        return false;
+      } else if (y37[i].checked == false && y37[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 17 est allumé !!!");
+        y37.focus();
+        return false;
+      } else if (y38[i].checked == false && y38[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 18 est allumé !!!");
+        y38.focus();
+        return false;
+      } else if (y39[i].checked == false && y39[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 19 est allumé !!!");
+        y39.focus();
+        return false;
+      } else if (y40[i].checked == false && y40[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 20 est allumé !!!");
+        y40.focus();
+        return false;
+      } else if (y41[i].checked == false && y41[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 21 est allumé !!!");
+        y41.focus();
+        return false;
+      } else if (y42[i].checked == false && y42[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 22 est allumé !!!");
+        y42.focus();
+        return false;
+      } else if (y43[i].checked == false && y43[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 23 est allumé !!!");
+        y43.focus();
+        return false;
+      } else if (y44[i].checked == false && y44[i + 1].checked == false && etat_vehi_arrive == "conduit") {
+        alert("Veuillez cocher si OUI ou NON le voyant 24 est allumé !!!");
+        y44.focus();
+        return false;
+      } else if ($('textarea#remarque_motif_depot').val() == '') {
+        alert("Veuillez saisir une remarque s'il y en a ou NEANT s'il n'y en a pas !!!");
+        $('textarea#remarque_motif_depot').focus();
+        return false;
+      } else if ($('input[name="pj_voyants_1"]').val() == '') {
+        alert("Veuillez ajouter une 1ère photo du tableau de bord SVP !!!");
+        $($('input[name="pj_voyants_1"]')).focus();
+        return false;
+      } else if ($('input[name="pj_voyants_2"]').val() == '') {
+        alert("Veuillez ajouter une 2ème photo du tableau de bord SVP !!!");
+        $($('input[name="pj_voyants_2"]')).focus();
+        return false;
+      } else {
+        return true;
+      }
+    }
+
     function validateMe() {
+
       if ($("#vin").val() == '') {
         alert("L'immatriculation du véhicule est obligatoire, saisissez la !!!");
         $("#vin").focus();
@@ -3055,11 +4835,13 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         alert("Le modèle du véhicule est obligatoire, saisissez le !!!");
         $("#ddl_model").focus();
         return false;
-      } else if ($("#assurance_vehi_recep").val() == '') {
-        alert("L'assurance du véhicule est obligatoire, saisissez la !!!");
-        $("#assurance_vehi_recep").focus();
-        return false;
-      } else if ($("#ddlCustomerList").val() == '') {
+      }
+      // else if ($("#assurance_vehi_recep").val() == '') {
+      //   alert("L'assurance du véhicule est obligatoire, saisissez la !!!");
+      //   $("#assurance_vehi_recep").focus();
+      //   return false;
+      // } 
+      else if ($("#ddlCustomerList").val() == '') {
         alert("Le nom du client est obligatoire, saisissez le !!!");
         $("#ddlCustomerList").focus();
         return false;
@@ -3076,21 +4858,23 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         alert("La date d'immatriculation du véhicule est obligatoire, saisissez la !!!");
         $("#add_date_imma").focus();
         return false;
-      } else if ($("#add_date_assurance").val() == '') {
-        alert("La date de début de l'assurance du véhicule est obligatoire, saisissez la !!!");
-        $("#add_date_assurance").focus();
-        return false;
-      } else if ($("#add_date_assurance_fin").val() == '') {
-        alert("La date de fin de l'assurance du véhicule est obligatoire, saisissez la !!!");
-        $("#add_date_assurance_fin").focus();
-        return false;
+      }
+      // else if ($("#add_date_assurance").val() == '') {
+      //   alert("La date de début de l'assurance du véhicule est obligatoire, saisissez la !!!");
+      //   $("#add_date_assurance").focus();
+      //   return false;
+      // } else if ($("#add_date_assurance_fin").val() == '') {
+      //   alert("La date de fin de l'assurance du véhicule est obligatoire, saisissez la !!!");
+      //   $("#add_date_assurance_fin").focus();
+      //   return false;
+      // } 
+      // else if ($("#add_date_visitetech").val() == '') {
+      //   alert("La date de la prochaine visite technique du véhicule est obligatoire, saisissez la !!!");
+      //   $("#add_date_visitetech").focus();
+      //   return false;
 
-      } else if ($("#add_date_visitetech").val() == '') {
-        alert("La date de la prochaine visite technique du véhicule est obligatoire, saisissez la !!!");
-        $("#add_date_visitetech").focus();
-        return false;
-
-      } else if ($("#genre_vehi_recep").val() == '') {
+      // } 
+      else if ($("#genre_vehi_recep").val() == '') {
         alert("Le genre du véhicule est obligatoire !!!");
         $("#genre_vehi_recep").focus();
         return false;
@@ -3114,10 +4898,416 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
         alert("La puissance fiscale du véhicule est obligatoire !!!");
         $("#fisc_vehi").focus();
         return false;
-      } else {
+      }
+      // else if ($('input[name="uploaded_file"]').val() == '') {
+      //   alert("Veuillez ajouter l'image du véhicule !!!");
+      //   $('input[name="uploaded_file"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_1_car"]').val() == '') {
+      //   alert("Ajouter la 1ère pièce jointe du véhicule !!!");
+      //   $('input[name="pj_1_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_2_car"]').val() == '') {
+      //   alert("Ajouter la 2ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_2_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_3_car"]').val() == '') {
+      //   alert("Ajouter la 3ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_3_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_4_car"]').val() == '') {
+      //   alert("Ajouter la 4ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_4_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_5_car"]').val() == '') {
+      //   alert("Ajouter la 5ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_5_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_6_car"]').val() == '') {
+      //   alert("Ajouter la 6ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_6_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_7_car"]').val() == '') {
+      //   alert("Ajouter la 7ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_7_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_8_car"]').val() == '') {
+      //   alert("Ajouter la 8ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_8_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_9_car"]').val() == '') {
+      //   alert("Ajouter la 9ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_9_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_10_car"]').val() == '') {
+      //   alert("Ajouter la 10ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_10_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_11_car"]').val() == '') {
+      //   alert("Ajouter la 11ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_11_car"]').focus();
+      //   return false;
+      // } else if ($('input[name="pj_12_car"]').val() == '') {
+      //   alert("Ajouter la 12ème pièce jointe du véhicule !!!");
+      //   $('input[name="pj_12_car"]').focus();
+      //   return false;
+      // } 
+      else {
         return true;
       }
     }
+
+    // On chargement de la page web (HTML)
+    $(document).ready(function() {
+
+      // Lorsque le véhicule est conduit, on cache tous les voyants
+      var etat_vehi_arrive;
+      etat_vehi_arrive = "<?php echo $etat_vehi_arrive ?>";
+
+      if (etat_vehi_arrive != "conduit") {
+
+        $('#voyant_box').hide();
+        $('#voyant_box').css('display', 'none');
+
+      }
+
+      // console.log($('#carte_grise_recep_vehi_non').is(':checked'));
+
+      // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout du scan de la carte grise
+      $('#carte_grise_box').hide();
+      $('#visite_tech_box').hide();
+      $('#assurance_box').hide();
+      $('#assurance_cedeao_box').hide(); 
+      $('#otre_piece_box').hide();
+      $('#contrat_assurance_box').hide();
+
+      /****************
+       *  CARTE GRISE
+       ***************/
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#carte_grise_recep_vehi_oui').click(function() {
+
+        // Si l'élément en question est coché, 
+
+        // if ($(this).is(':checked').val() == 'Carte grise')
+
+        if ($(this).is(':checked')) {
+
+          // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout du scan de la carte grise
+          $('#carte_grise_box').show();
+
+          // Si la valeur de ces éléments est vide, on déclenche une alerte
+          // if ($('input[name="carte_grise_numero"]').val() == '') {
+          //   $('input[name="carte_grise_numero"]').focus();
+          //   alert("Saisissez le numéro de la carte grise SVP !!!");
+          // }
+
+          // if ($('input[name="pj_carte_grise"]').val() == '') {
+          //   $('input[name="pj_carte_grise"]').focus();
+          //   alert("Ajouter la photocopie de la carte grise du véhicule !!!");
+          // }
+
+        }
+
+      })
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#carte_grise_recep_vehi_non').click(function() {
+
+        // Si l'élément en question est coché, 
+        // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout
+        if ($(this).is(':checked')) {
+
+          $('#carte_grise_box').hide();
+          $('#carte_grise_box').css('display', 'none');
+
+        }
+
+      })
+
+      /**********************
+       *  VISITE TECHNIQUE
+       **********************/
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#visite_tech_recep_vehi_oui').click(function() {
+
+        // Si l'élément en question est coché, 
+
+        if ($(this).is(':checked')) {
+
+          // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout du scan de la carte grise
+          $('#visite_tech_box').show();
+
+          // Si la valeur de ces éléments est vide, on déclenche une alerte
+          // if ($('input[name="visite_tech_numero"]').val() == '') {
+          //   $('input[name="visite_tech_numero"]').focus();
+          //   alert("Saisissez le numéro de la visite technique SVP !!!");
+          // }
+
+          // if ($('input[name="add_date_visitetech_car"]').val() == '') {
+          //   $('input[name="add_date_visitetech_car"]').focus();
+          //   alert("Choisissez la date de la prochaine visite technique SVP !!!");
+          // }
+
+          // if ($('input[name="pj_visite_tech"]').val() == '') {
+          //   $('input[name="pj_visite_tech"]').focus();
+          //   alert("Ajouter la photocopie de la visite technique du véhicule !!!");
+          // }
+
+        }
+
+      });
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#visite_tech_recep_vehi_non').click(function() {
+
+        // Si l'élément en question est coché, 
+        // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout
+        if ($(this).is(':checked')) {
+
+          $('#visite_tech_box').hide();
+          $('#visite_tech_box').css('display', 'none');
+
+        }
+
+      });
+
+      /**************
+       *  ASSURANCE
+       **************/
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#assurance_recep_vehi_oui').click(function() {
+
+        // Si l'élément en question est coché, 
+
+        if ($(this).is(':checked')) {
+
+          // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout du scan de la carte grise
+          $('#assurance_box').show();
+
+          // Si la valeur de ces éléments est vide, on déclenche une alerte
+          // if ($('input[name="assurance_numero"]').val() == '') {
+          //   $('input[name="assurance_numero"]').focus();
+          //   alert("Saisissez le numéro de l'assurance SVP !!!");
+          // }
+
+          // if ($('input[name="assurance_vehi_recep"]').val() == '') {
+          //   $('input[name="assurance_vehi_recep"]').focus();
+          //   alert("Saisissez le nom de l'assurance SVP !!!");
+          // }
+
+          // if ($('input[name="add_date_assurance"]').val() == '') {
+          //   $('input[name="add_date_assurance"]').focus();
+          //   alert("Choisissez la date de debut de l'assurance SVP !!!");
+          // }
+
+          // if ($('input[name="add_date_assurance_fin"]').val() == '') {
+          //   $('input[name="add_date_assurance_fin"]').focus();
+          //   alert("Choisissez la date de fin de l'assurance SVP !!!");
+          // }
+
+          // if ($('input[name="pj_assurance"]').val() == '') {
+          //   $('input[name="pj_assurance"]').focus();
+          //   alert("Ajouter l'image de l'assurance du véhicule en pièce jointe SVP !!!");
+          // }
+
+        }
+
+      });
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#assurance_recep_vehi_non').click(function() {
+
+        // Si l'élément en question est coché, 
+        // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout
+        if ($(this).is(':checked')) {
+
+          $('#assurance_box').hide();
+          $('#assurance_box').css('display', 'none');
+
+        }
+
+      });
+
+      /********************
+       *  ASSURANCE CEDEAO
+       *********************/
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#assurance_cedeao_recep_vehi_oui').click(function() {
+
+        // Si l'élément en question est coché, 
+
+        if ($(this).is(':checked')) {
+
+          // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout du scan de la carte grise
+          $('#assurance_cedeao_box').show();
+
+          // if ($('input[name="pj_assurance_cedeao"]').val() == '') {
+          //   $('input[name="pj_assurance_cedeao"]').focus();
+          //   alert("Ajouter l'image de l'assurance CEDEAO du véhicule en pièce jointe SVP !!!");
+          // }
+
+        }
+
+      });
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#assurance_cedeao_recep_vehi_non').click(function() {
+
+        // Si l'élément en question est coché, 
+        // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout
+        if ($(this).is(':checked')) {
+
+          $('#assurance_cedeao_box').hide();
+          $('#assurance_cedeao_box').css('display', 'none');
+
+        }
+
+      });
+
+      /**********************
+       *  CONTRAT ASSURANCE
+       *********************/
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#contrat_assurance_recep_vehi_oui').click(function() {
+
+        // Si l'élément en question est coché, 
+
+        if ($(this).is(':checked')) {
+
+          // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout du scan de la carte grise
+          $('#contrat_assurance_box').show();
+         
+
+          // if ($('input[name="pj_contrat_assurance"]').val() == '') {
+          //   $('input[name="pj_contrat_assurance"]').focus();
+          //   alert("Ajouter l'image du contrat d'assurance du véhicule en pièce jointe SVP !!!");
+          // }
+
+        }
+
+      });
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#contrat_assurance_recep_vehi_non').click(function() {
+
+        // Si l'élément en question est coché, 
+        // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout
+        if ($(this).is(':checked')) {
+
+          $('#contrat_assurance_box').hide();
+          $('#contrat_assurance_box').css('display', 'none');
+
+        }
+
+      });
+
+      /**********************
+       *  AUTRES PIECES
+       *********************/
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#otre_piece_recep_vehi_oui').click(function() {
+
+        // Si l'élément en question est coché, 
+
+        if ($(this).is(':checked')) {
+
+          // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout du scan de la carte grise
+          $('#otre_piece_box').show();
+
+          // if ($('input[name="otre_piece_numero"]').val() == '') {
+          //   $('input[name="otre_piece_numero"]').focus();
+          //   alert("Saisissez le numéro de la pièce SVP !!!");
+          // }
+
+          // if ($('input[name="date_otre_piece_recep_vehi"]').val() == '') {
+          //   $('input[name="date_otre_piece_recep_vehi"]').focus();
+          //   alert("Sélectionnez la date d'expiration de la pièce SVP !!!");
+          // }
+
+          // if ($('input[name="pj_otre_piece"]').val() == '') {
+          //   $('input[name="pj_otre_piece"]').focus();
+          //   alert("Ajouter l'image de la pièce SVP !!!");
+          // }
+
+        }
+
+      });
+
+      // Lorsqu'on clic sur l'élément ayant cet Id
+      $('#otre_piece_recep_vehi_non').click(function() {
+
+        // Si l'élément en question est coché, 
+        // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout
+        if ($(this).is(':checked')) {
+
+          $('#otre_piece_box').hide();
+          $('#otre_piece_box').css('display', 'none');
+
+        }
+
+      });
+
+    });
+
+    $(document).ready(function() {
+
+      $('#regForm').bootstrapValidator({
+        message: 'Cette valeur n\'est pas valide',
+        feedbackIcons: {
+          valid: 'glyphicon glyphicon-ok',
+          invalid: 'glyphicon glyphicon-remove',
+          validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+          car_chasis_no: {
+            validators: {
+              notEmpty: {
+                message: 'Le numéro de chasis est obligatoire !'
+              },
+              stringLength: {
+                min: 14,
+                message: 'Le numéro de chasis doit être supérieur à 14 caractères'
+              }
+            }
+          },
+          carte_grise_numero: {
+            validators: {
+              notEmpty: {
+                message: 'Le numéro de la carte grise est obligatoire !'
+              }
+            }
+          },
+          visite_tech_numero: {
+            validators: {
+              notEmpty: {
+                message: 'Le numéro de la visite technique est obligatoire !'
+              }
+            }
+          },
+          assurance_numero: {
+            validators: {
+              notEmpty: {
+                message: 'Le numéro de l\'assurance est obligatoire !'
+              }
+            }
+          },
+          assurance_vehi_recep: {
+            validators: {
+              notEmpty: {
+                message: 'Le nom de l\'assurance est obligatoire !'
+              }
+            }
+          }
+        }
+      });
+    });
   </script>
 
 </body>

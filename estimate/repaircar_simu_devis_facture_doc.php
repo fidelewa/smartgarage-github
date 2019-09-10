@@ -134,10 +134,10 @@ if (!empty($row) && count($row) > 0) { ?>
                 <div class="row" id="header">
                     <div class="col-xs-3" style="height:100px;">
                         <!-- <img class="editable-area" id="logo" src="<?php echo WEB_URL; ?>img/luxury_garage_logo.jpg" height="100" width="100"> -->
-                        <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
+                        <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg">
                     </div>
                     <div class="col-xs-3 col-xs-offset-6">
-                        <p><?php echo date_format(date_create($row['date_facture']), 'd/m/Y'); ?></p>
+                        <p><?php echo date_format(date_create($row['date_facture'], new \DateTimeZone('Africa/Abidjan')), 'd/m/Y à H:i:s'); ?></p>
                     </div>
                 </div>
                 <div class="row" id="content_1">

@@ -113,7 +113,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <!-- <img class="editable-area" id="logo" src="../img/logo.png"> -->
                             <div class="row">
                                 <div class="col-sm-12" align="center">
-                                    <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
+                                    <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg">
                                 </div>
                             </div>
                             <div class="row">
@@ -144,7 +144,7 @@ if (!empty($row) && count($row) > 0) { ?>
                                         <div class="col-md-12">
                                             <label for="date_bcmd" class="col-md-5 col-form-label">Date :</label>
                                             <div class="col-md-7">
-                                                <input type="text" id="date_bcmd" name="date_bcmd" value="<?php echo date_format(date_create($row['boncmde_date_creation']), 'd/m/Y'); ?>" class="datepicker form-control">
+                                                <input type="text" id="date_bcmd" name="date_bcmd" value="<?php echo date_format(date_create($row['boncmde_date_creation']), 'd/m/Y à H:i:s'); ?>" class="datepicker form-control">
                                             </div>
                                         </div>
                                     </div>

@@ -98,13 +98,16 @@ if (!empty($row) && count($row) > 0) { ?>
                     <div class="row" id="header">
                         <div class="col-sm-2" style="height:100px;">
                             <!-- <img class="editable-area" id="logo" src="../img/logo.png"> -->
-                            <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
+                            <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg">
                         </div>
                         <div class="col-sm-10" style="font-size:15pt;">
                             <p>Mécanique générale - Climatisation - Clé d'origine - Scanner - Programmation - Electricité</p>
                             <p>Tel. 21 35 55 60 / 06 66 06 66</p>
                         </div>
                     </div>
+                    <!-- <div class="col-xs-3 col-xs-offset-6">
+                        <p><?php echo date_format(date_create($row['date_facture']), 'd/m/Y h:i:s'); ?></p>
+                    </div> -->
                     <div class="row" id="content_1">
                         <div class="col-sm-12" style="text-align:center;">
                             <h4 style="text-decoration:underline;font-weight:bold">

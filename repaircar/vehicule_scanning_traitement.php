@@ -10,12 +10,12 @@ $wms = new wms_core();
 // die();
 
 // Si la valeur de la marque dans le champs de saisie n'est pas connu
-if(!isset($_POST['ddlMake']) || $_POST['ddlMake'] == ""){
+if (!isset($_POST['ddlMake']) || $_POST['ddlMake'] == "") {
     $_POST['ddlMake'] = $_POST['marque_hd'];
 }
 
 // Si la valeur du modèle dans le champs de saisie n'est pas connu
-if(!isset($_POST['ddlModel']) || $_POST['ddlModel'] == ""){
+if (!isset($_POST['ddlModel']) || $_POST['ddlModel'] == "") {
     $_POST['ddlModel'] = $_POST['model_hd'];
 }
 
@@ -105,33 +105,33 @@ $_POST['frais_scanner'] = (int) $_POST['frais_scanner'];
 // var_dump($_POST);
 // die();
 
-if ($_POST['scanner_electrique'] == null && $_POST['scanner_mecanique'] == null) {
+// if ($_POST['scanner_electrique'] == null && $_POST['scanner_mecanique'] == null) {
 
-    // Si aucun des types de scanner n'est sélectionné alors erreur
-    $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=scanner_error";
-    header("Location: $url");
-    die();
-} else if ($_POST['scanner_electrique'] != null xor $_POST['scanner_mecanique'] != null) {
+//     // Si aucun des types de scanner n'est sélectionné alors erreur
+//     $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=scanner_error";
+//     header("Location: $url");
+//     die();
+// } else if ($_POST['scanner_electrique'] != null xor $_POST['scanner_mecanique'] != null) {
 
-    // Si au moin l'un des types de scanner est sélectionné
-    if ((int) $_POST['frais_scanner'] != 50000) {
+//     // Si au moin l'un des types de scanner est sélectionné
+//     if ((int) $_POST['frais_scanner'] != 50000) {
 
-        // mais le montant des frais de scanner est différent de 50000 alors erreur
-        $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=scanner_error_50k";
-        header("Location: $url");
-        die();
-    }
-} else if ($_POST['scanner_electrique'] != null && $_POST['scanner_mecanique'] != null) {
+//         // mais le montant des frais de scanner est différent de 50000 alors erreur
+//         $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=scanner_error_50k";
+//         header("Location: $url");
+//         die();
+//     }
+// } else if ($_POST['scanner_electrique'] != null && $_POST['scanner_mecanique'] != null) {
 
-    // Si les deux types de scanners sont sélectionnés
-    if ((int) $_POST['frais_scanner'] != 100000) {
+//     // Si les deux types de scanners sont sélectionnés
+//     if ((int) $_POST['frais_scanner'] != 100000) {
 
-        // mais le montant des frais de scanner est différent de 100.000 alors erreur
-        $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=scanner_error_100k";
-        header("Location: $url");
-        die();
-    }
-}
+//         // mais le montant des frais de scanner est différent de 100.000 alors erreur
+//         $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=scanner_error_100k";
+//         header("Location: $url");
+//         die();
+//     }
+// }
 // } else {
 
 if (isset($_POST['scanner_electrique'])) {
@@ -387,30 +387,49 @@ $frais_scanner = (float) $_POST['frais_scanner'];
 // $nbr_aleatoire = rand();
 $nbr_aleatoire = substr(rand(), 0, 6);
 
+$createAt = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'Y-m-d H:i:s');
+
+// var_dump($createAt);
+// die();
+
 $query = "INSERT INTO tbl_vehicule_scanning (imma_vehi_client, marque_vehi_client, 
-       model_vehi_client, scanner_mecanique, scanner_electrique, frais_scanner, customer_id, nbr_aleatoire
+       model_vehi_client, scanner_mecanique, scanner_electrique, frais_scanner, customer_id, nbr_aleatoire, created_at, autres_motifs,
+       etat_vehi_arrive
     )
     VALUES('$_POST[immat]','$make_name_str','$model_name_str','$_POST[scanner_mecanique]','$_POST[scanner_electrique]',
-    '$frais_scanner','$_POST[ddlCustomerList]', $nbr_aleatoire)";
+    '$frais_scanner','$_POST[ddlCustomerList]', $nbr_aleatoire, '$createAt','$_POST[autres_motifs]','$_POST[etat_vehi_arrive]')";
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
 $result = mysql_query($query, $link);
 
-// die('je usis ici');
+if (!$result) {
+    // var_dump($data);
+    $message  = 'Invalid query: ' . mysql_error() . "\n";
+    $message .= 'Whole query: ' . $query;
+    die($message);
+}
 
-// On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur
-// if (!$result) {
-//     // var_dump($data);
-//     $message  = 'Invalid query: ' . mysql_error() . "\n";
-//     $message .= 'Whole query: ' . $query;
-//     die($message);
-// }
+// var_dump($query);
+// die();
+
+$queryElec = "UPDATE tbl_recep_vehi_repar 
+        SET etat_vehi_arrive_scanning= '" . (int) $_POST['etat_vehi_arrive'] . "'
+		WHERE car_id='" . (int) $_POST['reception_id'] . "'";
+
+// var_dump($_POST['reception_id']);
+// var_dump($queryElec);
+// die();
+
+// Exécution de la requête
+mysql_query($queryElec, $link);
+
+
 // Redirection vers la liste des devis
 // $url = WEB_URL . "repaircar/vehicule_scanning_list.php?m=add";
 // echo "<script type='text/javascript'> document.location.href='" . WEB_URL . "compta_panel/recu_paiement_scanner.php?nbr_aleatoire=" . $nbr_aleatoire . "'</script>";
 
-    $url = WEB_URL . "servcli_panel/servcli_dashboard.php";
-    header("Location: $url");
+$url = WEB_URL . "servcli_panel/servcli_dashboard.php";
+header("Location: $url");
     // }
 
 // }

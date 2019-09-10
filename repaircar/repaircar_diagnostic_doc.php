@@ -100,7 +100,7 @@ if (!empty($row) && count($row) > 0) { ?>
                     <div class="row" id="header">
                         <div class="col-sm-2" style="height:100px;">
                             <!-- <img class="editable-area" id="logo" src="../img/logo.png"> -->
-                            <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
+                            <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg">
                         </div>
                         <div class="col-sm-10" style="font-size:15pt;">
                             <p>Mécanique générale - Climatisation - Clé d'origine - Scanner - Programmation - Electricité</p>

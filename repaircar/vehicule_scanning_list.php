@@ -142,44 +142,46 @@ $i = 0;
                                 // 	$image = WEB_URL . 'img/upload/' . $row['usr_image'];
                                 // }
                                 ?>
-                            <tr>
-                                <td><?php echo $row['id']; ?></td>
-                                <td><?php echo $row['c_name']; ?></td>
-                                <td><?php echo $row['princ_tel']; ?></td>
-                                <td><?php echo $row['imma_vehi_client']; ?></td>
-                                <td><?php echo $row['marque_vehi_client']; ?></td>
-                                <td><?php echo $row['model_vehi_client']; ?></td>
-                                <td><?php echo $row['scanner_mecanique']; ?></td>
-                                <td><?php echo $row['scanner_electrique']; ?></td>
-                                <td id="frais_scanner_<?php echo $i; ?>"><?php echo $row['frais_scanner']; ?></td>
-                                <td><?php
-                                        if ($row['validation_recu_scanning'] == null) {
-                                            echo "<span class='label label-default'>Non validé</span> <br/>";
-                                        } else if ($row['validation_recu_scanning'] == 1) {
-                                            echo "<span class='label label-success'>validé</span> <br/>";
-                                        }
-                                        ?></td>
-                                <td><?php
-                                        if ($row['statut_scannage'] == null) {
-                                            echo "<span class='label label-default'>En attente de scan</span> <br/>";
-                                        } else if ($row['statut_scannage'] == 1) {
-                                            echo "<span class='label label-success'>Scan effectué</span> <br/>";
-                                        }
-                                        ?></td>
-                                <td><?php
-                                        if ($row['statut_reception'] == null) {
-                                            echo "<span class='label label-default'>En attente de reception</span> <br/>";
-                                        } else if ($row['statut_reception'] == 1) {
-                                            echo "<span class='label label-success'>Reception effectuée</span> <br/>";
-                                        }
-                                        ?></td>
-                                <td>
-                                    <?php if ($_SESSION['login_type'] == 'comptable') { ?>
-                                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer reçu de paiement du scanner</a>
-                                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>compta_panel/validation_recu_scanning.php?recu_scanning_id=<?php echo $row['id']; ?>" data-original-title="valider le reçu de paiement du scanner"><i class="fa fa-check"></i></a>
-                                    <?php } ?>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['c_name']; ?></td>
+                                    <td><?php echo $row['princ_tel']; ?></td>
+                                    <td><?php echo $row['imma_vehi_client']; ?></td>
+                                    <td><?php echo $row['marque_vehi_client']; ?></td>
+                                    <td><?php echo $row['model_vehi_client']; ?></td>
+                                    <td><?php echo $row['scanner_mecanique']; ?></td>
+                                    <td><?php echo $row['scanner_electrique']; ?></td>
+                                    <td id="frais_scanner_<?php echo $i; ?>"><?php echo $row['frais_scanner']; ?></td>
+                                    <td><?php
+                                            if ($row['validation_recu_scanning'] == null) {
+                                                echo "<span class='label label-default'>Non validé</span> <br/>";
+                                            } else if ($row['validation_recu_scanning'] == 1) {
+                                                echo "<span class='label label-success'>validé</span> <br/>";
+                                            }
+                                            ?></td>
+                                    <td><?php
+                                            if ($row['statut_scannage'] == null) {
+                                                echo "<span class='label label-default'>En attente de scan</span> <br/>";
+                                            } else if ($row['statut_scannage'] == 1) {
+                                                echo "<span class='label label-success'>Scan effectué</span> <br/>";
+                                            }
+                                            ?></td>
+                                    <td><?php
+                                            if ($row['statut_reception'] == null) {
+                                                echo "<span class='label label-default'>En attente de reception</span> <br/>";
+                                            } else if ($row['statut_reception'] == 1) {
+                                                echo "<span class='label label-success'>Reception effectuée</span> <br/>";
+                                            }
+                                            ?></td>
+                                    <td>
+                                        <?php if ($_SESSION['login_type'] == 'comptable') { ?>
+                                            <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Imprimer le reçu de paiement du scanner</a>
+                                            <?php if ($row['validation_recu_scanning'] == null) { ?>
+                                                <a class="btn btn-info" style="background-color:green;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>compta_panel/validation_recu_scanning.php?recu_scanning_id=<?php echo $row['id']; ?>" data-original-title="valider le reçu de paiement du scanner">Valider le reçu de paiement du scanner</a>
+                                        <?php }
+                                            } ?>
+                                    </td>
+                                </tr>
                             <?php
                                 $i++;
                             }

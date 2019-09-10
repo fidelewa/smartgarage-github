@@ -101,7 +101,7 @@ if (!empty($row) && count($row) > 0) { ?>
                     <div class="row" id="header">
                         <div class="col-sm-4" style="height:100px;">
                             <!-- <img class="editable-area" id="logo" src="../img/logo.png"> -->
-                            <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
+                            <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg">
                         </div>
                         <div class="col-sm-8" style="font-size:15pt;">
                             <p>Mécanique générale - Climatisation - Clé d'origine - Scanner - Programmation - Electricité</p>
@@ -111,13 +111,13 @@ if (!empty($row) && count($row) > 0) { ?>
                     <div class="row" id="content_1">
                         <div class="col-sm-9" id="info_gene">
                             <?php
-                            if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
+                                if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
                             <?php } else { ?>
                                 <p>Nom : <?php echo $row['c_name']; ?></p>
                             <?php } ?>
                             <!-- <p>Contact : <?php echo $row['contact_client']; ?></p> -->
                             <?php
-                            if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
+                                if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
                             <?php } else { ?>
                                 <p>Contact : <?php echo $row['princ_tel']; ?></p>
                             <?php } ?>
@@ -126,7 +126,7 @@ if (!empty($row) && count($row) > 0) { ?>
                             <p>Immatriculation : <?php echo $row['num_matricule']; ?></p>
                             <!-- <p>E-mail : <?php echo $row['email_client']; ?></p> -->
                             <?php
-                            if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
+                                if (isset($_GET['login_type']) && $_GET['login_type'] == "mechanics") { ?>
                             <?php } else { ?>
                                 <p>E-mail / tel.: <?php echo $row['c_email']; ?></p>
                             <?php } ?>
@@ -157,51 +157,51 @@ if (!empty($row) && count($row) > 0) { ?>
                                 <div class="panel-body">
                                     <p>Heure : <?php echo $row['heure_reception']; ?></p>
                                     <?php if (isset($row['km_reception_vehi']) && $row['type_km'] == "km") {
-                                        echo ("<p>Km : " . $row['km_reception_vehi'] . "</p>");
-                                    }
-                                    if (isset($row['km_reception_vehi']) && $row['type_km'] == "miles") {
-                                        echo ("<p>Miles : " . $row['km_reception_vehi'] . "</p>");
-                                    } ?>
+                                            echo ("<p>Km : " . $row['km_reception_vehi'] . "</p>");
+                                        }
+                                        if (isset($row['km_reception_vehi']) && $row['type_km'] == "miles") {
+                                            echo ("<p>Miles : " . $row['km_reception_vehi'] . "</p>");
+                                        } ?>
                                     <p>Niveau de carburant : <?php echo $row['nivo_carbu_recep_vehi']; ?></p>
                                     <hr>
 
                                     <div class="row">
                                         <?php if (isset($row['cle_recep_vehi']) && !empty($row['cle_recep_vehi'])) {
-                                            echo ("<div class='col-sm-6'><p>" . $row['cle_recep_vehi'] . "</p></div>");
-                                        }
-                                        if (isset($row['cle_recep_vehi']) && !empty($row['cle_recep_vehi'])) {
-                                            echo ("<div class='col-sm-6'><p>" . $row['cle_recep_vehi_text'] . "</p></div>");
-                                        } ?>
+                                                echo ("<div class='col-sm-6'><p>" . $row['cle_recep_vehi'] . "</p></div>");
+                                            }
+                                            if (isset($row['cle_recep_vehi']) && !empty($row['cle_recep_vehi'])) {
+                                                echo ("<div class='col-sm-6'><p>" . $row['cle_recep_vehi_text'] . "</p></div>");
+                                            } ?>
                                     </div>
                                     <div class="row">
                                         <?php if (isset($row['carte_grise_recep_vehi']) && !empty($row['carte_grise_recep_vehi'])) {
-                                            echo ("<div class='col-sm-12'><p>" . $row['carte_grise_recep_vehi'] . "</p></div>");
-                                        }
-                                        ?>
+                                                echo ("<div class='col-sm-12'><p>" . $row['carte_grise_recep_vehi'] . "</p></div>");
+                                            }
+                                            ?>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['assur_recep_vehi']) && !empty($row['assur_recep_vehi'])) {
-                                                    echo $row['assur_recep_vehi'];
-                                                } ?></p>
+                                                        echo $row['assur_recep_vehi'];
+                                                    } ?></p>
                                         </div>
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['assur_recep_vehi']) && !empty($row['assur_recep_vehi'])) {
-                                                    echo 'Exp.: ' . $row['add_date_assurance'];
-                                                } ?></p>
+                                                        echo 'Exp.: ' . $row['add_date_assurance'];
+                                                    } ?></p>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['visitetech_recep_vehi']) && !empty($row['visitetech_recep_vehi'])) {
-                                                    echo $row['visitetech_recep_vehi'];
-                                                } ?></p>
+                                                        echo $row['visitetech_recep_vehi'];
+                                                    } ?></p>
                                         </div>
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['visitetech_recep_vehi']) && !empty($row['visitetech_recep_vehi'])) {
-                                                    echo 'Exp.: ' . $row['add_date_visitetech'];
-                                                } ?></p>
+                                                        echo 'Exp.: ' . $row['add_date_visitetech'];
+                                                    } ?></p>
                                         </div>
                                     </div>
 
@@ -213,46 +213,46 @@ if (!empty($row) && count($row) > 0) { ?>
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <p><?php if (isset($row['cric_levage_recep_vehi']) && !empty($row['cric_levage_recep_vehi'])) {
-                                                    echo $row['cric_levage_recep_vehi'];
-                                                } ?></p>
+                                                        echo $row['cric_levage_recep_vehi'];
+                                                    } ?></p>
                                         </div>
                                         <div class="col-sm-5">
                                             <p><?php if (isset($row['cle_roue']) && !empty($row['cle_roue'])) {
-                                                    echo $row['cle_roue'];
-                                                } ?></p>
+                                                        echo $row['cle_roue'];
+                                                    } ?></p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <p><?php if (isset($row['rallonge_roue_recep_vehi']) && !empty($row['rallonge_roue_recep_vehi'])) {
-                                                    echo $row['rallonge_roue_recep_vehi'];
-                                                } ?></p>
+                                                        echo $row['rallonge_roue_recep_vehi'];
+                                                    } ?></p>
                                         </div>
                                         <div class="col-sm-5">
                                             <p><?php if (isset($row['triangle']) && !empty($row['triangle'])) {
-                                                    echo $row['triangle'];
-                                                } ?></p>
+                                                        echo $row['triangle'];
+                                                    } ?></p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <p><?php if (isset($row['pneu_secours']) && !empty($row['pneu_secours'])) {
-                                                    echo $row['pneu_secours'];
-                                                } ?></p>
+                                                        echo $row['pneu_secours'];
+                                                    } ?></p>
                                         </div>
                                         <div class="col-sm-5">
                                             <p><?php if (isset($row['extincteur']) && !empty($row['extincteur'])) {
-                                                    echo $row['extincteur'];
-                                                } ?></p>
+                                                        echo $row['extincteur'];
+                                                    } ?></p>
 
                                         </div>
                                     </div>
                                     <p><?php if (isset($row['anneau_remorquage_recep_vehi']) && !empty($row['anneau_remorquage_recep_vehi'])) {
-                                            echo $row['anneau_remorquage_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['anneau_remorquage_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['boite_pharma']) && !empty($row['boite_pharma'])) {
-                                            echo $row['boite_pharma'];
-                                        } ?></p>
+                                                echo $row['boite_pharma'];
+                                            } ?></p>
                                 </div>
                                 <div class="panel-heading">
                                     <h3 class="panel-title">MOTIFS DE DEPOT</h3>
@@ -261,153 +261,156 @@ if (!empty($row) && count($row) > 0) { ?>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['scanner_recep_vehi']) && !empty($row['scanner_recep_vehi'])) {
-                                                    echo $row['scanner_recep_vehi'];
-                                                } ?></p>
+                                                        echo $row['scanner_recep_vehi'];
+                                                    } ?></p>
                                         </div>
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['elec_recep_vehi']) && !empty($row['elec_recep_vehi'])) {
-                                                    echo $row['elec_recep_vehi'];
-                                                } ?></p>
+                                                        echo $row['elec_recep_vehi'];
+                                                    } ?></p>
                                         </div>
                                     </div>
                                     <p><?php if (isset($row['meca_recep_vehi']) && !empty($row['meca_recep_vehi'])) {
-                                            echo $row['meca_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['meca_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['pb_meca_recep_vehi']) && !empty($row['pb_meca_recep_vehi'])) {
-                                            echo $row['pb_meca_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['pb_meca_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['pb_electro_recep_vehi']) && !empty($row['pb_electro_recep_vehi'])) {
-                                            echo $row['pb_electro_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['pb_electro_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['pb_demar_recep_vehi']) && !empty($row['pb_demar_recep_vehi'])) {
-                                            echo $row['pb_demar_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['pb_demar_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['conf_cle_recep_vehi']) && !empty($row['conf_cle_recep_vehi'])) {
-                                            echo $row['conf_cle_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['conf_cle_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['sup_adblue_recep_vehi']) && !empty($row['sup_adblue_recep_vehi'])) {
-                                            echo $row['sup_adblue_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['sup_adblue_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['sup_fil_parti_recep_vehi']) && !empty($row['sup_fil_parti_recep_vehi'])) {
-                                            echo $row['sup_fil_parti_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['sup_fil_parti_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['sup_vanne_egr_recep_vehi']) && !empty($row['sup_vanne_egr_recep_vehi'])) {
-                                            echo $row['sup_vanne_egr_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['sup_vanne_egr_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['voy_alum_recep_vehi']) && !empty($row['voy_alum_recep_vehi'])) {
-                                            echo $row['voy_alum_recep_vehi'];
-                                        } ?></p>
-                                    <div class="row">
-                                        <?php if (isset($row['voyant_1']) && !empty($row['voyant_1'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_1'] . "'
-                                            alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_2']) && !empty($row['voyant_2'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_2'] . "'
-                                            alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_3']) && !empty($row['voyant_3'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_3'] . "'
-                                            alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_4']) && !empty($row['voyant_4'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_4'] . "'
-                                            alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_5']) && !empty($row['voyant_5'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_5'] . "'
-                                            alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_6']) && !empty($row['voyant_6'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_6'] . "'
-                                            alt='' height='44' width='46'></div>");
-                                        }
-                                        ?>
-                                    </div>
+                                                echo $row['voy_alum_recep_vehi'];
+                                            } ?></p>
 
-                                    <div class="row">
-                                        <?php if (isset($row['voyant_7']) && !empty($row['voyant_7'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_7'] . "'
+                                   
+                                        <div class="row">
+                                            <?php if (isset($row['voyant_1']) && !empty($row['voyant_1'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_1'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_8']) && !empty($row['voyant_8'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_8'] . "'
+                                                    }
+                                                    if (isset($row['voyant_2']) && !empty($row['voyant_2'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_2'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_9']) && !empty($row['voyant_9'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_9'] . "'
+                                                    }
+                                                    if (isset($row['voyant_3']) && !empty($row['voyant_3'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_3'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_10']) && !empty($row['voyant_10'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_10'] . "'
+                                                    }
+                                                    if (isset($row['voyant_4']) && !empty($row['voyant_4'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_4'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_11']) && !empty($row['voyant_11'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_11'] . "'
+                                                    }
+                                                    if (isset($row['voyant_5']) && !empty($row['voyant_5'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_5'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_12']) && !empty($row['voyant_12'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_12'] . "'
+                                                    }
+                                                    if (isset($row['voyant_6']) && !empty($row['voyant_6'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_6'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        ?>
-                                    </div>
+                                                    }
+                                                    ?>
+                                        </div>
 
-                                    <div class="row">
-                                        <?php if (isset($row['voyant_13']) && !empty($row['voyant_13'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_13'] . "'
+                                        <div class="row">
+                                            <?php if (isset($row['voyant_7']) && !empty($row['voyant_7'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_7'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_14']) && !empty($row['voyant_14'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_14'] . "'
+                                                    }
+                                                    if (isset($row['voyant_8']) && !empty($row['voyant_8'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_8'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_15']) && !empty($row['voyant_15'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_15'] . "'
+                                                    }
+                                                    if (isset($row['voyant_9']) && !empty($row['voyant_9'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_9'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_16']) && !empty($row['voyant_16'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_16'] . "'
+                                                    }
+                                                    if (isset($row['voyant_10']) && !empty($row['voyant_10'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_10'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_17']) && !empty($row['voyant_17'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_17'] . "'
+                                                    }
+                                                    if (isset($row['voyant_11']) && !empty($row['voyant_11'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_11'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_18']) && !empty($row['voyant_18'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_18'] . "'
+                                                    }
+                                                    if (isset($row['voyant_12']) && !empty($row['voyant_12'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_12'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        ?>
-                                    </div>
+                                                    }
+                                                    ?>
+                                        </div>
 
-                                    <div class="row">
-                                        <?php if (isset($row['voyant_19']) && !empty($row['voyant_19'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_19'] . "'
+                                        <div class="row">
+                                            <?php if (isset($row['voyant_13']) && !empty($row['voyant_13'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_13'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_20']) && !empty($row['voyant_20'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_20'] . "'
+                                                    }
+                                                    if (isset($row['voyant_14']) && !empty($row['voyant_14'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_14'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_21']) && !empty($row['voyant_21'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_21'] . "'
+                                                    }
+                                                    if (isset($row['voyant_15']) && !empty($row['voyant_15'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_15'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_22']) && !empty($row['voyant_22'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_22'] . "'
+                                                    }
+                                                    if (isset($row['voyant_16']) && !empty($row['voyant_16'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_16'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_23']) && !empty($row['voyant_23'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_23'] . "'
+                                                    }
+                                                    if (isset($row['voyant_17']) && !empty($row['voyant_17'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_17'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        if (isset($row['voyant_24']) && !empty($row['voyant_24'])) {
-                                            echo ("<div class='col-md-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_24'] . "'
+                                                    }
+                                                    if (isset($row['voyant_18']) && !empty($row['voyant_18'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_18'] . "'
                                             alt='' height='44' width='46'></div>");
-                                        }
-                                        ?>
-                                    </div>
+                                                    }
+                                                    ?>
+                                        </div>
+
+                                        <div class="row">
+                                            <?php if (isset($row['voyant_19']) && !empty($row['voyant_19'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_19'] . "'
+                                            alt='' height='44' width='46'></div>");
+                                                    }
+                                                    if (isset($row['voyant_20']) && !empty($row['voyant_20'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_20'] . "'
+                                            alt='' height='44' width='46'></div>");
+                                                    }
+                                                    if (isset($row['voyant_21']) && !empty($row['voyant_21'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_21'] . "'
+                                            alt='' height='44' width='46'></div>");
+                                                    }
+                                                    if (isset($row['voyant_22']) && !empty($row['voyant_22'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_22'] . "'
+                                            alt='' height='44' width='46'></div>");
+                                                    }
+                                                    if (isset($row['voyant_23']) && !empty($row['voyant_23'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_23'] . "'
+                                            alt='' height='44' width='46'></div>");
+                                                    }
+                                                    if (isset($row['voyant_24']) && !empty($row['voyant_24'])) {
+                                                        echo ("<div class='col-xs-2' style='padding-left:0px;'><img src='" . WEB_URL . $row['voyant_24'] . "'
+                                            alt='' height='44' width='46'></div>");
+                                                    }
+                                                    ?>
+                                        </div>
+                                   
                                 </div>
 
                                 <div class="panel-heading">
@@ -418,28 +421,28 @@ if (!empty($row) && count($row) > 0) { ?>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['etat_vehi_arrive']) && !empty($row['etat_vehi_arrive'])) {
-                                                    echo $row['etat_vehi_arrive'];
-                                                } ?></p>
+                                                        echo $row['etat_vehi_arrive'];
+                                                    } ?></p>
                                         </div>
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['etat_vehi_arrive']) && !empty($row['etat_vehi_arrive'])) {
-                                                    echo $row['arriv_remarq_recep_vehi_text'];
-                                                } ?></p>
+                                                        echo $row['arriv_remarq_recep_vehi_text'];
+                                                    } ?></p>
                                         </div>
                                     </div>
                                     <p><?php if (isset($row['accident_recep_vehi']) && !empty($row['accident_recep_vehi'])) {
-                                            echo $row['accident_recep_vehi'];
-                                        } ?></p>
+                                                echo $row['accident_recep_vehi'];
+                                            } ?></p>
                                     <p><?php if (isset($row['etat_proprete_arrivee']) && !empty($row['etat_proprete_arrivee'])) {
-                                            echo $row['etat_proprete_arrivee'];
-                                        } ?></p>
+                                                echo $row['etat_proprete_arrivee'];
+                                            } ?></p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4" style="padding:0">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">TRAVAUX A EFFECTUER</h3>
+                                    <h3 class="panel-title">PLAINTES DU CLIENT</h3>
                                 </div>
                                 <div class="panel-body">
                                     <p><?php echo $row['travo_effec']; ?></p>
@@ -522,27 +525,27 @@ if (!empty($row) && count($row) > 0) { ?>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <p><?php if (isset($row['etat_reparation_sortie']) && !empty($row['etat_reparation_sortie'])) {
-                                                    echo $row['etat_reparation_sortie'];
-                                                } ?></p>
+                                                        echo $row['etat_reparation_sortie'];
+                                                    } ?></p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <p><?php if (isset($row['etat_proprete_sortie']) && !empty($row['etat_proprete_sortie'])) {
-                                                    echo $row['etat_proprete_sortie'];
-                                                } ?></p>
+                                                        echo $row['etat_proprete_sortie'];
+                                                    } ?></p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['sortie_remarq_recep_vehi']) && !empty($row['sortie_remarq_recep_vehi'])) {
-                                                    echo $row['sortie_remarq_recep_vehi'];
-                                                } ?></p>
+                                                        echo $row['sortie_remarq_recep_vehi'];
+                                                    } ?></p>
                                         </div>
                                         <div class="col-sm-6">
                                             <p><?php if (isset($row['sortie_remarq_recep_vehi']) && !empty($row['sortie_remarq_recep_vehi'])) {
-                                                    echo $row['sortie_remarq_recep_vehi_text'];
-                                                } ?></p>
+                                                        echo $row['sortie_remarq_recep_vehi_text'];
+                                                    } ?></p>
                                         </div>
                                     </div>
                                 </div>

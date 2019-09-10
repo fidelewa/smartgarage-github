@@ -122,7 +122,7 @@ if (!empty($row) && count($row) > 0) { ?>
                     <div class="row" id="header">
                         <div class="col-sm-2" style="height:100px;">
                             <!-- <img class="editable-area" id="logo" src="<?php echo WEB_URL; ?>img/luxury_garage_logo.jpg" height="100" width="100"> -->
-                            <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg" height="100" width="100">
+                            <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg">
                         </div>
                         <div class="col-md-3 col-md-offset-7">
                             <p><?php echo date_format(date_create($row['date_devis']), 'd/m/Y'); ?></p>

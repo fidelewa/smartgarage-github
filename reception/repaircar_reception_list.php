@@ -190,7 +190,7 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                                 <th>Immatriculation du véhicule</th>
                                 <th>Receptionné par</th>
                                 <!-- <th>Statut attribution</th> -->
-                                <th>Attribué à</th>
+                                <!-- <th>Attribué à</th> -->
                                 <th>Statut diagnostic mécanique</th>
                                 <th>Statut diagnostic électrique</th>
                                 <th>Action</th>
@@ -244,81 +244,81 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                                                                 echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_electricien'] . "</span> <br/>";
                                                             } ?>
                                                         </td> -->
-                                    <td>
+                                    <!-- <td> -->
                                         <?php
                                         /* Si le véhicule réceptionné en question à été attribué seulement au chef mécanicien 
                                         et n'a pas encore fait l'objet de diagnostic mécanique */
-                                        if (isset($row['attribution_mecanicien']) && !isset($row['attribution_electricien'])) {
-                                            if (!isset($row['statut_diagnostic_mecanique'])) {
-                                                echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_mecanicien'] . "</span> <br/>";
-                                            }
-                                        }
+                                        // if (isset($row['attribution_mecanicien']) && !isset($row['attribution_electricien'])) {
+                                        //     if (!isset($row['statut_diagnostic_mecanique'])) {
+                                        //         echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_mecanicien'] . "</span> <br/>";
+                                        //     }
+                                        // }
                                         /* Si le véhicule réceptionné en question à été attribué seulement au chef électricien 
                                          et n'a pas encore fait l'objet de diagnostic électrique*/
-                                        if (isset($row['attribution_electricien']) && !isset($row['attribution_mecanicien'])) {
-                                            if (!isset($row['statut_diagnostic_electrique'])) {
-                                                echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_electricien'] . "</span> <br/>";
-                                            }
-                                        }
+                                        // if (isset($row['attribution_electricien']) && !isset($row['attribution_mecanicien'])) {
+                                        //     if (!isset($row['statut_diagnostic_electrique'])) {
+                                        //         echo "<span class='label label-default'>En cours d'attribution au " . $row['attribution_electricien'] . "</span> <br/>";
+                                        //     }
+                                        // }
 
                                         /* Si le véhicule réceptionné en question à été attribué seulement au chef mécanicien 
                                         et a déja fait l'objet de diagnostic mécanique */
-                                        if (isset($row['attribution_mecanicien']) && !isset($row['attribution_electricien'])) {
-                                            if ($row['statut_diagnostic_mecanique'] == 1) {
-                                                echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien'];
-                                            }
-                                        }
+                                        // if (isset($row['attribution_mecanicien']) && !isset($row['attribution_electricien'])) {
+                                        //     if ($row['statut_diagnostic_mecanique'] == 1) {
+                                        //         echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien'];
+                                        //     }
+                                        // }
                                         /* Si le véhicule réceptionné en question à été attribué seulement au chef électricien 
                                          et a déja fait l'objet de diagnostic électrique */
-                                        if (isset($row['attribution_electricien']) && !isset($row['attribution_mecanicien'])) {
-                                            if ($row['statut_diagnostic_electrique'] == 1) {
-                                                echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
-                                            }
-                                        }
+                                        // if (isset($row['attribution_electricien']) && !isset($row['attribution_mecanicien'])) {
+                                        //     if ($row['statut_diagnostic_electrique'] == 1) {
+                                        //         echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
+                                        //     }
+                                        // }
 
                                         /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
                                         mécanicien et n'a pas encore fait l'objet de diagnostic électrique, ni mécanique
                                         */
-                                        if (isset($row['attribution_electricien']) && isset($row['attribution_mecanicien'])) {
+                                        // if (isset($row['attribution_electricien']) && isset($row['attribution_mecanicien'])) {
 
-                                            if (!isset($row['statut_diagnostic_electrique']) && !isset($row['statut_diagnostic_mecanique'])) {
-                                                echo "<span class='label label-default'>En cours d'attribution aux chefs mécaniciens et électriciens</span> <br/>";
-                                            }
-                                        }
+                                        //     if (!isset($row['statut_diagnostic_electrique']) && !isset($row['statut_diagnostic_mecanique'])) {
+                                        //         echo "<span class='label label-default'>En cours d'attribution aux chefs mécaniciens et électriciens</span> <br/>";
+                                        //     }
+                                        // }
 
                                         /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
                                         mécanicien et a déja fait l'objet de diagnostic électrique
                                         */
-                                        if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
+                                        // if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
 
-                                            if ($row['statut_diagnostic_electrique'] == 1) {
-                                                echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
-                                            }
-                                        }
-
-                                        /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
-                                        mécanicien et a déja fait l'objet de diagnostic mécanique
-                                        */
-                                        if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
-
-                                            if ($row['statut_diagnostic_mecanique'] == 1) {
-                                                echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien'];
-                                            }
-                                        }
+                                        //     if ($row['statut_diagnostic_electrique'] == 1) {
+                                        //         echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
+                                        //     }
+                                        // }
 
                                         /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
                                         mécanicien et a déja fait l'objet de diagnostic mécanique
                                         */
-                                        if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
+                                        // if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
 
-                                            if ($row['statut_diagnostic_mecanique'] == 1 && $row['statut_diagnostic_electrique'] == 1) {
-                                                echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien']."\n";
-                                                echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
-                                            }
-                                        }
+                                        //     if ($row['statut_diagnostic_mecanique'] == 1) {
+                                        //         echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien'];
+                                        //     }
+                                        // }
+
+                                        /* Si le véhicule réceptionné en question à été attribué à la fois aux chef électricien et
+                                        mécanicien et a déja fait l'objet de diagnostic mécanique
+                                        */
+                                        // if (isset($row['attribution_electricien']) && isset($row['attribution_electricien'])) {
+
+                                        //     if ($row['statut_diagnostic_mecanique'] == 1 && $row['statut_diagnostic_electrique'] == 1) {
+                                        //         echo $row['mecano_name'] . ' : ' . $row['attribution_mecanicien']."\n";
+                                        //         echo $row['electro_name'] . ' : ' . $row['attribution_electricien'];
+                                        //     }
+                                        // }
 
                                         ?>
-                                    </td>
+                                    <!-- </td> -->
                                     <td><?php
 
                                         if (!isset($row['statut_diagnostic_mecanique'])) {
@@ -399,8 +399,8 @@ if (isset($_GET['sms_mech_elec']) && $_GET['sms_mech_elec'] == 'send_mech_elec_s
                                                             <div class="col-md-12">
                                                                 <select required class='form-control' id="mecanicienList" name="mecanicienList">
                                                                     <option selected value="">--Veuillez saisir ou sélectionner un mécanicien ou un électricien--</option>
-                                                                    <option value="chef mecanicien">Chef mécanicien</option>
-                                                                    <option value="chef electricien">Chef électricien</option>
+                                                                    <!-- <option value="chef mecanicien">Chef mécanicien</option>
+                                                                    <option value="chef electricien">Chef électricien</option> -->
                                                                     <option value="chef mecanicien et electricien">Chef mécanicien et électricien</option>
                                                                 </select>
                                                             </div>

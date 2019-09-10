@@ -29,7 +29,7 @@ foreach ($result as $row) {
             $mobile_customer = $row['princ_tel'];
 
             // Message de confirmation du devis
-            $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc a la renouveler merci !';
+            $content_msg = 'Cher client ' . $nom_client . ', nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' expire dans ' . $remainingDays . ' jours ! Pensez donc à la renouveler merci !';
 
             // importation du fichier
             require_once(ROOT_PATH . '/SmsApi.php');
@@ -52,7 +52,7 @@ foreach ($result as $row) {
             $mobile_customer = $row['princ_tel'];
 
             // Message de confirmation du devis
-            $content_msg = 'Cher client ' . $nom_client . ' nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' a expire ! Pensez donc a la renouveler merci !';
+            $content_msg = 'Cher client ' . $nom_client . ' nous vous informons que l\'assurance de votre voiture ' . $marque . ' ' . $modele . ' ' . $imma . ' à expirée ! Pensez donc à la renouveler merci !';
 
             // importation du fichier
             require_once(ROOT_PATH . '/SmsApi.php');

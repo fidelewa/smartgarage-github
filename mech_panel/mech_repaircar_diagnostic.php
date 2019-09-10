@@ -13,6 +13,8 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
 
 // var_dump($_SESSION);
 
+$usr_type = $_SESSION['objMech']['usr_type'];
+
 ?>
 
 <!DOCTYPE html>
@@ -140,7 +142,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                 <input type="hidden" id="att_mecano_id" name="att_mecano_id" value="<?php echo $_GET['att_mecano_id'] ?>" class="form-control">
                 <input type="hidden" id="att_electro_id" name="att_electro_id" value="<?php echo $_GET['att_electro_id'] ?>" class="form-control">
                 <input type="hidden" value="<?php echo $_SESSION['objMech']['usr_type']; ?>" name="chef_mech_elec_type" />
-                
+
                 <?php if (isset($_GET['elec_tel'])) { ?>
                     <input type="hidden" id="elec_tel" name="elec_tel" value="<?php echo $_GET['elec_tel'] ?>" class="form-control">
                 <?php } ?>
@@ -148,7 +150,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                 <?php if (isset($_GET['mech_tel'])) { ?>
                     <input type="hidden" id="mech_tel" name="mech_tel" value="<?php echo $_GET['mech_tel'] ?>" class="form-control">
                 <?php } ?>
-                
+
                 <!-- <div class="tab"> -->
                 <!-- <h1 style="text-align:center;">Récapitulatif des informations du client et du véhicule</h1>
                     <br>
@@ -253,7 +255,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                         <legend>Ajouter le résultat du scanner en fichier joint</legend>
                         <div class="row">
                             <div class="col-md-1">
-                                <span class="btn btn-file btn btn-primary">Ajouter<input type="file" name="pj_scanner" />
+                                <span class="btn btn-file btn btn-primary">Ajouter le fichier du scanner<input type="file" name="pj_scanner" id="pj_scanner" />
                                 </span>
                             </div>
                             <!-- <div class="col-md-1">
@@ -294,7 +296,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                                                     <!-- <td class="text-right"><input type="text" id="total_<?php echo $row; ?>" name="estimate_data[<?php echo $row; ?>][total]" value="" class="form-control etotal allownumberonly" /></td> -->
                                                     <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $row; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                                 </tr>
-                                                <?php $row++;
+                                            <?php $row++;
                                             } ?>
                                         </tbody>
                                         <tfoot>
@@ -330,21 +332,21 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
 
                     <p>
                         <div class="form-group row">
-                            <label for="duree_travaux" class="col-md-3 col-form-label">Durée des travaux</label>
+                            <label for="duree_travaux" class="col-md-3 col-form-label">Durée après avoir fournis les pièces de rechange</label>
                             <div class="col-md-9" style="padding-left:0px;">
                                 <input type="text" id="duree_travaux" name="duree_travaux" value="" class="form-control">
                             </div>
                         </div>
                     </p>
 
-                    <p>
+                    <!-- <p>
                         <div class="form-group row">
                             <label for="travaux_prevoir" class="col-md-3 col-form-label">Travaux à prévoir</label>
                             <div class="col-md-9" style="padding-left:0px;">
                                 <input type="text" id="travaux_prevoir" name="travaux_prevoir" value="" class="form-control">
                             </div>
                         </div>
-                    </p>
+                    </p> -->
 
                 </div>
 
@@ -432,7 +434,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
             // This function will figure out which tab to display
             var x = document.getElementsByClassName("tab");
             // Exit the function if any field in the current tab is invalid:
-            if (n == 1 && !validateForm()) return false;
+            if (n == 1 && !validateMe()) return false;
             // Hide the current tab:
             x[currentTab].style.display = "none";
             // Increase or decrease the current tab by 1:
@@ -445,6 +447,20 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
             }
             // Otherwise, display the correct tab:
             showTab(currentTab);
+        }
+
+
+        function validateMe() {
+
+            var usr_type = "<?php echo $usr_type; ?>";
+
+            if ($('input[name="pj_scanner"]').val() == '' && usr_type == "chef electricien") {
+                alert("Le fichier du résultat du scanner est obligatoire, veuillez l'ajouter SVP !!!");
+                $($('input[name="pj_scanner"]')).focus();
+                return false;
+            } else {
+                return true;
+            }
         }
 
         function validateForm() {

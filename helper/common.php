@@ -46,6 +46,14 @@ class wms_core
 	// 	return $row;
 	// }
 
+	/*
+	* @delete supplier info
+	*/
+	public function deleteRecuScanner($con, $p_id)
+	{
+		mysql_query("DELETE FROM `tbl_vehicule_scanning` WHERE id = " . (int) $p_id, $con);
+	}
+
 	// On compte le nombre de fois qu'un véhicule à été réceptionné
 	public function getNbReceptionByCarImma($con, $imma)
 	{
@@ -230,8 +238,8 @@ class wms_core
 		status_attribution_vehicule, usr.usr_name as recep_name, status_diagnostic_vehicule, mech.usr_name as mech_name,
 		statut_diagnostic_mecanique, statut_diagnostic_electrique, mecano_name, electro_name, attribution_mecanicien, attribution_electricien
 			from tbl_recep_vehi_repar rvr
-			join tbl_add_user usr on (rvr.attrib_recep = usr.usr_id)
-			join tbl_add_mech mech on (rvr.chef_mech_elec_id = mech.usr_id)
+			join tbl_add_user usr on rvr.attrib_recep = usr.usr_id
+			left join tbl_add_mech mech on rvr.chef_mech_elec_id = mech.usr_id
 			JOIN tbl_add_customer cus on rvr.customer_name = cus.customer_id
 			join tbl_repaircar_diagnostic diag on diag.car_id = rvr.add_car_id
 			WHERE status_attribution_vehicule = 1 OR status_diagnostic_vehicule = 1
@@ -1026,11 +1034,9 @@ class wms_core
 		if (!empty($data)) {
 
 
-			$query = "INSERT INTO tbl_add_car(repair_car_id, car_name, customer_id, car_make, car_model, VIN
-				)
-                   values('$data[hfInvoiceId]','$data[car_names]','$data[ddlCustomerList]','$data[ddlMake]','$data[ddlModel]',
-				   '$data[vin]'
-				   )";
+			$query = "INSERT INTO tbl_add_car(car_name, customer_id, car_make, car_model, VIN)
+                   values('$data[car_names]','$data[ddlCustomerList]','$data[ddlMake]','$data[ddlModel]',
+				   '$data[vin]')";
 			$result = mysql_query($query, $con);
 
 			// if (!$result) {
@@ -1067,7 +1073,10 @@ class wms_core
 	public function getCarScanning($con)
 	{
 		$data = array();
-		$result = mysql_query("SELECT vs.*, c_name, princ_tel FROM tbl_vehicule_scanning vs JOIN tbl_add_customer cus ON vs.customer_id = cus.customer_id ORDER BY id DESC", $con);
+		$result = mysql_query("SELECT vs.*, c_name, princ_tel, user.* FROM tbl_vehicule_scanning vs 
+		JOIN tbl_add_customer cus ON vs.customer_id = cus.customer_id 
+		JOIN tbl_add_user user ON user.usr_id = cus.service_client_id
+		ORDER BY id DESC", $con);
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
