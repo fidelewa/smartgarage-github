@@ -16,7 +16,9 @@ if (!empty($result_settings)) {
 // var_dump($_POST);
 // die();
 
-$boncmde_date_emission = date('d/m/Y');
+// $boncmde_date_emission = date('d/m/Y');
+$boncmde_date_emission = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'Y-m-d H:i:s');
+
 $query = "INSERT INTO tbl_boncmde_four (boncmde_id, supplier_id, boncmde_date_emission) VALUES('$_POST[boncmde_id]','$_POST[supplier_id]','$boncmde_date_emission')";
 
 // On teste le résultat de la requête pour vérifier qu'il n'y a pas d'erreur

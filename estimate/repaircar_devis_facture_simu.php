@@ -41,7 +41,6 @@ if (isset($_POST) && !empty($_POST)) {
     $facture_data = json_encode($_POST['facture_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
     // Initialisation de l'horodatage / timestamp de la fature au format anglophone
-    // $date_facture = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s');
     $date_facture = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'Y-m-d H:i:s');
 
     // Formulation de la requête

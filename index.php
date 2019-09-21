@@ -33,28 +33,34 @@ if (isset($_POST['username']) && $_POST['username'] != '' && isset($_POST['passw
 		$_SESSION['login_type'] = $_POST['ddlLoginType'];
 		if ($_POST['ddlLoginType'] == 'admin') {
 			$_SESSION['objLogin'] = $obj_login;
+			$_SESSION['auth'] = 'authentifié';
 			header("Location: dashboard.php");
 			die();
 		} else if ($_POST['ddlLoginType'] == 'customer') {
 			$_SESSION['objCust'] = $obj_login;
+			$_SESSION['auth'] = 'authentifié';
 			header("Location: cust_panel/cust_dashboard.php");
 			die();
 		} else if ($_POST['ddlLoginType'] == 'mechanics') {
 			$_SESSION['objMech'] = $obj_login;
+			$_SESSION['auth'] = 'authentifié';
 			header("Location: mech_panel/mech_dashboard.php");
 			die();
 		} else if ($_POST['ddlLoginType'] == 'reception') {
 			$_SESSION['objRecep'] = $obj_login;
+			$_SESSION['auth'] = 'authentifié';
 			header("Location: recep_panel/recep_dashboard.php");
 			die();
 		}
 		else if($_POST['ddlLoginType'] == 'comptable'){
 			$_SESSION['objCompta'] = $obj_login;
+			$_SESSION['auth'] = 'authentifié';
 			header("Location: compta_panel/compta_dashboard.php");
 			die();
 		}
 		else if($_POST['ddlLoginType'] == 'service client'){
 			$_SESSION['objServiceClient'] = $obj_login;
+			$_SESSION['auth'] = 'authentifié';
 			header("Location: servcli_panel/servcli_dashboard.php");
 			die();
 		}

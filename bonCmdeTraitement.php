@@ -15,7 +15,8 @@ $vehi_diag_id = $_GET['vehi_diag_id'];
 $devis_id = $_GET['devis_id'];
 $nom_client = $_GET['nom_client'];
 
-$date_boncmde = date('d/m/Y');
+// $date_boncmde = date('d/m/Y');
+$date_boncmde = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y');
 
 // Création et persistance du bon de commande en BDD
 $bcmd_query_insert = "INSERT INTO tbl_add_boncmde (devis_id, date_boncmde) VALUES ('$devis_id', '$date_boncmde')";

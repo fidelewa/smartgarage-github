@@ -68,23 +68,23 @@ if (isset($_SESSION['objRecep']) && !empty($_SESSION['objRecep'])) {
 //     $immat = ''; // on affecte la valeur de la variable de session à $vin
 //   }
 
-if (isset($_POST['car_names'])) { // Si le nom de la voiture existe et à une valeur
-  $image_url = uploadImage();
-  if (empty($image_url)) {
-    $image_url = $_POST['img_exist'];
-  }
+// if (isset($_POST['car_names'])) { // Si le nom de la voiture existe et à une valeur
+//   $image_url = uploadImage();
+//   if (empty($image_url)) {
+//     $image_url = $_POST['img_exist'];
+//   }
 
-  // $wms->saveUpdateRepairCarInformation($link, $_POST, $image_url);
-  $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
-  // if((int)$_POST['repair_car'] > 0){
-  // 	$url = WEB_URL.'repaircar/carlist.php?m=up';
-  // 	header("Location: $url");
-  // } else {
-  // 	$url = WEB_URL.'repaircar/carlist.php?m=add';
-  // 	header("Location: $url");
-  // }
-  exit();
-}
+//   // $wms->saveUpdateRepairCarInformation($link, $_POST, $image_url);
+//   $wms->saveRecepRepairCarInformation($link, $_POST, $image_url);
+//   // if((int)$_POST['repair_car'] > 0){
+//   // 	$url = WEB_URL.'repaircar/carlist.php?m=up';
+//   // 	header("Location: $url");
+//   // } else {
+//   // 	$url = WEB_URL.'repaircar/carlist.php?m=add';
+//   // 	header("Location: $url");
+//   // }
+//   exit();
+// }
 
 if (isset($_GET['immat']) && $_GET['immat'] != '') {
   $row = $wms->getRepairCarInfoByRepairCarImma($link, $_GET['immat']);
@@ -201,6 +201,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'add_car') {
 
 $resultCarScanning = $wms->getCarScanningById($link, $_GET['vehicule_scanner_id']);
 $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
+$scanner_mecanique = $resultCarScanning['scanner_mecanique'];
+$scanner_electrique = $resultCarScanning['scanner_electrique'];
 
 // var_dump($etat_vehi_arrive);
 
@@ -320,6 +322,7 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
   <div class="container">
     <!-- Main content -->
     <form action="<?php echo $form_url; ?>" method="post" enctype="multipart/form-data" id="regForm">
+    <!-- <form role="form" method="POST" enctype="multipart/form-data" id="regForm"> -->
       <section class="content">
 
         <div id="you" class="alert alert-success alert-dismissable" style="display:<?php echo $addinfo; ?>">
@@ -756,10 +759,10 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
                 <label class="form-check-label">NON</label>
               </div>
               <div id="carte_grise_box">
-                <div class="col-md-4 form-check" style="padding-left:0px;">
+                <!-- <div class="col-md-4 form-check" style="padding-left:0px;">
                   <input class="form-check-input form-control" type="text" name="carte_grise_numero" id="carte_grise_numero" value="" placeholder="Renseigner le numéro de la carte grise">
-                </div>
-                <div class="col-md-2 form-check" style="padding-left:0px;">
+                </div> -->
+                <div class="col-md-6 form-check" style="padding-left:0px;">
                   <span class="btn btn-file btn btn-primary">Ajouter la pièce de la carte grise<input type="file" name="pj_carte_grise" id="pj_carte_grise" />
                   </span>
                 </div>
@@ -779,7 +782,7 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
               </div>
               <div id="visite_tech_box">
                 <div class="col-md-7 form-check" style="padding-left:0px;">
-                  <input style="margin-bottom:5px;" class="form-check-input form-control" type="text" name="visite_tech_numero" id="visite_tech_numero" value="" placeholder="Renseigner le numéro de la visite technique SVP">
+                  <!-- <input style="margin-bottom:5px;" class="form-check-input form-control" type="text" name="visite_tech_numero" id="visite_tech_numero" value="" placeholder="Renseigner le numéro de la visite technique SVP"> -->
                   <input style="margin-bottom:5px;" class="form-control datepicker" type="text" name="add_date_visitetech_car" id="add_date_visitetech_car" value="" placeholder="Cliquez pour choisir la date d'expiration de la visite technique SVP">
                   <span style="margin-bottom:5px;" class="btn btn-file btn btn-primary">Ajouter la pièce de la visite technique<input type="file" name="pj_visite_tech" id="pj_visite_tech" />
                   </span>
@@ -800,10 +803,10 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
               </div>
               <div id="assurance_box">
                 <div class="col-md-7 form-check" style="padding-left:0px;">
-                  <input style="margin-bottom:5px;" class="form-check-input form-control" type="text" name="assurance_numero" id="assurance_numero" value="" placeholder="Saisissez le numéro de l'assurance du véhicule SVP">
+                  <!-- <input style="margin-bottom:5px;" class="form-check-input form-control" type="text" name="assurance_numero" id="assurance_numero" value="" placeholder="Saisissez le numéro de l'assurance du véhicule SVP"> -->
                   <input style="margin-bottom:5px;" type="text" class='form-control' name="assurance_vehi_recep" id="assurance_vehi_recep" placeholder="Saisissez le nom de l'assurance du véhicule">
-                  <input style="margin-bottom:5px;" type="text" name="add_date_assurance_car" value="" id="add_date_assurance" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
-                  <input style="margin-bottom:5px;" type="text" name="add_date_assurance_fin" value="" id="add_date_assurance_fin" class="form-control datepicker" placeholder="Veuillez cliquer pour choisir une date" />
+                  <input style="margin-bottom:5px;" type="text" name="add_date_assurance_car" value="" id="add_date_assurance" class="form-control datepicker" placeholder="Veuillez sélectionner la date de début de l'assurance" />
+                  <input style="margin-bottom:5px;" type="text" name="add_date_assurance_fin" value="" id="add_date_assurance_fin" class="form-control datepicker" placeholder="Veuillez sélectionner la date de fin de l'assurance" />
                   <span style="margin-bottom:5px;" class="btn btn-file btn btn-primary">Ajouter la pièce de l'assurance<input type="file" name="pj_assurance" id="pj_assurance" />
                   </span>
                 </div>
@@ -1085,11 +1088,11 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
 
               <div class="form-group row">
                 <div class="col-md-3 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="elec_recep_vehi" value="Electrique">
+                  <input class="form-check-input" type="radio" name="elec_recep_vehi" id="elec_recep_vehi_oui" value="Electrique">
                   <label class="form-check-label">OUI</label>
                 </div>
                 <div class="col-md-3 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="elec_recep_vehi" value="">
+                  <input class="form-check-input" type="radio" name="elec_recep_vehi" id="elec_recep_vehi_non" value="">
                   <label class="form-check-label">NON</label>
                 </div>
               </div>
@@ -1101,11 +1104,11 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
 
               <div class="form-group row">
                 <div class="col-md-3 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="meca_recep_vehi" value="Mecanique">
+                  <input class="form-check-input" type="radio" name="meca_recep_vehi" id="meca_recep_vehi_oui" value="Mecanique">
                   <label class="form-check-label">OUI</label>
                 </div>
                 <div class="col-md-3 form-check" style="padding-left:0px;">
-                  <input class="form-check-input" type="radio" name="meca_recep_vehi" value="">
+                  <input class="form-check-input" type="radio" name="meca_recep_vehi" id="meca_recep_vehi_non" value="">
                   <label class="form-check-label">NON</label>
                 </div>
               </div>
@@ -3161,6 +3164,7 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
       if (currentTab >= x.length) {
         // ... the form gets submitted:
         document.getElementById("regForm").submit();
+        // submitRecepForm();
         return false;
       }
       // Otherwise, display the correct tab:
@@ -4472,16 +4476,16 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
       // }
 
       y46 = $('input[name=remarque_motif_depot]');
-      y47 = $('input[name="carte_grise_numero"]');
+      // y47 = $('input[name="carte_grise_numero"]');
       y48 = $('input[name="pj_carte_grise"]');
 
-      y49 = $('input[name="visite_tech_numero"]');
+      // y49 = $('input[name="visite_tech_numero"]');
       y50 = $('input[name="add_date_visitetech_car"]');
       y51 = $('input[name="pj_visite_tech"]');
       y52 = $('input[name="visitetech_recep_vehi"]');
 
       y53 = $('input[name="assur_recep_vehi"]');
-      y54 = $('input[name="assurance_numero"]');
+      // y54 = $('input[name="assurance_numero"]');
       y55 = $('input[name="assurance_vehi_recep"]');
       y56 = $('input[name="add_date_assurance_car"]');
       y57 = $('input[name="add_date_assurance_fin"]');
@@ -4523,11 +4527,13 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
         alert("Veuillez cocher OUI ou NON s'il y'a une carte grise !!!");
         y1.focus();
         return false;
-      } else if (y47.val() == '' && $('#carte_grise_recep_vehi_oui').is(':checked')) {
-        y47.focus();
-        alert("Saisissez le numéro de la carte grise SVP !!!");
-        return false;
-      } else if (y48.val() == '' && $('#carte_grise_recep_vehi_oui').is(':checked')) {
+      } 
+      // else if (y47.val() == '' && $('#carte_grise_recep_vehi_oui').is(':checked')) {
+      //   y47.focus();
+      //   alert("Saisissez le numéro de la carte grise SVP !!!");
+      //   return false;
+      // } 
+      else if (y48.val() == '' && $('#carte_grise_recep_vehi_oui').is(':checked')) {
         y48.focus();
         alert("Ajouter l'image de la carte grise du véhicule !!!");
         return false;
@@ -4535,11 +4541,13 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
         alert("Veuillez cocher OUI ou NON s'il y'a une visite technique !!!");
         y52.focus();
         return false;
-      } else if (y49.val() == '' && $('#visite_tech_recep_vehi_oui').is(':checked')) {
-        y49.focus();
-        alert("Saisissez le numéro de la visite technique SVP !!!");
-        return false;
-      } else if (y50.val() == '' && $('#visite_tech_recep_vehi_oui').is(':checked')) {
+      } 
+      // else if (y49.val() == '' && $('#visite_tech_recep_vehi_oui').is(':checked')) {
+      //   y49.focus();
+      //   alert("Saisissez le numéro de la visite technique SVP !!!");
+      //   return false;
+      // } 
+      else if (y50.val() == '' && $('#visite_tech_recep_vehi_oui').is(':checked')) {
         y50.focus();
         alert("Ajouter la date de la prochaine visite technique du véhicule !!!");
         return false;
@@ -4551,12 +4559,14 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
         alert("Veuillez cocher OUI ou NON s'il y'a une assurance !!!");
         y53.focus();
         return false;
-      } else if (y54.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
-        y54.focus();
-        alert("Saisissez le numéro de l'assurance SVP !!!");
-        return false;
-      } else if (y55.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
-        y55.focus(); 
+      } 
+      // else if (y54.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
+      //   y54.focus();
+      //   alert("Saisissez le numéro de l'assurance SVP !!!");
+      //   return false;
+      // } 
+      else if (y55.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
+        y55.focus();
         alert("Saisissez le nom de l'assurance SVP !!!");
       } else if (y56.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
         alert("La date de début de l'assurance du véhicule est obligatoire, saisissez la !!!");
@@ -4567,7 +4577,7 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
         y57.focus();
         return false;
       } else if (y58.val() == '' && $('#assurance_recep_vehi_oui').is(':checked')) {
-        y58.focus(); 
+        y58.focus();
         alert("Ajouter l'image de l'assurance du véhicule !!!");
         return false;
       } else if (y64[i].checked == false && y64[i + 1].checked == false) {
@@ -4602,9 +4612,7 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
         y63.focus();
         alert("Ajouter l'image de la pièce du véhicule !!!");
         return false;
-      }
-      
-      else if (y2[i].checked == false && y2[i + 1].checked == false) {
+      } else if (y2[i].checked == false && y2[i + 1].checked == false) {
         alert("Veuillez cocher OUI ou NON s'il y'a un cric de levage !!!");
         y2.focus();
         return false;
@@ -4648,23 +4656,25 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
         alert("Veuillez ajouter la photo du 2ème accessoire du véhicule SVP !!!");
         $($('input[name="pj_access_2"]')).focus();
         return false;
-      } else if ($('input[name="pj_access_3"]').val() == '') {
-        alert("Veuillez ajouter la photo du 3ème accessoire du véhicule SVP !!!");
-        $($('input[name="pj_access_3"]')).focus();
-        return false;
-      } else if ($('input[name="pj_access_4"]').val() == '') {
-        alert("Veuillez ajouter la photo du 4ème accessoire du véhicule SVP !!!");
-        $($('input[name="pj_access_4"]')).focus();
-        return false;
-      } else if ($('input[name="pj_access_5"]').val() == '') {
-        alert("Veuillez ajouter la photo du 5ème accessoire du véhicule SVP !!!");
-        $($('input[name="pj_access_5"]')).focus();
-        return false;
-      } else if ($('input[name="pj_access_6"]').val() == '') {
-        alert("Veuillez ajouter la photo du 6ème accessoire du véhicule SVP !!!");
-        $($('input[name="pj_access_6"]')).focus();
-        return false;
-      } else if ($("#scanner_recep_vehi").prop("checked") == false && etat_vehi_arrive == "conduit") {
+      }
+      // else if ($('input[name="pj_access_3"]').val() == '') {
+      //   alert("Veuillez ajouter la photo du 3ème accessoire du véhicule SVP !!!");
+      //   $($('input[name="pj_access_3"]')).focus();
+      //   return false;
+      // } else if ($('input[name="pj_access_4"]').val() == '') {
+      //   alert("Veuillez ajouter la photo du 4ème accessoire du véhicule SVP !!!");
+      //   $($('input[name="pj_access_4"]')).focus();
+      //   return false;
+      // } else if ($('input[name="pj_access_5"]').val() == '') {
+      //   alert("Veuillez ajouter la photo du 5ème accessoire du véhicule SVP !!!");
+      //   $($('input[name="pj_access_5"]')).focus();
+      //   return false;
+      // } else if ($('input[name="pj_access_6"]').val() == '') {
+      //   alert("Veuillez ajouter la photo du 6ème accessoire du véhicule SVP !!!");
+      //   $($('input[name="pj_access_6"]')).focus();
+      //   return false;
+      // } 
+      else if ($("#scanner_recep_vehi").prop("checked") == false && etat_vehi_arrive == "conduit") {
         alert("Veuillez cocher la case du scanner !!!");
         $("#scanner_recep_vehi").focus();
         return false;
@@ -4898,20 +4908,20 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
         alert("La puissance fiscale du véhicule est obligatoire !!!");
         $("#fisc_vehi").focus();
         return false;
+      } else if ($('input[name="uploaded_file"]').val() == '') {
+        alert("Veuillez ajouter l'image du véhicule !!!");
+        $('input[name="uploaded_file"]').focus();
+        return false;
+      } else if ($('input[name="pj_1_car"]').val() == '') {
+        alert("Ajouter la 1ère pièce jointe du véhicule !!!");
+        $('input[name="pj_1_car"]').focus();
+        return false;
+      } else if ($('input[name="pj_2_car"]').val() == '') {
+        alert("Ajouter la 2ème pièce jointe du véhicule !!!");
+        $('input[name="pj_2_car"]').focus();
+        return false;
       }
-      // else if ($('input[name="uploaded_file"]').val() == '') {
-      //   alert("Veuillez ajouter l'image du véhicule !!!");
-      //   $('input[name="uploaded_file"]').focus();
-      //   return false;
-      // } else if ($('input[name="pj_1_car"]').val() == '') {
-      //   alert("Ajouter la 1ère pièce jointe du véhicule !!!");
-      //   $('input[name="pj_1_car"]').focus();
-      //   return false;
-      // } else if ($('input[name="pj_2_car"]').val() == '') {
-      //   alert("Ajouter la 2ème pièce jointe du véhicule !!!");
-      //   $('input[name="pj_2_car"]').focus();
-      //   return false;
-      // } else if ($('input[name="pj_3_car"]').val() == '') {
+      // else if ($('input[name="pj_3_car"]').val() == '') {
       //   alert("Ajouter la 3ème pièce jointe du véhicule !!!");
       //   $('input[name="pj_3_car"]').focus();
       //   return false;
@@ -4961,8 +4971,45 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
     $(document).ready(function() {
 
       // Lorsque le véhicule est conduit, on cache tous les voyants
-      var etat_vehi_arrive;
+      var etat_vehi_arrive, scanner_mecanique, scanner_electrique;
+
       etat_vehi_arrive = "<?php echo $etat_vehi_arrive ?>";
+      scanner_mecanique = "<?php echo $scanner_mecanique ?>";
+      scanner_electrique = "<?php echo $scanner_electrique ?>";
+
+      if (scanner_mecanique == "OUI" && scanner_electrique == "") {
+
+        $("#scanner_recep_vehi").prop("checked", true);
+        $("#scanner_recep_vehi").prop("disabled", true);
+
+        $("#meca_recep_vehi_oui").prop("checked", true);
+        $("#elec_recep_vehi_non").prop("checked", true);
+        $('input[name="meca_recep_vehi"]').prop("disabled", true);
+        $('input[name="elec_recep_vehi"]').prop("disabled", true);
+      }
+
+      if (scanner_mecanique == "OUI" && scanner_electrique == "OUI") {
+
+        $("#scanner_recep_vehi").prop("checked", true);
+        $("#scanner_recep_vehi").prop("disabled", true);
+
+        $("#meca_recep_vehi_oui").prop("checked", true);
+        $("#elec_recep_vehi_oui").prop("checked", true);
+        $('input[name="meca_recep_vehi"]').prop("disabled", true);
+        $('input[name="elec_recep_vehi"]').prop("disabled", true);
+
+      }
+
+      if (scanner_mecanique == "" && scanner_electrique == "OUI") {
+
+        $("#scanner_recep_vehi").prop("checked", true);
+        $("#scanner_recep_vehi").prop("disabled", true);
+        $("#meca_recep_vehi_non").prop("checked", true);
+        $("#elec_recep_vehi_oui").prop("checked", true);
+        $('input[name="meca_recep_vehi"]').prop("disabled", true);
+        $('input[name="elec_recep_vehi"]').prop("disabled", true);
+
+      }
 
       if (etat_vehi_arrive != "conduit") {
 
@@ -4977,7 +5024,7 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
       $('#carte_grise_box').hide();
       $('#visite_tech_box').hide();
       $('#assurance_box').hide();
-      $('#assurance_cedeao_box').hide(); 
+      $('#assurance_cedeao_box').hide();
       $('#otre_piece_box').hide();
       $('#contrat_assurance_box').hide();
 
@@ -5182,7 +5229,7 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
 
           // On cache le conteneur qui contient le champ de saisi et le bouton d'ajout du scan de la carte grise
           $('#contrat_assurance_box').show();
-         
+
 
           // if ($('input[name="pj_contrat_assurance"]').val() == '') {
           //   $('input[name="pj_contrat_assurance"]').focus();
@@ -5277,27 +5324,27 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
               }
             }
           },
-          carte_grise_numero: {
-            validators: {
-              notEmpty: {
-                message: 'Le numéro de la carte grise est obligatoire !'
-              }
-            }
-          },
-          visite_tech_numero: {
-            validators: {
-              notEmpty: {
-                message: 'Le numéro de la visite technique est obligatoire !'
-              }
-            }
-          },
-          assurance_numero: {
-            validators: {
-              notEmpty: {
-                message: 'Le numéro de l\'assurance est obligatoire !'
-              }
-            }
-          },
+          // carte_grise_numero: {
+          //   validators: {
+          //     notEmpty: {
+          //       message: 'Le numéro de la carte grise est obligatoire !'
+          //     }
+          //   }
+          // },
+          // visite_tech_numero: {
+          //   validators: {
+          //     notEmpty: {
+          //       message: 'Le numéro de la visite technique est obligatoire !'
+          //     }
+          //   }
+          // },
+          // assurance_numero: {
+          //   validators: {
+          //     notEmpty: {
+          //       message: 'Le numéro de l\'assurance est obligatoire !'
+          //     }
+          //   }
+          // },
           assurance_vehi_recep: {
             validators: {
               notEmpty: {
@@ -5308,6 +5355,61 @@ $etat_vehi_arrive = $resultCarScanning['etat_vehi_arrive'];
         }
       });
     });
+
+    $(document).ready(function() {
+
+      // Cette fonction anonyme va écouter l'évènement de soumission du formulaire de réception d'un véhicule
+      $("#regForm").submit(function(event) {
+        // submitRecepForm();
+        return false;
+      });
+
+    });
+
+    function submitRecepForm() {
+
+      // On sélectionne le 1er formulaire (formulaire de réception) et on extrait ses données
+      var form = $('form')[0]
+      // var formData = new FormData(form);
+      var form_data = new FormData(form);
+      var web_url = "http://application.luxurygarage.ci/";
+      // var web_url = "http://127.0.0.1:8181/smartgarage-github/";
+      var file_data = $('input[type=file]').prop('files')[0];
+  
+      form_data.append('file', file_data);
+
+      // alert(form_data);
+
+      $.ajax({
+        url: "../ajax/addcar_reception_traitement.php",
+        dataType: 'text', // what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,
+        type: 'post',
+        success: function(php_script_response) {
+          // Avant le traitement on fait une redirection
+          window.location.href = web_url + "recep_panel/recep_dashboard.php?m=reception_success";
+        }
+      });
+
+      // On transmet les données du formulaire au fichier de traitement 
+      // $.ajax({ // Instanciation de l'objet XHR
+      //   type: "POST",
+      //   url: "../ajax/addcar_reception_traitement.php",
+      //   cache: false,
+      //   data: formData,
+      //   contentType: false,
+      //   processData: false,
+      //   success: function() {
+      //     // Avant le traitement on fait une redirection
+      //     window.location.href = web_url + "recep_panel/recep_dashboard.php?m=reception_success";
+      //     // $("#client-modal").modal('hide');
+      //     // $("#ddlCustomerList").focus();
+      //   }
+      // });
+    }
   </script>
 
 </body>

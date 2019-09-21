@@ -107,12 +107,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                         }
                         ?></td>
                   <td>
-                    <?php if ($_SESSION['login_type'] == 'comptable') { ?>
-                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>&recu_scanning_id=<?php echo $row['id']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Visualiser le reçu de paiement du scanner</a>
-                      <?php if ($row['validation_recu_scanning'] == null) { ?>
-                        <!-- <a class="btn btn-info" style="background-color:green;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>compta_panel/validation_recu_scanning.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>&recu_scanning_id=<?php echo $row['id']; ?>" data-original-title="valider le reçu de paiement du scanner">Valider le reçu de paiement du scanner</a> -->
-                    <?php }
-                      } ?>
+                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>&recu_scanning_id=<?php echo $row['id']; ?>&validation_recu_scanning=<?php echo $row['validation_recu_scanning']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Visualiser le reçu de paiement du scanner</a>
                   </td>
                 </tr>
               <?php

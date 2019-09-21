@@ -46,6 +46,81 @@ class wms_core
 	// 	return $row;
 	// }
 
+	public function getRepairCarDiagnosticDevisMecanoClients($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT DISTINCT rd.id as vehi_diag_id, dev.devis_id, c_name, cr.add_date_assurance, cr.add_date_visitetech, 
+		rd.car_id, dev.confirm_devis, VIN, statut_validation_devis_mecanique, type_diagnostic, statut_validation_devis_electrique
+		FROM tbl_add_devis dev 
+		JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
+		JOIN tbl_add_car cr ON cr.car_id = rd.car_id
+		JOIN tbl_add_customer cus on cus.customer_id = cr.customer_id
+		WHERE statut_validation_devis_mecanique = 1";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getRepairCarDiagnosticDevisElectroClients($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT DISTINCT rd.id as vehi_diag_id, dev.devis_id, c_name, cr.add_date_assurance, cr.add_date_visitetech, 
+		rd.car_id, dev.confirm_devis, VIN, statut_validation_devis_mecanique, type_diagnostic, statut_validation_devis_electrique
+		FROM tbl_add_devis dev 
+		JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
+		JOIN tbl_add_car cr ON cr.car_id = rd.car_id
+		JOIN tbl_add_customer cus on cus.customer_id = cr.customer_id
+		WHERE statut_validation_devis_electrique = 1";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getRepairCarDiagnosticDevisClients($con)
+	{
+		// Déclaration et initialisation d'un array vide
+		$data = array();
+
+		$query = "SELECT DISTINCT rd.id as vehi_diag_id, dev.devis_id, c_name, cr.add_date_assurance, cr.add_date_visitetech, 
+		rd.car_id, dev.confirm_devis, VIN, statut_validation_devis_mecanique, type_diagnostic, statut_validation_devis_electrique
+		FROM tbl_add_devis dev 
+		JOIN tbl_repaircar_diagnostic rd ON dev.repaircar_diagnostic_id = rd.id
+		JOIN tbl_add_car cr ON cr.car_id = rd.car_id
+		JOIN tbl_add_customer cus on cus.customer_id = cr.customer_id
+		WHERE statut_validation_devis_electrique = 1 OR statut_validation_devis_mecanique = 1";
+
+		// Exécution et stockage du résultat de la requête
+		$result = mysql_query($query, $con);
+
+		// Tant qu'il y a des enregistrements ou lignes dans le jeu de résultat de la requête
+		// Pour chaque ligne, on l'affecte à une variable tampon
+		// Puis dans l'array
+		while ($row = mysql_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
 	public function getServcliInfos($con)
 	{
 		$data = array();
@@ -1132,7 +1207,10 @@ class wms_core
 	public function getCarScanningById($con, $car_scanning_id)
 	{
 
-		$result = mysql_query("SELECT vs.*, c_name, princ_tel FROM tbl_vehicule_scanning vs JOIN tbl_add_customer cus ON vs.customer_id = cus.customer_id WHERE vs.id ='" . (int) $car_scanning_id . "'", $con);
+		$result = mysql_query("SELECT vs.*, c_name, princ_tel 
+		FROM tbl_vehicule_scanning vs 
+		JOIN tbl_add_customer cus ON vs.customer_id = cus.customer_id 
+		WHERE vs.id ='" . (int) $car_scanning_id . "'", $con);
 
 		$row = mysql_fetch_assoc($result);
 
@@ -4459,7 +4537,7 @@ GROUP BY pp.per_id";
 		if (!empty($data)) {
 			if ($data['boncmde_id'] == '0') {
 
-				$boncmde_date_creation = date('d/m/Y');
+				$boncmde_date_creation = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s');
 
 				$query = "INSERT INTO tbl_add_boncmde(boncmde_num, boncmde_designation, boncmde_qte, boncmde_pu_ht, boncmde_total_ht, supplier_id, boncmde_date_creation, bon_cmde_type, car_id, boncmde_data)
 
@@ -4887,7 +4965,7 @@ GROUP BY pp.per_id";
 			'site_name' => $site_config_data['site_name'],
 			'subject' => $subject,
 			'message' => $details,
-			'today_date' => date('d/m/Y'),
+			'today_date' => date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s'),
 			// 'devis_id' => $devis_id
 		);
 		$headers = "From: " . strip_tags($from) . "\r\n";
@@ -4909,7 +4987,7 @@ GROUP BY pp.per_id";
 			'site_name' => $site_config_data['site_name'],
 			'subject' => $subject,
 			'message' => $details,
-			'today_date' => date('d/m/Y'),
+			'today_date' => date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s'),
 			// 'devis_id' => $devis_id
 		);
 		$headers = "From: " . strip_tags($from) . "\r\n";
@@ -4958,7 +5036,7 @@ GROUP BY pp.per_id";
 			'site_name' => $site_config_data['site_name'],
 			'subject' => $subject,
 			'message' => $details,
-			'today_date' => date('d/m/Y'),
+			'today_date' => date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s'),
 			'devis_id' => $devis_id
 		);
 		$headers = "From: " . strip_tags($from) . "\r\n";
@@ -5904,7 +5982,6 @@ GROUP BY pp.per_id";
 			remarque_motif_depot, remarque_etat_vehi_arrive, remarque_aspect_ext, remarque_aspect_int, remarque_etat_vehi_sortie, 
 			etat_vehi_arrive, add_car_id, pj1_url, pj2_url, pj3_url, pj4_url, pj5_url, pj6_url, pj7_url, pj8_url, pj9_url, pj10_url, pj11_url, 
 			pj12_url, attrib_recep, dimension_pneu, dupli_cle, climatisation, vehicule_scanner_id, frein_main, bouton_detresse, suspension, etat_carosserie, 
-			
 			carte_grise_numero, pj_carte_grise_url, visite_tech_numero, pj_visite_tech_url, assurance_numero, assurance_cedeao_recep_vehi,
 			contrat_assurance_recep_vehi, pj_contrat_assurance, otre_piece_recep_vehi, otre_piece_numero, date_otre_piece_recep_vehi, pj_otre_piece,
 			pj_access_1, pj_access_2, pj_access_3, pj_access_4, pj_access_5, pj_access_6, pj_assurance_cedeao, pj_assurance,
@@ -5941,8 +6018,8 @@ GROUP BY pp.per_id";
 			'$data[pj6_url]','$data[pj7_url]','$data[pj8_url]','$data[pj9_url]','$data[pj10_url]','$data[pj11_url]','$data[pj12_url]'
 			,'$data[recep_id]','$data[dim_pneu]','$data[dupli_cle_recep_vehi]','$data[climatisation]','$data[vehicule_scanner_id]',
 			'$data[frein_main]','$data[bouton_detresse]','$data[suspension]','$data[etat_carosserie]',
-			'$data[carte_grise_numero]','$data[pj_carte_grise]','$data[visite_tech_numero]','$data[pj_visite_tech]',
-			'$data[assurance_numero]','$data[assurance_cedeao_recep_vehi]',
+			null,'$data[pj_carte_grise]',null,'$data[pj_visite_tech]',
+			null,'$data[assurance_cedeao_recep_vehi]',
 			'$data[contrat_assurance_recep_vehi]','$data[pj_contrat_assurance]', '$data[otre_piece_recep_vehi]', 
 			'$data[otre_piece_numero]', '$data[date_otre_piece_recep_vehi]', '$data[pj_otre_piece]',
 			'$data[pj_access_1]', '$data[pj_access_2]',
@@ -6679,12 +6756,12 @@ GROUP BY pp.per_id";
 	public function getRepairCarDateForReportEcheance($con)
 	{
 		$data = array();
-		$datetech = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+		$datetech = DateTime::createFromFormat('d/m/Y', date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s'));
 
 		$timestampstechnique =  $datetech->format('U');
 
 		//assurance
-		$dateassur = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+		$dateassur = DateTime::createFromFormat('d/m/Y', date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s'));
 
 		$timestampsassurance =  $dateassur->format('U');
 		//$result = mysql_query("SELECT MONTHNAME(`invoice_date`) as month_name, (select SUM(quantity) as total_parts from tbl_parts_sell ps WHERE ps.sold_id = tbl_parts_sold_invoice.sold_id ) as total_parts FROM tbl_parts_sold_invoice WHERE YEAR(`invoice_date`) = '".$year."' GROUP BY MONTH(`invoice_date`) ORDER BY MONTH(`invoice_date`)",$con);
@@ -8779,12 +8856,12 @@ GROUP BY pp.per_id";
 			}
 		}
 
-		// if (!$result) {
-		// 	// var_dump($data);
-		// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
-		// 	$message .= 'Whole query: ' . $query;
-		// 	die($message);
-		// }
+		if (!$result) {
+			// var_dump($data);
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
 	}
 
 	/*
