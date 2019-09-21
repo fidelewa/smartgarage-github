@@ -18,91 +18,6 @@ $delinfo = 'none';
 $addinfo = 'none';
 $failedinfo = 'none';
 
-//get all car info by current year
-$total_car_year_sold = 0;
-$sold_car = $wms->getSellCarMonthlyData($link, date('Y'));
-//var_dump($sold_car);exit;
-$car_sell_report = '';
-if (!empty($sold_car)) {
-  foreach ($sold_car as $scar) {
-    $ccode = $wms->getChartColorCodeByMonth($scar['month_name']);
-    $car_sell_report[] = array(
-      'value'      => $scar['total_sell'],
-      'color'      => $ccode,
-      'highlight'    => $ccode,
-      'label'      => ' Car Sold' . ' ' . $scar['month_name']
-    );
-    $total_car_year_sold += (int) $scar['total_sell'];
-  }
-  if (!empty($car_sell_report)) {
-    $car_sell_report = json_encode($car_sell_report, JSON_NUMERIC_CHECK);
-  }
-}
-
-//get all parts info by current year
-$sold_parts = $wms->getSellPartsMonthlyData($link, date('Y'));
-
-$total_parts_year_sold = 0;
-$parts_sell_report = '';
-if (!empty($sold_parts)) {
-  foreach ($sold_parts as $sparts) {
-    $ccode = $wms->getChartColorCodeByMonth($sparts['month_name']);
-    $parts_sell_report[] = array(
-      'value'      => $sparts['total_parts'],
-      'color'      => $ccode,
-      'highlight'    => $ccode,
-      'label'      => ' Parts Sold' . ' ' . $sparts['month_name']
-    );
-    $total_parts_year_sold += (int) $sparts['total_parts'];
-  }
-  if (!empty($parts_sell_report)) {
-    $parts_sell_report = json_encode($parts_sell_report, JSON_NUMERIC_CHECK);
-  }
-}
-
-//get car repair chart data
-$months = array(
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July ',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-);
-
-$total_car_repair_year = 0;
-$car_repair_data_default = [0];
-$car_repair = $wms->getCarRepairChartData($link, date('Y'));
-
-if (!empty($car_repair)) {
-  $car_repair_data = '';
-  foreach ($months as $month) {
-    $car_repair_data .= arrayValueExist($car_repair, $month) . ',';
-  }
-  $car_repair_data = trim($car_repair_data, ',');
-  $car_repair_data_default = $car_repair_data;
-  foreach ($car_repair as $arr) {
-    $total_car_repair_year += (int) $arr['total_repair'];
-  }
-}
-
-function arrayValueExist($array, $value)
-{
-  foreach ($array as $arr) {
-    if ($arr['month_name'] == $value) {
-      return $arr['total_repair'];
-      break;
-    }
-  }
-  return 0;
-}
-
 $msg = '';
 $addinfo = 'none';
 if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
@@ -111,6 +26,8 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
 }
 
 // var_dump($_SESSION);
+
+$i = 0;
 
 ?>
 <!-- Content Header (Page header) -->
@@ -248,6 +165,94 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
       <?php echo $msg; ?>
     </div>
 
+  </div>
+
+  <div class="row container-fluid">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="box box-success">
+        <div class="box-header">
+          <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers scanners enregistrés par véhicules</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table class="table sakotable table-bordered table-striped dt-responsive">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nom client</th>
+                <th>Personne ayant enregistré le client</th>
+                <th>Téléphone du client</th>
+                <th>Immatriculation</th>
+                <th>Marque</th>
+                <th>Modèle</th>
+                <th>Scanner mécanique</th>
+                <th>Scanner électrique</th>
+                <th>Frais de scanner</th>
+                <th>Statut reçu scanner</th>
+                <th>Statut scanner</th>
+                <th>Statut reception</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              $results = $wms->getCarScanning($link);
+              foreach ($results as $row) {
+                // $image = WEB_URL . 'img/no_image.jpg';
+                // if(file_exists(ROOT_PATH . '/img/upload/' . $row['usr_image']) && $row['usr_image'] != ''){
+                // 	$image = WEB_URL . 'img/upload/' . $row['usr_image'];
+                // }
+                ?>
+                <tr>
+                  <td><?php echo $row['id']; ?></td>
+                  <td><?php echo $row['c_name']; ?></td>
+                  <td><?php echo $row['usr_name']; ?></td>
+                  <td><?php echo $row['princ_tel']; ?></td>
+                  <td><?php echo $row['imma_vehi_client']; ?></td>
+                  <td><?php echo $row['marque_vehi_client']; ?></td>
+                  <td><?php echo $row['model_vehi_client']; ?></td>
+                  <td><?php echo $row['scanner_mecanique']; ?></td>
+                  <td><?php echo $row['scanner_electrique']; ?></td>
+                  <td id="frais_scanner_<?php echo $i; ?>"><?php echo $row['frais_scanner']; ?></td>
+                  <td><?php
+                        if ($row['validation_recu_scanning'] == null) {
+                          echo "<span class='label label-default'>Non validé</span> <br/>";
+                        } else if ($row['validation_recu_scanning'] == 1) {
+                          echo "<span class='label label-success'>validé</span> <br/>";
+                        }
+                        ?></td>
+                  <td><?php
+                        if ($row['statut_scannage'] == null) {
+                          echo "<span class='label label-default'>En attente de scan</span> <br/>";
+                        } else if ($row['statut_scannage'] == 1) {
+                          echo "<span class='label label-success'>Scan effectué</span> <br/>";
+                        }
+                        ?></td>
+                  <td><?php
+                        if ($row['statut_reception'] == null) {
+                          echo "<span class='label label-default'>En attente de reception</span> <br/>";
+                        } else if ($row['statut_reception'] == 1) {
+                          echo "<span class='label label-success'>Reception effectuée</span> <br/>";
+                        }
+                        ?></td>
+                  <td>
+                    <?php if ($row['validation_recu_scanning'] != null) { ?>
+                      <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $row['nbr_aleatoire']; ?>&recu_scanning_id=<?php echo $row['id']; ?>" data-original-title="Afficher le reçu de paiement du scanner">Visualiser le reçu de paiement du scanner</a>
+                    <?php } ?>
+                  </td>
+                </tr>
+              <?php
+                $i++;
+              }
+              // On retourne la représentation JSON du tableau
+              $scanner_data_json = json_encode($results, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+              ?>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
   </div>
 
   <div class="row container-fluid">
@@ -843,6 +848,66 @@ if (isset($_GET['m']) && $_GET['m'] == 'msg_envoye') {
 </section>
 <!-- /.content -->
 <script type="text/javascript">
+  // Définition de la locale en français
+  numeral.register('locale', 'fr', {
+    delimiters: {
+      thousands: ' ',
+      decimal: ','
+    },
+    abbreviations: {
+      thousand: 'k',
+      million: 'm',
+      billion: 'b',
+      trillion: 't'
+    },
+    currency: {
+      symbol: 'FCFA'
+    }
+  });
+
+  // Sélection de la locale en français
+  numeral.locale('fr');
+
+  // Initialisation des variables
+  var frais_scanner = "<?php echo $row['frais_scanner']; ?>";
+
+  // analyse de la chaîne de caractères JSON et 
+  // construction de la valeur JavaScript ou l'objet décrit par cette chaîne
+  var scanner_data_obj = JSON.parse('<?= $scanner_data_json; ?>');
+
+  // console.log(scanner_data_obj);
+
+  // Déclaration et initialisation de l'objet itérateur
+  var iterateur = scanner_data_obj.keys();
+
+  // Déclaration et initialisation de l'indice ou compteur
+  var row = iterateur.next().value;
+
+  // Parcours du tableau d'objet
+  for (const key of scanner_data_obj) {
+
+    // Conversion en flottant
+    key.frais_scanner = parseFloat(key.frais_scanner);
+
+    // console.log(numeral(key.frais_scanner).format('0,0 $'));
+
+    // Affectation des nouvelles valeurs
+    $("#frais_scanner_" + row).html(numeral(key.frais_scanner).format('0,0 $'));
+
+    // incrémentation du compteur
+    row++;
+
+  }
+
+  // Conversion des variables en flottant
+  frais_scanner = parseFloat(frais_scanner);
+
+  // console.log(numeral(frais_scanner).format('0,0 $'));
+
+  // console.log($("#salaire_base_scanner"));
+
+  $("#frais_scanner").html(numeral(frais_scanner).format('0,0 $'));
+
   $(document).ready(function() {
     setTimeout(function() {
       $("#me").hide(300);

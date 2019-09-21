@@ -312,22 +312,26 @@ if (!empty($row) && count($row) > 0) { ?>
 
                                     <div class="col-xs-5 cadre" style="width:220px;">
                                         <div class="row">
-                                            <div class="col-xs-5">Total HT</div>
-                                            <div class="col-xs-7" id="total_ht"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
+                                            <div class="col-xs-6">Total HT</div>
+                                            <div class="col-xs-6" id="total_ht"><?php echo $row['total_ht_gene_piece_rechange_devis'] . ' ' . $currency; ?></div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xs-5">Remise (%)</div>
-                                            <div class="col-xs-7" id="devis_remise"><?php echo $row['devis_remise'] ?></div>
+                                            <div class="col-xs-6">Remise (%)</div>
+                                            <div class="col-xs-6" id="devis_remise"><?php echo $row['devis_remise'] ?></div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xs-5">Total TVA</div>
-                                            <div class="col-xs-7" id="total_tva"><?php echo $row['total_tva'] . ' ' . $currency; ?></div>
+                                            <div class="col-xs-6">Net à payer HT</div>
+                                            <div class="col-xs-6" id="net_payer"><?php echo $row['net_payer'] ?></div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xs-5">
+                                            <div class="col-xs-6">Total TVA</div>
+                                            <div class="col-xs-6" id="total_tva"><?php echo $row['total_tva'] . ' ' . $currency; ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
                                                 <p style="font-size:9pt;font-weight:bold">Total TTC</p>
                                             </div>
-                                            <div class="col-xs-7">
+                                            <div class="col-xs-6">
                                                 <p style="font-size:9pt;font-weight:bold" id="total_ttc">
                                                     <?php echo $row['total_ttc_gene_piece_rechange_devis'] . ' ' . $currency; ?>
                                                 </p>
@@ -492,6 +496,7 @@ if (!empty($row) && count($row) > 0) { ?>
             var total_ttc = "<?php echo $row['total_ttc_gene_piece_rechange_devis']; ?>";
             var total_ht = "<?php echo $row['total_ht_gene_piece_rechange_devis']; ?>";
             var total_tva = "<?php echo $row['total_tva']; ?>";
+            var net_payer = "<?php echo $row['net_payer']; ?>";
             var montant_labour = "<?php echo $row['main_oeuvre_piece_rechange_devis']; ?>";
             var avance = 0;
             var reste_a_payer = 0;
@@ -531,6 +536,7 @@ if (!empty($row) && count($row) > 0) { ?>
             total_ht = parseFloat(total_ht);
             total_tva = parseFloat(total_tva);
             montant_labour = parseFloat(montant_labour);
+            net_payer = parseFloat(net_payer);
 
             // calcul de l'avance et du reste à payer
             avance = 0.75 * total_ttc;
@@ -544,9 +550,10 @@ if (!empty($row) && count($row) > 0) { ?>
             avance = numeral(avance).format('0,0 $');
             reste_a_payer = numeral(reste_a_payer).format('0,0 $');
 
-            console.log(avance);
-            console.log(reste_a_payer);
+            // console.log(avance);
+            // console.log(reste_a_payer);
 
+            $("#net_payer").html(numeral(net_payer).format('0,0 $'));
             $("#total_ttc").html(numeral(total_ttc).format('0,0 $'));
             $("#total_ht").html(numeral(total_ht).format('0,0 $'));
             $("#total_tva").html(numeral(total_tva).format('0,0 $'));

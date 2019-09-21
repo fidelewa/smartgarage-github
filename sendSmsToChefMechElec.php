@@ -14,7 +14,7 @@ $resultChefMechElec = mysql_query($queryChefMechElec, $link);
 
 // if (!$resultChefMechElec) {
 //     $message  = 'Invalid query: ' . mysql_error() . "\n";
-//     $message .= 'Whole query: ' .  $$queryChefMechElec;
+//     $message .= 'Whole query: ' .  $queryChefMechElec;
 //     die($message);
 // }
 

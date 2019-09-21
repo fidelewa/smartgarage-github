@@ -19,6 +19,12 @@ $(document).ready(function () {
         getAllClient();
         return false;
     });
+
+    // Cette fonction anonyme va écouter l'évènement de soumission du formulaire de réception d'un véhicule
+    // $("#regForm").submit(function (event) {
+    //     submitRecepForm();
+    //     return false;
+    // });
 });
 
 function submitAssuranceForm() {
@@ -68,6 +74,43 @@ function submitModelForm() {
         }
     });
 }
+
+// function submitRecepForm() {
+
+//     // On sélectionne le 1er formulaire (formulaire de réception) et on extrait ses données
+//     var form = $('form')[0]
+//     var formData = new FormData(form);
+//     var web_url = "http://127.0.0.1:8181/smartgarage-github/";
+
+//     // On récupère toutes les images du formulaire
+//     formData.append('image', $('input[type=file]')[0].files[0]);
+
+//     console.log(formData);
+
+//     // On transmet les données du formulaire au fichier de traitement 
+//     $.ajax({
+//         type: "POST",
+//         url: "../ajax/addcar_reception_traitement.php",
+//         cache: false,
+//         data: formData,
+//         contentType: false,
+//         processData: false,
+//         success: function () {
+//             // Avant le traitement on fait une redirection
+//             window.location.href = web_url + "recep_panel/recep_dashboard.php?m=reception_success";
+//             // $("#client-modal").modal('hide');
+//             // $("#ddlCustomerList").focus();
+//         },
+//         error: function () {
+//             alert("Error");
+//         },
+//         beforeSend: function() {
+//             // Avant le traitement on fait une redirection
+//             window.location.href = web_url + "recep_panel/recep_dashboard.php?m=reception_processing";
+//             // window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;
+//         }
+//     });
+// }
 
 function submitClientForm() {
 

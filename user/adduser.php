@@ -8,6 +8,8 @@ $usr_tel = "";
 $usr_password = "";
 $usr_type = "";
 $usr_image = "";
+$per_name = "";
+$per_id = 0;
 
 // Importation de l'autoload de composer
 // require ROOT_PATH.'/vendor/autoload.php';
@@ -121,6 +123,9 @@ $image = WEB_URL . 'img/no_image.jpg';
 if (isset($_GET['id']) && $_GET['id'] != '') {
     //view
     $row = $wms->getUserInfoByUserId($link, $_GET['id']);
+
+    // var_dump($row);
+
     if (!empty($row)) {
         $usr_name = $row['usr_name'];
         $usr_email = $row['usr_email'];
@@ -128,13 +133,15 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
         $usr_password = $row['usr_password'];
         $usr_type = $row['usr_type'];
         $usr_image = $row['usr_image'];
+        $per_name = $row['per_name'];
+        $per_id = (int) $row['per_id'];
         // if ($row['image'] != '') {
         //     $image_sup = WEB_URL . 'img/upload/' . $row['image'];
         //     $img_track = $row['image'];
         // }
         $hdnid = $_GET['id'];
         $title = 'Modification de l\'utilisateur';
-        $button_text = "Mise à jour";
+        $button_text = "Modifier";
         $successful_msg = "Modification de l'utilisateur effectuée avec succès";
         $form_url = WEB_URL . "user/adduser.php?id=" . $_GET['id'];
     }
@@ -170,7 +177,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                             <input type="text" maxlength="12" name="usr_tel" value="<?php echo $usr_tel ?>" id="usr_tel" class="form-control" required />
                         </div>
                         <div class="form-group">
-                            <label for="txtEmail"><span style="color:red;">*</span>E-mail (ou numéro de téléphone si vous n'avez pas d'adresse e-mail): <span style="color:red;"> (ceci est le login)</span></label>
+                            <label for="txtEmail"><span style="color:red;">*</span>E-mail (ou numéro de téléphone si vous n'avez pas d'adresse e-mail): <span style="color:red;"> (ceci est le login/identifiant)</span></label>
                             <input required type="text" name="txtUserEmail" value="<?php echo $usr_email ?>" id="txtUserEmail" class="form-control" />
                         </div>
                         <div class="form-group">
@@ -240,6 +247,24 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     echo "<option value='chef electricien'>Chef électricien</option>";
                                     echo "<option value='service client'>Service client</option>";
                                     echo "<option value='administrateur'>Administrateur</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fname"> Employé:</label>
+                            
+                            <select class="form-control" name="per_id" id="per_id">
+                                <option value="">--Sélectionnez un employé--</option>
+                                <?php
+                                $perso_list = $wms->getAllPersonnelList($link);
+                                foreach ($perso_list as $prow) {
+                                    if ($per_id > 0 && $per_id == $prow['per_id']) {
+                                        echo '<option selected value="' . $prow['per_id'] . '">' . $prow['per_name'] . '</option>';
+                                    } else {
+                                        echo '<option value="' . $prow['per_id'] . '">' . $prow['per_name'] . '</option>';
+                                    }
                                 }
                                 ?>
                             </select>

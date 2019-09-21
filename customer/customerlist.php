@@ -95,7 +95,7 @@ $invoice_id = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
 
                 <?php if ($_SESSION['login_type'] == 'admin') { ?>
                 <td>
-                  <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/pj_client_list.php?cid=<?php echo $row['customer_id']; ?>" data-original-title="Afficher la liste des pièces jointes au client"><i class="fa fa-paperclip"></i></a>
+                  <!-- <a class="btn btn-primary" style="background-color:purple;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/pj_client_list.php?cid=<?php echo $row['customer_id']; ?>" data-original-title="Afficher la liste des pièces jointes au client"><i class="fa fa-paperclip"></i></a> -->
                   <a class="btn btn-primary" style="background-color:gray;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/recep_vehi_client_list.php?cid=<?php echo $row['customer_id']; ?>" data-original-title="Afficher la liste des véhicules appartenant au client"><i class="fa fa-car"></i></a>
                   <!-- <a class="btn btn-primary" style="background-color:black;color:#ffffff;" data-toggle="tooltip" href="<?php echo WEB_URL; ?>customer/vehi_client_list.php?cid=<?php echo $row['customer_id']; ?>" data-original-title="Afficher la liste des véhicules du client"><i class="fa fa-car"></i></a> -->
                   <!-- <a class="btn btn-warning" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/addcar.php?cid=<?php echo $row['customer_id']; ?>" data-original-title="Ajouter votre voiture"><i class="fa fa-car"></i></a>  -->

@@ -94,6 +94,13 @@ if ($_POST['chef_mech_elec_type'] == "chef electricien") {
     // Exécution et stockage du résultat de la requête sous forme de ressource
     $result = mysql_query($query, $link);
 
+    // S'il y a eu une erreur lors de la réquête, on affiche le message d'erreur
+		if (!$result) {
+			$message  = 'Invalid query: ' . mysql_error() . "\n";
+			$message .= 'Whole query: ' . $query;
+			die($message);
+		}
+
     // Si le chef électricien fini de faire son diagnostic, alors on annule le statut de son acceptation de faire le diagnostic
     $result_2 = $wms->updateStatutActionElectro($link, $_POST['recep_car_id']);
 
@@ -117,6 +124,12 @@ if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
     // Exécution et stockage du résultat de la requête sous forme de ressource
     $result = mysql_query($query, $link);
 
+    if (!$result) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' . $query;
+        die($message);
+    }
+
     // Si le chef mécanicien fini de faire son diagnostic, alors on annule le statut de son acceptation de faire le diagnostic
     $result_2 = $wms->updateStatutActionMecano($link, $_POST['recep_car_id']);
 
@@ -126,17 +139,13 @@ if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
 }
 
 /***********************************************
- * Envoi du SMS à l'administrateur gestionnaire
+ * Envoi du SMS aux DG et DGA
  ***********************************************/
 
 // require_once(ROOT_PATH . '/SmsApi.php');
 
 // instanciation de la classe de l'API SMS
 $smsApi = new SmsApi();
-
-// Récupération du numéro de téléphone de l'administration gestionnaire
-$admin_ges_tel = $_POST['admin_ges_tel'];
-// $admin_ges_tel  = "02280768";
 
 if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
     // Message d'alerte
@@ -150,8 +159,40 @@ if ($_POST['chef_mech_elec_type'] == "chef electricien") {
     $content_msg = 'Le chef électricien ' . $_SESSION['objMech']['name'] . ', a fait le diagnostic électrique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
 }
 
+$resultDGinfos = $wms->getDGInfos($link);
+
+foreach ($resultDGinfos as $DGinfos) {
+
+    // Exécution de la méthode d'envoi 
+    $resultSmsSentToAdmin = $smsApi->isSmsapi($DGinfos['usr_tel'], $content_msg);
+}
+
+/**********************************
+ * Envoi du SMS au service client
+ **********************************/
+
+if ($_POST['chef_mech_elec_type'] == "chef mecanicien") {
+    // Message d'alerte
+    // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+    $content_msg = 'Le chef mécanicien ' . $_SESSION['objMech']['name'] . ', a fait le diagnostic mécanique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+}
+
+if ($_POST['chef_mech_elec_type'] == "chef electricien") {
+    // Message d'alerte
+    // $content_msg = $_SESSION['objMech']['name'] . ', a fait le diagnostic de la voiture réceptionnée ';
+    $content_msg = 'Le chef électricien ' . $_SESSION['objMech']['name'] . ', a fait le diagnostic électrique de la voiture réceptionnée ' . $_POST['make_name'] . ' ' . $_POST['model_name'] . ' ' . $_POST['VIN'];
+}
+
+$resultServcliInfo = $wms->getServcliInfos($link);
+
+foreach ($resultServcliInfo as $servcliInfo) {
+
+    // Exécution de la méthode d'envoi 
+    $resultServcliInfo = $smsApi->isSmsapi($servcliInfo['usr_tel'], $content_msg);
+}
+
 // Exécution de la méthode d'envoi 
-$resultSmsSent = $smsApi->isSmsapi($admin_ges_tel, $content_msg);
+$resultSmsSent = $smsApi->isSmsapi($recep_tel, $content_msg);
 
 /**********************************
  * Envoi du SMS au receptionniste

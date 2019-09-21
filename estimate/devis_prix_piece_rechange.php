@@ -26,13 +26,14 @@ if (isset($_POST) && !empty($_POST)) {
     // $devis_data = serialize($_POST['devis_data']);
     $devis_data = json_encode($_POST['devis_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
-    $date_devis = $wms->datepickerDateToMySqlDate(date('d/m/Y'));
+    // Horodatage / timestamp de la date du devis
+    $date_devis = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'Y-m-d H:i:s');
 
     // Formulation de la requête
 
     $query = "INSERT INTO tbl_add_devis (date_devis, devis_data, main_oeuvre_piece_rechange_devis, total_ht_gene_piece_rechange_devis, 
     total_tva, total_ttc_gene_piece_rechange_devis, repaircar_diagnostic_id, montant_du_piece_rechange_devis,
-    montant_paye_piece_rechange_devis, devis_remise) 
+    montant_paye_piece_rechange_devis, devis_remise, net_payer) 
     VALUES ('$date_devis','$devis_data','$_POST[main_oeuvre_piece_rechange_devis]',
     '$_POST[total_ht_gene_piece_rechange_devis]',
     '$_POST[total_tva]',
@@ -40,18 +41,19 @@ if (isset($_POST) && !empty($_POST)) {
     '$_GET[vehi_diag_id]', 
     '$_POST[montant_du_piece_rechange_devis]',
     '$_POST[montant_paye_piece_rechange_devis]',
-    '$_POST[devis_remise]'
+    '$_POST[devis_remise]',
+    '$_POST[net_payer]'
     )";
 
     // Exécution de la requête
     $result = mysql_query($query, $link);
 
     // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-    // if (!$result) {
-    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
-    //     $message .= 'Whole query: ' . $query;
-    //     die($message);
-    // }
+    if (!$result) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' . $query;
+        die($message);
+    }
 
     // Lors de l'enregistrement du devis lié au diagnostic d'un véhicule
     // On persiste les données d'historisation du devis lié à un diagnostic donné concernant un véhicule
@@ -66,11 +68,11 @@ if (isset($_POST) && !empty($_POST)) {
     $resultInsHistoDevVehi = mysql_query($queryInsHistoDevVehi, $link);
 
     // S'il y a eu une erreur lors de l'exécution de la réquête, on affiche le message d'erreur
-    // if (!$resultInsHistoDevVehi) {
-    //     $message  = 'Invalid query: ' . mysql_error() . "\n";
-    //     $message .= 'Whole query: ' . $queryInsHistoDevVehi;
-    //     die($message);
-    // }
+    if (!$resultInsHistoDevVehi) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' . $queryInsHistoDevVehi;
+        die($message);
+    }
 
     // Redirection vers la liste des devis
     $url = WEB_URL . 'estimate/repaircar_diagnostic_devis_list.php?m=add';
@@ -172,7 +174,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                             <td class="text-left"><button type="button" onclick="$('#estimate-row<?php echo $i; ?>').remove();totalEstCost();" data-toggle="tooltip" title="Supprimer" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                                         </tr>
 
-                                                        <?php
+                                                    <?php
                                                         // Incrémentation du compteur
                                                         $i++;
                                                         // Concaténation et calcul de la somme des totaux des prix des pièces de rechange
@@ -198,6 +200,10 @@ if (isset($_POST) && !empty($_POST)) {
                                                         <td colspan="6" class="text-right">Remise (%):</td>
                                                         <!-- <td><input id="total_ht_gene" name="total_ht_gene_piece_rechange_devis" type="text" value="0.00" readonly class="form-control allownumberonly" /></td> -->
                                                         <td><input required id="devis_remise" name="devis_remise" type="text" value="" class="form-control allownumberonly eFireRemise" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="6" class="text-right">Net à payer HT:</td>
+                                                        <td><input required id="net_payer" name="net_payer" type="text" value="" class="form-control allownumberonly" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6" class="text-right">Total TVA (<?php echo $currency; ?>):</td>
@@ -277,7 +283,14 @@ if (isset($_POST) && !empty($_POST)) {
     <script>
         var row = <?php echo $i; ?>;
 
+        // Signal add_estimate
+        var add_estimate = false;
+        // console.log(add_estimate);
+
         function addEstimate() {
+
+            add_estimate = true;
+            // console.log(add_estimate);
 
             html = '<tr id="estimate-row' + row + '">';
             html += '  <td class="text-right"><input id="codepiece_' + row + '" type="text" name="devis_data[' + row + '][code_piece_rechange_devis]" class="form-control"></td>';
@@ -307,7 +320,7 @@ if (isset($_POST) && !empty($_POST)) {
             $(".eFireRemise").change(function() {
                 // Cette fonction récupère l'id de l'élément qui possède la classe eFireRemise
                 // console.log('remise')
-                totalRemiseCalculate();
+                totalRemiseCalculate_2();
                 // totalEstCost();
 
                 // On récupère la valeur du taux de la remise en (%)
@@ -348,9 +361,13 @@ if (isset($_POST) && !empty($_POST)) {
         });
 
         $(".eFireRemise").change(function() {
-            // Cette fonction récupère l'id de l'élément qui possède la classe eFireRemise
+            
             // console.log('remise')
-            totalRemiseCalculate();
+            if (add_estimate == false) {
+                totalRemiseCalculate_2();
+                // totalEstCost();
+            }
+
             // totalEstCost();
 
             // On récupère la valeur du taux de la remise en (%)

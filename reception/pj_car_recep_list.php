@@ -116,6 +116,58 @@ $row = $wms->getAllPjByCarRecep($link, $_GET['car_recep_id']);
                                     // echo "<th>Pièce jointe #1</th>";
                                     $pj_list[] = $row['pj12_url'];
                                 }
+                                if (isset($row['pj_scanner_fr']) && !empty($row['pj_scanner_fr'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_scanner_fr'];
+                                }
+                                if (isset($row['pj_voyants_1']) && !empty($row['pj_voyants_1'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_voyants_1'];
+                                }
+                                if (isset($row['pj_voyants_2']) && !empty($row['pj_voyants_2'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_voyants_2'];
+                                }
+                                if (isset($row['pj_assurance']) && !empty($row['pj_assurance'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_assurance'];
+                                }
+                                if (isset($row['pj_assurance_cedeao']) && !empty($row['pj_assurance_cedeao'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_assurance_cedeao'];
+                                }
+                                if (isset($row['pj_access_1']) && !empty($row['pj_access_1'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_access_1'];
+                                }
+                                if (isset($row['pj_access_2']) && !empty($row['pj_access_2'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_access_2'];
+                                }
+                                if (isset($row['pj_access_3']) && !empty($row['pj_access_3'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_access_3'];
+                                }
+                                if (isset($row['pj_access_4']) && !empty($row['pj_access_4'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_access_4'];
+                                }
+                                if (isset($row['pj_access_5']) && !empty($row['pj_access_5'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_access_5'];
+                                }
+                                if (isset($row['pj_access_6']) && !empty($row['pj_access_6'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_access_6'];
+                                }
+                                if (isset($row['pj_otre_piece']) && !empty($row['pj_otre_piece'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_otre_piece'];
+                                }
+                                if (isset($row['pj_carte_grise_url']) && !empty($row['pj_carte_grise_url'])) {
+                                    // echo "<th>Pièce jointe #1</th>";
+                                    $pj_list[] = $row['pj_carte_grise_url'];
+                                }
                                 ?>
                                 <th>Nom des pièces jointes</th>
                                 <!-- <th>Action</th> -->

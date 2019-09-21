@@ -52,7 +52,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                 <th>ID</th>
                 <th>Nom client</th>
                 <th>Personne ayant enregistré le client</th>
-                <th>Numéro téléphone</th>
+                <th>Téléphone du client</th>
                 <th>Immatriculation</th>
                 <th>Marque</th>
                 <th>Modèle</th>

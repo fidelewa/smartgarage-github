@@ -46,6 +46,51 @@ class wms_core
 	// 	return $row;
 	// }
 
+	public function getServcliInfos($con)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_add_user WHERE usr_type = 'service client')", $con);
+
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getReceptionnisteInfos($con)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_add_user WHERE usr_type = 'receptionniste')", $con);
+
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getComptaInfos($con)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_add_user WHERE usr_type = 'comptable')", $con);
+
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	public function getDGInfos($con)
+	{
+		$data = array();
+		$result = mysql_query("SELECT * FROM tbl_add_user u 
+		JOIN tbl_add_personnel p ON p.per_id = u.per_id WHERE per_fonction IN ('DG','DGA','dg','dga','directeur technique')", $con);
+
+		while ($row = mysql_fetch_array($result)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
 	/*
 	* @delete supplier info
 	*/
@@ -387,7 +432,10 @@ class wms_core
 	public function getCarScanningByNbAleatoire($con, $nb_aleatoire)
 	{
 
-		$result = mysql_query("SELECT vs.*, c_name, princ_tel FROM tbl_vehicule_scanning vs JOIN tbl_add_customer cus ON vs.customer_id = cus.customer_id WHERE nbr_aleatoire ='" . (int) $nb_aleatoire . "'", $con);
+		$result = mysql_query("SELECT vs.*, c_name, princ_tel 
+		FROM tbl_vehicule_scanning vs 
+		JOIN tbl_add_customer cus ON vs.customer_id = cus.customer_id
+		WHERE nbr_aleatoire ='" . (int) $nb_aleatoire . "'", $con);
 
 		$row = mysql_fetch_assoc($result);
 
@@ -2502,8 +2550,7 @@ class wms_core
 	public function getAllPjByCarRecep($con, $car_recep_id)
 	{
 
-		$query = "SELECT rvr.pj1_url, rvr.pj2_url, rvr.pj3_url, rvr.pj4_url, rvr.pj5_url, rvr.pj6_url, rvr.pj7_url, rvr.pj8_url,
-		rvr.pj9_url, rvr.pj10_url, rvr.pj11_url, rvr.pj12_url, car_name, model_name, VIN
+		$query = "SELECT rvr.*, car_name, model_name, VIN
 		FROM tbl_recep_vehi_repar rvr
 		JOIN tbl_add_car cr ON cr.car_id = rvr.add_car_id
 		JOIN tbl_model mo ON cr.car_model = mo.model_id
@@ -5837,16 +5884,6 @@ GROUP BY pp.per_id";
 	public function saveRecepRepairCarInformation($con, $data, $image_url)
 	{
 
-		// Date actuelle de la visite technique
-		$datetech = DateTime::createFromFormat('d/m/Y', $data['add_date_visitetech']);
-
-		$timestampstechnique =  $datetech->format('U');
-
-		//assurance
-		$dateassur = DateTime::createFromFormat('d/m/Y', $data['add_date_assurance']);
-
-		$timestampsassurance =  $dateassur->format('U');
-
 		$query = "INSERT INTO tbl_recep_vehi_repar(repair_car_id, customer_name, car_make, car_model, num_matricule, heure_reception, 
 			nivo_carbu_recep_vehi, km_reception_vehi, cle_recep_vehi, cle_recep_vehi_text, carte_grise_recep_vehi, add_date_visitetech, 
 			add_date_assurance, timestampstechnique, timestampsassurance,
@@ -5876,7 +5913,7 @@ GROUP BY pp.per_id";
 			values('$data[hfInvoiceId]','$data[ddlCustomerList]','$data[ddlMake]','$data[ddlModel]','$data[ddlImma]','$data[heure_reception]',
 			'$data[nivo_carbu_recep_vehi]','$data[km_reception_vehi]','$data[cle_recep_vehi]','$data[cle_recep_vehi_text]',
 			'$data[carte_grise_recep_vehi]', '$data[add_date_visitetech]', '$data[add_date_assurance]',
-			'$timestampstechnique', '$timestampsassurance','$data[assur_recep_vehi]','$data[visitetech_recep_vehi]',
+			null, null,'$data[assur_recep_vehi]','$data[visitetech_recep_vehi]',
 			'$data[cric_levage_recep_vehi]', '$data[rallonge_roue_recep_vehi]','$data[panneau_remorquage_recep_vehi]',
 			'$data[scanner_recep_vehi]','$data[elec_recep_vehi]','$data[meca_recep_vehi]','$data[pb_meca_recep_vehi]',
 			'$data[pb_electro_recep_vehi]','$data[pb_demar_recep_vehi]','$data[conf_cle_recep_vehi]','$data[sup_adblue_recep_vehi]',

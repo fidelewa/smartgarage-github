@@ -22,7 +22,16 @@ $smsApi = new SmsApi();
 $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
 if($resultSmsSent == "ok"){
-    // echo "SMS envoyé avec succès !";
+
+    // On envoi ce même SMS aux DG et DGA
+    $resultDGinfos = $wms->getDGInfos($link);
+
+    foreach ($resultDGinfos as $DGinfos) {
+
+        // Exécution de la méthode d'envoi 
+        $resultSmsSentToAdmin = $smsApi->isSmsapi($DGinfos['usr_tel'], $content_msg);
+    }
+
     $url = WEB_URL.'confirmFactureSmsSent.php';
     header("Location: $url");
 } else {

@@ -201,7 +201,7 @@ $ligne = $wms->getRecepRepairCarInfoDiagnostic($link, $_GET['add_car_id'], $_GET
                         <div class="form-group row">
                             <label for="date_creation_fiche_diag" class="col-md-3 col-form-label">Date de création de la fiche:</label>
                             <div class="col-md-9" style="padding-left:0px;">
-                                <input readonly type="text" id="date_creation_fiche_diag" name="date_creation_fiche_diag" value="<?php echo date('d/m/Y') ?>" class="form-control">
+                                <input readonly type="text" id="date_creation_fiche_diag" name="date_creation_fiche_diag" value="<?php echo date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s') ?>" class="form-control">
                             </div>
                         </div>
                     </p>

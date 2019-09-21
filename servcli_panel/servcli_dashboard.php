@@ -29,7 +29,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
       <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="box box-success">
           <div class="box-header">
-            <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers scanners enregistrés par véhicules</h3>
+            <h3 class="box-title"><i class="fa fa-list"></i> Liste des derniers véhicules enregistrés pour scanner</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -39,7 +39,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                   <th>ID</th>
                   <th>Nom client</th>
                   <th>Personne ayant enregistré le client</th>
-                  <th>Numéro téléphone</th>
+                  <th>Téléphone du client</th>
                   <th>Immatriculation</th>
                   <th>Marque</th>
                   <th>Modèle</th>
@@ -48,7 +48,6 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                   <th>Frais de scanner</th>
                   <th>Statut scanner</th>
                   <th>Statut reception</th>
-
                   <th>Action</th>
                 </tr>
               </thead>
@@ -100,6 +99,91 @@ $settings = $wms->getWebsiteSettingsInformation($link);
             </table>
           </div>
           <!-- /.box-body -->
+        </div>
+        <div class="box box-success">
+          <div class="box-header">
+            <h3 class="box-title"><i class="fa fa-list"></i> Liste des devis validés par les clients</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <table class="table sakotable table-bordered table-striped dt-responsive">
+              <thead>
+                <tr>
+                  <th>ID Devis</th>
+                  <th>Immatriculation</th>
+                  <th>Client</th>
+                  <!-- <th>Date reception</th> -->
+                  <th>Date exp. assur</th>
+                  <th>Date exp. vis. tech.</th>
+                  <th>Statut validation devis mécanique</th>
+                  <th>Statut validation devis électrique</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <?php
+
+                $result = $wms->getRepairCarDiagnosticDevisClients($link);
+
+                foreach ($result as $row) {
+
+                  ?>
+
+                  <tr>
+                    <td><span class="label label-success"><?php echo $row['devis_id']; ?></span></td>
+                    <td><?php echo $row['VIN']; ?></td>
+                    <td><?php echo $row['c_name']; ?></td>
+                    <!-- <td><?php echo $row['add_date_recep_vehi']; ?></td> -->
+                    <td><?php echo $row['add_date_assurance']; ?></td>
+                    <td><?php echo $row['add_date_visitetech']; ?></td>
+                    <td><?php
+                          if (!isset($row['statut_validation_devis_mecanique'])) {
+                            echo "";
+                          } else if ($row['statut_validation_devis_mecanique'] == null) {
+                            echo "<span class='label label-default'>En attente de validation</span> <br/>";
+                          } else if ($row['statut_validation_devis_mecanique'] == 1) {
+                            echo "<span class='label label-success'>Validation effectué par le client</span> <br/>";
+                          }
+                          ?></td>
+                    <td><?php
+                          if (!isset($row['statut_validation_devis_electrique'])) {
+                            echo "";
+                          } else if ($row['statut_validation_devis_electrique'] == null) {
+                            echo "<span class='label label-default'>En attente de validation</span> <br/>";
+                          } else if ($row['statut_validation_devis_electrique'] == 1) {
+                            echo "<span class='label label-success'>Validation effectué par le client</span> <br/>";
+                          }
+                          ?></td>
+                    <td>
+                      <!-- <a class="btn btn-info" target="_blank" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>" data-original-title="Consulter la devis de réparation du véhicule"><i class="fa fa-file-text-o"></i></a> -->
+                      <?php if ($row['type_diagnostic'] == "électrique") { ?>
+                        <!-- <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du diagnostic électrique du véhicule"><i class="fa fa-file-text-o"></i></a> -->
+                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du diagnostic électrique du véhicule"><i class="fa fa-file-text-o"></i></a>
+                        <?php
+                            if ($row['statut_validation_devis_electrique'] == null) { ?>
+                          <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/devis_client_validation.php?type_diagnostic=<?php echo $row['type_diagnostic']; ?>&vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="valider le devis du diagnostic électrique"><i class="fa fa-check"></i></a>
+                      <?php }
+                        } ?>
+                      <?php if ($row['type_diagnostic'] == "mécanique") { ?>
+                        <!-- <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du diagnostic mécanique du véhicule"><i class="fa fa-file-text-o"></i></a> -->
+                        <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>repaircar/repaircar_diagnostic_devis_doc.php?vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>" data-original-title="Consulter le devis du diagnostic mécanique du véhicule"><i class="fa fa-file-text-o"></i></a>
+                        <?php
+                            if ($row['statut_validation_devis_mecanique'] == null) { ?>
+                          <a class="btn btn-info" data-toggle="tooltip" href="<?php echo WEB_URL; ?>cust_panel/devis_client_validation.php?type_diagnostic=<?php echo $row['type_diagnostic']; ?>&vehi_diag_id=<?php echo $row['vehi_diag_id']; ?>&devis_id=<?php echo $row['devis_id']; ?>&nom_client=<?php echo $row['c_name']; ?>" data-original-title="valider le devis du diagnostic mécanique"><i class="fa fa-check"></i></a>
+                      <?php }
+                        } ?>
+                      </a>
+                    </td>
+                  </tr>
+                <?php }
+                // mysql_close($link); 
+                ?>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+          <!-- <div class="box-footer clearfix"><a href="<?php echo WEB_URL; ?>cust_panel/cust_repaircar_diagnostic_devis_list.php" class="btn btn-sm btn-success btn-flat pull-right"><b><i class="fa fa-list"></i> &nbsp;Voir toute la liste</b></a> </div> -->
         </div>
       </div>
 
@@ -153,7 +237,7 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                           <a class="close" data-dismiss="modal">×</a>
                           <h3>Formulaire d'enregistrement du véhicule et du scanner</h3>
                         </div>
-                        <form id="devuisvehiForm" name="devis_vehi" role="form" method="POST" action="../repaircar/vehicule_scanning_traitement.php">
+                        <form id="scannerVehiForm" name="devis_vehi" role="form" method="POST" action="../repaircar/vehicule_scanning_traitement.php">
                           <div class="modal-body">
 
                             <fieldset>
@@ -243,6 +327,18 @@ $settings = $wms->getWebsiteSettingsInformation($link);
                                   <div class="col-md-12">
                                     <label>Montant des frais du scanner :</label>
                                     <input required type="number" maxlength="6" class='form-control montant_scanner' name="frais_scanner" id="frais_scanner" placeholder="Saisissez le montant du scanner">
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <label>Avance :</label>
+                                    <input type="number" maxlength="6" class='form-control' name="avance_scanner" id="avance_scanner" placeholder="Saisissez le montant de l'avance du scanner">
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <label>Reste à payer :</label>
+                                    <input type="number" maxlength="6" class='form-control' name="reste_payer_scanner" id="reste_payer_scanner" placeholder="Saisissez le reste à payer du scanner">
                                   </div>
                                 </div>
                               </div>
@@ -361,90 +457,41 @@ $settings = $wms->getWebsiteSettingsInformation($link);
   $("#frais_scanner").html(numeral(frais_scanner).format('0,0 $'));
 
   // Après la saisie des frais du scanner
-  // $("#frais_scanner").change(function() {
+  $("#frais_scanner").change(function() {
 
-  //   // On récupère la valeur des frais de scanner
-  //   // Si le montant a été saisi
-  //   if ($("#frais_scanner").val() != '') {
+    // On récupère la valeur des frais de scanner
+    // Si le montant a été saisi
+    if ($("#frais_scanner").val() != '') {
 
-  //     frais_scanner = $("#frais_scanner").val();
+      frais_scanner = $("#frais_scanner").val();
 
-  //     // Si le montant des frais de scanner est
-  //     // supérieur ou égale à 100 000 FCFA
-  //     if (frais_scanner >= 100000) {
+      // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
+      if (elt_scanner_electrique.checked == false && elt_scanner_mecanique.checked == false) {
+        alert("Veuillez cocher au moin un seul type de scanner SVP !!!");
+      }
+    }
 
-  //       const elt_scanner_electrique = document.getElementById('scanner_electrique');
-  //       const elt_scanner_mecanique = document.getElementById('scanner_mecanique');
+  });
 
-  //       // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
+  $(document).ready(function() {
+    $("#scannerVehiForm").submit(function(event) {
+      // On récupère la valeur des frais de scanner
+      // Si le montant a été saisi
+      if ($("#frais_scanner").val() != '') {
 
-  //       if (elt_scanner_electrique.checked == false || elt_scanner_mecanique.checked == false) {
-  //         alert("Veuillez cocher les deux types de scanner SVP !!!");
-  //       }
+        frais_scanner = $("#frais_scanner").val();
 
-  //     } else if (frais_scanner >= 50000 && frais_scanner < 100000) {
+        // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
+        if (elt_scanner_electrique.checked == false && elt_scanner_mecanique.checked == false) {
+          alert("Veuillez cocher au moin un seul type de scanner SVP !!!");
+        }
+      } else {
+        alert("Veuillez saisir le montant des frais de scanner SVP !!!");
+      }
+    });
 
-  //       const elt_scanner_electrique = document.getElementById('scanner_electrique');
-  //       const elt_scanner_mecanique = document.getElementById('scanner_mecanique');
+  });
 
-  //       // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
-  //       if (elt_scanner_electrique.checked == false && elt_scanner_mecanique.checked == false) {
-  //         alert("Veuillez cocher un seul type de scanner SVP !!!");
-  //         dashboard
-  //       }
-
-  //       if (elt_scanner_electrique.checked == true && elt_scanner_mecanique.checked == true) {
-  //         alert("Veuillez cocher un seul type de scanner SVP !!!");
-  //       }
-
-  //     } else {
-  //       alert("Veuillez saisir un montant supérieur ou égale à 50 000 FCFA SVP !!!");
-  //     }
-  //   }
-
-  // });
-
-  // $("#submit").click(function(e) {
-
-  //   // On récupère la valeur des frais de scanner
-  //   // Si le montant a été saisi
-  //   if ($("#frais_scanner").val() != '') {
-
-  //     frais_scanner = $("#frais_scanner").val();
-
-  //     // Si le montant des frais de scanner est
-  //     // supérieur ou égale à 100 000 FCFA
-  //     if (frais_scanner >= 100000) {
-
-  //       const elt_scanner_electrique = document.getElementById('scanner_electrique');
-  //       const elt_scanner_mecanique = document.getElementById('scanner_mecanique');
-
-  //       // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
-
-  //       if (elt_scanner_electrique.checked == false || elt_scanner_mecanique.checked == false) {
-  //         alert("Veuillez cocher les deux types de scanner SVP !!!");
-  //       }
-
-  //     } else if (frais_scanner >= 50000 && frais_scanner < 100000) {
-
-  //       const elt_scanner_electrique = document.getElementById('scanner_electrique');
-  //       const elt_scanner_mecanique = document.getElementById('scanner_mecanique');
-
-  //       // On vérifie que les cases à cocher sont bien checké sinon, on déclenche une alerte
-  //       if (elt_scanner_electrique.checked == false && elt_scanner_mecanique.checked == false) {
-  //         alert("Veuillez cocher un seul type de scanner SVP !!!");
-  //       }
-
-  //       if (elt_scanner_electrique.checked == true && elt_scanner_mecanique.checked == true) {
-  //         alert("Veuillez cocher un seul type de scanner SVP !!!");
-  //       }
-
-  //     } else {
-  //       alert("Veuillez saisir un montant supérieur ou égal à 50 000 FCFA SVP !!!");
-  //     }
-  //   }
-
-  // });
 
   $(document).ready(function() {
     $('.espace_code_gratuite').hide();

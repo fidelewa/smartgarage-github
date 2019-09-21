@@ -59,7 +59,7 @@ $content_msg = 'Un véhicule, ' . $make_name . ' ' . $model_name . ' ' . $imma_v
 
 $resultSmsSentMech = $smsApi->isSmsapi($mech_tel, $content_msg);
 
-if ($$resultSmsSentElec == "ok" && $resultSmsSentMech == "ok") {
+if ($resultSmsSentElec == "ok" && $resultSmsSentMech == "ok") {
     $sms_mech_elec = 'send_mech_elec_sms_succes';
 } else {
     $sms_mech_elec = 'send_mech_elec_sms_failed';

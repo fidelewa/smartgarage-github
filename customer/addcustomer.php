@@ -96,7 +96,26 @@ if (isset($_POST['txtCName'])) {
 	if (empty($image_url)) {
 		$image_url = $_POST['img_exist'];
 	}
+
 	$wms->saveUpdateCustomerInformation($link, $_POST, $image_url);
+
+	// Après l'enregistrement d'un client envoyé un SMS aux DG et DGA
+
+	$resultDGinfos = $wms->getDGInfos($link);
+
+	require_once(ROOT_PATH . '/SmsApi.php');
+
+	// instanciation de la classe de l'API SMS
+	$smsApi = new SmsApi();
+
+	$content_msg = "Un nouveau client " . $_POST['txtCName'] . " vient d'être enregistré";
+
+	foreach ($resultDGinfos as $DGinfos) {
+
+		// Exécution de la méthode d'envoi 
+		$resultSmsSent = $smsApi->isSmsapi($DGinfos['usr_tel'], $content_msg);
+	}
+
 	if ((int) $_POST['customer_id'] > 0) {
 		$url = WEB_URL . 'customer/customerlist.php?m=up';
 		header("Location: $url");

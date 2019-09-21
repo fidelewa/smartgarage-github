@@ -137,7 +137,7 @@ if (!empty($row) && count($row) > 0) { ?>
                         <img class="editable-area" id="logo" src="../img/luxury_garage_logo.jpg">
                     </div>
                     <div class="col-xs-3 col-xs-offset-6">
-                        <p><?php echo date_format(date_create($row['date_facture'], new \DateTimeZone('Africa/Abidjan')), 'd/m/Y h:i:s'); ?></p>
+                        <p><?php echo date_format(date_create($row['date_facture'], new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s'); ?></p>
                     </div>
                 </div>
                 <div class="row" id="content_1">

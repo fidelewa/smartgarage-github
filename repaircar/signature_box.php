@@ -11,7 +11,7 @@
 <body>
     <div class="row" id="signature">
         <div class="col-sm-3" style="height:150px;">
-            <p class="signature">Nom et signature du client</p>
+            <p class="signature">Signature du client</p>
             <p style="font-family:'Roboto Mono',monospace,serif;font-weight:bold;font-style:italic;text-align:center">Contrat lu et approuvé</p>
             <?php if (isset($_GET['login_type']) && $_GET['login_type'] != "mechanics") { ?>
 
@@ -234,7 +234,7 @@
                             </div> -->
         </div>
         <div class="col-sm-3" style="height:150px;">
-            <p class="signature">Nom et signature du réceptionniste</p>
+            <p class="signature">Signature du réceptionniste</p>
             <?php if (isset($_GET['login_type']) && $_GET['login_type'] != "mechanics") { ?>
 
                 <div style="margin-top:40px;">

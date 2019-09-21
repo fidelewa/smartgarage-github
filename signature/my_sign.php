@@ -230,7 +230,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
+							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;
 						}
 					});
 				}
@@ -267,7 +267,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
+							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;
 						}
 					});
 				}
@@ -304,7 +304,7 @@ include("../config.php");
 						type: 'post',
 						dataType: 'json',
 						success: function(response) {
-							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;;
+							window.location.href = web_url + "repaircar/repaircar_doc_gene.php?car_id=" + car_id + "&etat=" + etat + "&sign=" + signataire + "&image=" + image_url+ "&login_type=" + login_type;
 						}
 					});
 				}

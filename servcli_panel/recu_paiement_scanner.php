@@ -22,6 +22,35 @@ if (isset($_GET['validation_statut']) && $_GET['validation_statut'] == 1) {
     // On teste le résultat de la requête pour savoir si elle n'a pas déclenché des erreurs
     $result = mysql_query($query, $link);
 
+    // Après validation du reçu de scanner par le caissier, envoyer un SMS aux DG et DGA
+
+    $resultDGinfos = $wms->getDGInfos($link);
+
+    require_once(ROOT_PATH . '/SmsApi.php');
+
+    // instanciation de la classe de l'API SMS
+    $smsApi = new SmsApi();
+
+    $content_msg_admin = "Le reçu de paiement N° " . $row['id'] . " du véhicule " . $row['marque_vehi_client'] . " " . $row['model_vehi_client'] . " " . $row['imma_vehi_client'] . " vient d'être validé";
+
+    foreach ($resultDGinfos as $DGinfos) {
+
+        // Exécution de la méthode d'envoi 
+        $resultSmsSent = $smsApi->isSmsapi($DGinfos['usr_tel'], $content_msg_admin);
+    }
+
+    // Après validation du reçu de scanner par le caissier, envoyer un SMS au réceptionniste
+
+    $resultRecepinfos = $wms->getReceptionnisteInfos($link);
+
+    $content_msg_recep = "Le reçu de paiement N° " . $row['id'] . " du véhicule " . $row['marque_vehi_client'] . " " . $row['model_vehi_client'] . " " . $row['imma_vehi_client'] . " vient d'être validé. Le véhicule en question est en attente de réception";
+
+    foreach ($resultRecepinfos as $recepInfos) {
+
+        // Exécution de la méthode d'envoi 
+        $resultSmsSent = $smsApi->isSmsapi($recepInfos['usr_tel'], $content_msg_recep);
+    }
+
     echo "<script type='text/javascript'> document.location.href='javascript:window.print()'</script>";
 }
 
@@ -254,6 +283,14 @@ if (!empty($row) && count($row) > 0) { ?>
                                             <div class="col-xs-6">Montant total payé</div>
                                             <div class="col-xs-6" id="total_ht"><?php echo $row['frais_scanner'] ?></div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">Montant avance</div>
+                                            <div class="col-xs-6" id="avance_scanner"><?php echo $row['avance_scanner'] ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">Reste à payer</div>
+                                            <div class="col-xs-6" id="reste_payer"><?php echo $row['reste_payer'] ?></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -379,16 +416,20 @@ if (!empty($row) && count($row) > 0) { ?>
             <?php if ($_SESSION['login_type'] == 'comptable') { ?>
                 <a style="" href="<?php echo WEB_URL; ?>compta_panel/compta_dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
             <?php } ?>
+            <?php if ($_SESSION['login_type'] == 'admin') { ?>
+                <a style="" href="<?php echo WEB_URL; ?>dashboard.php"><img src="<?php echo WEB_URL; ?>img/back.png" style="float:left; margin:0 10px 0 0;"> Retour </a>
+            <?php } ?>
         </div>
         <div id="mobile-preview-close_2">
             <!-- <a style="" href="<?php echo WEB_URL; ?>estimate/devis_prix_piece_rechange.php?vehi_diag_id=<?php echo $_GET['vehi_diag_id']; ?>"> Créer un devis </a> -->
             <!-- <a style="" href="<?php echo WEB_URL; ?>bon_cmde/sendBonCmde.php?boncmde_id=<?php echo $_GET['boncmde_id']; ?>&supplier_id=<?php echo $row['supplier_id']; ?>"> Envoyer le bon de commande </a> -->
             <a style="" onClick="deleteRecuScanner(<?php echo $_GET['recu_scanning_id']; ?>);" href="javascript:;">Annuler </a>
-            <a style="" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $_GET['nbr_aleatoire']; ?>&recu_scanning_id=<?php echo $_GET['recu_scanning_id']; ?>&validation_statut=1">Valider et imprimer </a>
+            <?php if ($_SESSION['login_type'] == 'comptable' && $_GET['validation_recu_scanning'] != 1) { ?>
+                <a style="" href="<?php echo WEB_URL; ?>servcli_panel/recu_paiement_scanner.php?nbr_aleatoire=<?php echo $_GET['nbr_aleatoire']; ?>&recu_scanning_id=<?php echo $_GET['recu_scanning_id']; ?>&validation_statut=1">Valider et imprimer </a>
+            <?php } ?>
         </div>
 
         <script type="text/javascript">
-
             function deleteRecuScanner(Id) {
                 var iAnswer = confirm("Êtes-vous sûr de vouloir annuler ce reçu de scanner ?");
                 if (iAnswer) {
@@ -397,6 +438,8 @@ if (!empty($row) && count($row) > 0) { ?>
             }
 
             var total_ht = "<?php echo $row['frais_scanner']; ?>";
+            var avance_scanner = "<?php echo $row['avance_scanner']; ?>";
+            var reste_payer = "<?php echo $row['reste_payer']; ?>";
 
             // Définition de la locale en français
             numeral.register('locale', 'fr', {
@@ -420,8 +463,12 @@ if (!empty($row) && count($row) > 0) { ?>
 
             // Conversion des variables en flottant
             total_ht = parseFloat(total_ht);
+            avance_scanner = parseFloat(avance_scanner);
+            reste_payer = parseFloat(reste_payer);
 
             $("#total_ht").html(numeral(total_ht).format('0,0 $'));
+            $("#avance_scanner").html(numeral(avance_scanner).format('0,0 $'));
+            $("#reste_payer").html(numeral(reste_payer).format('0,0 $'));
         </script>
     </body>
 

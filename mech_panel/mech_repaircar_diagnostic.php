@@ -135,7 +135,7 @@ $usr_type = $_SESSION['objMech']['usr_type'];
                 <input type="hidden" id="num_chasis_vehicule" name="num_chasis_vehicule" value="<?php echo $ligne['chasis_no'] ?>" class="form-control">
                 <input type="hidden" id="marque_vehicule" name="marque_vehicule" value="<?php echo $ligne['car_make'] ?>" class="form-control">
                 <input type="hidden" id="modele_vehicule" name="modele_vehicule" value="<?php echo $ligne['car_model'] ?>" class="form-control">
-                <input type="hidden" id="date_creation_fiche_diag" name="date_creation_fiche_diag" value="<?php echo date('d/m/Y') ?>" class="form-control">
+                <input type="hidden" id="date_creation_fiche_diag" name="date_creation_fiche_diag" value="<?php echo date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'Y-m-d H:i:s'); ?>" class="form-control">
 
                 <input type="hidden" id="admin_ges_tel" name="admin_ges_tel" value="<?php echo $_GET['admin_ges_tel'] ?>" class="form-control">
                 <input type="hidden" id="recep_tel" name="recep_tel" value="<?php echo $_GET['recep_tel'] ?>" class="form-control">

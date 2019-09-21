@@ -2,6 +2,26 @@
 
 include_once('../header.php');
 
+// var_dump($_POST);
+// die();
+
+// Compress image
+function compressImage($source, $destination, $quality)
+{
+
+	$info = getimagesize($source);
+
+	if ($info['mime'] == 'image/jpeg')
+		$image = imagecreatefromjpeg($source);
+
+	elseif ($info['mime'] == 'image/gif')
+		$image = imagecreatefromgif($source);
+
+	elseif ($info['mime'] == 'image/png')
+		$image = imagecreatefrompng($source);
+
+	imagejpeg($image, $destination, $quality);
+}
 
 function uploadPJ_carte_grise()
 {
@@ -15,7 +35,14 @@ function uploadPJ_carte_grise()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// Cette fonction permet de reduire la qualité de l'image uploadé
+			// compressImage($_FILES["pj_carte_grise"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
+			// Cette fonction vérifie si l'image a vraiment été envoyé à l'emplacement prévu
 			move_uploaded_file($_FILES["pj_carte_grise"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
+
+			// Retourne le nom de l'image
 			return $filename;
 		} else {
 			return '';
@@ -36,6 +63,10 @@ function uploadPJ_assurance_cedeao()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// Cette fonction permet de reduire la qualité de l'image uploadé
+			// compressImage($_FILES["pj_assurance_cedeao"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_assurance_cedeao"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -57,6 +88,9 @@ function uploadPJ_assurance()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+			// Cette fonction permet de reduire la qualité de l'image uploadé
+			// compressImage($_FILES["pj_assurance"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_assurance"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -78,6 +112,9 @@ function uploadPJ_visite_tech()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_visite_tech"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_visite_tech"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -99,6 +136,9 @@ function uploadPJ_otre_piece()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_otre_piece"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_otre_piece"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -120,6 +160,8 @@ function uploadPJ_contrat_assurance()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+			// compressImage($_FILES["pj_contrat_assurance"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_contrat_assurance"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -141,6 +183,9 @@ function uploadPJ_access_1()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_access_1"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_access_1"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -162,6 +207,9 @@ function uploadPJ_access_2()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_access_2"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_access_2"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -183,6 +231,8 @@ function uploadPJ_access_3()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+			// compressImage($_FILES["pj_access_3"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_access_3"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -204,6 +254,9 @@ function uploadPJ_access_4()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_access_4"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_access_4"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -225,6 +278,9 @@ function uploadPJ_access_5()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_access_5"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_access_5"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -246,6 +302,9 @@ function uploadPJ_access_6()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_access_6"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_access_6"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -267,6 +326,9 @@ function uploadPJ_voyants_1()
 		) {
 			// $temp = explode(".", $_FILES["pj_3_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_voyants_1"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_voyants_1"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -288,6 +350,9 @@ function uploadPJ_voyants_2()
 		) {
 			// $temp = explode(".", $_FILES["pj_3_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_voyants_2"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_voyants_2"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -309,6 +374,9 @@ function uploadPJ_scanner_fr()
 		) {
 			// $temp = explode(".", $_FILES["pj_3_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_scanner_fr"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_scanner_fr"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -408,6 +476,9 @@ function uploadPJ_1_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_1_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+			
 			move_uploaded_file($_FILES["pj_1_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -430,6 +501,9 @@ function uploadPJ_2_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_2_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_2_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_2_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -452,6 +526,9 @@ function uploadPJ_3_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_3_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_3_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_3_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -474,6 +551,9 @@ function uploadPJ_4_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_4_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_4_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_4_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -496,6 +576,9 @@ function uploadPJ_5_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_5_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_5_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_5_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -517,6 +600,8 @@ function uploadPJ_6_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_6_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+			// compressImage($_FILES["pj_6_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_6_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -538,6 +623,9 @@ function uploadPJ_7_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_7_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_7_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -559,6 +647,9 @@ function uploadPJ_8_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_8_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_8_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -580,6 +671,9 @@ function uploadPJ_9_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_9_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_9_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -601,6 +695,9 @@ function uploadPJ_10_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_10_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_10_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -622,6 +719,9 @@ function uploadPJ_11_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_11_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_11_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -643,6 +743,9 @@ function uploadPJ_12_car()
 		) {
 			// $temp = explode(".", $_FILES["pj_1_car"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+
+			// compressImage($_FILES["pj_12_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename, 60);
+
 			move_uploaded_file($_FILES["pj_12_car"]["tmp_name"], ROOT_PATH . '/img/upload/car/' . $filename);
 			return $filename;
 		} else {
@@ -749,7 +852,7 @@ if (isset($_POST['car_names'])) {
 
 	// if (!$resultChefMechElec) {
 	// 	$message  = 'Invalid query: ' . mysql_error() . "\n";
-	// 	$message .= 'Whole query: ' .  $$queryChefMechElec;
+	// 	$message .= 'Whole query: ' .  $queryChefMechElec;
 	// 	die($message);
 	// }
 
@@ -1125,7 +1228,7 @@ if (empty($_POST['cle_recep_vehi'])) {
 }
 if (empty($_POST['carte_grise_recep_vehi'])) {
 	$_POST['carte_grise_recep_vehi'] = "";
-} 
+}
 if (empty($_POST['assur_recep_vehi'])) {
 	$_POST['assur_recep_vehi'] = "";
 }
@@ -1313,6 +1416,7 @@ function uploadPJ_1_recep()
 		) {
 			// $temp = explode(".", $_FILES["pj_1"]["name"]);
 			// $newfilename = NewGuid() . '.' . end($temp);
+			
 			move_uploaded_file($_FILES["pj_1_recep"]["tmp_name"], ROOT_PATH . '/img/upload/docs/reception_vehicule/' . $filename);
 			return $filename;
 		} else {
@@ -1577,6 +1681,7 @@ function uploadImage()
 		if (($ext == "jpg" && $_FILES["uploaded_file"]["type"] == 'image/jpeg') || ($ext == "png" && $_FILES["uploaded_file"]["type"] == 'image/png') || ($ext == "gif" && $_FILES["uploaded_file"]["type"] == 'image/gif')) {
 			$temp = explode(".", $_FILES["uploaded_file"]["name"]);
 			$newfilename = NewGuid() . '.' . end($temp);
+			
 			move_uploaded_file($_FILES["uploaded_file"]["tmp_name"], ROOT_PATH . '/img/upload/' . $newfilename);
 			return $newfilename;
 		} else {
@@ -1640,6 +1745,9 @@ if ($row['scanner_mecanique'] == 'OUI' && $row['scanner_electrique'] == '') {
 
 	// Exécution de la requête
 	mysql_query($queryMech, $link);
+
+	// Envoi de SMS au chef mécanicien seul
+	include(ROOT_PATH . '/sendSmsToMech.php');
 }
 
 // Si un véhicule doit subir uniquement un scanner électrique alors
@@ -1656,6 +1764,9 @@ if ($row['scanner_mecanique'] == '' && $row['scanner_electrique'] == 'OUI') {
 
 	// Exécution de la requête
 	mysql_query($queryElec, $link);
+
+	// Envoi de SMS au chef électricien seul
+	include(ROOT_PATH . '/sendSmsToElec.php');
 }
 
 // Si un véhicule doit subir à la fois un scanner électrique et un scanner mécanique alors
@@ -1673,10 +1784,13 @@ if ($row['scanner_mecanique'] == 'OUI' && $row['scanner_electrique'] == 'OUI') {
 
 	// Exécution de la requête
 	mysql_query($queryElec, $link);
+
+	// Envoi de SMS aux chefs mécaniciens et électriciens à la fois
+	include(ROOT_PATH . '/sendSmsToChefMechElec_2.php');
 }
 
-// Envoi de SMS aux clients, chef mécanicien et chef électricien
-include(ROOT_PATH . '/sendSmsToChefMechElec_2.php');
+// Envoi de SMS aux clients et administrateurs
+include(ROOT_PATH . '/sendSmsToAdmin.php');
 include(ROOT_PATH . '/sendSmsToClient_2.php');
 
 // if (isset($_SESSION['objRecep']) && $_SESSION['login_type'] == "reception") {

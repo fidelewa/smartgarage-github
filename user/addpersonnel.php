@@ -139,7 +139,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
         $hdnid = $_GET['id'];
         $title = 'Modification du personnel';
-        $button_text = "Mise à jour";
+        $button_text = "Modifier";
         $successful_msg = "Modification du personnel effectuée avec succès";
         $form_url = WEB_URL . "reception/addreceptionniste.php?id=" . $_GET['id'];
     }

@@ -105,9 +105,9 @@ if (!empty($row) && count($row) > 0) { ?>
                             <p>Tel. 21 35 55 60 / 06 66 06 66</p>
                         </div>
                     </div>
-                    <!-- <div class="col-xs-3 col-xs-offset-6">
-                        <p><?php echo date_format(date_create($row['date_facture']), 'd/m/Y h:i:s'); ?></p>
-                    </div> -->
+                    <div class="col-xs-3 col-xs-offset-6">
+                        <p><?php echo date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'd/m/Y H:i:s'); ?></p>
+                    </div>
                     <div class="row" id="content_1">
                         <div class="col-sm-12" style="text-align:center;">
                             <h4 style="text-decoration:underline;font-weight:bold">

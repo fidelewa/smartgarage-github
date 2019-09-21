@@ -46,12 +46,12 @@ if (isset($_GET['m']) && $_GET['m'] == 'scanner_error') {
 
 if (isset($_GET['m']) && $_GET['m'] == 'scanner_error_50k') {
     $error_info_2 = 'block';
-    $msg_error_2 = "Veuillez saisir un montant égal à 50 000 FCFA lorsque vous choisissez un seul type de scanner SVP !!!";
+    $msg_error_2 = "Veuillez saisir un montant inférieur à 100 000 FCFA lorsque vous choisissez un seul type de scanner SVP !!!";
 }
 
 if (isset($_GET['m']) && $_GET['m'] == 'scanner_error_100k') {
     $error_info_3 = 'block';
-    $msg_error_3 = "Veuillez saisir un montant égal à 100 000 FCFA lorsque vous choisissez les deux types de scanner SVP !!!";
+    $msg_error_3 = "Veuillez saisir un montant supérieur à 50 000 FCFA lorsque vous choisissez les deux types de scanner SVP !!!";
 }
 
 if (isset($_GET['m']) && $_GET['m'] == 'nom_client_incorrect_format') {

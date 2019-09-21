@@ -37,7 +37,7 @@ if (isset($_POST) && !empty($_POST)) {
     $facture_data = json_encode($_POST['facture_data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
     // Initialisation de la date de la fature
-    $date_facture = date('d/M/Y');
+    $date_facture = date_format(date_create('now', new \DateTimeZone('Africa/Abidjan')), 'Y-m-d H:i:s');
 
     // Formulation de la requête
     $query = "INSERT INTO tbl_add_facture (date_facture, facture_data, montant_main_oeuvre_facture, montant_total_tva_facture, 

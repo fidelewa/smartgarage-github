@@ -30,8 +30,18 @@ $smsApi = new SmsApi();
 // Exécution de la méthode d'envoi 
 $resultSmsSent = $smsApi->isSmsapi($mobile_customer, $content_msg);
 
+// Losrque le SMS du devis a été envoyé au client
 if ($resultSmsSent == "ok") {
-    // echo "SMS envoyé avec succès !";
+
+    // On envoi ce même SMS aux DG et DGA
+    $resultDGinfos = $wms->getDGInfos($link);
+
+    foreach ($resultDGinfos as $DGinfos) {
+
+        // Exécution de la méthode d'envoi 
+        $resultSmsSentToAdmin = $smsApi->isSmsapi($DGinfos['usr_tel'], $content_msg);
+    }
+
     $url = WEB_URL . 'confirmDevisSmsSent.php';
     header("Location: $url");
 } else {

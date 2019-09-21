@@ -1,6 +1,8 @@
 <?php
 include_once('config.php');
 include_once('helper/common.php');
+
+
 $wms = new wms_core();
 
 $vehi_diag_id = $_GET['vehi_diag_id'];
@@ -25,6 +27,15 @@ $title = "Nouveau devis à confirmer";
 
 // $wms->setContactStatus($link, $_POST['contact_id']);
 $result = $wms->sendCustomerDevisEmail($link, $email_customer, $title, $content_msg, $devis_id);
+
+// On envoi ce même SMS aux DG et DGA
+$resultDGinfos = $wms->getDGInfos($link);
+
+foreach ($resultDGinfos as $DGinfos) {
+
+    // Exécution de la méthode d'envoi 
+    $resultSmsSentToAdmin = $smsApi->isSmsapi($DGinfos['usr_tel'], $content_msg);
+}
 
 $url = WEB_URL.'confirmDevisEmailSent.php';
 header("Location: $url");
